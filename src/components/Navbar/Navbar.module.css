@@ -1,0 +1,22 @@
+.nav {
+  background-color: rgb(128, 255, 128);
+  grid-area: nav;
+  padding: 10px;
+  width: 100px;
+}
+.nav a {
+  text-decoration: none;
+	display: block;
+  margin-top: 15px;
+  font-size: 20px;
+  color: black;
+}
+.nav a:hover {
+  background-color: cadetblue;
+}
+.nav a:nth-child(1) {
+  margin-top: 0;
+}
+.nav a.active {
+  color: goldenrod;
+}

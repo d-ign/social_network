@@ -1,0 +1,16 @@
+.header {
+  background-color: rgb(255, 130, 120);
+  grid-area: header;
+}
+.loginBlock{
+  float:right;
+}
+.login_name{
+
+}
+.logout{
+
+}
+.login_link{
+  
+}

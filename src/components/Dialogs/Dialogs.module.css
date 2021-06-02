@@ -1,0 +1,31 @@
+.messages {
+  display: flex;
+  margin: 30px;
+}
+.items {
+  margin-right: 50px;
+}
+.items a {
+  display: block;
+  text-decoration: none;
+  padding: 10px 10px 10px 0;
+  margin: 10px 10px 10px 0;
+  color: black;
+  font-size: 18px;
+}
+.items a:hover {
+  background-color: rgb(120, 170, 120);
+}
+.title {
+  font-size: 25px;
+  font-weight: 700;
+  display: block;
+}
+.dialogs {
+}
+.message {
+  background-color: rgb(155, 155, 155);
+  padding: 20px;
+  border: 1px solid rgb(95, 95, 95);
+  border-radius: 10px;
+}

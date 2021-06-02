@@ -1,0 +1,18 @@
+.pageInfo__data img{
+  width: 120px;
+}
+.about a{
+  
+}
+.pageInfo__data span {
+  display: block;
+}
+.dataRow {
+  display: flex;
+  padding-top: 5px;
+}
+/* .dataRow__label {
+  width: 150px;
+}
+.dataRow__value {
+} */

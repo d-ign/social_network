@@ -1,0 +1,10 @@
+.form{
+  /* display: flex; */
+}
+.row{
+
+}
+.formError{
+  color: red;
+  background-color: palevioletred;
+}

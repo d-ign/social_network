@@ -1,0 +1,35 @@
+.pageNumber.selectedPage {
+  font-weight: bold;
+  background-color: rgb(179, 89, 89);
+}
+.pageNumber {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #fff;
+}
+.container {
+  display: flex;
+  margin: 20px;
+  width: 300px;
+  background-color: #324222;
+  padding: 10px;
+}
+.column_avatar {
+  flex-basis: 80px;
+  background-color: #fff;
+}
+.column_avatar img {
+  width: 80px;
+  display: block;
+  margin: 0 auto;
+}
+.column_avatar button {
+  display: block;
+  margin: 10px auto 10px;
+}
+.column_data{
+  padding: 0 20px 0 20px;
+}
+.column_data span {
+  display: block;
+}
