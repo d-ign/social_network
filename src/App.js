@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { initializeAppThunk } from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import store from './redux/redux-store';
 import { withSuspense } from './components/hoc/withSuspense';
 
@@ -103,11 +103,11 @@ let AppContainer = compose(
 let SamuraiJSApp = (props) => {
   // провайдер создает контекст; компонента может брать инфу из пропсов, своего состояния и контекста
   return (
-    <BrowserRouter basemname={process.env.PUBLIC_URL}>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Provider store={store}>
         <AppContainer />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
