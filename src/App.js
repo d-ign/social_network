@@ -102,8 +102,9 @@ let AppContainer = compose(
 
 let SamuraiJSApp = (props) => {
   // провайдер создает контекст; компонента может брать инфу из пропсов, своего состояния и контекста
+  // HashRouter добавляет # в url перед путём. Сервер отбрасывает всё, что после #. Для данного случая это то, что надо. Но вообще HashRouter при использовании полноценных серверов (не github) не нужен и бесполезен.
   return (
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <Provider store={store}>
         <AppContainer />
       </Provider>
