@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUserProfile, getStatus, updateStatus } from '../../redux/profile-reducer';
+import { getUserProfile, getStatus, updateStatus, savePhotoThunk } from '../../redux/profile-reducer';
 import WallContainer from './Wall/WallContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { connect } from 'react-redux';
@@ -23,12 +23,25 @@ class ProfileContainer extends React.Component {
     this.props.getStatus(userId); // (1) получаем статус с сервера при первичной отрисовке, getStatus взят из контекста. Затем перекидываем статус через пропсы (см. (2))
   }
 
+  componentDidMount() {
+    this.refreshProfile()
+  }
+  componentDidUpdate(prevProps) {
+    if(this.props.match.params.userId !== prevProps.match.params.userId) {
+      this.refreshProfile()
+      // т.е. перерисовывать только когда переходишь с одной страницы на другую
+    }
+  }
+
   render() {
     return <>
       <ProfileInfo
         profile={this.props.profile}
         status={this.props.status}
-        updateStatus={this.props.updateStatus} />
+        updateStatus={this.props.updateStatus} 
+        isOwner={!this.props.match.params.userId} // если есть id, значит я на чужой странице и значит я не хозяин
+        savePhotoThunk={this.props.savePhotoThunk}
+        />
       <WallContainer />
     </>
   }
@@ -57,6 +70,7 @@ export default compose(
     getUserProfile,
     getStatus,
     updateStatus,
+    savePhotoThunk,
   }),
   withRouter,
   // withAuthRedirect

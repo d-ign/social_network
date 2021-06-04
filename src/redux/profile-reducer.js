@@ -3,7 +3,8 @@ import { usersAPI, profileAPI } from '../api/api';
 const ADD_POST = 'ADD-POST';
 const SET_USER = 'SET-USER';
 const SET_STATUS = 'SET-STATUS';
-const DELETE_POST = 'DELETE-POST;'
+const DELETE_POST = 'DELETE-POST';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
 
 // если state не придёт в reducer, то initialState будет этим начальным state (как параметр по умолчанию у функции func(a=initialState, b))
 let initialState = {
@@ -29,7 +30,7 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: [
-          ...state.posts, 
+          ...state.posts,
           newPost
         ],
       }
@@ -54,10 +55,17 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         posts: state.posts.filter(p => p.id !== action.postID)
       }
+    } 
+
+    case SAVE_PHOTO_SUCCESS: {
+      return {
+        ...state,
+        profile: {...state.profile, photo: action.photo}
+      }
     }
 
     default:
-      return state; 
+      return state;
   }
 };
 
@@ -68,9 +76,7 @@ export const deletePost = (postID) => ({ type: DELETE_POST, postID });
 
 const setUserProfile = (profile) => ({ type: SET_USER, profile });
 const setStatus = (status) => ({ type: SET_STATUS, status });
-
-
-
+const savePhotoSuccessAC = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos});
 
 // thunk
 export const getUserProfile = (userId) => {
@@ -99,6 +105,13 @@ export const updateStatus = (status) => { // обновить статус на 
           dispatch(setStatus(status));
         }
       });
+  }
+};
+
+export const savePhotoThunk = (photos) => async (dispatch) => {
+  let response = await profileAPI.savePhotoAPI(photos);
+  if (response.data.resultCode === 0) {
+    dispatch(savePhotoSuccessAC(response.data.data.photos));
   }
 };
 
