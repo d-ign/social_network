@@ -25,9 +25,9 @@ const authReducer = (state = initialState, action) => {
 };
 
 // это action creators
-const setAuthUserData = (id, email, login, isAuth) => ({
+const setAuthUserData = (userID, email, login, isAuth) => ({
   type: SET_USER_DATA,
-  payload: { id, email, login, isAuth }
+  payload: { userID, email, login, isAuth }
 });
 
 // это thunks
