@@ -8,10 +8,10 @@ import { withRouter } from 'react-router';
 import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile() {
     // параметр usetId обозначили в App, работает благодаря withRouter
     let userId = this.props.match.params.userId;
-
+    
     if (!userId) {
       userId = this.props.authorizedUserID;
       if (!userId) {
