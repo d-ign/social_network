@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsersThunk } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-// import withAuthRedirect from '../hoc/withAuthRedirect';
+import withAuthRedirect from '../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { getUsersSelector, 
   // getUserSuperPuperSelector, 
@@ -78,5 +78,5 @@ export default compose(
     toggleFollowingProgress,
     getUsersThunk
   }),
-  // withAuthRedirect
+  withAuthRedirect
 )(UsersContainer)
