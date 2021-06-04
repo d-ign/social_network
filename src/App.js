@@ -103,7 +103,7 @@ let AppContainer = compose(
 let SamuraiJSApp = (props) => {
   // провайдер создает контекст; компонента может брать инфу из пропсов, своего состояния и контекста
   return (
-    <BrowserRouter>
+    <BrowserRouter basemname={process.env.PUBLIC_URL}>
       <Provider store={store}>
         <AppContainer />
       </Provider>
