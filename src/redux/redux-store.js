@@ -1,11 +1,12 @@
 import {applyMiddleware, combineReducers, createStore, compose} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+
 import authReducer from './auth-reducer';
 import messagesReducer from './messages-reducer';
 import profileReducer from './profile-reducer';
 import usersReducer from './users-reducer';
-import thunkMiddleware from 'redux-thunk';
-import {reducer as formReducer} from 'redux-form';
 import appReducer from './app-reducer';
+import { reducer as formReducer } from 'redux-form';
 
 // по сути это сейчас наш state, store. getState, dispatch и subscribe встроены в Redux и называются точно также, поэтому переписывать ничего не надо в index.js и далее
 let reducers = combineReducers({
