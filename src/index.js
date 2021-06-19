@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom'; // вместо ReactDOM можно использовать React Native и превратить реакт-компоненты и js в java-код для андроида и айфона
 import SamuraiJSApp from './App';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 
 
 // убрали rerenderEntireTree потому что у функции connect усть внутренний свой subscribe
@@ -21,5 +20,3 @@ ReactDOM.render(<SamuraiJSApp />, document.getElementById('root'));
 //   let state = store.getState();
 //   rerenderEntireTree(state);
 // });
-
-reportWebVitals();
