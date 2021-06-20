@@ -38,7 +38,7 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
     <form onSubmit={handleSubmit}>
       <div className="form">
         <div className={s.row}>
-          <label for='email'>Логин</label>
+          <label htmlFor='email'>Логин</label>
           <Field
             id='email'
             type="email"
@@ -47,7 +47,7 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
             validate={[required, maxLength30]} />
         </div>
         <div className={s.row}>
-          <label for='password'>Пароль</label>
+          <label htmlFor='password'>Пароль</label>
           <Field
             id='password'
             type="password"
@@ -56,7 +56,7 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
             validate={[required, maxLength30]} />
         </div>
         <div className={s.row}>
-          <label for='save'>
+          <label htmlFor='save'>
             <Field
               id='save'
               type="checkbox"
@@ -67,7 +67,7 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
           </label>
         </div>
 
-        {captchaURL && <img src={captchaURL} />}
+        {captchaURL && <img src={captchaURL} alt='captcha'/>}
         {captchaURL &&
           <Field
             type="text"
