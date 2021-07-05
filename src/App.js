@@ -1,86 +1,77 @@
 import React from 'react';
-import './App.css';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Navbar from './components/Navbar/Navbar';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import Login from './components/Login/Login';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { initializeAppThunk } from './redux/app-reducer';
+import { compose } from 'redux';
+
+import { initializeAppThunk, showGlobalErrorThunk } from './redux/app-reducer';
+
 import Preloader from './components/common/Preloader/Preloader';
-import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
-import store from './redux/redux-store';
 import { withSuspense } from './components/hoc/withSuspense';
 
-// import DialogsContainer from './components/Dialogs/DialogsContainer';
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); // в конечный bundle эта компонента не попадёт, а подгрузится, если будет надо, при переходе на диалоги
-// import UsersContainer from './components/Users/UsersContainer';
+import s from './App.module.css';
+
+import HeaderContainer from './components/Header/HeaderContainer';
+import Navbar from './components/Navbar/Navbar';
+import ProfileContainer from './components/Profile/ProfileContainer';
+import Login from './components/Login/Login';
+import GlobalError from './components/GlobalError/GlobalError';
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
-// увеличиваем скорость стартовой загрузки и замедляем затем использование
 
 class App extends React.Component {
+
   componentDidMount() {
     this.props.initializeAppThunk();
+    
+    window.addEventListener('unhandledrejection',
+      (event) => this.props.showGlobalErrorThunk(event.reason),
+      { once: true, passive: true }
+    )
   }
-  // (2)
 
   render() {
-    // сначала сработает Preloader, даст время проининциализироваться initializeAppThunk (см. componentDidMount), затем пойдем в JSX
-    // (1)
     if (!this.props.initialized) {
       return <Preloader />
     }
 
-    // (3)
     return (
-      <div className="container">
-        <div className="app-wrapper">
-          <HeaderContainer />
-          <Navbar />
-          <div className='app-wrapper-content'>
-            <Switch>
+      <div className={s.fon}>
+        <div className={s.container}>
 
-              {/* редирект подставляет в урл свою часть (т.е. перенаправялет на нужную страницу), а роут с таким-то адресом отрисовывает ту компоненту, которая указана в render */}
+          <div className={s.appWrapper}>
 
-              {/* <Route path='/' exact
-                     render={() => <ProfileContainer />} /> */}
-              <Redirect exact from="/" to="/profile" />
+            {this.props.globalError && <Redirect to="/error" />}
 
-              <Route path='/dialogs'
-                render={withSuspense(DialogsContainer)} />
+            <HeaderContainer />
+            <Navbar />
 
-                  {/* // return <Suspense fallback={<div>Загрузка...</div>}>
-                  //   <DialogsContainer />
-                  // </Suspense> */}
-                
+            <div className={s.appWrapperContent}>
+              <Switch>
 
-              {/* userId - параметр, мы можем его достать благодаря import { withRouter } from 'react-router'; в контейнерной компоненте ProfileContainer, ? - значит что параметр необязательный; текущий URL - это второй источник истины после store*/}
+                <Route path='/error'
+                  render={() => <GlobalError error={this.props.globalError} />} />
 
-              <Route path='/profile/:userId?'
-                render={() => <ProfileContainer />} />
+                <Redirect from='/profile/undefined' to="/" />
 
-              <Route path='/users'
-                render={withSuspense(UsersContainer)} />
+                <Route path='/dialogs'
+                  render={withSuspense(DialogsContainer)} />
 
-              {/* <Route path='/users'
-                render={() => {
-                  return <Suspense fallback={<div>Загрузка...</div>}>
-                    <UsersContainer />
-                  </Suspense>
-                }} /> */}
+                <Route path='/profile/:userId?'
+                  component={ProfileContainer} />
 
-              <Route path='/login'
-                render={() => <Login login={this.props.login} />} />
+                <Route path='/users'
+                  render={withSuspense(UsersContainer)} />
 
-              {/* <Route exact path='/login' render={() => <Login login={this.props.login} />} /> */}
-              {/* exact означает что урл должен быть точь в точь такой, как указан. Если после login что-то еще будет, то Route не сработает. Без exact будет срабатывать и при урл login и при login/что-то еще */}
-              {/* или можно Route в Switch: <Switch> <Route ... </Switch>. Он как только находит нужный url просто дальше (ниже) не проверяет и выводит первое, что нашёл */}
+                <Route path='/login'
+                  render={() => <Login login={this.props.login} />} />
 
-              {/* <Route patch='*' 
-                     render={() => <div> 404 </div>} /> */}
-            </Switch>
+                <Redirect exact from="/" to="/profile" />
+
+                <Redirect from='*' to="/" />
+
+              </Switch>
+            </div>
           </div>
         </div>
       </div>
@@ -90,26 +81,15 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
+  globalError: state.app.globalError,
 });
 
-// compose - функция, которая одним за одним выполняет HOC, оборачивая всё больше и больше нашу презентационную компоненту, наделяя её какой-то функциональностью, данными
-let AppContainer = compose(
-  withRouter, // берем инфу из урла
+const AppContainer = compose(
+  withRouter,
   connect(mapStateToProps, {
-    initializeAppThunk
+    initializeAppThunk,
+    showGlobalErrorThunk,
   })
 )(App)
 
-let SamuraiJSApp = (props) => {
-  // провайдер создает контекст; компонента может брать инфу из пропсов, своего состояния и контекста
-  // HashRouter добавляет # в url перед путём. Сервер отбрасывает всё, что после #. Для данного случая это то, что надо. Но вообще HashRouter при использовании полноценных серверов (не github) не нужен и бесполезен.
-  return (
-    <HashRouter>
-      <Provider store={store}>
-        <AppContainer />
-      </Provider>
-    </HashRouter>
-  )
-}
-
-export default SamuraiJSApp;
+export default AppContainer;
