@@ -1,9 +1,11 @@
-import { getAuthUserData } from './auth-reducer';
+import { getAuthUserDataThunk } from './auth-reducer';
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
+const SHOW_GLOBAL_ERROR = 'SHOW_GLOBAL_ERROR';
 
 let initialState = {
-  initialized: false
+  initialized: false,
+  globalError: null,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -15,24 +17,31 @@ const appReducer = (state = initialState, action) => {
         initialized: true
       }
     }
+    case SHOW_GLOBAL_ERROR: {
+      return {
+        ...state,
+        globalError: action.reason,
+      }
+    }
     default:
       return state;
   }
 };
 
-// это action creators
 const initializedSuccess = () => ({ type: INITIALIZED_SUCCESS });
+const showGlobalErrorAC = (reason) => ({ type: SHOW_GLOBAL_ERROR, reason });
 
-// это thunks
 export const initializeAppThunk = () => (dispatch) => {
-  // когда все асинх запросы выполняться, задиспатчить initializedSuccess
   Promise.all([
-    dispatch(getAuthUserData()),
+    dispatch(getAuthUserDataThunk()),
     // ...
   ]).then(() => {
     dispatch(initializedSuccess())
   })
 }
 
+export const showGlobalErrorThunk = (reason) => (dispatch) => {
+  dispatch(showGlobalErrorAC(reason))
+}
 
 export default appReducer;
