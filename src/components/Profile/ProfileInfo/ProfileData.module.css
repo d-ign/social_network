@@ -1,0 +1,62 @@
+.containerForm {
+  padding-left: 5px;
+  max-width: 470px;
+  margin: 20px;
+}
+.wrap {
+  position: relative;
+}
+.aboutMe,
+.job,
+.contacts {
+  margin-top: 15px;
+  padding-left: 22px;
+}
+.title {
+  font-weight: 900;
+  font-size: 16px;
+}
+.job:before,
+.contacts:before,
+.aboutMe:before {
+  content: "";
+  width: 2px;
+  height: 48px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #00bcd4;
+  transition: width 0.2s;
+}
+.job:hover:before,
+.contacts:hover:before,
+.aboutMe:hover:before {
+  width: 5px;
+}
+.text {
+  font-style: italic;
+  overflow-wrap: break-word;
+  margin: 0 15px 0 20px;
+}
+.contact {
+  margin-left: 15px;
+}
+.contactTitle {
+  display: inline-block;
+  width: 100px;
+  color: #919191;
+}
+.contactText {
+  display: inline-block;
+  color: white;
+}
+@media (max-width: 420px) {
+  .containerForm {
+    margin: 5px;
+  }
+  .aboutMe,
+  .job,
+  .contacts {
+    padding-left: 12px;
+  }
+}

@@ -1,0 +1,107 @@
+.avatar {
+  width: 132px;
+  height: 132px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+.avatar img {
+  width: auto;
+  height: 100%;
+  margin: 0 auto;
+}
+.avatarWrap {
+  position: relative;
+}
+.camera {
+  position: absolute;
+  top: 95px;
+  left: 95px;
+}
+.wrapImg img {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+}
+.wrapImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #00adb5;
+  cursor: pointer;
+}
+.wrapImg:hover {
+  background-color: #4f4f4f;
+  transition: background-color 0.4s;
+}
+.editPhotoInput {
+  display: none;
+}
+.containerMain {
+  display: flex;
+}
+.columnLeft {
+  margin: 10px;
+}
+.columnRight {
+  width: 100%;
+  margin-left: 20px;
+}
+.iconButtonEditProfile {
+  padding-right: 5px;
+}
+.fullName {
+  font-size: 25px;
+  font-weight: bold;
+  padding: 0 0 10px 5px;
+  overflow-wrap: break-word;
+}
+.buttonsSaveAndCancelProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.successSave {
+  color: #4caf50;
+  animation: anim 2s 2s ease;
+  text-align: center;
+  padding: 5px;
+  margin-top: 5px;
+}
+@keyframes anim {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (max-width: 770px) {
+  .columnLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .columnRight {
+    margin-left: 0px;
+  }
+  .containerMain {
+    display: block;
+  }
+  .fullName {
+    text-align: center;
+    padding: 10px 0 5px 0;
+    margin-right: 30px;
+  }
+  .buttonsSaveAndCancelProfile {
+    flex-direction: row;
+  }
+}
+@media (max-width: 550px) {
+  .columnRight {
+    margin-left: 0px;
+  }
+}

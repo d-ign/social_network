@@ -1,15 +1,18 @@
 import React from 'react';
-import { getUserProfile, getStatus, updateStatus, savePhotoThunk } from '../../redux/profile-reducer';
-import WallContainer from './Wall/WallContainer';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-// import withAuthRedirect from '../hoc/withAuthRedirect';
-import { compose } from 'redux';
 
-class ProfileContainer extends React.Component {
+import withAuthRedirect from '../hoc/withAuthRedirect';
+
+import { getUserProfile, getStatus, updateStatus, savePhotoThunk, saveProfileThunk } from '../../redux/profile-reducer';
+
+import WallContainer from './Wall/WallContainer';
+import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer';
+
+class ProfileContainer extends React.PureComponent {
   refreshProfile() {
-    // параметр usetId обозначили в App, работает благодаря withRouter
+    
     let userId = this.props.match.params.userId;
     
     if (!userId) {
@@ -20,58 +23,55 @@ class ProfileContainer extends React.Component {
     }
 
     this.props.getUserProfile(userId);
-    this.props.getStatus(userId); // (1) получаем статус с сервера при первичной отрисовке, getStatus взят из контекста. Затем перекидываем статус через пропсы (см. (2))
+    this.props.getStatus(userId);
   }
 
   componentDidMount() {
     this.refreshProfile()
   }
   componentDidUpdate(prevProps) {
+    // рендер при переходе с одной страницы на другую
     if(this.props.match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile()
-      // т.е. перерисовывать только когда переходишь с одной страницы на другую
     }
   }
 
   render() {
     return <>
-      <ProfileInfo
+      <ProfileInfoContainer
         profile={this.props.profile}
         status={this.props.status}
         updateStatus={this.props.updateStatus} 
-        isOwner={!this.props.match.params.userId} // если есть id, значит я на чужой странице и значит я не хозяин
+        isOwner={!this.props.match.params.userId}
         savePhotoThunk={this.props.savePhotoThunk}
+        saveProfileThunk={this.props.saveProfileThunk}
+        showSuccessSave={this.props.showSuccessSave}
+        errorProfileContacts={this.props.errorProfileContacts}
         />
       <WallContainer />
     </>
   }
 }
 
-
-// пропсы для Profile
 let mapStateToProps = (state) => {
   return {
     profile: state.profilePage.profile,
-    status: state.profilePage.status, // (2) - берём из контекста данные
+    status: state.profilePage.status,
     authorizedUserID: state.auth.userID,
     isAuth: state.auth.isAuth,
+    showSuccessSave: state.profilePage.showSuccessSave,
+    errorProfileContacts: state.profilePage.errorProfileContacts,
   }
 };
 
-// это HOC, снабжающий редиректом ProfileContainer, т.е. при отсутсвии регистрации у пользователя его будет кидать на страницу login
-// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-// withRouter работает также как и connact - возвращает компоненту, но withRouter прикрутит еще данные из URL
-// export default connect(mapStateToProps, {
-//   getUserProfile
-// })(withRouter(AuthRedirectComponent));
-
 export default compose(
-  connect(mapStateToProps, { // (3) - берём из импорта функции thunk-и
+  connect(mapStateToProps, {
     getUserProfile,
     getStatus,
     updateStatus,
     savePhotoThunk,
+    saveProfileThunk,
   }),
   withRouter,
-  // withAuthRedirect
+  withAuthRedirect
 )(ProfileContainer)
