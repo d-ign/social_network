@@ -1,0 +1,48 @@
+.fon,
+.container {
+  background-color: #4f4f4f;
+}
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.appWrapper {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "header header"
+    "nav content";
+  grid-gap: 10px;
+
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  line-height: 25px;
+  letter-spacing: 0.1px;
+  color: #eeeeee;
+}
+.appWrapperContent {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), 0 5px 5px rgba(0, 0, 0, 0.4);
+  background-color: #222831;
+  border-radius: 10px 10px 0 0;
+  padding: 20px;
+  max-width: 690px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+@media (max-width: 600px) {
+  .appWrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 1fr 60px;
+    grid-template-areas:
+      "header"
+      "content"
+      "nav";
+  }
+  .appWrapperContent {
+    border-radius: 10px;
+    padding: 10px;
+  }
+}

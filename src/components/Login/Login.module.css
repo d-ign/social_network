@@ -1,10 +1,21 @@
-.form{
-  /* display: flex; */
+.wrap {
+  display: flex;
 }
-.row{
-
+.body {
+  flex: 1 1 auto;
+  max-width: 260px;
+  margin: 0 auto;
+  text-align: center;
 }
-.formError{
+.row {
+  margin-top: 10px;
+}
+.rowCheckbox {
+  margin-top: 2px;
+  padding-bottom: 5px;
+  text-align: left;
+}
+.formError {
   color: red;
-  background-color: palevioletred;
+  padding-top: 15px;
 }

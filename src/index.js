@@ -1,25 +1,45 @@
 import React from 'react';
-import ReactDOM from 'react-dom'; // вместо ReactDOM можно использовать React Native и превратить реакт-компоненты и js в java-код для андроида и айфона
-import SamuraiJSApp from './App';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
+import store from './redux/redux-store';
 
-// убрали rerenderEntireTree потому что у функции connect усть внутренний свой subscribe
-// let rerenderEntireTree = (state) => {
+import AppContainer from './App';
 
-// Provider - компонента из библиотеки react-redux, использующая context API
-// <React.StrictMode> здесь был Provider и App</React.StrictMode> - убрал, т.к. на странице users два раза отрисовывал пользователей (вместо 2х - четыре), сделал на 49-ом уроке
-ReactDOM.render(<SamuraiJSApp />, document.getElementById('root'));
+import { createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import cyan from '@material-ui/core/colors/cyan';
 
-// первичная отрисовка страницы
-// rerenderEntireTree(store.getState());
+let theme = createMuiTheme({
+  palette: {
+    type: 'dark', // светлый текст
+    primary: {
+      main: cyan[600], // #00bcd4
+      // синий цвет (кнопки, активные ссылки в навигации, декоративные линии)
+    },
+    secondary: {
+      main: '#4F4F4F',
+      // общий фон
+    },
+    
+    // #919191
+    // фон светлее общего (hover и текст в profileForm)
 
-// передали rerenderEntireTree функции в state.js, т.е. создаём callback
-// redux при вызове reduсers не передаёт им обновлённый state, поэтому store.subscribe(rerenderEntireTree); заменяем на:
-// store.subscribe(() => {
-//   let state = store.getState();
-//   rerenderEntireTree(state);
-// });
+    // #5E5E5E
+    // средний серый (фон статуса при редактировании)
+  },
+});
 
-reportWebVitals();
+theme = responsiveFontSizes(theme);
+
+ReactDOM.render(
+  <HashRouter>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <CssBaseline />
+        <AppContainer />
+      </Provider>
+    </ThemeProvider>
+  </HashRouter>, document.getElementById('root')
+);
