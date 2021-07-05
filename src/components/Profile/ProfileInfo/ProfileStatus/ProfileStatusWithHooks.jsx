@@ -30,56 +30,61 @@ const ProfileStatusWithHooks = (props) => {
 
   const num300 = 300;
 
-  return <div className={s.wrapper}>
-    {editMode
-      ? <>
-        <Input
-          name='status'
-          onInput={handleInputCount.bind(null, num300)}
-          autoFocus
-          inputProps={{ maxLength: 300 }}
-          className={classes.inputProfileStatus}
-          multiline={true}
-          rowsMax='2'
-          onFocus={handleFocusCount}
-          onBlur={handleBlurCount}
-          fullWidth={true}
-          onChange={onStatusChange}
-          placeholder={'Your status...'}
-          value={status} />
+  return <div className={s.container}>
+    {editMode && <div className={s.wrap}>
+      <Input
+        name='status'
+        value={status}
+        placeholder={'Your status...'}
+        autoFocus
+        inputProps={{ maxLength: 300 }}
+        className={classes.inputProfileStatus}
+        multiline={true}
+        fullWidth={true}
+        onInput={handleInputCount.bind(null, num300)}
+        onFocus={handleFocusCount}
+        onBlur={handleBlurCount}
+        onChange={onStatusChange}
+      />
 
-        <div className={s.buttons}>
-          <div className={s.buttonWrap}>
-            <Button
-              onClick={saveStatus}
-              variant="contained"
-              color="primary"
-              style={{ color: '#fff', margin: 10, width: '100%' }}
-              startIcon={<SaveIcon />}
-            >Save</Button>
-          </div>
-          <div className={s.buttonWrap}>
-            <Button
-              onClick={cancelEditMode}
-              variant="outlined"
-              style={{ margin: 10, width: '100%' }}
-              startIcon={<CloseIcon />}
-            >Cancel</Button>
-          </div>
-
-          <span id='statusWrapCount'>
-            <span id='statusCount'></span> of 300
-          </span>
+      <div className={s.buttons}>
+        <div className={s.buttonWrap}>
+          <Button
+            onClick={saveStatus}
+            variant="contained"
+            color="primary"
+            style={{ color: '#fff', margin: 10, width: '100%' }}
+            startIcon={<SaveIcon />}
+          >Save</Button>
         </div>
-      </>
+        <div className={s.buttonWrap}>
+          <Button
+            onClick={cancelEditMode}
+            variant="outlined"
+            style={{ margin: 10, width: '100%' }}
+            startIcon={<CloseIcon />}
+          >Cancel</Button>
+        </div>
 
-      : <div className={s.status} onClick={activateEditMode}>
-        {props.status ||
-          <span className={s.statusEmpty}>
-            Your status is empty
-          </span>
-        }
+        <span id='statusWrapCount'>
+          <span id='statusCount'></span> of 300
+        </span>
       </div>
+    </div>
+    }
+
+    {props.isOwner && !editMode && <div className={s.status} onClick={activateEditMode}>
+      {props.status ||
+        <span className={s.statusEmpty}>
+          Your status is empty
+        </span>
+      }
+    </div>
+    }
+
+    {!props.isOwner && props.status && <div className={s.statusNotMy}>
+      {props.status}
+    </div>
     }
   </div>
 }
