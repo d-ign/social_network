@@ -6,7 +6,7 @@ const Navbar = (props) => {
 
   return (
     <nav className={s.nav} id='navbar'>
-      <NavLink to="/profile" activeClassName={s.active} className={s.navLink}>
+      <NavLink exact to="/profile" activeClassName={s.active} className={s.navLink}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24"
           fill={props.location.pathname === '/profile' ? '#00bcd4' : 'white'}
           className={s.navLinkImg}
