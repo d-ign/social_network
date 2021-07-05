@@ -5,10 +5,11 @@ const ProfileData = ({ profile }) => {
   return <div className={s.containerForm}>
 
     <div className={s.wrap}>
-      <div className={s.aboutMe}>
+      {profile.aboutMe && <div className={s.aboutMe}>
         <div className={s.title}>About me:</div>
         <div className={s.text}>{profile.aboutMe}</div>
       </div>
+      }
     </div>
 
     <div className={s.wrap}>
@@ -21,22 +22,25 @@ const ProfileData = ({ profile }) => {
     </div>
 
     <div className={s.wrap}>
-      <div className={s.job}>
+      {profile.lookingForAJobDescription && <div className={s.job}>
         <div className={s.title}>Professional skills:</div>
         <div className={s.text}>{profile.lookingForAJobDescription}</div>
       </div>
+      }
     </div>
 
     <div className={s.wrap}>
-      <div className={s.contacts}>
-        <div className={s.title}>My contacts</div>
-        {Object.keys(profile.contacts).map(key => {
-          return <Contact
-            key={key}
-            contactTitle={key}
-            contactValue={profile.contacts[key]} />
-        })}
-      </div>
+      {Object.values(profile.contacts).some(val => val && val !== '')
+        && <div className={s.contacts}>
+          <div className={s.title}>My contacts</div>
+          {Object.keys(profile.contacts).map(key => {
+            return <Contact
+              key={key}
+              contactTitle={key}
+              contactValue={profile.contacts[key]} />
+          })}
+        </div>
+      }
     </div>
   </div >
 }
