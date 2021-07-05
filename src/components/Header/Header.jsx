@@ -1,20 +1,46 @@
 import React from 'react';
+import { NavLink, Redirect } from 'react-router-dom';
+
+
 import logo from '../../img/icons/logo.svg';
+import logout from '../../img/icons/logout.svg';
 import s from './Header.module.css';
-import { NavLink } from 'react-router-dom';
+
+import Button from '@material-ui/core/Button';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const Header = (props) => {
-
   return (
     <header className={s.header}>
-      <img src={logo} alt='logo' />
-      <div className={s.loginBlock}>
+      <NavLink className={s.logoAndTitle} to={'/profile'}>
+        <img src={logo} alt='logo' />
+        <span className={s.headerTitle}>Social network</span>
+      </NavLink>
+
+      <div className={s.login}>
         {props.isAuth
           ? <>
-            <span className={s.login_name}>{props.login}</span>
-            <button className={s.logout} onClick={props.logoutThunk}>Выйти</button>
+            <span className={s.loginName}>{props.login}</span>
+            <span className={s.buttonDesctop}>
+              <Button
+                onClick={props.logoutThunk}
+                variant="outlined"
+                style={{ margin: 16 }}
+                startIcon={<ExitToAppIcon />}>
+                Log out
+              </Button>
+            </span>
+            <span className={s.buttonMobile}>
+              <Button
+                onClick={props.logoutThunk}
+                variant="outlined"
+                style={{ margin: 16 }}
+              ><img src={logout} alt="logout" />
+              </Button>
+            </span>
           </>
-          : <NavLink className={s.login_link} to={'/login'}>Login</NavLink>}
+          : <Redirect to="/login" />
+        }
       </div>
     </header>
   )
