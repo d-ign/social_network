@@ -50,7 +50,9 @@ const Contact = ({ contactTitle, contactValue }) => {
     {contactValue
       && <div className={s.contact}>
         <span className={s.contactTitle}>{contactTitle}:</span>
-        <a className={s.contactText} href={contactValue}>{contactValue}</a>
+        <div className={s.contactTextWrap}>
+          <a className={s.contactText} href={contactValue}>{contactValue}</a>
+        </div>
       </div>}
   </>
   )
