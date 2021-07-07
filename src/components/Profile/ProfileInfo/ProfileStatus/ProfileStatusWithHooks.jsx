@@ -5,7 +5,7 @@ import { Input, Button } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 
-import useStyles from '../../../common/ElementCustom/InputCustom';
+import useStyles from '../../../common/ElementCustom/InputCustomProfileStatus';
 import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
 
 const ProfileStatusWithHooks = (props) => {
