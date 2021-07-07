@@ -57,7 +57,7 @@ class App extends React.Component {
                 <Route path='/dialogs'
                   render={withSuspense(DialogsContainer)} />
 
-                <Route path='/profile/:userId?'
+                <Route path='/profile/:userId'
                   component={ProfileContainer} />
 
                 <Route path='/users'
@@ -66,7 +66,7 @@ class App extends React.Component {
                 <Route path='/login'
                   render={() => <Login login={this.props.login} />} />
 
-                <Redirect exact from="/" to="/profile" />
+                <Redirect exact from="/" to={'/profile/' + this.props.authorizedUserID} />
 
                 <Redirect from='*' to="/" />
 
@@ -82,6 +82,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
   globalError: state.app.globalError,
+  authorizedUserID: state.auth.userID,
 });
 
 const AppContainer = compose(

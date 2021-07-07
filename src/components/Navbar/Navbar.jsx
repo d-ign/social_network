@@ -1,23 +1,29 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
 import s from './Navbar.module.css';
 
 const Navbar = (props) => {
 
+  const profileUrl = '/profile/' + props.authorizedUserID;
+  const dialogsUrl = '/dialogs/' + props.authorizedUserID;
+
   return (
     <nav className={s.nav} id='navbar'>
-      <NavLink exact to="/profile" activeClassName={s.active} className={s.navLink}>
+      <NavLink exact to={profileUrl} activeClassName={s.active} className={s.navLink}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24"
-          fill={props.location.pathname === '/profile' ? '#00bcd4' : 'white'}
+          fill={props.location.pathname === profileUrl ? '#00bcd4' : 'white'}
           className={s.navLinkImg}
           viewBox="0 0 24 24"><path d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z" />
         </svg>
         Profile
       </NavLink>
 
-      <NavLink to="/dialogs" activeClassName={s.active} className={s.navLink}>
+      <NavLink to={dialogsUrl} activeClassName={s.active} className={s.navLink}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24"
-          fill={props.location.pathname === '/dialogs' ? '#00bcd4' : 'white'}
+          fill={props.location.pathname === dialogsUrl ? '#00bcd4' : 'white'}
           className={s.navLinkImg}
           viewBox="0 0 24 24"><path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
         </svg>
@@ -36,4 +42,11 @@ const Navbar = (props) => {
   )
 }
 
-export default withRouter(Navbar);
+const mapStateToProps = (state) => ({
+  authorizedUserID: state.auth.userID,
+});
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, {})
+)(Navbar);
