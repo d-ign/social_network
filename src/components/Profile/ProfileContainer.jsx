@@ -12,7 +12,7 @@ import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer';
 
 class ProfileContainer extends React.PureComponent {
   refreshProfile() {
-    
+
     let userId = this.props.match.params.userId;
     
     if (!userId) {
@@ -31,7 +31,7 @@ class ProfileContainer extends React.PureComponent {
   }
   componentDidUpdate(prevProps) {
     // рендер при переходе с одной страницы на другую
-    if(this.props.match.params.userId !== prevProps.match.params.userId) {
+    if (this.props.match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile()
     }
   }
@@ -41,13 +41,15 @@ class ProfileContainer extends React.PureComponent {
       <ProfileInfoContainer
         profile={this.props.profile}
         status={this.props.status}
-        updateStatus={this.props.updateStatus} 
-        isOwner={!this.props.match.params.userId}
-        savePhotoThunk={this.props.savePhotoThunk}
-        saveProfileThunk={this.props.saveProfileThunk}
         showSuccessSave={this.props.showSuccessSave}
         errorProfileContacts={this.props.errorProfileContacts}
-        />
+
+        isOwner={this.props.match.params.userId == this.props.authorizedUserID}
+
+        updateStatus={this.props.updateStatus}
+        savePhotoThunk={this.props.savePhotoThunk}
+        saveProfileThunk={this.props.saveProfileThunk}
+      />
       <WallContainer />
     </>
   }
@@ -58,7 +60,6 @@ let mapStateToProps = (state) => {
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserID: state.auth.userID,
-    isAuth: state.auth.isAuth,
     showSuccessSave: state.profilePage.showSuccessSave,
     errorProfileContacts: state.profilePage.errorProfileContacts,
   }

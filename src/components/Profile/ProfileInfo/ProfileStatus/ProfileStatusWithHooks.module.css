@@ -23,6 +23,7 @@
 .status,
 .statusNotMy {
   line-height: 25px;
+  word-break: break-word;
   min-height: 30px;
   max-height: 180px;
   font-size: 16px;
