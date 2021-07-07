@@ -8,7 +8,7 @@ import ProfileDataForm from './ProfileDataForm';
 import ProfileData from './ProfileData';
 
 import camera from '../../../img/icons/camera.svg';
-import unknown from '../../../img/no_photo.png';
+import unknown from '../../../img/no_photo.svg';
 import s from './ProfileInfoContainer.module.css';
 
 import Button from '@material-ui/core/Button';
