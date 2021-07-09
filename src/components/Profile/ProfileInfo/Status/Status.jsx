@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import s from './ProfileStatusWithHooks.module.css';
+import s from './Status.module.css';
 
 import { Input, Button } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import useStyles from '../../../common/ElementCustom/InputCustomProfileStatus';
 import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
 
-const ProfileStatusWithHooks = (props) => {
+const Status = (props) => {
 
   const classes = useStyles();
 
@@ -89,4 +89,4 @@ const ProfileStatusWithHooks = (props) => {
   </div>
 }
 
-export default ProfileStatusWithHooks;
+export default Status;

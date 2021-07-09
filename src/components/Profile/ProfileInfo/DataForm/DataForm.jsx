@@ -1,14 +1,14 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import renderTextField from '../../common/ElementCustom/renderTextField';
-import renderCheckbox from '../../common/ElementCustom/renderCheckbox';
-import s from './ProfileDataForm.module.css';
+import renderTextField from '../../../common/ElementCustom/renderTextField';
+import renderCheckbox from '../../../common/ElementCustom/renderCheckbox';
+import s from './DataForm.module.css';
 import cn from 'classnames';
 
-import { handleInputCount, handleFocusCount, handleBlurCount } from '../../common/inputCount/inputCount';
+import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
 
-const ProfileDataForm = (props) => {
+const DataForm = (props) => {
   const { handleSubmit, initialValues, ...custom } = props;
 
   const num100 = 100;
@@ -104,4 +104,4 @@ const ProfileDataForm = (props) => {
 
 export default reduxForm({
   form: 'editProfile',
-})(ProfileDataForm);
+})(DataForm);

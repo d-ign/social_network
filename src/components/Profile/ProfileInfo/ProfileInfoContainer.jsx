@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { submit } from 'redux-form';
 
 import Preloader from '../../common/Preloader/Preloader';
-import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
-import ProfileDataForm from './ProfileDataForm';
+import Status from './Status/Status';
+import DataForm from './DataForm/DataForm';
 import ProfileData from './ProfileData';
 
 import camera from '../../../img/icons/camera.svg';
@@ -104,14 +104,14 @@ const ProfileInfo = ({ dispatch, ...props }) => {
 
         {!editModeProfile && <div className={s.fullName}>{props.profile.fullName}</div>}
 
-        {!editModeProfile && <ProfileStatusWithHooks
+        {!editModeProfile && <Status
           status={props.status}
           updateStatus={props.updateStatus}
           isOwner={props.isOwner} />
         }
 
         {editModeProfile
-          ? <ProfileDataForm
+          ? <DataForm
             initialValues={props.profile}
             errorProfileContacts={props.errorProfileContacts}
             onSubmit={formData => props.saveProfileThunk(formData)}
