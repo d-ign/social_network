@@ -45,6 +45,7 @@
 }
 .columnLeft {
   margin: 10px;
+  position: relative;
 }
 .columnRight {
   max-width: 420px;
@@ -71,6 +72,8 @@
   text-align: center;
   padding: 5px;
   margin-top: 5px;
+  max-width: 130px;
+  position: absolute;
 }
 @keyframes anim {
   0% {
@@ -99,6 +102,11 @@
   }
   .buttonsSaveAndCancelProfile {
     flex-direction: row;
+    margin-bottom: 15px;
+  }
+  .successSave {
+    top: 185px;
+    max-width: 230px;
   }
 }
 @media (max-width: 550px) {
