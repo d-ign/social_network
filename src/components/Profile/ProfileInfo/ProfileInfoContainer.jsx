@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { submit } from 'redux-form';
 
 import Preloader from '../../common/Preloader/Preloader';
-import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
-import ProfileDataForm from './ProfileDataForm';
+import Status from './Status/Status';
+import DataForm from './DataForm/DataForm';
 import ProfileData from './ProfileData';
 
 import camera from '../../../img/icons/camera.svg';
-import unknown from '../../../img/no_photo.png';
+import unknown from '../../../img/no_photo.svg';
 import s from './ProfileInfoContainer.module.css';
 
 import Button from '@material-ui/core/Button';
@@ -26,7 +26,7 @@ function ScrollToTopOnMount() {
 
 const ProfileInfo = ({ dispatch, ...props }) => {
 
-  const [editMode, setEditMode] = useState(false);
+  const [editModeProfile, seteditModeProfile] = useState(false);
 
   if (!props.profile) {
     return <Preloader />
@@ -48,7 +48,7 @@ const ProfileInfo = ({ dispatch, ...props }) => {
         <div className={s.avatarWrap}>
           <div className={s.avatar}>
             <img src={props.profile.photos.large || unknown} alt="avatar" />
-            {props.isOwner && !editMode &&
+            {props.isOwner && !editModeProfile &&
               <div className={s.camera}>
                 <label htmlFor="file_out">
                   <div className={s.wrapImg}>
@@ -65,16 +65,16 @@ const ProfileInfo = ({ dispatch, ...props }) => {
           </div>
         </div>
 
-        {props.isOwner && !editMode
+        {props.isOwner && !editModeProfile
           && <Button
-            onClick={() => setEditMode(true)}
+            onClick={() => seteditModeProfile(true)}
             variant="outlined"
             style={{ fontSize: 12, marginTop: 10 }}
             startIcon={<EditIcon style={{ fontSize: 16 }} />}
           >Edit profile</Button>
         }
 
-        {editMode && <div className={s.buttonsSaveAndCancelProfile}>
+        {editModeProfile && <div className={s.buttonsSaveAndCancelProfile}>
           <Button
             onClick={() => dispatch(submit('editProfile'))}
             variant="contained"
@@ -84,7 +84,7 @@ const ProfileInfo = ({ dispatch, ...props }) => {
             startIcon={<SaveIcon />}
           >Save</Button>
           <Button
-            onClick={() => setEditMode(false)}
+            onClick={() => seteditModeProfile(false)}
             variant="outlined"
             fullWidth={true}
             style={{ fontSize: 12, color: '#fff', margin: 10 }}
@@ -92,7 +92,7 @@ const ProfileInfo = ({ dispatch, ...props }) => {
           >Cancel</Button>
         </div>}
 
-        {editMode && props.showSuccessSave &&
+        {editModeProfile && props.showSuccessSave &&
           <div className={s.successSave}>
             {props.showSuccessSave}
           </div>
@@ -102,15 +102,16 @@ const ProfileInfo = ({ dispatch, ...props }) => {
 
       <div className={s.columnRight}>
 
-        {!editMode && <div className={s.fullName}>{props.profile.fullName}</div>}
+        {!editModeProfile && <div className={s.fullName}>{props.profile.fullName}</div>}
 
-        {!editMode && <ProfileStatusWithHooks
-            status={props.status}
-            updateStatus={props.updateStatus} />
+        {!editModeProfile && <Status
+          status={props.status}
+          updateStatus={props.updateStatus}
+          isOwner={props.isOwner} />
         }
 
-        {editMode
-          ? <ProfileDataForm
+        {editModeProfile
+          ? <DataForm
             initialValues={props.profile}
             errorProfileContacts={props.errorProfileContacts}
             onSubmit={formData => props.saveProfileThunk(formData)}

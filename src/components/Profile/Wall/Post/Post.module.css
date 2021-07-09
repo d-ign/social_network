@@ -1,3 +1,43 @@
-.pageWall__newPost img{
-  width: 50px;
+.container {
+  display: flex;
+  flex: 1 1 auto;
+  padding: 10px;
+  margin: 10px;
+  max-height: 120px;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 10px;
+}
+.avatar img {
+  width: auto;
+  height: 100%;
+  margin: 0 auto;
+}
+.nameAndPost {
+  display: flex;
+  flex-direction: column;
+  background-color: #5e5e5e4d;
+  border-radius: 10px;
+  padding: 5px 15px 15px 15px;
+  max-width: 400px;
+  width: 100%;
+}
+.name {
+  padding: 5px 0 5px 0;
+  color: white;
+  white-space: pre-wrap;
+  font-weight: bold;
+}
+.message {
+  overflow-wrap: break-word;
+}
+.wrapLike {
+  align-self: flex-end;
+}
+.like {
+  font-size: 14px;
 }

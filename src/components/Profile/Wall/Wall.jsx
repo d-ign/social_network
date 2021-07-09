@@ -1,9 +1,12 @@
 import React from 'react';
-import Post from './Post/Post';
-import s from './Wall.module.css';
 import { Field, reduxForm } from 'redux-form';
-import { maxLengthCreator } from '../../../utils/validators/validators';
-import { Element } from '../../common/FormsControls/FormsControls';
+
+import Post from './Post/Post';
+
+import s from './Wall.module.css';
+import renderTextField from '../../../components/common/ElementCustom/renderTextField';
+import Button from '@material-ui/core/Button';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 const Wall = (props) => {
 
@@ -16,30 +19,34 @@ const Wall = (props) => {
   }
 
   return (
-    <div className={s.pageWall}>
-      <span className={s.pageWall__title}>Стена</span>
+    <div className={s.container}>
       <PostReduxForm onSubmit={handleAddPost} />
       {postsElements}
     </div>
   )
 }
 
-
-const maxLength30 = maxLengthCreator(30);
-const Textarea = Element("textarea");
-
 const AddNewPostForm = (props) => {
-  return (
-    <form onSubmit={props.handleSubmit}>
+  return <form onSubmit={props.handleSubmit}>
+    <div className={s.wrapSendAndButton}>
       <Field
+        component={renderTextField}
         name='newPostText'
-        component={Textarea}
-        validate={[maxLength30]}
-        placeholder='Write post...'
+        placeholder='Enter the post text...'
+        multiline={true}
+        fullWidth={true}
+        variant="outlined"
+        inputProps={{ maxLength: 1000 }}
       />
-      <button>Добавить пост</button>
-    </form>
-  )
+      <Button
+        type='submit'
+        variant="contained"
+        color='primary'
+        style={{ color: 'white', marginLeft: '10px', width: '160px' }}
+        endIcon={<PostAddIcon />}
+      >Add post</Button>
+    </div>
+  </form>
 }
 
 const PostReduxForm = reduxForm({ form: 'profileNewPostForm' })(AddNewPostForm);

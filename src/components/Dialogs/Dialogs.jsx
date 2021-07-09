@@ -1,11 +1,13 @@
 import React from 'react';
-import s from './Dialogs.module.css';
-import DialogItem from './DialogItem/DialogItem'
-import Message from './Message/Message'
 import { Field, reduxForm } from 'redux-form';
-import { Element } from '../common/FormsControls/FormsControls';
-import { maxLengthCreator } from '../../utils/validators/validators';
 
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+
+import s from './Dialogs.module.css';
+import renderTextField from '../../components/common/ElementCustom/renderTextField';
+import Button from '@material-ui/core/Button';
+import SendIcon from '@material-ui/icons/Send';
 
 const Dialogs = (props) => {
 
@@ -15,47 +17,49 @@ const Dialogs = (props) => {
     <Message key={m.id} text={m.message} />);
 
   const addNewMessage = (values) => {
-    // newMessageBody - name у Field
-    props.sendMessage(values.newMessageBody)
+    props.sendMessage(values.newMessageBody) // newMessageBody - name у Field
   }
 
-  return (
-    <div className={s.messages}>
+  return <div className={s.containerMain}>
+
+    <div className={s.container}>
       <div className={s.items}>
-        <span className={s.title}>DIALOGS</span>
         {dialogsElements}
       </div>
+
       <div className={s.dialogs}>
         {messagesElements}
-        <DialogsReduxForm onSubmit={addNewMessage}/>
+        <DialogsReduxForm onSubmit={addNewMessage} />
       </div>
     </div>
-  )
+  </div>
 }
-
-const maxLength30 = maxLengthCreator(30);
-const Textarea = Element('textarea');
 
 const SendMessageForm = (props) => {
-
-  return (
-    <form onSubmit={props.handleSubmit}>
-      {/* handleSubmit - метод из reduxForm, который собирает данные, вызывает preventDefault() и т.д. */}
-      <Field
-        name='newMessageBody'
-        validate={[maxLength30]}
-        placeholder='Введи сообщение'
-        component={Textarea}
-      />
-      <button>Send</button>
+  return <form onSubmit={props.handleSubmit}>
+      <div className={s.wrapSendAndButton}>
+        <Field
+          component={renderTextField}
+          name='newMessageBody'
+          placeholder='Enter your message...'
+          multiline={true}
+          fullWidth={true}
+          variant="outlined"
+          inputProps={{ maxLength: 1000 }}
+        />
+        <Button
+          type='submit'
+          variant="contained"
+          color='primary'
+          style={{ color: 'white', marginLeft: '10px' }}
+          endIcon={<SendIcon />}
+        >Send</Button>
+      </div>
     </form>
-  )
 }
 
-
 const DialogsReduxForm = reduxForm({
-  form: 'dialogAddMessageForm' // form никак не связан с form в redux-store
+  form: 'dialogAddMessageForm'
 })(SendMessageForm);
-
 
 export default Dialogs;

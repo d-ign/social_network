@@ -1,4 +1,4 @@
-import { usersAPI, profileAPI } from '../api/api';
+import { profileAPI } from '../api/api';
 
 const ADD_POST = 'ADD-POST';
 const SET_USER = 'SET-USER';
@@ -32,8 +32,8 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: [
+          newPost,
           ...state.posts,
-          newPost
         ],
       }
     }
@@ -89,22 +89,14 @@ const savePhotoSuccessAC = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
 const showSuccessSaveProfile = (message) => ({ type: SHOW_SUCCESS_SAVE, message });
 const showErrorProfileContacts = (message) => ({ type: SHOW_ERROR_PROFILE_CONTACTS, message });
 
-export const getUserProfile = (userId) => {
-  return (dispatch) => {
-    usersAPI.getProfile(userId)
-      .then(response => {
-        dispatch(setUserProfile(response.data));
-      });
-  }
+export const getUserProfile = (userId) => async (dispatch) => {
+  const response = await profileAPI.getProfile(userId);
+  dispatch(setUserProfile(response.data));
 };
 
-export const getStatus = (id) => {
-  return (dispatch) => {
-    profileAPI.getStatus(id)
-      .then(response => {
-        dispatch(setStatus(response.data));
-      });
-  }
+export const getStatus = (id) => async (dispatch) => {
+  const response = await profileAPI.getStatus(id);
+  dispatch(setStatus(response.data));
 };
 
 export const updateStatus = (status) => async (dispatch) => {

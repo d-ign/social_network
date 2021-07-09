@@ -1,13 +1,16 @@
-.wrapper {
+.container {
   width: 100%;
-  overflow: hidden;
   border-radius: 5px;
   margin-right: 30px;
 }
+.wrap {
+  position: relative;
+}
 .buttons {
   display: flex;
-  position: relative;
-  z-index: 10;
+  width: 100%;
+  position: absolute;
+  z-index: 20;
   background-color: #5e5e5e;
   border-radius: 0 0 5px 5px;
 }
@@ -17,10 +20,15 @@
   justify-content: center;
   align-items: center;
 }
-.status {
-  height: 60px;
+.status,
+.statusNotMy {
+  line-height: 25px;
+  word-break: break-word;
+  min-height: 30px;
+  max-height: 180px;
   font-size: 16px;
-  padding: 5px;
+  padding: 8px;
+  padding-bottom: 6px;
   display: block;
   color: #00bcd4;
   border-bottom: 2px solid #4f4f4f;
@@ -28,7 +36,6 @@
 .status:hover {
   background-color: #4f4f4f;
   cursor: pointer;
-  padding: 5px;
   border-radius: 5px;
 }
 .statusEmpty {

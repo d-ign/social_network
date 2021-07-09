@@ -2,6 +2,7 @@
   padding-left: 5px;
   max-width: 470px;
   margin: 20px;
+  margin-left: 0;
 }
 .wrap {
   position: relative;
@@ -39,16 +40,26 @@
   margin: 0 15px 0 20px;
 }
 .contact {
+  display: flex;
   margin-left: 15px;
+  margin-bottom: 10px;
 }
 .contactTitle {
-  display: inline-block;
-  width: 100px;
+  flex: 0 0 100px;
   color: #919191;
 }
+.contactTextWrap {
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .contactText {
-  display: inline-block;
   color: white;
+}
+@media (max-width: 860px) {
+  .contactTextWrap {
+    max-width: 200px;
+  }
 }
 @media (max-width: 420px) {
   .containerForm {
@@ -58,5 +69,13 @@
   .job,
   .contacts {
     padding-left: 12px;
+  }
+}
+@media (max-width: 370px) {
+  .contact {
+    flex-direction: column;
+  }
+  .contactTitle {
+    flex-basis: auto;
   }
 }

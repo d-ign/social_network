@@ -1,4 +1,13 @@
-.pageWall {
+.container {
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px #00bcd4 solid;
 }
-.pageWall__title {
+.wrapSendAndButton {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }
