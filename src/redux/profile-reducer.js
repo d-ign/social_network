@@ -32,8 +32,8 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: [
+          newPost,
           ...state.posts,
-          newPost
         ],
       }
     }

@@ -4,15 +4,15 @@ import Wall from './Wall';
 
 // class WallContainer extends React.Component {
 
-  // componentDidMount() {
-    // this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
-  // }
+// componentDidMount() {
+// this.props.getUsersCreator(this.props.currentPage, this.props.pageSize);
+// }
 
-  // пишем через стрелочную функцию, чтобы сохранить контекст вызова, чтобы не использовать bind
-  // onPageChanged = (pageNumber) => {
-  //   this.props.getUsersThunkCreator(pageNumber, this.props.pageSize);
-  //   this.props.setCurrentPage(pageNumber);
-  // }
+// пишем через стрелочную функцию, чтобы сохранить контекст вызова, чтобы не использовать bind
+// onPageChanged = (pageNumber) => {
+//   this.props.getUsersCreator(pageNumber, this.props.pageSize);
+//   this.props.setCurrentPage(pageNumber);
+// }
 
 //   render() {
 //     return <>
