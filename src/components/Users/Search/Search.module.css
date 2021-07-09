@@ -1,0 +1,16 @@
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchCount {
+  padding: 0 5px 0 15px;
+  font-size: 14px;
+  color: #919191;
+}
+
+@media (max-width: 390px) {
+  .search {
+    flex-direction: column;
+  }
+}
