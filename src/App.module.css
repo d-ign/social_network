@@ -16,11 +16,12 @@
     "nav content";
   grid-gap: 10px;
 
+  /* Шрифт */
   font-family: "Roboto", sans-serif;
   font-size: 15px;
   line-height: 25px;
   letter-spacing: 0.1px;
-  color: #eeeeee;
+  color: white;
 }
 .appWrapperContent {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), 0 5px 5px rgba(0, 0, 0, 0.4);
@@ -30,6 +31,7 @@
   max-width: 690px;
   width: 100%;
   min-height: 100vh;
+  position: relative;
 }
 
 @media (max-width: 600px) {

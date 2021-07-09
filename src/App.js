@@ -3,7 +3,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { initializeAppThunk, showGlobalErrorThunk } from './redux/app-reducer';
+import { initializeAppThunk } from './redux/app-reducer';
 
 import Preloader from './components/common/Preloader/Preloader';
 import { withSuspense } from './components/hoc/withSuspense';
@@ -14,44 +14,31 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import Login from './components/Login/Login';
-import GlobalError from './components/GlobalError/GlobalError';
+import FriendsContainer from './components/Friends/Friends';
+import ErrorBoundary from './components/Error/ErrorBoundary';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
-class App extends React.Component {
+const App = (props) => {
 
-  componentDidMount() {
-    this.props.initializeAppThunk();
-    
-    window.addEventListener('unhandledrejection',
-      (event) => this.props.showGlobalErrorThunk(event.reason),
-      { once: true, passive: true }
-    )
+  React.useEffect(() => props.initializeAppThunk(), []);
+
+  if (!props.initialized) {
+    return <Preloader />
   }
 
-  render() {
-    if (!this.props.initialized) {
-      return <Preloader />
-    }
+  return (
+    <div className={s.fon}>
+      <div className={s.container}>
+        <div className={s.appWrapper}>
 
-    return (
-      <div className={s.fon}>
-        <div className={s.container}>
+          <HeaderContainer />
+          <Navbar />
 
-          <div className={s.appWrapper}>
-
-            {this.props.globalError && <Redirect to="/error" />}
-
-            <HeaderContainer />
-            <Navbar />
-
-            <div className={s.appWrapperContent}>
+          <div className={s.appWrapperContent}>
+            <ErrorBoundary>
               <Switch>
-
-                <Route path='/error'
-                  render={() => <GlobalError error={this.props.globalError} />} />
-
                 <Redirect from='/profile/undefined' to="/" />
 
                 <Route path='/dialogs'
@@ -63,25 +50,27 @@ class App extends React.Component {
                 <Route path='/users'
                   render={withSuspense(UsersContainer)} />
 
-                <Route path='/login'
-                  render={() => <Login login={this.props.login} />} />
+                <Route path='/friends'
+                  render={() => <FriendsContainer />} />
 
-                <Redirect exact from="/" to={'/profile/' + this.props.authorizedUserID} />
+                <Route path='/login'
+                  render={() => <Login login={props.login} />} />
+
+                <Redirect exact from="/" to={'/profile/' + props.authorizedUserID} />
 
                 <Redirect from='*' to="/" />
-
               </Switch>
-            </div>
+            </ErrorBoundary>
           </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
 
 const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
-  globalError: state.app.globalError,
   authorizedUserID: state.auth.userID,
 });
 
@@ -89,7 +78,6 @@ const AppContainer = compose(
   withRouter,
   connect(mapStateToProps, {
     initializeAppThunk,
-    showGlobalErrorThunk,
   })
 )(App)
 
