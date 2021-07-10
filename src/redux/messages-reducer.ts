@@ -1,22 +1,35 @@
 // const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
+type DialogType = {
+  id: number
+  name: string
+}
+type MessageType = {
+  id: number
+  message: string
+}
+
 let initialState = {
   dialogs: [
-    { id: '1', name: 'Denis' },
-    { id: '2', name: 'Andrey' },
-    { id: '3', name: 'Alexandr' },
-    { id: '4', name: 'Alisa' },
-  ],
+    { id: 1, name: 'Denis' },
+    { id: 2, name: 'Andrey' },
+    { id: 3, name: 'Alexandr' },
+    { id: 4, name: 'Alisa' },
+  ] as Array<DialogType>,
 
   messages: [
-    { id: '1', message: 'Hi!' },
-    { id: '2', message: 'lalalalalalala' },
-    { id: '3', message: 'How are you?' },
-  ],
+    { id: 1, message: 'Hi!' },
+    { id: 2, message: 'lalalalalalala' },
+    { id: 3, message: 'How are you?' },
+  ] as Array<MessageType>,
+
+  newMessageText: ''
 };
 
-const messagesReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState;
+
+const messagesReducer = (state = initialState, action: any): InitialStateType => {
 
   // копируем только то, что планируем изменять; внутренние объекты массива (с id которые) мы менять не планируем, поэтому их копию и не делаем
   // stateCopy = 'копия state' или copy of state
@@ -29,13 +42,14 @@ const messagesReducer = (state = initialState, action) => {
     //   };
 
     case SEND_MESSAGE:
+      let newMessage = { 
+        id: 6,
+        message: action.newMessageText
+      };
       return {
         ...state,
-        messages: [
-          ...state.messages, 
-          { id: '6', 
-          message: action.newMessageBody }
-        ],
+        messages: [newMessage, ...state.messages],
+        newMessageText: ''
       };
 
     default:
@@ -49,6 +63,10 @@ const messagesReducer = (state = initialState, action) => {
 //   type: UPDATE_NEW_MESSAGE_BODY,
 //   body: symbol
 // });
-export const sendMessage = (newMessageBody) => ({ type: SEND_MESSAGE, newMessageBody });
+type SendMessageType = {
+  type: typeof SEND_MESSAGE
+  newMessageText: string
+}
+export const sendMessage = (newMessageText: string): SendMessageType => ({ type: SEND_MESSAGE, newMessageText });
 
 export default messagesReducer;

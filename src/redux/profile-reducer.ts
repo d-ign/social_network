@@ -1,4 +1,7 @@
 import { profileAPI } from '../api/api';
+import { PostType } from '../types/types';
+import { ProfileType } from '../types/types';
+import { PhotosType } from '../types/types';
 
 const ADD_POST = 'ADD-POST';
 const SET_USER = 'SET-USER';
@@ -10,31 +13,32 @@ const SHOW_ERROR_PROFILE_CONTACTS = 'SHOW_ERROR_PROFILE_CONTACTS';
 
 let initialState = {
   posts: [
-    { id: '1', message: 'Стена Привет!', likesCount: 12 },
-    { id: '2', message: 'Стена Как дела?', likesCount: 4 },
-  ],
+    { id: 1, message: 'Стена Привет!', likesCount: 12 },
+    { id: 2, message: 'Стена Как дела?', likesCount: 4 },
+  ] as Array<PostType>,
 
-  profile: null,
+  profile: null as ProfileType | null,
   status: '',
   showSuccessSave: '',
   errorProfileContacts: '',
+  newPostText: '',
 };
 
-const profileReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState;
+
+const profileReducer = (state = initialState, action: any): InitialStateType => {
 
   switch (action.type) {
     case ADD_POST: {
       let newPost = {
-        id: 5,
+        id: 3,
         message: action.newPostText,
         likesCount: 0,
       };
       return {
         ...state,
-        posts: [
-          newPost,
-          ...state.posts,
-        ],
+        posts: [newPost, ...state.posts],
+        newPostText: ''
       }
     }
     case SET_USER: {
@@ -58,7 +62,7 @@ const profileReducer = (state = initialState, action) => {
     case SAVE_PHOTO_SUCCESS: {
       return {
         ...state,
-        profile: { ...state.profile, photo: action.photo }
+        profile: { ...state.profile, photos: action.photos } as ProfileType
       }
     }
     case SHOW_SUCCESS_SAVE: {
@@ -78,43 +82,55 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
+type AddPostType = { type: typeof ADD_POST, newPostText: string }
+export const addPost = (newPostText: string): AddPostType => ({ type: ADD_POST, newPostText });
 
-export const addPost = (newPostText) => ({ type: ADD_POST, newPostText });
-export const deletePost = (postID) => ({ type: DELETE_POST, postID });
+type DeletePostType = { type: typeof DELETE_POST, postID: number }
+export const deletePost = (postID: number): DeletePostType => ({ type: DELETE_POST, postID });
 
-const setUserProfile = (profile) => ({ type: SET_USER, profile });
-const setStatus = (status) => ({ type: SET_STATUS, status });
+type SetUserProfileType = { type: typeof SET_USER, profile: ProfileType }
+const setUserProfile = (profile: ProfileType): SetUserProfileType => ({ type: SET_USER, profile });
 
-const savePhotoSuccessAC = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
-const showSuccessSaveProfile = (message) => ({ type: SHOW_SUCCESS_SAVE, message });
-const showErrorProfileContacts = (message) => ({ type: SHOW_ERROR_PROFILE_CONTACTS, message });
+type SetStatusType = { type: typeof SET_STATUS, status: string | null }
+const setStatus = (status: string | null): SetStatusType => ({ type: SET_STATUS, status });
 
-export const getUserProfile = (userId) => async (dispatch) => {
+type SavePhotoSuccessType = { type: typeof SAVE_PHOTO_SUCCESS, photos: PhotosType }
+const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => ({ type: SAVE_PHOTO_SUCCESS, photos });
+
+type ShowSuccessSaveProfileType = { type: typeof SHOW_SUCCESS_SAVE, message: string}
+const showSuccessSaveProfile = (message: string): ShowSuccessSaveProfileType => ({ type: SHOW_SUCCESS_SAVE, message });
+
+type ShowErrorProfileContactsType = { type: typeof SHOW_ERROR_PROFILE_CONTACTS, message: string}
+const showErrorProfileContacts = (message: string): ShowErrorProfileContactsType => ({ type: SHOW_ERROR_PROFILE_CONTACTS, message });
+
+
+
+export const getUserProfile = (userId: number) => async (dispatch: any) => {
   const response = await profileAPI.getProfile(userId);
   dispatch(setUserProfile(response.data));
 };
 
-export const getStatus = (id) => async (dispatch) => {
+export const getStatus = (id: number) => async (dispatch: any) => {
   const response = await profileAPI.getStatus(id);
   dispatch(setStatus(response.data));
 };
 
-export const updateStatus = (status) => async (dispatch) => {
+export const updateStatus = (status: string) => async (dispatch: any) => {
   const response = await profileAPI.updateStatus(status);
   if (response.data.resultCode === 0) {
     dispatch(setStatus(status));
   }
 };
 
-export const savePhotoThunk = (photos) => async (dispatch) => {
+export const savePhotoThunk = (photos: PhotosType) => async (dispatch: any) => {
   const response = await profileAPI.savePhotoAPI(photos);
   if (response.data.resultCode === 0) {
-    dispatch(savePhotoSuccessAC(response.data.data.photos));
+    dispatch(savePhotoSuccess(response.data.data.photos));
   }
 };
 
-export const saveProfileThunk = (formData) => async (dispatch, getState) => {
-  let response = await profileAPI.saveProfileAPI(formData);
+export const saveProfileThunk = (profile: ProfileType) => async (dispatch: any, getState: any) => {
+  const response = await profileAPI.saveProfileAPI(profile);
   const userID = getState().auth.userID;
 
   if (response.data.resultCode === 0) {
@@ -123,7 +139,7 @@ export const saveProfileThunk = (formData) => async (dispatch, getState) => {
     setTimeout(dispatch, 4000, showSuccessSaveProfile(''));
     dispatch(showErrorProfileContacts(''));
   }
-  
+
   if (response.data.resultCode === 1) {
     // заготовка для показа ошибки конкретного поля
     // let key = response.data.messages[0].match(/Contacts->(\w+)/)[1].toLowerCase();
