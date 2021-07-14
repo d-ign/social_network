@@ -8,7 +8,19 @@ import { Button } from '@material-ui/core';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 
-const User = (props) => {
+type PropsType = {
+  id: number
+  photo: string | null
+  name: string
+  status: string
+  followed: boolean
+  authorizedUserID: number | null
+  followingInProgress: Array<number>
+  follow: (id: number) => void
+  unfollow: (id: number) => void
+}
+
+const User: React.FC<PropsType> = (props) => {
   const { id, photo, name, status, followed, unfollow, follow, followingInProgress, authorizedUserID } = props;
 
   return <>
@@ -22,13 +34,13 @@ const User = (props) => {
         </div>
 
         <div className={s.nameAndStatus}>
-          {name && (name.length > 17)
+          {name?.length > 17
             ? <div data-tooltip={name}>
               <div className={s.name}>{name}</div>
             </div>
             : <div className={s.name}>{name}</div>
           }
-          {status && (status.length > 17)
+          {status?.length > 17
             ? <div data-tooltip={status}>
               <div className={s.status}>{status}</div>
             </div>
@@ -42,19 +54,18 @@ const User = (props) => {
       ? <div className={s.button}>
         <Button
           onClick={() => unfollow(id)}
-          disabled={followingInProgress.some(id => id === id)}
-          color="secondary"
+          disabled={followingInProgress.some(idUser => idUser === id)}
           style={{ justifyContent: 'flex-end', alignItems: 'flex-start', flexBasis: '200px' }}
           startIcon={<RemoveIcon />}
         >Unfollow</Button>
       </div>
 
-      : (id == authorizedUserID) ? <></>
+      : (id === authorizedUserID) ? <></>
 
         : <div className={s.button}>
           <Button
             onClick={() => follow(id)}
-            disabled={followingInProgress.some(id => id === id)}
+            disabled={followingInProgress.some(idUser => idUser === id)}
             color="primary"
             style={{ justifyContent: 'flex-end', alignItems: 'flex-start', flexBasis: '200px' }}
             startIcon={<AddIcon />}
