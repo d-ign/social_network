@@ -1,18 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
-import { loginThunk, logoutThunk } from '../../redux/auth-reducer';
+import { loginThunk } from '../../redux/reducers/auth-reducer';
 import s from './Login.module.css';
 import cn from 'classnames';
 
 import renderTextField from '../common/ElementCustom/renderTextField';
 import renderCheckbox from '../common/ElementCustom/renderCheckbox';
 import Button from '@material-ui/core/Button';
+import { AppStateType } from '../../redux/redux-store';
+import { compose } from 'redux';
 
-const validate = values => {
-  const errors = {}
+const validate = (values: LoginFormValuesType) => {
+
+  type ErrorsType = {
+    email?: string
+    password?: string
+    captcha?: string
+  }
+
+  const errors: ErrorsType = {}
   const requiredFields = [
     'email',
     'password',
@@ -20,8 +29,8 @@ const validate = values => {
   ]
 
   requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
+    if (!values[field as keyof LoginFormValuesType]) {
+      errors[field as keyof ErrorsType] = 'Required'
     }
   })
 
@@ -33,15 +42,41 @@ const validate = values => {
   return errors
 }
 
-const Login = (props) => {
 
-  const onSubmit = (formData) => {
+
+
+type MapStatePropsType = {
+  captchaURL: string | null
+  isAuth: boolean
+  userID: number | null
+}
+
+type MapDispatchPropsType = {
+  loginThunk: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+}
+
+type OwnPropsType = {
+  captchaURL: string | null
+}
+
+type LoginFormValuesType = {
+  email: string
+  password: string
+  rememberMe: boolean
+  captcha: string
+}
+
+
+
+const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
+
+  const onSubmit = (values: LoginFormValuesType) => {
     props.loginThunk(
-      formData.email, formData.password, formData.rememberMe, formData.captcha)
+      values.email, values.password, values.rememberMe, values.captcha)
   }
 
   if (props.isAuth) {
-    return <Redirect to={`/profile/${props.id}`} />
+    return <Redirect to={`/profile/${props.userID}`} />
   }
 
   return <div className={s.wrap}>
@@ -49,13 +84,14 @@ const Login = (props) => {
       <h1>Log in</h1>
       <LoginReduxForm
         onSubmit={onSubmit}
-        logoutThunk={logoutThunk}
         captchaURL={props.captchaURL} />
     </div>
   </div>
 }
 
-const LoginForm = ({ handleSubmit, error, captchaURL }) => {
+
+
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType> = ({ handleSubmit, error, captchaURL }) => {
   return <>
     <form onSubmit={handleSubmit}>
       <div className={s.row}>
@@ -110,19 +146,17 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
   </>
 }
 
-const LoginReduxForm = reduxForm({
+const LoginReduxForm = reduxForm<LoginFormValuesType, OwnPropsType>({
   form: 'loginForm',
   validate,
 })(LoginForm);
 
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   captchaURL: state.auth.captchaURL,
   isAuth: state.auth.isAuth,
-  id: state.auth.id,
+  userID: state.auth.userID,
 });
 
-export default connect(mapStateToProps, {
-  loginThunk,
-  logoutThunk
-})(Login);
+export default compose<React.ComponentType>(connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
+  mapStateToProps, {loginThunk}
+), )(Login);
