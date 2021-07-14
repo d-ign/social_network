@@ -1,11 +1,16 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { AppStateType } from '../../redux/redux-store';
 
 import s from './Navbar.module.css';
 
-const Navbar = (props) => {
+type PathParamsType = {
+  pathname: string
+}
+
+const Navbar: React.FC<MapStatePropsType & {} & RouteComponentProps<PathParamsType>> = (props) => {
 
   const profileUrl = '/profile/' + props.authorizedUserID;
 
@@ -50,11 +55,16 @@ const Navbar = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  authorizedUserID: state.auth.userID,
-});
+type MapStatePropsType = {
+  authorizedUserID: number | null
+}
 
-export default compose(
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+  authorizedUserID: state.auth.userID,
+})
+
+export default compose<React.ComponentType>(
+  connect<MapStatePropsType, {}, RouteComponentProps<PathParamsType>, AppStateType>(
+    mapStateToProps, {}),
   withRouter,
-  connect(mapStateToProps, {})
-)(Navbar);
+)(Navbar)
