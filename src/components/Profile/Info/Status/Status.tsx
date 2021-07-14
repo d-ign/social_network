@@ -8,7 +8,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import useStyles from '../../../common/ElementCustom/InputCustomProfileStatus';
 import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
 
-const Status = (props) => {
+type PropsType = {
+  status: string
+  updateStatus: (status: string) => void
+  isOwner: boolean
+}
+
+const Status: React.FC<PropsType> = (props) => {
 
   const classes = useStyles();
 
@@ -20,7 +26,7 @@ const Status = (props) => {
   }, [props.status]);
 
   const activateEditMode = () => setEditMode(true);
-  const onStatusChange = (e) => setStatus(e.currentTarget.value);
+  const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value);
   const cancelEditMode = () => setEditMode(false);
 
   const saveStatus = () => {

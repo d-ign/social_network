@@ -5,8 +5,9 @@ import avatar from '../../../../img/avatar_2.jpg';
 import unknown from './../../../../img/no_photo.svg';
 import IconButton from '@material-ui/core/IconButton';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import { PostType } from '../../../../types/types';
 
-const Post = (props) => {
+const Post: React.FC<PostType> = (props) => {
   return <div className={s.container}>
     <div>
       <div className={s.avatar}>

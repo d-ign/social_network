@@ -1,7 +1,12 @@
 import React from 'react';
-import s from './ProfileData.module.css';
+import { ProfileType, СontactsType } from '../../../../types/types';
+import s from './InfoData.module.css';
 
-const ProfileData = ({ profile }) => {
+type PropsType = {
+  profile: ProfileType
+}
+
+const InfoData: React.FC<PropsType> = ({ profile }) => {
   return <div className={s.containerForm}>
 
     <div className={s.wrap}>
@@ -30,14 +35,14 @@ const ProfileData = ({ profile }) => {
     </div>
 
     <div className={s.wrap}>
-      {Object.values(profile.contacts).some(val => val && val !== '')
+      {Object.values(profile.contacts).some(el => el && el !== '')
         && <div className={s.contacts}>
           <div className={s.title}>My contacts</div>
           {Object.keys(profile.contacts).map(key => {
             return <Contact
               key={key}
               contactTitle={key}
-              contactValue={profile.contacts[key]} />
+              contactValue={profile.contacts[key as keyof СontactsType]} />
           })}
         </div>
       }
@@ -45,7 +50,12 @@ const ProfileData = ({ profile }) => {
   </div >
 }
 
-const Contact = ({ contactTitle, contactValue }) => {
+type ContactPropsType = {
+  contactTitle: string
+  contactValue: string
+}
+
+const Contact: React.FC<ContactPropsType> = ({ contactTitle, contactValue }) => {
   return (<>
     {contactValue
       && <div className={s.contact}>
@@ -58,4 +68,4 @@ const Contact = ({ contactTitle, contactValue }) => {
   )
 }
 
-export default ProfileData;
+export default InfoData;

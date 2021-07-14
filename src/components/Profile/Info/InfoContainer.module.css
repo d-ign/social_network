@@ -48,7 +48,7 @@
   position: relative;
 }
 .columnRight {
-  max-width: 420px;
+  max-width: 535px;
   width: 100%;
   margin-left: 20px;
 }
@@ -98,7 +98,7 @@
   .fullName {
     text-align: center;
     padding: 10px 0 5px 0;
-    margin-right: 30px;
+    /* margin-right: 30px; */
   }
   .buttonsSaveAndCancelProfile {
     flex-direction: row;

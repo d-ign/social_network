@@ -4,17 +4,19 @@ import { submit } from 'redux-form';
 
 import Preloader from '../../common/Preloader/Preloader';
 import Status from './Status/Status';
-import DataForm from './DataForm/DataForm';
-import ProfileData from './ProfileData';
+import InfoDataForm from './InfoDataForm/InfoDataForm';
+import InfoData from './InfoData/InfoData';
 
 import camera from '../../../img/icons/camera.svg';
 import unknown from '../../../img/no_photo.svg';
-import s from './ProfileInfoContainer.module.css';
+import s from './InfoContainer.module.css';
 
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
+
+import { ProfileType } from '../../../types/types';
 
 // при переходе на старницу профиля скрол обнулится
 function ScrollToTopOnMount() {
@@ -24,7 +26,25 @@ function ScrollToTopOnMount() {
   return null;
 }
 
-const ProfileInfo = ({ dispatch, ...props }) => {
+type MapStatePropsType = {
+  profile: ProfileType | null
+  status: string
+  showSuccessSave: string
+  errorProfileContacts: string
+}
+
+type MapDispatchPropsType = {
+  dispatch: any
+  updateStatus: (status: string) => void
+  savePhotoThunk: (file: File) => void
+  saveProfileThunk: (profile: ProfileType) => void
+}
+
+type OwnPropsType = {
+  isOwner: boolean
+}
+
+const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsType> = ({ dispatch, ...props }) => {
 
   const [editModeProfile, seteditModeProfile] = useState(false);
 
@@ -32,8 +52,12 @@ const ProfileInfo = ({ dispatch, ...props }) => {
     return <Preloader />
   }
 
-  const onMainPhotoSelected = (e) => {
-    if (e.target.files.length) {
+  const onSubmit = (values: ProfileType) => {
+    props.saveProfileThunk(values)
+  }
+
+  const onMainPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
       props.savePhotoThunk(e.target.files[0])
     }
   }
@@ -111,17 +135,19 @@ const ProfileInfo = ({ dispatch, ...props }) => {
         }
 
         {editModeProfile
-          ? <DataForm
+          ? <InfoDataForm
             initialValues={props.profile}
             errorProfileContacts={props.errorProfileContacts}
-            onSubmit={formData => props.saveProfileThunk(formData)}
+            onSubmit={onSubmit}
           />
-          : <ProfileData {...props} />}
+          : <InfoData profile={props.profile} />}
       </div>
     </div>
   )
 }
 
-const ProfileInfoContainer = connect()(ProfileInfo);
+const InfoContainer = connect()(ProfileInfo);
 
-export default ProfileInfoContainer;
+export default InfoContainer;
+
+// MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType

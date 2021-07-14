@@ -1,15 +1,21 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
 import renderTextField from '../../../common/ElementCustom/renderTextField';
 import renderCheckbox from '../../../common/ElementCustom/renderCheckbox';
-import s from './DataForm.module.css';
+import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
+import s from './InfoDataForm.module.css';
 import cn from 'classnames';
 
-import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
+import { ProfileType } from '../../../../types/types';
 
-const DataForm = (props) => {
-  const { handleSubmit, initialValues, ...custom } = props;
+type OwnPropsType = {
+  errorProfileContacts: string
+  initialValues: ProfileType
+}
+
+const DataForm: React.FC<InjectedFormProps<ProfileType, OwnPropsType> & OwnPropsType> = (props) => {
+  const { handleSubmit, initialValues, errorProfileContacts } = props;
 
   const num100 = 100;
   const num1000 = 1000;
@@ -86,7 +92,7 @@ const DataForm = (props) => {
       <div className={s.titleAllContacts}>Contacts:</div>
 
       <div className={s.errorProfileContacts}>
-        {custom.errorProfileContacts}
+        {errorProfileContacts}
       </div>
 
       {Object.keys(initialValues.contacts).map(key => {
@@ -102,6 +108,8 @@ const DataForm = (props) => {
   </form>
 }
 
-export default reduxForm({
+const InfoDataForm = reduxForm<ProfileType, OwnPropsType>({
   form: 'editProfile',
 })(DataForm);
+
+export default InfoDataForm;
