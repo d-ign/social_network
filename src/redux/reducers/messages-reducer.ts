@@ -1,14 +1,5 @@
-// const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
-const SEND_MESSAGE = 'SEND-MESSAGE';
-
-type DialogType = {
-  id: number
-  name: string
-}
-type MessageType = {
-  id: number
-  message: string
-}
+import { DialogType, MessageType } from "../../types/types";
+import { InferActionsTypes } from "../redux-store";
 
 let initialState = {
   dialogs: [
@@ -27,9 +18,7 @@ let initialState = {
   newMessageText: ''
 };
 
-type InitialStateType = typeof initialState;
-
-const messagesReducer = (state = initialState, action: any): InitialStateType => {
+const messagesReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 
   // копируем только то, что планируем изменять; внутренние объекты массива (с id которые) мы менять не планируем, поэтому их копию и не делаем
   // stateCopy = 'копия state' или copy of state
@@ -38,12 +27,12 @@ const messagesReducer = (state = initialState, action: any): InitialStateType =>
     // case UPDATE_NEW_MESSAGE_BODY:
     //   return {
     //     ...state,
-    //     newMessageBody: action.body
+    //     newMessageText: action.body
     //   };
 
-    case SEND_MESSAGE:
-      let newMessage = { 
-        id: 6,
+    case 'SEND_MESSAGE':
+      let newMessage = {
+        id: 4,
         message: action.newMessageText
       };
       return {
@@ -63,10 +52,12 @@ const messagesReducer = (state = initialState, action: any): InitialStateType =>
 //   type: UPDATE_NEW_MESSAGE_BODY,
 //   body: symbol
 // });
-type SendMessageType = {
-  type: typeof SEND_MESSAGE
-  newMessageText: string
+
+export const actions = {
+  sendMessage: (newMessageText: string) => ({ type: 'SEND_MESSAGE', newMessageText } as const),
 }
-export const sendMessage = (newMessageText: string): SendMessageType => ({ type: SEND_MESSAGE, newMessageText });
 
 export default messagesReducer;
+
+type InitialStateType = typeof initialState;
+type ActionsTypes = InferActionsTypes<typeof actions>;
