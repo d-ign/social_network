@@ -3,7 +3,8 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { initializeAppThunk } from './redux/app-reducer';
+import { AppStateType } from './redux/redux-store';
+import { initializeAppThunk } from './redux/reducers/app-reducer';
 
 import Preloader from './components/common/Preloader/Preloader';
 import { withSuspense } from './components/hoc/withSuspense';
@@ -17,12 +18,18 @@ import Login from './components/Login/Login';
 import FriendsContainer from './components/Friends/Friends';
 import ErrorBoundary from './components/Error/ErrorBoundary';
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const DialogsContainer = React.lazy(
+  () => import('./components/Dialogs/DialogsContainer'));
+const UsersContainer = React.lazy(
+  () => import('./components/Users/UsersContainer'));
 
-const App = (props) => {
+const SuspendedDialogs = withSuspense(DialogsContainer);
+const SuspendedUsers = withSuspense(UsersContainer);
 
-  React.useEffect(() => props.initializeAppThunk(), []);
+const App: React.FC<MapStatePropsType & MapDispatchPropsType> = (
+  {initializeAppThunk, ...props}) => {
+
+  React.useEffect(() => initializeAppThunk(), [initializeAppThunk]);
 
   if (!props.initialized) {
     return <Preloader />
@@ -42,21 +49,21 @@ const App = (props) => {
                 <Redirect from='/profile/undefined' to="/" />
 
                 <Route path='/dialogs'
-                  render={withSuspense(DialogsContainer)} />
+                  render={() => <SuspendedDialogs />} />
 
                 <Route path='/profile/:userId'
-                  component={ProfileContainer} />
+                  render={() => <ProfileContainer />} />
 
                 <Route path='/users'
-                  render={withSuspense(UsersContainer)} />
+                  render={() => <SuspendedUsers />} />
 
                 <Route path='/friends'
                   render={() => <FriendsContainer />} />
 
                 <Route path='/login'
-                  render={() => <Login login={props.login} />} />
+                  render={() => <Login />} />
 
-                <Redirect exact from="/" to={'/profile/' + props.authorizedUserID} />
+                <Redirect exact from="/" to={'/profile/' + props.userID} />
 
                 <Redirect from='*' to="/" />
               </Switch>
@@ -68,10 +75,9 @@ const App = (props) => {
   )
 }
 
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
-  authorizedUserID: state.auth.userID,
+  userID: state.auth.userID,
 });
 
 const AppContainer = compose(
@@ -82,3 +88,6 @@ const AppContainer = compose(
 )(App)
 
 export default AppContainer;
+ 
+type MapStatePropsType = ReturnType<typeof mapStateToProps>;
+type MapDispatchPropsType = { initializeAppThunk: () => void }
