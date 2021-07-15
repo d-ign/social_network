@@ -14,10 +14,12 @@ export const usersAPI = {
     );
     return response.data;
   },
-  followUser(id: number) {
-    return instance.post<DefaultResponseType>(`follow/${id}`, {})
+  async followUser(id: number) {
+    const response = await instance.post<DefaultResponseType>(`follow/${id}`, {});
+    return response.data;
   },
-  unfollowUser(id: number) {
-    return instance.delete<DefaultResponseType>(`follow/${id}`)
+  async unfollowUser(id: number) {
+    const response = await instance.delete<DefaultResponseType>(`follow/${id}`);
+    return response.data;
   },
 }
