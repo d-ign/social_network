@@ -149,5 +149,3 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
 const InfoContainer = connect()(ProfileInfo);
 
 export default InfoContainer;
-
-// MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType
