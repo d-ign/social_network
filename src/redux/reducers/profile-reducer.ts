@@ -1,4 +1,4 @@
-import { AppStateType, BaseThunkType, InferActionsTypes } from '../redux-store';
+import { BaseThunkType, InferActionsTypes } from '../redux-store';
 
 import { PostType } from '../../types/types';
 import { ProfileType } from '../../types/types';
@@ -9,8 +9,8 @@ import { profileAPI } from '../../api/profile-api';
 
 let initialState = {
   posts: [
-    { id: 1, message: 'Стена Привет!', likesCount: 12 },
-    { id: 2, message: 'Стена Как дела?', likesCount: 4 },
+    { id: 0, message: 'Привет!', likesCount: 12 },
+    { id: 1, message: 'Как дела?', likesCount: 4 },
   ] as Array<PostType>,
 
   profile: null as ProfileType | null,
@@ -23,7 +23,7 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
   switch (action.type) {
     case 'ADD_POST': {
       let newPost = {
-        id: 3,
+        id: 2,
         message: action.newPostText,
         likesCount: 0,
       };
@@ -130,6 +130,6 @@ export const saveProfileThunk = (profile: ProfileType): ThunkType => async (disp
 
 export default profileReducer;
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 type ActionsTypes = InferActionsTypes<typeof actions>;
 type ThunkType = BaseThunkType<ActionsTypes>;
