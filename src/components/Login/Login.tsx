@@ -92,6 +92,14 @@ const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
 
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType> = ({ handleSubmit, error, captchaURL }) => {
+
+  const stylesLoginButton: any = {
+    width: '100%', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    color: '#fff' 
+  }
+
   return <>
     <form onSubmit={handleSubmit}>
       <div className={s.row}>
@@ -133,7 +141,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, OwnPropsType> &
           type='submit'
           variant="contained"
           color="primary"
-          style={{ width: '100%', fontSize: 16, fontWeight: 'bold', color: '#fff' }}
+          style={stylesLoginButton}
         >Log in</Button>
 
         {error &&

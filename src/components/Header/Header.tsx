@@ -10,6 +10,11 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { MapDispatchPropsType, MapStatePropsType } from './HeaderContainer';
 
 const Header: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
+
+  const stylesLogoutButton = {
+    margin: 16
+  }
+
   return (
     <header className={s.header}>
       <NavLink className={s.logoAndTitle} to={'/profile'}>
@@ -25,7 +30,7 @@ const Header: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
               <Button
                 onClick={props.logoutThunk}
                 variant="outlined"
-                style={{ margin: 16 }}
+                style={stylesLogoutButton}
                 startIcon={<ExitToAppIcon />}>
                 Log out
               </Button>
@@ -34,7 +39,7 @@ const Header: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
               <Button
                 onClick={props.logoutThunk}
                 variant="outlined"
-                style={{ margin: 16 }}
+                style={stylesLogoutButton}
               ><img src={logout} alt="logout" />
               </Button>
             </span>

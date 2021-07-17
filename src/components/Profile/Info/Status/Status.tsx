@@ -18,6 +18,12 @@ const Status: React.FC<PropsType> = (props) => {
 
   const classes = useStyles();
 
+  const stylesSaveAndButton = {
+    color: '#fff', 
+    margin: 10, 
+    width: '100%',
+  }
+
   let [editMode, setEditMode] = useState(false);
   let [status, setStatus] = useState(props.status);
 
@@ -59,7 +65,7 @@ const Status: React.FC<PropsType> = (props) => {
             onClick={saveStatus}
             variant="contained"
             color="primary"
-            style={{ color: '#fff', margin: 10, width: '100%' }}
+            style={stylesSaveAndButton}
             startIcon={<SaveIcon />}
           >Save</Button>
         </div>
@@ -67,7 +73,7 @@ const Status: React.FC<PropsType> = (props) => {
           <Button
             onClick={cancelEditMode}
             variant="outlined"
-            style={{ margin: 10, width: '100%' }}
+            style={stylesSaveAndButton}
             startIcon={<CloseIcon />}
           >Cancel</Button>
         </div>

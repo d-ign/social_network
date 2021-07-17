@@ -1,9 +1,19 @@
 import React from 'react';
 import preloader from '../../../img/preloader.svg';
 
+const stylesContainer = {
+  position: 'absolute', 
+  left: 'calc(50% - 85px)',
+}
+
+const stylesWrap = {
+  display: 'flex', 
+  justifyContent: 'center',
+}
+
 const Preloader = () => {
-  return <div style={{ position: 'absolute', left: 'calc(50% - 85px)' }}>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+  return <div style={stylesContainer}>
+    <div style={stylesWrap}>
       <img src={preloader} alt='preloader' />
     </div>
   </div>

@@ -29,6 +29,13 @@ const Wall: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
 
 const AddNewPostForm: React.FC<InjectedFormProps<WallValuesFormType, {}> & {}> =
   (props) => {
+
+    const stylesAddPostButton = {
+      color: 'white',
+      marginLeft: '10px',
+      width: '160px'
+    }
+
     return <form onSubmit={props.handleSubmit}>
       <div className={s.wrapSendAndButton}>
         <Field
@@ -44,7 +51,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<WallValuesFormType, {}> & {}> =
           type='submit'
           variant="contained"
           color='primary'
-          style={{ color: 'white', marginLeft: '10px', width: '160px' }}
+          style={stylesAddPostButton}
           endIcon={<PostAddIcon />}
         >Add post</Button>
       </div>

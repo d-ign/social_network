@@ -46,6 +46,17 @@ type OwnPropsType = {
 
 const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsType> = ({ dispatch, ...props }) => {
 
+  const stylesSaveAndCancelButton = {
+    fontSize: 12, 
+    color: '#fff', 
+    margin: 10
+  }
+
+  const stylesEditButton = { 
+    fontSize: 12, 
+    marginTop: 10 
+  }
+
   const [editModeProfile, seteditModeProfile] = useState(false);
 
   if (!props.profile) {
@@ -93,7 +104,7 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
           && <Button
             onClick={() => seteditModeProfile(true)}
             variant="outlined"
-            style={{ fontSize: 12, marginTop: 10 }}
+            style={stylesEditButton}
             startIcon={<EditIcon style={{ fontSize: 16 }} />}
           >Edit profile</Button>
         }
@@ -104,14 +115,14 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
             variant="contained"
             color="primary"
             fullWidth={true}
-            style={{ fontSize: 12, color: '#fff', margin: 10 }}
+            style={stylesSaveAndCancelButton}
             startIcon={<SaveIcon />}
           >Save</Button>
           <Button
             onClick={() => seteditModeProfile(false)}
             variant="outlined"
             fullWidth={true}
-            style={{ fontSize: 12, color: '#fff', margin: 10 }}
+            style={stylesSaveAndCancelButton}
             startIcon={<CloseIcon />}
           >Cancel</Button>
         </div>}

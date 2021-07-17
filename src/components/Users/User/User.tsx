@@ -23,9 +23,20 @@ type PropsType = {
 const User: React.FC<PropsType> = (props) => {
   const { id, photo, name, status, followed, unfollow, follow, followingInProgress, authorizedUserID } = props;
 
+  const stylesFollowedButton = {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    flexBasis: '200px',
+  }
+
+  const stylesNavLink = {
+    textDecoration: 'none',
+    display: 'block',
+  }
+
   return <>
     <NavLink to={'/profile/' + id}
-      style={{ textDecoration: 'none', display: 'block' }}>
+      style={stylesNavLink}>
       <div className={s.wrapAvatarNameAndStatus}>
         <div>
           <div className={s.avatar}>
@@ -55,7 +66,7 @@ const User: React.FC<PropsType> = (props) => {
         <Button
           onClick={() => unfollow(id)}
           disabled={followingInProgress.some(idUser => idUser === id)}
-          style={{ justifyContent: 'flex-end', alignItems: 'flex-start', flexBasis: '200px' }}
+          style={stylesFollowedButton}
           startIcon={<RemoveIcon />}
         >Unfollow</Button>
       </div>
@@ -67,7 +78,7 @@ const User: React.FC<PropsType> = (props) => {
             onClick={() => follow(id)}
             disabled={followingInProgress.some(idUser => idUser === id)}
             color="primary"
-            style={{ justifyContent: 'flex-end', alignItems: 'flex-start', flexBasis: '200px' }}
+            style={stylesFollowedButton}
             startIcon={<AddIcon />}
           >Follow</Button>
         </div>
