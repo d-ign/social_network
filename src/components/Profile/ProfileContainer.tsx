@@ -2,33 +2,21 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
-import withAuthRedirect from '../hoc/withAuthRedirect';
-
-import { getUserProfile, getStatus, updateStatus, savePhotoThunk, saveProfileThunk } from '../../redux/reducers/profile-reducer';
-
-import WallContainer from './Wall/WallContainer';
-import InfoContainer from './Info/InfoContainer';
-import { ProfileType } from '../../types/types';
 import { AppStateType } from '../../redux/redux-store';
 import { RouteComponentProps } from 'react-router-dom';
+import { getUserProfile, getStatus } from '../../redux/reducers/profile-reducer';
+
+import withAuthRedirect from '../hoc/withAuthRedirect';
+import WallContainer from './Wall/WallContainer';
+import InfoContainer from './Info/InfoContainer';
 
 type MapStatePropsType = {
   authorizedUserID: number | null
-
-  profile: ProfileType | null
-  status: string
-  showSuccessSave: string
-  errorProfileContacts: string
 }
 
 type MapDispatchPropsType = {
   getUserProfile: (userId: number) => void
   getStatus: (userId: number) => void
-
-  updateStatus: (status: string) => void
-  savePhotoThunk: (file: File) => void
-  saveProfileThunk: (profile: ProfileType) => void
 }
 
 type PathParamsType = {
@@ -38,8 +26,8 @@ type PathParamsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>;
 
 class ProfileContainer extends React.PureComponent<PropsType> {
-  refreshProfile() {
 
+  refreshProfile() {
     let userId: number | null = +this.props.match.params.userId;
 
     if (!userId) {
@@ -66,16 +54,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
   render() {
     return <>
       <InfoContainer
-        profile={this.props.profile}
-        status={this.props.status}
-        showSuccessSave={this.props.showSuccessSave}
-        errorProfileContacts={this.props.errorProfileContacts}
-
         isOwner={+this.props.match.params.userId === this.props.authorizedUserID}
-
-        updateStatus={this.props.updateStatus}
-        savePhotoThunk={this.props.savePhotoThunk}
-        saveProfileThunk={this.props.saveProfileThunk}
       />
       <WallContainer />
     </>
@@ -84,11 +63,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
     authorizedUserID: state.auth.userID,
-    showSuccessSave: state.profilePage.showSuccessSave,
-    errorProfileContacts: state.profilePage.errorProfileContacts,
   }
 };
 
@@ -98,9 +73,6 @@ export default compose<React.ComponentType>(
     {
       getUserProfile,
       getStatus,
-      updateStatus,
-      savePhotoThunk,
-      saveProfileThunk,
     }
   ),
   withRouter,

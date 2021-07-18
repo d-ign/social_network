@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { submit } from 'redux-form';
+import { getErrorProfileContacts, getProfile, getShowSuccessSave, getStatusSelector } from '../../../redux/selectors/profile-selectors';
+import { savePhotoThunk, saveProfileThunk, updateStatus } from '../../../redux/reducers/profile-reducer';
+import { ProfileType } from '../../../types/types';
 
 import Preloader from '../../common/Preloader/Preloader';
 import Status from './Status/Status';
 import InfoDataForm from './InfoDataForm/InfoDataForm';
 import InfoData from './InfoData/InfoData';
 
+import s from './InfoContainer.module.css';
 import camera from '../../../img/icons/camera.svg';
 import unknown from '../../../img/no_photo.svg';
-import s from './InfoContainer.module.css';
-
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
-
-import { ProfileType } from '../../../types/types';
 
 // при переходе на старницу профиля скрол обнулится
 function ScrollToTopOnMount() {
@@ -26,51 +26,45 @@ function ScrollToTopOnMount() {
   return null;
 }
 
-type MapStatePropsType = {
-  profile: ProfileType | null
-  status: string
-  showSuccessSave: string
-  errorProfileContacts: string
-}
-
-type MapDispatchPropsType = {
-  dispatch: any
-  updateStatus: (status: string) => void
-  savePhotoThunk: (file: File) => void
-  saveProfileThunk: (profile: ProfileType) => void
-}
-
 type OwnPropsType = {
   isOwner: boolean
 }
 
-const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsType> = ({ dispatch, ...props }) => {
+const ProfileInfo: React.FC<{} & {} & OwnPropsType> = ({ isOwner }) => {
 
   const stylesSaveAndCancelButton = {
-    fontSize: 12, 
-    color: '#fff', 
+    fontSize: 12,
+    color: '#fff',
     margin: 10
   }
-
-  const stylesEditButton = { 
-    fontSize: 12, 
-    marginTop: 10 
+  const stylesEditButton = {
+    fontSize: 12,
+    marginTop: 10
   }
 
-  const [editModeProfile, seteditModeProfile] = useState(false);
+  const [editModeProfile, setEditModeProfile] = useState(false);
 
-  if (!props.profile) {
-    return <Preloader />
-  }
+  // for Status
+  const status = useSelector(getStatusSelector)
+  // for InfoDataForm
+  const errorProfileContacts = useSelector(getErrorProfileContacts)
+
+  const profile = useSelector(getProfile)
+  const showSuccessSave = useSelector(getShowSuccessSave)
+  const dispatch = useDispatch()
 
   const onSubmit = (values: ProfileType) => {
-    props.saveProfileThunk(values)
+    dispatch(saveProfileThunk(values))
   }
 
   const onMainPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
-      props.savePhotoThunk(e.target.files[0])
+      dispatch(savePhotoThunk(e.target.files[0]))
     }
+  }
+
+  if (!profile) {
+    return <Preloader />
   }
 
   return (
@@ -82,8 +76,8 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
       <div className={s.columnLeft}>
         <div className={s.avatarWrap}>
           <div className={s.avatar}>
-            <img src={props.profile.photos.large || unknown} alt="avatar" />
-            {props.isOwner && !editModeProfile &&
+            <img src={profile.photos.large || unknown} alt="avatar" />
+            {isOwner && !editModeProfile &&
               <div className={s.camera}>
                 <label htmlFor="file_out">
                   <div className={s.wrapImg}>
@@ -100,9 +94,9 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
           </div>
         </div>
 
-        {props.isOwner && !editModeProfile
+        {isOwner && !editModeProfile
           && <Button
-            onClick={() => seteditModeProfile(true)}
+            onClick={() => setEditModeProfile(true)}
             variant="outlined"
             style={stylesEditButton}
             startIcon={<EditIcon style={{ fontSize: 16 }} />}
@@ -119,7 +113,7 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
             startIcon={<SaveIcon />}
           >Save</Button>
           <Button
-            onClick={() => seteditModeProfile(false)}
+            onClick={() => setEditModeProfile(false)}
             variant="outlined"
             fullWidth={true}
             style={stylesSaveAndCancelButton}
@@ -127,9 +121,9 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
           >Cancel</Button>
         </div>}
 
-        {editModeProfile && props.showSuccessSave &&
+        {editModeProfile && showSuccessSave &&
           <div className={s.successSave}>
-            {props.showSuccessSave}
+            {showSuccessSave}
           </div>
         }
       </div>
@@ -137,26 +131,26 @@ const ProfileInfo: React.FC<MapStatePropsType & MapDispatchPropsType & OwnPropsT
 
       <div className={s.columnRight}>
 
-        {!editModeProfile && <div className={s.fullName}>{props.profile.fullName}</div>}
+        {!editModeProfile && <div className={s.fullName}>{profile.fullName}</div>}
 
-        {!editModeProfile && <Status
-          status={props.status}
-          updateStatus={props.updateStatus}
-          isOwner={props.isOwner} />
+        {!editModeProfile &&
+          <Status
+            status={status}
+            updateStatus={updateStatus}
+            isOwner={isOwner} />
         }
 
         {editModeProfile
           ? <InfoDataForm
-            initialValues={props.profile}
-            errorProfileContacts={props.errorProfileContacts}
+            initialValues={profile}
+            errorProfileContacts={errorProfileContacts}
             onSubmit={onSubmit}
           />
-          : <InfoData profile={props.profile} />}
+          : <InfoData profile={profile} />}
       </div>
     </div>
   )
 }
 
-const InfoContainer = connect()(ProfileInfo);
-
-export default InfoContainer;
+const InfoContainer = ProfileInfo
+export default InfoContainer
