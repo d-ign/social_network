@@ -6,12 +6,9 @@ import { BaseThunkType, InferActionsTypes } from '../redux-store';
 
 let initialState = {
   users: [] as Array<UserType>,
-  friends: [] as Array<UserType>,
-  foundUsers: [] as Array<UserType>,
 
-  pageSize: 50,
+  pageSize: 10,
   totalUsersCount: 0,
-  currentPage: 1,
 
   isFetching: true,
   // disabling the button after pressing
@@ -45,8 +42,13 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
     case 'SET_USERS': {
       return {
         ...state,
+        users: [...action.users],
+      }
+    }
+    case 'ADD_USERS': {
+      return {
+        ...state,
         users: [...state.users, ...action.users],
-        foundUsers: []
       }
     }
     case 'CLEAR_USERS': {
@@ -55,25 +57,18 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
         users: []
       }
     }
-    case 'SET_FRIENDS': {
-      return {
-        ...state,
-        friends: action.friends
-      }
-    }
-    case 'SET_FOUND_USERS': {
-      return {
-        ...state,
-        users: [],
-        foundUsers: action.foundUsers
-      }
-    }
-    case 'SET_CURRENT_PAGE': {
-      return {
-        ...state,
-        currentPage: action.currentPage,
-      }
-    }
+    // case 'SET_FRIENDS': {
+    //   return {
+    //     ...state,
+    //     friends: action.friends
+    //   }
+    // }
+    // case 'SET_CURRENT_PAGE': {
+    //   return {
+    //     ...state,
+    //     currentPage: action.currentPage,
+    //   }
+    // }
     case 'SET_TOTAL_USERS_COUNT': {
       return {
         ...state,
@@ -104,51 +99,39 @@ export const actions = {
   unfollowSuccess: (userID: number) => ({ type: 'UNFOLLOW', userID } as const),
 
   setUsers: (users: Array<UserType>) => ({ type: 'SET_USERS', users } as const),
-  setFriends: (friends: Array<UserType>) => ({ type: 'SET_FRIENDS', friends } as const),
-  setFoundUsers: (foundUsers: Array<UserType>) => ({ type: 'SET_FOUND_USERS', foundUsers } as const),
-
+  addUsers: (users: Array<UserType>) => ({ type: 'ADD_USERS', users } as const),
   setTotalUsersCount: (totalUsersCount: number) => ({
     type: 'SET_TOTAL_USERS_COUNT', count: totalUsersCount
   } as const),
   clearUsers: () => ({ type: 'CLEAR_USERS' } as const),
-  setCurrentPage: (currentPage: number) => ({ type: 'SET_CURRENT_PAGE', currentPage } as const),
+
   toggleIsFetching: (isFetching: boolean) => ({ type: 'TOGGLE_IS_FETCHING', isFetching } as const),
   toggleFollowingProgress: (isFetching: boolean, userID: number) => ({
     type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userID
   } as const),
 }
 
-export const getUsers = (page: number, pageSize: number, term: string):
-  ThunkType => async (dispatch) => {
+export const getUsers = (page: number, term: string, friend?: boolean):
+  ThunkType => async (dispatch, getState) => {
     dispatch(actions.toggleIsFetching(true));
 
-    const response = await usersAPI.getUsers(page, pageSize, term);
-    dispatch(actions.setUsers(response.items));
+    const response = await usersAPI.getUsers(page, getState().usersPage.pageSize, term, friend);
+
+    // первичная загрузка
+    if (term.length === 0 && page === 1) {
+      dispatch(actions.setUsers(response.items));
+    }
+    // получение больше пользователей
+    if (page > 1) {
+      dispatch(actions.addUsers(response.items));
+    }
+    // первичный поиск
+    if (term.length > 0 && page === 1) {
+      dispatch(actions.clearUsers());
+      dispatch(actions.setUsers(response.items));
+    }
+
     dispatch(actions.setTotalUsersCount(response.totalCount));
-
-    dispatch(actions.toggleIsFetching(false));
-  }
-
-export const getFoundUsers = (page: number, pageSize: number, term: string):
-  ThunkType => async (dispatch) => {
-    dispatch(actions.toggleIsFetching(true));
-
-    const response = await usersAPI.getUsers(page, pageSize, term);
-    dispatch(actions.clearUsers());
-    dispatch(actions.setFoundUsers(response.items));
-    dispatch(actions.setTotalUsersCount(response.totalCount));
-
-    dispatch(actions.toggleIsFetching(false));
-  }
-
-export const getFriends = (page: number, pageSize: number, term: string, friend = true):
-  ThunkType => async (dispatch) => {
-    dispatch(actions.toggleIsFetching(true));
-
-    const response = await usersAPI.getUsers(page, pageSize, term, friend);
-    dispatch(actions.setFriends(response.items));
-    dispatch(actions.setTotalUsersCount(response.totalCount));
-
     dispatch(actions.toggleIsFetching(false));
   }
 

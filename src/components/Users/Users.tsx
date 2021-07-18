@@ -1,86 +1,138 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { getAuthorizedUserID, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsersSelector } from '../../redux/users-selectors';
+import { actions, follow, getUsers, unfollow } from '../../redux/reducers/users-reducer';
 
 import User from './User/User';
 import Search from './Search/Search';
 
 import s from './Users.module.css';
-
+import cn from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { UserType } from '../../types/types';
 
-type PropsType = {
-  isFetching: boolean
-  pageSize: number
-  totalUsersCount: number
-  authorizedUserID: number | null
-  followingInProgress: Array<number>
-  users: Array<UserType>
-  foundUsers: Array<UserType>
-  getFoundUsers: (pageNumber: number, pageSize: number, term: string) => void
-  onPageChanged: (pageNumber: number, value: string) => void
-  unfollow: (id: number) => void
-  follow: (id: number) => void
+type PathParamsType = {
+  pathname: string
 }
 
-const Users: React.FC<PropsType> = (props) => {
-  let [page, setPage] = useState(1);
+const Users: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = ({location: {pathname}}) => {
 
-  const searchUsers = (pageNumber: number, term: string) => {
-    props.getFoundUsers(pageNumber, props.pageSize, term);
+  // for User
+  const followingInProgress = useSelector(getFollowingInProgress)
+  const authorizedUserID = useSelector(getAuthorizedUserID)
+
+  // for Search
+  const searchUsers = (term: string) => {
+    setTermForMoreUsersButton(term)
+    setPageNumber(1)
+
+    if (pathname === '/friends') {
+      dispatch(getUsers(1, term, true))
+    }
+    if (pathname === '/users') {
+      dispatch(getUsers(1, term))
+    }
+
+    if (maxPageCount === pageNumber) {
+      setIsShowMoreUsersButton(false)
+    }
+    if (maxPageCount > pageNumber) {
+      setIsShowMoreUsersButton(true)
+    }
   }
 
-  const check = () => {
-    if (props.users.length > 0) {
-      return props.users
-    } else {
-      return props.foundUsers
+  const totalUsersCount = useSelector(getTotalUsersCount)
+  const pageSize = useSelector(getPageSize)
+  const users = useSelector(getUsersSelector)
+  const isFetching = useSelector(getIsFetching)
+  const dispatch = useDispatch()
+
+  let maxPageCount = Math.ceil(totalUsersCount / pageSize);
+  let [pageNumber, setPageNumber] = useState(1);
+
+  let [termForMoreUsersButton, setTermForMoreUsersButton] = useState('');
+  let [isShowMoreUsersButton, setIsShowMoreUsersButton] = useState(true);
+
+  React.useEffect(() => {
+    totalUsersCount > pageSize
+      ? setIsShowMoreUsersButton(true)
+      : setIsShowMoreUsersButton(false)
+  }, [maxPageCount])
+
+  React.useEffect(() => {
+    dispatch(actions.clearUsers())
+    setIsShowMoreUsersButton(true)
+    setPageNumber(1)
+    setTermForMoreUsersButton('')
+
+    if (pathname === '/friends') {
+      dispatch(getUsers(1, '', true))
+    }
+    if (pathname === '/users') {
+      dispatch(getUsers(1, ''))
+    }
+  }, [pathname])
+
+  const handleShowMoreUsers = () => {
+    if (maxPageCount > pageNumber) {
+      setPageNumber(++pageNumber)
+
+      if (pathname === '/friends') {
+        dispatch(getUsers(pageNumber, termForMoreUsersButton, true));
+      }
+      if (pathname === '/users') {
+        dispatch(getUsers(pageNumber, termForMoreUsersButton));
+      }
+    }
+    if (maxPageCount === pageNumber) {
+      setIsShowMoreUsersButton(false)
     }
   }
 
   return <div className={s.wrapper}>
     <Search
-      onPageChanged={searchUsers}
-      totalUsersCount={props.totalUsersCount}
+      searchUsers={searchUsers}
+      totalUsersCount={totalUsersCount}
+      pathname={pathname}
     />
 
     {
-      props.totalUsersCount === 0 && !props.isFetching &&
+      totalUsersCount === 0 && !isFetching &&
       <div className={s.nothingFound}>Nothing found</div>
     }
 
     <div className={s.container}>
-      {check().map(u =>
-        <div key={u.id} className={s.user}>
-          <User
-            id={u.id}
-            photo={u.photos.small}
-            name={u.name}
-            status={u.status}
-            followed={u.followed}
-            unfollow={props.unfollow}
-            follow={props.follow}
-            followingInProgress={props.followingInProgress}
-            authorizedUserID={props.authorizedUserID}
-          />
-        </div>
-      )}
+      <div className={s.wrapUsers}>
+        {users.map(u =>
+          <div key={u.id} className={s.user}>
+            <User
+              id={u.id}
+              photo={u.photos.small}
+              name={u.name}
+              status={u.status}
+              followed={u.followed}
+              unfollow={(id: number) => dispatch(unfollow(id))}
+              follow={(id: number) => dispatch(follow(id))}
+              followingInProgress={followingInProgress}
+              authorizedUserID={authorizedUserID}
+            />
+          </div>
+        )}
+      </div>
 
-      {<div className={s.buttonLoadMore}>
+      {<div className={cn(s.buttonLoadMore, {
+        [s.hiddenButtonLoadMore]: !isShowMoreUsersButton
+      })}>
         <IconButton
           aria-label="load more users"
-          onClick={() => {
-            setPage(++page);
-            props.onPageChanged(page, '');
-          }}
-        >
-          <ExpandMoreIcon />
+          onClick={handleShowMoreUsers}
+        ><ExpandMoreIcon />
         </IconButton>
       </div>
       }
-
     </div>
   </div>
 }
 
-export default Users;
+export default withRouter(Users);

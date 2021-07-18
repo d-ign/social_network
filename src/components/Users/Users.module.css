@@ -27,9 +27,12 @@
 .buttonLoadMore {
   text-align: center;
 }
+.hiddenButtonLoadMore {
+  visibility: hidden;
+}
 
 @media (max-width: 740px) {
-  .container {
+  .wrapUsers {
     display: flex;
     flex-wrap: wrap;
   }

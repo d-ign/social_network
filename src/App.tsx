@@ -15,7 +15,6 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import Login from './components/Login/Login';
-import FriendsContainer from './components/Friends/Friends';
 import ErrorBoundary from './components/Error/ErrorBoundary';
 
 const DialogsContainer = React.lazy(
@@ -58,7 +57,7 @@ const App: React.FC<MapStatePropsType & MapDispatchPropsType> = (
                   render={() => <SuspendedUsers />} />
 
                 <Route path='/friends'
-                  render={() => <FriendsContainer />} />
+                  render={() => <SuspendedUsers />} />
 
                 <Route path='/login'
                   render={() => <Login />} />
