@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { getAuthorizedUserID, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsersSelector } from '../../redux/users-selectors';
+import { getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsersSelector } from '../../redux/selectors/users-selectors';
+import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors';
 import { actions, follow, getUsers, unfollow } from '../../redux/reducers/users-reducer';
 
 import User from './User/User';
