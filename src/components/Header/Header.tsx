@@ -7,9 +7,15 @@ import logout from '../../img/icons/logout.svg';
 import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { MapDispatchPropsType, MapStatePropsType } from './HeaderContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutThunk } from '../../redux/reducers/auth-reducer';
+import { getIsAuth, getLogin } from '../../redux/selectors/auth-selectors';
 
-const Header: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
+const Header: React.FC = (props) => {
+
+  const isAuth = useSelector(getIsAuth)
+  const login = useSelector(getLogin)
+  const dispatch = useDispatch()
 
   const stylesLogoutButton = {
     margin: 16
@@ -23,12 +29,12 @@ const Header: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
       </NavLink>
 
       <div className={s.login}>
-        {props.isAuth
+        {isAuth
           ? <>
-            <span className={s.loginName}>{props.login}</span>
+            <span className={s.loginName}>{login}</span>
             <span className={s.buttonDesctop}>
               <Button
-                onClick={props.logoutThunk}
+                onClick={() => dispatch(logoutThunk())}
                 variant="outlined"
                 style={stylesLogoutButton}
                 startIcon={<ExitToAppIcon />}>
@@ -37,7 +43,7 @@ const Header: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
             </span>
             <span className={s.buttonMobile}>
               <Button
-                onClick={props.logoutThunk}
+                onClick={() => dispatch(logoutThunk())}
                 variant="outlined"
                 style={stylesLogoutButton}
               ><img src={logout} alt="logout" />
