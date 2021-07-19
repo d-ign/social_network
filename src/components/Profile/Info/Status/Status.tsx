@@ -10,13 +10,14 @@ import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../co
 
 type PropsType = {
   status: string
-  updateStatus: (status: string) => void
   isOwner: boolean
+  updateStatus: (status: string) => void
 }
 
 const Status: React.FC<PropsType> = (props) => {
 
-  const classes = useStyles();
+  const { isOwner, status, updateStatus} = props
+  const classes = useStyles()
 
   const stylesSaveAndButton = {
     color: '#fff', 
@@ -25,18 +26,18 @@ const Status: React.FC<PropsType> = (props) => {
   }
 
   let [editMode, setEditMode] = useState(false);
-  let [status, setStatus] = useState(props.status);
+  let [statusLocal, setStatusLocal] = useState(status);
 
   useEffect(() => {
-    setStatus(props.status)
-  }, [props.status]);
+    setStatusLocal(status)
+  }, [status]);
 
   const activateEditMode = () => setEditMode(true);
-  const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value);
+  const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => setStatusLocal(e.currentTarget.value);
   const cancelEditMode = () => setEditMode(false);
 
   const saveStatus = () => {
-    props.updateStatus(status);
+    updateStatus(statusLocal);
     setEditMode(false);
   }
 
@@ -46,7 +47,7 @@ const Status: React.FC<PropsType> = (props) => {
     {editMode && <div className={s.wrap}>
       <Input
         name='status'
-        value={status}
+        value={statusLocal}
         placeholder={'Your status...'}
         autoFocus
         inputProps={{ maxLength: 300 }}
@@ -85,8 +86,8 @@ const Status: React.FC<PropsType> = (props) => {
     </div>
     }
 
-    {props.isOwner && !editMode && <div className={s.status} onClick={activateEditMode}>
-      {props.status ||
+    {isOwner && !editMode && <div className={s.status} onClick={activateEditMode}>
+      {status ||
         <span className={s.statusEmpty}>
           Your status is empty
         </span>
@@ -94,8 +95,8 @@ const Status: React.FC<PropsType> = (props) => {
     </div>
     }
 
-    {!props.isOwner && props.status && <div className={s.statusNotMy}>
-      {props.status}
+    {!isOwner && status && <div className={s.statusNotMy}>
+      {status}
     </div>
     }
   </div>
