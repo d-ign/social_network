@@ -68,7 +68,6 @@ const Users: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = React.mem
   useEffect(() => {
     const parsed = queryString.parse(
       history.location.search.substr(1)) as { term: string }; // substr(1) = удаление ? в начале
-
     if (parsed.term && pathname === '/users') setTermOfUrl(parsed.term)
   }, [])
 
@@ -122,6 +121,7 @@ const Users: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = React.mem
       <Search
         searchUsers={searchUsers}
         totalUsersCount={totalUsersCount}
+        pathname={pathname}
       />
     }
 
@@ -130,6 +130,7 @@ const Users: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = React.mem
         searchUsers={searchUsers}
         totalUsersCount={totalUsersCount}
         termOfUrl={termOfUrl}
+        pathname={pathname}
       />
     }
 
