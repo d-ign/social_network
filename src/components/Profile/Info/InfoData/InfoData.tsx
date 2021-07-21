@@ -55,7 +55,7 @@ type ContactPropsType = {
   contactValue: string
 }
 
-const Contact: React.FC<ContactPropsType> = ({ contactTitle, contactValue }) => {
+const Contact: React.FC<ContactPropsType> = React.memo(({ contactTitle, contactValue }) => {
   return (<>
     {contactValue
       && <div className={s.contact}>
@@ -66,6 +66,6 @@ const Contact: React.FC<ContactPropsType> = ({ contactTitle, contactValue }) => 
       </div>}
   </>
   )
-}
+})
 
 export default InfoData;
