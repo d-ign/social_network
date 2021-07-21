@@ -19,17 +19,7 @@ let initialState = {
 };
 
 const messagesReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
-
-  // копируем только то, что планируем изменять; внутренние объекты массива (с id которые) мы менять не планируем, поэтому их копию и не делаем
-  // stateCopy = 'копия state' или copy of state
-
   switch (action.type) {
-    // case UPDATE_NEW_MESSAGE_BODY:
-    //   return {
-    //     ...state,
-    //     newMessageText: action.body
-    //   };
-
     case 'SEND_MESSAGE':
       let newMessage = {
         id: 4,
@@ -45,13 +35,6 @@ const messagesReducer = (state = initialState, action: ActionsTypes): InitialSta
       return state;
   }
 };
-
-// updateNewMessageBody (читается: обновить ТЕЛО нового сообщения) то же самое, что и "body of new message"
-// больше его не надо, т.к. за состояние сообщения теперь отвечает библиотека redux-form
-// export const updateNewMessageBody = (symbol) => ({
-//   type: UPDATE_NEW_MESSAGE_BODY,
-//   body: symbol
-// });
 
 export const actions = {
   sendMessage: (newMessageText: string) => ({ type: 'SEND_MESSAGE', newMessageText } as const),

@@ -9,8 +9,6 @@ type MeDataType = {
 export const authAPI = {
   async me() {
     const response = await instance.get<DefaultResponseType<MeDataType>>(`auth/me`);
-    // const response = await instance.get(`auth/me`);
-    // debugger
     return response.data;
   },
   async login(email: string, password: string,

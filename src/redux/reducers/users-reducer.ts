@@ -57,18 +57,6 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
         users: []
       }
     }
-    // case 'SET_FRIENDS': {
-    //   return {
-    //     ...state,
-    //     friends: action.friends
-    //   }
-    // }
-    // case 'SET_CURRENT_PAGE': {
-    //   return {
-    //     ...state,
-    //     currentPage: action.currentPage,
-    //   }
-    // }
     case 'SET_TOTAL_USERS_COUNT': {
       return {
         ...state,
