@@ -1,18 +1,3 @@
-.avatar {
-  width: 132px;
-  height: 132px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-.avatar img {
-  width: auto;
-  height: 100%;
-  margin: 0 auto;
-}
-.avatarWrap {
-  position: relative;
-}
 .camera {
   position: absolute;
   top: 95px;
@@ -62,6 +47,7 @@
   overflow-wrap: break-word;
 }
 .buttonsSaveAndCancelProfile {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,7 +84,6 @@
   .fullName {
     text-align: center;
     padding: 10px 0 5px 0;
-    /* margin-right: 30px; */
   }
   .buttonsSaveAndCancelProfile {
     flex-direction: row;

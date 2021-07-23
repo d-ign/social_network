@@ -24,12 +24,19 @@
   font-family: "Mate SC", serif;
   padding-right: 10px;
 }
-.login {
+.rightPart {
+  display: flex;
+  align-items: center;
+}
+.loginAndPhoto {
+  text-decoration: none;
   display: flex;
   align-items: center;
 }
 .loginName {
   font-size: 15px;
+  margin-left: 10px;
+  color: white;
 }
 .logoutImg {
   padding-right: 5px;

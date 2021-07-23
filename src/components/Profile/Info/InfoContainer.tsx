@@ -7,12 +7,12 @@ import { ProfileType } from '../../../types/types';
 
 import Preloader from '../../common/Preloader/Preloader';
 import Status from './Status/Status';
+import Avatar from '../../common/Avatar/Avatar';
 import InfoDataForm from './InfoDataForm/InfoDataForm';
 import InfoData from './InfoData/InfoData';
 
 import s from './InfoContainer.module.css';
 import camera from '../../../img/icons/camera.svg';
-import unknown from '../../../img/no_photo.svg';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
@@ -39,7 +39,7 @@ const ProfileInfo: React.FC<{} & {} & OwnPropsType> = ({ isOwner }) => {
   }
   const stylesEditButton = {
     fontSize: 12,
-    marginTop: 10
+    marginTop: 20
   }
 
   const [editModeProfile, setEditModeProfile] = useState(false);
@@ -74,25 +74,22 @@ const ProfileInfo: React.FC<{} & {} & OwnPropsType> = ({ isOwner }) => {
       <ScrollToTopOnMount />
 
       <div className={s.columnLeft}>
-        <div className={s.avatarWrap}>
-          <div className={s.avatar}>
-            <img src={profile.photos.large || unknown} alt="avatar" />
-            {isOwner && !editModeProfile &&
-              <div className={s.camera}>
-                <label htmlFor="file_out">
-                  <div className={s.wrapImg}>
-                    <img src={camera} alt="icon" />
-                  </div>
-                </label>
-                <input
-                  id="file_out"
-                  className={s.editPhotoInput}
-                  type="file"
-                  onChange={onMainPhotoSelected} />
-              </div>
-            }
-          </div>
-        </div>
+        <Avatar photo={profile.photos.large} size='large'>
+          {isOwner && !editModeProfile &&
+            <div className={s.camera}>
+              <label htmlFor="file_out">
+                <div className={s.wrapImg}>
+                  <img src={camera} alt="icon" />
+                </div>
+              </label>
+              <input
+                id="file_out"
+                className={s.editPhotoInput}
+                type="file"
+                onChange={onMainPhotoSelected} />
+            </div>
+          }
+        </Avatar>
 
         {isOwner && !editModeProfile
           && <Button

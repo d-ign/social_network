@@ -1,25 +1,27 @@
 import React from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutThunk } from '../../redux/reducers/auth-reducer';
+import { getAuthorizedUserID, getIsAuth, getLogin, getMyPhoto } from '../../redux/selectors/auth-selectors';
 
 import s from './Header.module.css';
 import logo from '../../img/icons/logo.svg';
 import logout from '../../img/icons/logout.svg';
 import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutThunk } from '../../redux/reducers/auth-reducer';
-import { getIsAuth, getLogin } from '../../redux/selectors/auth-selectors';
+import Avatar from '../common/Avatar/Avatar';
 
 const Header: React.FC = (props) => {
-
-  const isAuth = useSelector(getIsAuth)
-  const login = useSelector(getLogin)
-  const dispatch = useDispatch()
 
   const stylesLogoutButton = {
     margin: 16
   }
+
+  const isAuth = useSelector(getIsAuth)
+  const login = useSelector(getLogin)
+  const myID = useSelector(getAuthorizedUserID)
+  const myPhoto = useSelector(getMyPhoto)
+  const dispatch = useDispatch()
 
   return (
     <header className={s.header}>
@@ -28,10 +30,14 @@ const Header: React.FC = (props) => {
         <span className={s.headerTitle}>Social network</span>
       </NavLink>
 
-      <div className={s.login}>
+      <div className={s.rightPart}>
         {isAuth
           ? <>
-            <span className={s.loginName}>{login}</span>
+            <NavLink className={s.loginAndPhoto} to={'/profile/' + myID}>
+              <Avatar photo={myPhoto} size='small' />
+              <span className={s.loginName}>{login}</span>
+            </NavLink>
+
             <span className={s.buttonDesctop}>
               <Button
                 onClick={() => dispatch(logoutThunk())}

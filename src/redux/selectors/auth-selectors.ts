@@ -15,3 +15,7 @@ export const getAuthorizedUserID = (state: AppStateType) => {
 export const getCaptchaURL = (state: AppStateType) => {
   return state.auth.captchaURL
 }
+
+export const getMyPhoto = (state: AppStateType) => {
+  return state.auth.myPhoto
+}

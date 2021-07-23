@@ -4,6 +4,7 @@ import { securityAPI } from '../../api/security-api';
 
 import { FormAction, stopSubmit } from 'redux-form';
 import { BaseThunkType, InferActionsTypes } from '../redux-store';
+import { profileAPI } from '../../api/profile-api';
 
 let initialState = {
   userID: null as number | null,
@@ -11,6 +12,7 @@ let initialState = {
   login: null as string | null,
   isAuth: false,
   captchaURL: null as string | null,
+  myPhoto: null as string | null,
 };
 
 const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
@@ -20,6 +22,13 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
       return {
         ...state,
         ...action.payload,
+      }
+    }
+    case 'SET_MY_PHOTO': {
+      return {
+        ...state,
+        // @ts-ignore
+        myPhoto: action.payload.photo,
       }
     }
     default:
@@ -37,6 +46,11 @@ const actions = {
     type: 'GET_CAPTCHA_URL_SUCCESS',
     payload: { captchaURL } as const
   }),
+
+  setMyPhoto: (photo: string | null) => ({
+    type: 'SET_MY_PHOTO',
+    payload: { photo } as const
+  }),
 }
 
 export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
@@ -46,6 +60,9 @@ export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
     let { id, email, login } = response.data;
     dispatch(actions.setAuthUserData(id, email, login, true))
   }
+  
+  const myProfile = await profileAPI.getProfile(response.data.id);
+  dispatch(actions.setMyPhoto(myProfile.photos.large));
 }
 
 const setCaptchaThunk = (): ThunkType => async (dispatch) => {
