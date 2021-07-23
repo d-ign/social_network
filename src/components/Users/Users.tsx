@@ -62,24 +62,24 @@ const Users: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = React.mem
     totalUsersCount > pageSize
       ? setIsShowMoreUsersButton(true)
       : setIsShowMoreUsersButton(false)
-  }, [maxPageCount])
+  }, [maxPageCount, totalUsersCount, pageSize])
 
   // если есть, достаём из URL term
   useEffect(() => {
     const parsed = queryString.parse(
       history.location.search.substr(1)) as { term: string }; // substr(1) = удаление ? в начале
     if (parsed.term && pathname === '/users') setTermOfUrl(parsed.term)
-  }, [])
+  }, [history.location.search, pathname])
 
   // пуш введённого из поиска в URL
   useEffect(() => {
     if (pathname === '/users') {
-      history.push({
+      history.replace({
         pathname: '/users',
         search: termOfUrl ? `?term=${termOfUrl}` : '',
       })
     }
-  }, [termOfUrl])
+  }, [termOfUrl, history, pathname])
 
   // отрисовка friends + обнуление
   useEffect(() => {
@@ -91,14 +91,14 @@ const Users: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = React.mem
       dispatch(getUsers(1, '', true))
       setTermOfUrl('')
     }
-  }, [pathname])
+  }, [pathname, dispatch])
 
   // отрисовка users + зависимость от search
   useEffect(() => {
     if (pathname === '/users') {
       dispatch(getUsers(1, termOfUrl))
     }
-  }, [termOfUrl, pathname])
+  }, [termOfUrl, pathname, dispatch])
 
   const handleShowMoreUsers = () => {
     if (maxPageCount > pageNumber) {

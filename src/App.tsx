@@ -29,7 +29,7 @@ const App: React.FC = (props) => {
   const userID = useSelector(getAuthorizedUserID)
   const dispatch = useDispatch()
   // @ts-ignore
-  React.useEffect(() => dispatch(initializeAppThunk()), [initializeAppThunk]);
+  React.useEffect(() => dispatch(initializeAppThunk()), [dispatch]);
 
   if (!initialized) {
     return <Preloader />
