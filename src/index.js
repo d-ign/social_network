@@ -22,6 +22,9 @@ let theme = createMuiTheme({
       main: '#919191',
       // фон светлее общего (hover и текст в profileForm)
 
+      // #222831
+      // фон header, nav, content
+
       // #4F4F4F
       // общий фон
 
