@@ -17,7 +17,7 @@ export const profileAPI = {
   },
 
   async updateStatus(status: string) {
-    const response = await instance.put<DefaultResponseType>(`profile/status`, status);
+    const response = await instance.put<DefaultResponseType>(`profile/status`, {status});
     return response.data;
   },
 

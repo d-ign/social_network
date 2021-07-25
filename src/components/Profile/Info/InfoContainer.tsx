@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { submit } from 'redux-form';
-import { getErrorProfileContacts, getProfile, getShowSuccessSave, getStatusSelector } from '../../../redux/selectors/profile-selectors';
-import { savePhotoThunk, saveProfileThunk, updateStatus } from '../../../redux/reducers/profile-reducer';
+import { getErrorProfileContacts, getProfile, getShowSuccessSave } from '../../../redux/selectors/profile-selectors';
+import { savePhotoThunk, saveProfileThunk } from '../../../redux/reducers/profile-reducer';
 import { ProfileType } from '../../../types/types';
 
 import Preloader from '../../common/Preloader/Preloader';
@@ -44,8 +44,6 @@ const ProfileInfo: React.FC<{} & {} & OwnPropsType> = ({ isOwner }) => {
 
   const [editModeProfile, setEditModeProfile] = useState(false);
 
-  // for Status
-  const status = useSelector(getStatusSelector)
   // for InfoDataForm
   const errorProfileContacts = useSelector(getErrorProfileContacts)
 
@@ -132,8 +130,6 @@ const ProfileInfo: React.FC<{} & {} & OwnPropsType> = ({ isOwner }) => {
 
         {!editModeProfile &&
           <Status
-            status={status}
-            updateStatus={updateStatus}
             isOwner={isOwner} />
         }
 

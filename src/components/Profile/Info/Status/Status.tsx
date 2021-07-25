@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import s from './Status.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStatusSelector } from '../../../../redux/selectors/profile-selectors';
+import { updateStatus } from '../../../../redux/reducers/profile-reducer';
 
+import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
+
+import s from './Status.module.css';
+import useStyles from '../../../common/ElementCustom/InputCustomProfileStatus';
 import { Input, Button } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 
-import useStyles from '../../../common/ElementCustom/InputCustomProfileStatus';
-import { handleInputCount, handleFocusCount, handleBlurCount } from '../../../common/inputCount/inputCount';
-
 type PropsType = {
-  status: string
   isOwner: boolean
-  updateStatus: (status: string) => void
 }
 
 const Status: React.FC<PropsType> = (props) => {
 
-  const { isOwner, status, updateStatus} = props
+  const { isOwner } = props
   const classes = useStyles()
 
   const stylesSaveAndButton = {
@@ -24,6 +25,9 @@ const Status: React.FC<PropsType> = (props) => {
     margin: 10, 
     width: '100%',
   }
+
+  const status = useSelector(getStatusSelector)
+  const dispatch = useDispatch()
 
   let [editMode, setEditMode] = useState(false);
   let [statusLocal, setStatusLocal] = useState(status);
@@ -37,7 +41,7 @@ const Status: React.FC<PropsType> = (props) => {
   const cancelEditMode = () => setEditMode(false);
 
   const saveStatus = () => {
-    updateStatus(statusLocal);
+    dispatch(updateStatus(statusLocal));
     setEditMode(false);
   }
 
