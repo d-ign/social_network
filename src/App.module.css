@@ -54,9 +54,9 @@ body {
   background-color: #222831;
   border-radius: 10px 10px 0 0;
   padding: 20px;
+  padding-bottom: 10px;
   max-width: 690px;
   width: 100%;
-  min-height: 100vh;
   position: relative;
 }
 
@@ -72,5 +72,15 @@ body {
   .appWrapperContent {
     border-radius: 10px;
     padding: 10px;
+  }
+}
+@media (max-height: 500px) {
+  .appWrapperContent {
+    padding-bottom: 5px;
+  }
+}
+@media (max-width: 400px) {
+  .appWrapperContent {
+    padding: 5px;
   }
 }
