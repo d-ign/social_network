@@ -44,7 +44,7 @@
 .buttonMobile {
   display: none;
 }
-@media (max-width: 550px) {
+@media (max-width: 570px) {
   .loginName,
   .buttonDesctop {
     display: none;
@@ -53,12 +53,17 @@
     display: inline;
   }
 }
-@media (max-width: 400px) {
+@media (max-width: 440px) {
   .headerTitle {
     font-size: 18px;
   }
   .logoAndTitle img {
     width: 30px;
     height: 30px;
+  }
+}
+@media (max-width: 360px) {
+  .headerTitle {
+    font-size: 14px;
   }
 }
