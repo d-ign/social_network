@@ -61,7 +61,9 @@ const Contact: React.FC<ContactPropsType> = React.memo(({ contactTitle, contactV
       && <div className={s.contact}>
         <span className={s.contactTitle}>{contactTitle}:</span>
         <div className={s.contactTextWrap}>
-          <a className={s.contactText} href={contactValue}>{contactValue}</a>
+          <a className={s.contactText} href={contactValue}>
+            {contactValue.replace(/(?:https?):\/\/([^/\s]+)[^\s]*/ig, '$1')}
+          </a>
         </div>
       </div>}
   </>

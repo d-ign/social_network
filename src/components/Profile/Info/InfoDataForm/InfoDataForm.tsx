@@ -91,16 +91,19 @@ const DataForm: React.FC<InjectedFormProps<ProfileType, OwnPropsType> & OwnProps
     <div className={s.wrap}>
       <div className={s.titleAllContacts}>Contacts:</div>
 
-      <div className={s.errorProfileContacts}>
+      {errorProfileContacts ? <div className={s.errorProfileContacts}>
         {errorProfileContacts}
-      </div>
+      </div> : <></>}
 
       {Object.keys(initialValues.contacts).map(key => {
-        return <div className={s.contacts} key={key}>
+        return <div className={s.contact} key={key}>
           <div className={s.titleContact}>{key}:</div>
           <Field
             component={renderTextField}
             name={'contacts.' + key}
+            multiline={true}
+            fullWidth={true}
+            placeholder='https://...'
           />
         </div>
       })}

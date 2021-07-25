@@ -35,6 +35,7 @@
   width: 5px;
 }
 .text {
+  overflow: hidden;
   font-style: italic;
   overflow-wrap: break-word;
   margin: 0 15px 0 20px;
@@ -55,6 +56,10 @@
 }
 .contactText {
   color: white;
+  text-decoration: none;
+}
+.contactText:hover {
+  text-decoration: underline;
 }
 @media (max-width: 860px) {
   .contactTextWrap {
