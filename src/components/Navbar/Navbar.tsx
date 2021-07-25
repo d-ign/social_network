@@ -25,13 +25,13 @@ const Navbar: React.FC<{} & {} & RouteComponentProps<PathParamsType>> = (
         Profile
       </NavLink>
 
-      <NavLink to='/dialogs' activeClassName={s.active} className={s.navLink}>
+      <NavLink to='/chat' activeClassName={s.active} className={s.navLink}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24"
-          fill={pathname === '/dialogs' ? '#00bcd4' : 'white'}
+          fill={pathname === '/chat' ? '#00bcd4' : 'white'}
           className={s.navLinkImg}
           viewBox="0 0 24 24"><path d="M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z" />
         </svg>
-        Messages
+        Chat
       </NavLink>
 
       <NavLink to='/friends' activeClassName={s.active} className={s.navLink}>

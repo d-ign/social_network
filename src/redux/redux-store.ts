@@ -7,6 +7,7 @@ import messagesReducer from './reducers/messages-reducer';
 import profileReducer from './reducers/profile-reducer';
 import usersReducer from './reducers/users-reducer';
 import appReducer from './reducers/app-reducer';
+import chatReducer from './reducers/chat-reducer';
 
 let rootReducer = combineReducers({
   profilePage: profileReducer,
@@ -15,6 +16,7 @@ let rootReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
   form: formReducer,
+  chat: chatReducer,
 });
 
 // types state app

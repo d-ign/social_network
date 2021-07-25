@@ -1,0 +1,239 @@
+/* полоса прокрутки Mozilla Firefox */
+@-moz-document url-prefix() {
+  .allMessages {
+    scrollbar-color: #919191 #4f4f4f;
+    scrollbar-width: thin;
+  }
+}
+/* Chat */
+.membersAndMessages {
+  display: flex;
+  position: relative;
+}
+/* Members */
+.titleMembersWrap,
+.buttonSortWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.membersContainer {
+  flex: 1 1 200px;
+}
+.titleMembers {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.titleMembersArrow {
+  display: none;
+}
+.member {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.showAllWrap {
+  text-align: center;
+}
+.showAll {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
+}
+.showAll:hover {
+  text-decoration: underline;
+}
+/* Messages */
+.allMessages,
+.membersContainer {
+  max-height: 68vh;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  overflow-y: auto;
+}
+.allMessages {
+  display: flex;
+  flex-direction: column;
+}
+.messageContainer,
+.myMessageContainer {
+  display: flex;
+  max-width: 300px;
+  width: 100%;
+  margin: 5px 0 5px 0;
+  padding: 10px;
+  background-color: #00bcd433;
+  border-radius: 5px;
+}
+.myMessageContainer {
+  background-color: #00bcd480;
+  align-self: flex-end;
+}
+.name {
+  font-weight: 900;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+.nameMember {
+  font-size: 12px;
+  padding-left: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.message {
+  overflow-wrap: break-word;
+  width: 100%;
+  padding-right: 10px;
+}
+.avatarSmall {
+  display: none;
+}
+.nameAndMessage {
+  margin-left: 15px;
+  max-width: 200px;
+}
+/* AddMessageForm */
+.form {
+  background-color: #222831;
+}
+.form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+/* width */
+@media (max-width: 760px) {
+  .titleMembersArrow {
+    display: inline;
+  }
+  .buttonSortWrapHidden2,
+  .chatMembersWrapHidden2 {
+    display: none;
+  }
+  .buttonSortWrapHidden,
+  .chatMembersWrapHidden {
+    position: absolute;
+    right: 15px;
+    top: 36px;
+    width: 150px;
+    background-color: #222831;
+    border-left: 1px solid #00bcd4;
+  }
+  .chatMembersWrapHidden {
+    top: 67px;
+    padding: 0 10px 10px 10px;
+    border-radius: 0 0 5px 5px;
+    max-height: 300px;
+    overflow: auto;
+    border-left: 1px solid #00bcd4;
+    border-bottom: 1px solid #00bcd4;
+  }
+  .membersAndMessages {
+    display: block;
+  }
+  .membersContainer {
+    order: 1;
+  }
+  .allMessages {
+    order: 2;
+  }
+  .titleMembersWrap {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    background-color: #222831;
+    width: 150px;
+    flex-direction: row;
+    padding: 0 8px 0 8px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #00bcd4;
+    border-top: none;
+  }
+  .titleMembersWrapDeployed {
+    border-radius: 0;
+    border-bottom: 1px solid transparent;
+    border-right: 1px solid transparent;
+  }
+  .buttonSortWrapHiddenNotShowAll {
+    border-right: 1px solid #00bcd4;
+  }
+  .titleMembers {
+    font-size: 12px;
+    padding-top: 5px;
+  }
+}
+
+@media (max-width: 470px) {
+  .form {
+    padding: 5px;
+  }
+}
+@media (max-width: 420px) {
+  .avatarMedium {
+    display: none;
+  }
+  .avatarSmall {
+    display: block;
+  }
+  .name {
+    font-size: 14px;
+  }
+  .messageContainer,
+  .myMessageContainer {
+    max-width: 200px;
+  }
+  .nameAndMessage {
+    margin-left: 10px;
+    max-width: 150px;
+  }
+}
+
+/* height */
+@media (max-height: 620px) {
+  .allMessages,
+  .membersContainer {
+    max-height: 63vh;
+  }
+}
+@media (max-height: 590px) {
+  .allMessages,
+  .membersContainer {
+    max-height: 58vh;
+  }
+}
+@media (max-height: 460px) {
+  .allMessages,
+  .membersContainer {
+    max-height: 53vh;
+  }
+  .form {
+    padding: 3px;
+  }
+}
+@media (max-height: 410px) {
+  .allMessages,
+  .membersContainer {
+    max-height: 48vh;
+  }
+}
+@media (max-height: 371px) {
+  .allMessages,
+  .membersContainer {
+    max-height: 43vh;
+  }
+}
+@media (max-height: 338px) {
+  .allMessages,
+  .membersContainer {
+    max-height: 38vh;
+  }
+}

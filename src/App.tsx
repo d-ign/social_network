@@ -15,12 +15,12 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import Login from './components/Login/Login';
 import ErrorBoundary from './components/Error/ErrorBoundary';
 
-const DialogsContainer = React.lazy(
-  () => import('./components/Dialogs/DialogsContainer'));
+const ChatContainer = React.lazy(
+  () => import('./components/Chat/Chat'));
 const UsersContainer = React.lazy(
   () => import('./components/Users/UsersContainer'));
 
-const SuspendedDialogs = withSuspense(DialogsContainer);
+const SuspendedChat = withSuspense(ChatContainer);
 const SuspendedUsers = withSuspense(UsersContainer);
 
 const App: React.FC = (props) => {
@@ -48,16 +48,16 @@ const App: React.FC = (props) => {
               <Switch>
                 <Redirect from='/profile/undefined' to="/" />
 
-                <Route path='/dialogs'
-                  render={() => <SuspendedDialogs />} />
-
                 <Route path='/profile/:userId'
                   render={() => <ProfileContainer />} />
 
-                <Route path='/users'
-                  render={() => <SuspendedUsers />} />
+                <Route path='/chat'
+                  render={() => <SuspendedChat />} />
 
                 <Route path='/friends'
+                  render={() => <SuspendedUsers />} />
+
+                <Route path='/users'
                   render={() => <SuspendedUsers />} />
 
                 <Route path='/login'
