@@ -3,7 +3,6 @@ import thunkMiddleware, { ThunkAction } from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
 import authReducer from './reducers/auth-reducer';
-import messagesReducer from './reducers/messages-reducer';
 import profileReducer from './reducers/profile-reducer';
 import usersReducer from './reducers/users-reducer';
 import appReducer from './reducers/app-reducer';
@@ -11,7 +10,6 @@ import chatReducer from './reducers/chat-reducer';
 
 let rootReducer = combineReducers({
   profilePage: profileReducer,
-  messagesPage: messagesReducer,
   usersPage: usersReducer,
   auth: authReducer,
   app: appReducer,
