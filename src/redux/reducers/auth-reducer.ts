@@ -60,9 +60,11 @@ export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
     let { id, email, login } = response.data;
     dispatch(actions.setAuthUserData(id, email, login, true))
   }
-  
-  const myProfile = await profileAPI.getProfile(response.data.id);
-  dispatch(actions.setMyPhoto(myProfile.photos.large));
+
+  if (Object.keys(response.data).length !== 0) {
+    const myProfile = await profileAPI.getProfile(response.data.id);
+    dispatch(actions.setMyPhoto(myProfile.photos.large));
+  }
 }
 
 const setCaptchaThunk = (): ThunkType => async (dispatch) => {
@@ -71,7 +73,7 @@ const setCaptchaThunk = (): ThunkType => async (dispatch) => {
   dispatch(actions.setCaptcha(captcha))
 }
 
-export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async (dispatch) => {
+export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => async (dispatch) => {
   const response = await authAPI.login(email, password, rememberMe, captcha);
 
   if (response.resultCode === ResultCodesEnum.Success) {
