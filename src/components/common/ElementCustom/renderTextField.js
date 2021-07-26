@@ -19,7 +19,7 @@ const renderTextField = (props) => {
     {
       touched && (
         (error &&
-          <span style={{ color: 'red' }}>{error}</span>)
+          <span style={{ color: '#f44336' }}>{error}</span>)
         || (warning && <span>{warning}</span>)
       )
     }

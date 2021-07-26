@@ -33,7 +33,7 @@
   position: relative;
 }
 .errorProfileContacts {
-  color: red;
+  color: #f44336;
   padding: 5px;
 }
 @media (max-width: 420px) {
