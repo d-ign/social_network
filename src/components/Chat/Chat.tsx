@@ -51,14 +51,29 @@ const Members: React.FC = () => {
   const itemsCount = isShowAll ? chatMembers.length : 5
   let [isShowMembers, setIsShowMembers] = useState(false)
 
-  return <div className={s.membersContainer}>
-    <div className={cn(s.titleMembersWrap, { [s.titleMembersWrapDeployed]: isShowMembers }, { [s.buttonSortWrapHiddenNotShowAll]: !isShowAll })}
-      onClick={() => isShowMembers ? setIsShowMembers(false) : setIsShowMembers(true)}>
+  return <div className={cn(
+    s.membersContainer,
+    { [s.membersContainerHidden]: !chatMembers.length }
+  )}>
+    <div className={cn(
+      s.titleMembersWrap,
+      { [s.titleMembersWrapDeployed]: isShowMembers },
+      { [s.buttonSortWrapHiddenNotShowAll]: !isShowAll }
+    )}
+      onClick={() => isShowMembers
+        ? setIsShowMembers(false)
+        : setIsShowMembers(true)
+      }>
       <div className={s.titleMembers}>Members</div>
       <Icon className={s.titleMembersArrow} path={mdiChevronDown} title="ArrowShowMembers" size='18px' />
     </div>
 
-    <div className={cn(s.buttonSortWrap, { [s.buttonSortWrapHidden]: isShowMembers }, { [s.buttonSortWrapHidden2]: !isShowMembers }, { [s.buttonSortWrapHiddenNotShowAll]: !isShowAll })}>
+    <div className={cn(
+      s.buttonSortWrap,
+      { [s.buttonSortMedia]: isShowMembers },
+      { [s.buttonSortNotShowMembers]: !isShowMembers },
+      { [s.buttonSortNotShowAll]: !isShowAll }
+    )}>
       <Button
         onClick={() => isReverseSort
           ? setIsReverseSort(false)
@@ -67,10 +82,15 @@ const Members: React.FC = () => {
           ? <ArrowDropUpIcon />
           : <ArrowDropDownIcon />}
         style={{ fontSize: 10, marginBottom: 5, padding: 3 }}
-      >sort by name</Button>
+      >sort by name
+      </Button>
     </div>
 
-    <div className={cn({ [s.chatMembersWrapHidden]: isShowMembers }, { [s.chatMembersWrapHidden2]: !isShowMembers }, { [s.buttonSortWrapHiddenNotShowAll]: !isShowAll })}>
+    <div className={cn(
+      { [s.chatMembersMedia]: isShowMembers },
+      { [s.chatMembersNotShowMembers]: !isShowMembers },
+      { [s.buttonSortNotShowAll]: !isShowAll }
+    )}>
       {
         chatMembers && chatMembers
           .slice(0, itemsCount)
@@ -95,8 +115,7 @@ const Members: React.FC = () => {
           ? <div className={s.showAllWrap}>
             <span className={s.showAll} onClick={() => setIsShowAll(true)}>
               show all...
-            </span>
-          </div>
+            </span></div>
           : ''
       }
     </div>
@@ -125,13 +144,14 @@ const Messages: React.FC = () => {
   }, [messages, isAutoScroll])
 
   return (
-    <div className={s.allMessages} onScroll={scrollHandler}>
-      {
-        messages
+    <div className={cn(s.allMessages, { [s.allMessagesAbsent]: !messages.length })} onScroll={scrollHandler}>
+      {messages.length
+        ? messages
           .filter(m => m.message.trim().length > 0)
           .map((m: ChatMessageType) =>
             <Message key={m.id} message={m} />
           )
+        : <div className={s.noMessages}>No messages yet...<br />Write something!</div>
       }
       <div ref={messagesAnchorRef}></div>
     </div>
