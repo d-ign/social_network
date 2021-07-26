@@ -20,17 +20,6 @@ const validate = (values: LoginFormValuesType) => {
   }
 
   const errors: ErrorsType = {}
-  const requiredFields = [
-    'email',
-    'password',
-    'captcha'
-  ]
-
-  requiredFields.forEach(field => {
-    if (!values[field as keyof LoginFormValuesType]) {
-      errors[field as keyof ErrorsType] = 'Required'
-    }
-  })
 
   if (values.email
     && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -86,62 +75,81 @@ const Login: React.FC = (props) => {
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType> = ({ handleSubmit, error, captchaURL }) => {
 
   const stylesLoginButton: any = {
-    width: '100%', 
-    fontSize: 16, 
-    fontWeight: 'bold', 
-    color: '#fff' 
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff'
+  }
+
+  const dispatch = useDispatch()
+
+  const onTestAccountSubmit = (email: string, password: string) => {
+    dispatch(loginThunk(email, password, false, null))
   }
 
   return <>
     <form onSubmit={handleSubmit}>
-      <div className={s.row}>
-        <Field
-          component={renderTextField}
-          name='email'
-          label='Email:'
-          type="email"
-          fullWidth={true}
-        />
-      </div>
-      <div className={s.row}>
-        <Field
-          component={renderTextField}
-          name='password'
-          label='Password:'
-          type="password"
-          fullWidth={true}
-        />
-      </div>
-      <div className={cn(s.row, s.rowCheckbox)}>
-        <Field
-          component={renderCheckbox}
-          name='rememberMe'
-          label='Remember me'
-        />
-      </div>
+      <div className={s.loginBlockSubstrate}>
+      <div className={s.loginBlock}>
+        <div className={s.row}>
+          <Field
+            component={renderTextField}
+            name='email'
+            label='Email:'
+            type="email"
+            fullWidth={true}
+          />
+        </div>
+        <div className={s.row}>
+          <Field
+            component={renderTextField}
+            name='password'
+            label='Password:'
+            type="password"
+            fullWidth={true}
+          />
+        </div>
+        <div className={cn(s.row, s.rowCheckbox)}>
+          <Field
+            component={renderCheckbox}
+            name='rememberMe'
+            label='Remember me'
+          />
+        </div>
 
-      {captchaURL && <img src={captchaURL} alt='captcha' />}
-      {captchaURL &&
-        <Field
-          component={renderTextField}
-          fullWidth={true}
-          name='captcha' />
-      }
-
-      <div className={s.row}>
-        <Button
-          type='submit'
-          variant="contained"
-          color="primary"
-          style={stylesLoginButton}
-        >Log in</Button>
-
-        {error &&
-          <div className={s.formError}>
-            {error}
-          </div>
+        {captchaURL && <img src={captchaURL} alt='captcha' />}
+        {captchaURL &&
+          <Field
+            component={renderTextField}
+            fullWidth={true}
+            name='captcha' />
         }
+
+        <div className={s.row}>
+          <Button
+            type='submit'
+            variant="contained"
+            color="primary"
+            fullWidth={true}
+            style={stylesLoginButton}
+          >Log in</Button>
+
+          {error &&
+            <div className={s.formError}>
+              {error}
+            </div>
+          }
+        </div>
       </div>
+      </div>
+      <p>or</p>
+      <Button
+        onClick={() => onTestAccountSubmit('free@samuraijs.com', 'free')}
+        variant="contained"
+        color="secondary"
+        fullWidth={true}
+        style={stylesLoginButton}
+      >Login to test account
+      </Button>
     </form>
   </>
 }
