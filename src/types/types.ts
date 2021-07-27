@@ -1,7 +1,9 @@
 export type PostType = {
-  id?: number
+  idPost: string
+  author: string | undefined
   message: string
   likesCount: number
+  isLikeClick: boolean
 }
 
 export type ProfileType = {

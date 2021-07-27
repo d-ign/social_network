@@ -15,3 +15,19 @@ export const getShowSuccessSave = (state: AppStateType) => {
 export const getErrorProfileContacts = (state: AppStateType) => {
   return state.profilePage.errorProfileContacts
 }
+
+export const getPosts = (state: AppStateType) => {
+  return state.profilePage.posts
+}
+
+export const getPostsForDelete = (state: AppStateType) => {
+  return state.profilePage.postsForDelete
+}
+
+export const getToggleClickDeleteSelectedPosts = (state: AppStateType) => {
+  return state.profilePage.isClickDeleteSelectedPosts
+}
+
+export const getIsSelectedPost = (state: AppStateType) => {
+  return state.profilePage.isSelectedPost
+}

@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { getUserProfile, getStatus } from '../../redux/reducers/profile-reducer';
 
 import withAuthRedirect from '../hoc/withAuthRedirect';
-import WallContainer from './Wall/WallContainer';
+import Wall from './Wall/Wall';
 import InfoContainer from './Info/InfoContainer';
 
 type MapStatePropsType = {
@@ -56,7 +56,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
       <InfoContainer
         isOwner={+this.props.match.params.userId === this.props.authorizedUserID}
       />
-      <WallContainer />
+      <Wall />
     </>
   }
 }
