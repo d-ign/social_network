@@ -35,12 +35,9 @@ beforeEach(() => {
         status: 'status_3'
       },
     ],
-    friends: [],
-    foundUsers: [],
 
     pageSize: 50,
     totalUsersCount: 0,
-    currentPage: 1,
 
     isFetching: true,
     followingInProgress: [],
