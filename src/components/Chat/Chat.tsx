@@ -7,6 +7,7 @@ import { getChatMembers, getMessages, getStatus } from '../../redux/selectors/ch
 import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors';
 
 import Avatar from '../common/Avatar/Avatar';
+import withAuthRedirect from '../hoc/withAuthRedirect';
 
 import s from './Chat.module.css';
 import cn from 'classnames';
@@ -229,4 +230,4 @@ const AddMessageForm: React.FC = () => {
   )
 }
 
-export default Chat;
+export default withAuthRedirect(Chat);

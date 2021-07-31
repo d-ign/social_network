@@ -100,6 +100,7 @@ export const logoutThunk = (): ThunkType => async (dispatch) => {
 
   if (response.resultCode === ResultCodesEnum.Success) {
     dispatch(actions.setAuthUserData(null, null, null, false))
+    dispatch(actions.setMyPhoto(null));
   }
 }
 
