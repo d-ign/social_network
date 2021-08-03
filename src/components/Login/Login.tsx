@@ -147,7 +147,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, OwnPropsType> &
         variant="contained"
         color="secondary"
         fullWidth={true}
-        style={stylesLoginButton}
+        style={stylesLoginButton && {marginBottom: '15px'}}
       >Login to test account
       </Button>
     </form>
