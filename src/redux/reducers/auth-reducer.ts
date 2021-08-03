@@ -61,6 +61,15 @@ export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
     dispatch(actions.setAuthUserData(id, email, login, true))
   }
 
+  if (response.resultCode === ResultCodesEnum.Error) {
+    const message = response.messages;
+    const action = stopSubmit('loginForm', {
+      _error: message.length > 0 ? message[0] : 'Some error'
+    });
+    // Some error - на всякий случай, если с сервера придёт пустое сообщение при ошибке
+    dispatch(action);
+  }
+
   if (Object.keys(response.data).length !== 0) {
     const myProfile = await profileAPI.getProfile(response.data.id);
     dispatch(actions.setMyPhoto(myProfile.photos.large));

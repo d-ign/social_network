@@ -135,7 +135,14 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, OwnPropsType> &
 
           {error &&
             <div className={s.formError}>
-              {error}
+              {
+              error === 'You are not authorized' 
+                  ? <>
+                  <div>You are not authorized</div>
+                  <div>(please, unblock third party cookies)</div>
+                  </>
+              : error
+              }
             </div>
           }
         </div>
