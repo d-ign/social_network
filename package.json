@@ -30,6 +30,14 @@
     "build": "react-scripts build",
     "deploy": "gh-pages -d build"
   },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/git/commitizen.js"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -61,6 +69,8 @@
     "@types/react-test-renderer": "^17.0.1",
     "@types/redux-form": "^8.3.2",
     "@types/uuid": "^8.3.1",
+    "commitizen": "^4.2.4",
+    "cz-customizable": "^6.3.0",
     "gh-pages": "^3.2.0",
     "react-test-renderer": "^17.0.2",
     "typescript": "^4.3.5"
