@@ -1,14 +1,14 @@
-import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { AppStateType } from '../../redux/redux-store';
-import { RouteComponentProps } from 'react-router-dom';
-import { getUserProfile, getStatus } from '../../redux/reducers/profile-reducer';
+import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { RouteComponentProps } from 'react-router-dom'
+import { AppStateType } from '../../redux/redux-store'
+import { getUserProfile, getStatus } from '../../redux/reducers/profile-reducer'
 
-import withAuthRedirect from '../hoc/withAuthRedirect';
-import Wall from './Wall/Wall';
-import InfoContainer from './Info/InfoContainer';
+import withAuthRedirect from '../hoc/withAuthRedirect'
+import Wall from './Wall/Wall'
+import InfoContainer from './Info/InfoContainer'
 
 type MapStatePropsType = {
   authorizedUserID: number | null
@@ -23,58 +23,67 @@ type PathParamsType = {
   userId: string
 }
 
-type PropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>;
+type PropsType = MapStatePropsType &
+  MapDispatchPropsType &
+  RouteComponentProps<PathParamsType>
 
 class ProfileContainer extends React.PureComponent<PropsType> {
-
-  refreshProfile() {
-    let userId: number | null = +this.props.match.params.userId;
-
-    if (!userId) {
-      userId = this.props.authorizedUserID;
-      if (!userId) {
-        this.props.history.push('/login')
-      }
-    }
-
-    this.props.getUserProfile(userId as number);
-    this.props.getStatus(userId as number);
-  }
-
   componentDidMount() {
     this.refreshProfile()
   }
+
   componentDidUpdate(prevProps: PropsType) {
+    const { match } = this.props
     // рендер при переходе с одной страницы на другую
-    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+    if (match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile()
     }
   }
 
+  refreshProfile() {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { match, authorizedUserID, history, getUserProfile, getStatus } =
+      this.props
+    let userId: number | null = +match.params.userId
+
+    if (!userId) {
+      userId = authorizedUserID
+      if (!userId) {
+        history.push('/login')
+      }
+    }
+
+    getUserProfile(userId as number)
+    getStatus(userId as number)
+  }
+
   render() {
-    return <>
-      <InfoContainer
-        isOwner={+this.props.match.params.userId === this.props.authorizedUserID}
-      />
-      <Wall />
-    </>
+    const { match, authorizedUserID } = this.props
+    return (
+      <>
+        <InfoContainer isOwner={+match.params.userId === authorizedUserID} />
+        <Wall />
+      </>
+    )
   }
 }
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     authorizedUserID: state.auth.userID,
   }
-};
+}
 
 export default compose<React.ComponentType>(
-  connect<MapStatePropsType, MapDispatchPropsType, RouteComponentProps<PathParamsType>, AppStateType>(
-    mapStateToProps,
-    {
-      getUserProfile,
-      getStatus,
-    }
-  ),
+  connect<
+    MapStatePropsType,
+    MapDispatchPropsType,
+    RouteComponentProps<PathParamsType>,
+    AppStateType
+  >(mapStateToProps, {
+    getUserProfile,
+    getStatus,
+  }),
   withRouter,
   withAuthRedirect
 )(ProfileContainer)

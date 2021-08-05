@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.11.2",
     "@mdi/js": "^5.9.55",
     "@mdi/react": "^1.5.0",
+    "@types/react-router": "^5.1.16",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
@@ -26,6 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "lint": "eslint src/. --fix --color",
     "test": "react-scripts test",
     "build": "react-scripts build",
     "deploy": "gh-pages -d build"
@@ -37,12 +39,6 @@
     "cz-customizable": {
       "config": "config/git/commitizen.js"
     }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -69,9 +65,21 @@
     "@types/react-test-renderer": "^17.0.1",
     "@types/redux-form": "^8.3.2",
     "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
     "commitizen": "^4.2.4",
     "cz-customizable": "^6.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^3.2.0",
+    "prettier": "^2.3.2",
     "react-test-renderer": "^17.0.2",
     "typescript": "^4.3.5"
   }

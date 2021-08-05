@@ -1,20 +1,24 @@
-import React from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutThunk } from '../../redux/reducers/auth-reducer';
-import { getAuthorizedUserID, getIsAuth, getLogin, getMyPhoto } from '../../redux/selectors/auth-selectors';
+import React from 'react'
+import { NavLink, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Button from '@material-ui/core/Button'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import { logoutThunk } from '../../redux/reducers/auth-reducer'
+import {
+  getAuthorizedUserID,
+  getIsAuth,
+  getLogin,
+  getMyPhoto,
+} from '../../redux/selectors/auth-selectors'
 
-import s from './Header.module.css';
-import logo from '../../img/icons/logo.svg';
-import logout from '../../img/icons/logout.svg';
-import Button from '@material-ui/core/Button';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Avatar from '../common/Avatar/Avatar';
+import s from './Header.module.css'
+import logo from '../../img/icons/logo.svg'
+import logout from '../../img/icons/logout.svg'
+import Avatar from '../common/Avatar/Avatar'
 
-const Header: React.FC = (props) => {
-
+const Header: React.FC = () => {
   const stylesLogoutButton = {
-    margin: 16
+    margin: 16,
   }
 
   const isAuth = useSelector(getIsAuth)
@@ -25,15 +29,15 @@ const Header: React.FC = (props) => {
 
   return (
     <header className={s.header}>
-      <NavLink className={s.logoAndTitle} to={'/profile'}>
+      <NavLink className={s.logoAndTitle} to='/profile'>
         <img src={logo} alt='logo' />
         <span className={s.headerTitle}>Social network</span>
       </NavLink>
 
       <div className={s.rightPart}>
-        {isAuth
-          ? <>
-            <NavLink className={s.loginAndPhoto} to={'/profile/' + myID}>
+        {isAuth ? (
+          <>
+            <NavLink className={s.loginAndPhoto} to={`/profile/${myID}`}>
               <Avatar photo={myPhoto} size='small' />
               <span className={s.loginName}>{login}</span>
             </NavLink>
@@ -41,26 +45,29 @@ const Header: React.FC = (props) => {
             <span className={s.buttonDesctop}>
               <Button
                 onClick={() => dispatch(logoutThunk())}
-                variant="outlined"
+                variant='outlined'
                 style={stylesLogoutButton}
-                startIcon={<ExitToAppIcon />}>
+                startIcon={<ExitToAppIcon />}
+              >
                 Log out
               </Button>
             </span>
             <span className={s.buttonMobile}>
               <Button
                 onClick={() => dispatch(logoutThunk())}
-                variant="outlined"
+                variant='outlined'
                 style={stylesLogoutButton}
-              ><img src={logout} alt="logout" />
+              >
+                <img src={logout} alt='logout' />
               </Button>
             </span>
           </>
-          : <Redirect to="/login" />
-        }
+        ) : (
+          <Redirect to='/login' />
+        )}
       </div>
     </header>
   )
 }
 
-export default Header;
+export default Header

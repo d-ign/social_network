@@ -1,23 +1,24 @@
-import React from 'react';
-import preloader from '../../../img/preloader.svg';
+import React from 'react'
+import preloader from '../../../img/preloader.svg'
 
 const stylesContainer = {
-  position: 'absolute', 
+  position: 'absolute',
   left: 'calc(50% - 85px)',
 }
 
 const stylesWrap = {
-  display: 'flex', 
+  display: 'flex',
   justifyContent: 'center',
 }
 
 const Preloader = () => {
-  return <div style={stylesContainer}>
-    <div style={stylesWrap}>
-      <img src={preloader} alt='preloader' />
+  return (
+    <div style={stylesContainer}>
+      <div style={stylesWrap}>
+        <img src={preloader} alt='preloader' />
+      </div>
     </div>
-  </div>
+  )
+}
 
-};
-
-export default Preloader;
+export default Preloader

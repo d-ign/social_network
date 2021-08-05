@@ -1,7 +1,7 @@
 import React from 'react'
+import cn from 'classnames'
 import unknown from '../../../img/no_photo.svg'
 import s from './Avatar.module.css'
-import cn from 'classnames'
 
 type SizeType = 'small' | 'medium' | 'large'
 
@@ -10,21 +10,20 @@ type PropsType = {
   size: SizeType
 }
 
-const Avatar: React.FC<PropsType> = ({ photo, size, children }) => {
-  return (
-    <div className={s.avatarWrap}>
-      <div className={cn(
+const Avatar: React.FC<PropsType> = ({ photo, size, children }) => (
+  <div className={s.avatarWrap}>
+    <div
+      className={cn(
         s.avatar,
         { [s.large]: size === 'large' },
         { [s.medium]: size === 'medium' },
-        { [s.small]: size === 'small' },
+        { [s.small]: size === 'small' }
       )}
-      >
-        <img src={photo || unknown} alt="avatar" />
-        {children}
-      </div>
+    >
+      <img src={photo || unknown} alt='avatar' />
+      {children}
     </div>
-  )
-}
+  </div>
+)
 
 export default Avatar

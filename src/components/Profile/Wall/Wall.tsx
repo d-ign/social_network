@@ -1,23 +1,25 @@
-import React from 'react';
-import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPosts, getPostsForDelete } from '../../../redux/selectors/profile-selectors';
-import { getMyPhoto } from '../../../redux/selectors/auth-selectors';
-import { actions } from '../../../redux/reducers/profile-reducer';
+import React from 'react'
+import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form'
+import { useDispatch, useSelector } from 'react-redux'
+import cn from 'classnames'
+import Button from '@material-ui/core/Button'
+import PostAddIcon from '@material-ui/icons/PostAdd'
+import { IconButton } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import {
+  getPosts,
+  getPostsForDelete,
+} from '../../../redux/selectors/profile-selectors'
+import { getMyPhoto } from '../../../redux/selectors/auth-selectors'
+import { actions } from '../../../redux/reducers/profile-reducer'
 
-import Post from './Post/Post';
-import { PostType } from '../../../types/types';
+import Post from './Post/Post'
+import { PostType } from '../../../types/types'
 
-import s from './Wall.module.css';
-import cn from 'classnames';
-import renderTextField from '../../common/ElementCustom/renderTextField';
-import Button from '@material-ui/core/Button';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import { IconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import s from './Wall.module.css'
+import renderTextField from '../../common/ElementCustom/renderTextField.jsx'
 
-const Wall: React.FC = (props) => {
-
+const Wall: React.FC = () => {
   const posts = useSelector(getPosts)
   const postsForDelete = useSelector(getPostsForDelete)
   const myPhoto = useSelector(getMyPhoto)
@@ -25,14 +27,14 @@ const Wall: React.FC = (props) => {
 
   React.useEffect(() => {
     // @ts-ignore
-    let arr = JSON.parse(localStorage.getItem("posts"));
+    const arr = JSON.parse(localStorage.getItem('posts'))
     if (arr) {
       dispatch(actions.initializePosts(arr))
     }
   }, [dispatch])
 
   React.useEffect(() => {
-    localStorage.setItem("posts", JSON.stringify(posts));
+    localStorage.setItem('posts', JSON.stringify(posts))
   }, [posts])
 
   const handleAddPost = (values: WallValuesFormType) => {
@@ -47,13 +49,13 @@ const Wall: React.FC = (props) => {
   }
 
   const handleDeleteSelectedPost = () => {
-    // начало анимации удаления 
+    // начало анимации удаления
     dispatch(actions.toggleIsClickDeleteSelectedPosts(true))
     // возвращаем индивидуальные иконки-крестики у всех постов
     dispatch(actions.toggleIsSelectedPost(false))
 
     setTimeout(() => {
-      postsForDelete.forEach(p => {
+      postsForDelete.forEach((p) => {
         dispatch(actions.deletePost(p))
       })
       dispatch(actions.clearPostsForDelete())
@@ -71,7 +73,7 @@ const Wall: React.FC = (props) => {
     dispatch(actions.deletePostForDeleting(idPost))
   }
 
-  let postsElements = posts.map((p: PostType) =>
+  const postsElements = posts.map((p: PostType) => (
     <Post
       key={p.idPost}
       idPost={p.idPost}
@@ -84,17 +86,18 @@ const Wall: React.FC = (props) => {
       addIdPostBeforeDeleting={addIdPostBeforeDeleting}
       deleteIdPostBeforeDeleting={deleteIdPostBeforeDeleting}
     />
-  )
+  ))
 
   return (
     <div className={s.container}>
-      <div hidden={postsForDelete.length === 0} className={cn(
-        { [s.basket]: postsForDelete.length > 0 }
-      )}>
+      <div
+        hidden={postsForDelete.length === 0}
+        className={cn({ [s.basket]: postsForDelete.length > 0 })}
+      >
         <Button
           onClick={() => handleDeleteSelectedPost()}
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           style={{ color: 'white', width: '100%', height: '100%' }}
           startIcon={<DeleteIcon />}
         >
@@ -102,69 +105,72 @@ const Wall: React.FC = (props) => {
         </Button>
       </div>
 
-      {
-        postsForDelete.length === 0 &&
+      {postsForDelete.length === 0 && (
+        // @ts-ignore
         <PostReduxForm onSubmit={handleAddPost} />
-      }
+      )}
 
       <div className={s.posts}>
         {postsElements}
-        {
-          !posts.length &&
+        {!posts.length && (
           <div className={s.noPosts}>
             <span>No posts yet...</span>
             <span>Write something!</span>
           </div>
-        }
+        )}
       </div>
     </div>
   )
 }
 
-const AddNewPostForm: React.FC<InjectedFormProps<WallValuesFormType, {}> & {}> =
-  ({ handleSubmit }) => {
+const AddNewPostForm: React.FC<InjectedFormProps<WallValuesFormType>> = ({
+  handleSubmit,
+}) => {
+  const stylesAddPostButton = {
+    color: 'white',
+    margin: '10px 0 10px 10px',
+    width: '140px',
+  }
 
-    const stylesAddPostButton = {
-      color: 'white',
-      margin: '10px 0 10px 10px',
-      width: '140px',
-    }
-
-    return <form onSubmit={handleSubmit}>
+  return (
+    <form onSubmit={handleSubmit}>
       <div className={s.form}>
         <Field
           component={renderTextField}
           name='newPostText'
           placeholder='Enter the post text...'
-          multiline={true}
-          fullWidth={true}
-          variant="outlined"
+          multiline
+          fullWidth
+          variant='outlined'
           inputProps={{ maxLength: 1000 }}
         />
         <div className={s.buttonBig}>
           <Button
             type='submit'
-            variant="contained"
+            variant='contained'
             color='primary'
             style={stylesAddPostButton}
             endIcon={<PostAddIcon />}
-          >Add post</Button>
+          >
+            Add post
+          </Button>
         </div>
         <div hidden className={s.buttonIcon}>
-          <IconButton aria-label="addPost" type='submit'>
+          <IconButton aria-label='addPost' type='submit'>
             <PostAddIcon color='primary' />
           </IconButton>
         </div>
       </div>
     </form>
-  }
+  )
+}
 
 type WallValuesFormType = {
   newPostText: string
 }
 
-const PostReduxForm = reduxForm<WallValuesFormType, {}>({
-  form: 'profileNewPostForm'
-})(AddNewPostForm);
+const PostReduxForm = reduxForm<WallValuesFormType>({
+  form: 'profileNewPostForm',
+})(AddNewPostForm)
 
-export default Wall;
+export default Wall

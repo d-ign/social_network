@@ -1,15 +1,15 @@
-let ws: WebSocket | null = null;
+let ws: WebSocket | null = null
 
 let subscribers = {
   'messages-received': [] as Array<MessagesReceivedSubscriberType>,
-  'status-changed': [] as Array<StatusChangedSubscriberType>
+  'status-changed': [] as Array<StatusChangedSubscriberType>,
 }
 
 type EventsCustomNamesType = 'messages-received' | 'status-changed'
 
 const notifySubscribersAboutStatus = (status: StatusType) => {
   if (subscribers) {
-    subscribers["status-changed"].forEach(s => s(status))
+    subscribers['status-changed'].forEach((s) => s(status))
   }
 }
 
@@ -19,9 +19,9 @@ const reconnect = () => {
 }
 
 const messageHandler = (e: MessageEvent) => {
-  let newMessages = JSON.parse(e.data);
+  const newMessages = JSON.parse(e.data)
   if (subscribers) {
-    subscribers['messages-received'].forEach(s => s(newMessages));
+    subscribers['messages-received'].forEach((s) => s(newMessages))
   }
 }
 
@@ -31,6 +31,7 @@ const openHandler = () => {
 
 const errorHandler = () => {
   notifySubscribersAboutStatus('error')
+  // eslint-disable-next-line no-console
   console.error('REFRESH PAGE')
 }
 
@@ -45,7 +46,9 @@ function createChannel() {
   cleanUp()
   ws?.close()
 
-  ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+  ws = new WebSocket(
+    'wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'
+  )
 
   notifySubscribersAboutStatus('pending')
 
@@ -67,7 +70,10 @@ export const chatAPI = {
     cleanUp()
     ws?.close()
   },
-  subscribe(eventName: EventsCustomNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType) {
+  subscribe(
+    eventName: EventsCustomNamesType,
+    callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType
+  ) {
     if (subscribers) {
       // @ts-ignore
       subscribers[eventName].push(callback)
@@ -75,16 +81,20 @@ export const chatAPI = {
   },
 
   // отписка (забираем возможность api уведомлять store)
-  unsubscribe(eventName: EventsCustomNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType) {
+  unsubscribe(
+    eventName: EventsCustomNamesType,
+    callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType
+  ) {
     if (subscribers) {
       // @ts-ignore
-      subscribers = subscribers[eventName]?.filter(s => s !== callback) // оставляем всех, кроме callback
+      subscribers = subscribers[eventName]?.filter((s) => s !== callback)
+      // оставляем всех, кроме callback
     }
   },
 
   sendMessage(message: string) {
     ws?.send(message)
-  }
+  },
 }
 
 export type ChatMessageAPIType = {
@@ -96,6 +106,8 @@ export type ChatMessageAPIType = {
 
 export type StatusType = 'pending' | 'ready' | 'error'
 
-type MessagesReceivedSubscriberType = (messages: Array<ChatMessageAPIType>) => void
+type MessagesReceivedSubscriberType = (
+  messages: Array<ChatMessageAPIType>
+) => void
 
 type StatusChangedSubscriberType = (status: StatusType) => void

@@ -1,15 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
-import store from './redux/redux-store';
-
-import AppContainer from './App';
-
-import { createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import cyan from '@material-ui/core/colors/cyan';
+import {
+  createMuiTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import cyan from '@material-ui/core/colors/cyan'
+import AppContainer from './App'
+import store from './redux/redux-store'
 
 let theme = createMuiTheme({
   palette: {
@@ -41,9 +43,9 @@ let theme = createMuiTheme({
       // ошибки
     },
   },
-});
+})
 
-theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme)
 
 ReactDOM.render(
   <HashRouter>
@@ -53,5 +55,6 @@ ReactDOM.render(
         <AppContainer />
       </Provider>
     </ThemeProvider>
-  </HashRouter>, document.getElementById('root')
-);
+  </HashRouter>,
+  document.getElementById('root')
+)

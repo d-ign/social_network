@@ -1,4 +1,9 @@
-import { DefaultResponseType, instance, ResultCodeForCaptcha, ResultCodesEnum } from './api';
+import {
+  DefaultResponseType,
+  instance,
+  ResultCodeForCaptcha,
+  ResultCodesEnum,
+} from './api'
 
 type MeDataType = {
   id: number
@@ -6,22 +11,36 @@ type MeDataType = {
   login: string
 }
 
-export const authAPI = {
+const authAPI = {
   async me() {
-    const response = await instance.get<DefaultResponseType<MeDataType>>(`auth/me`);
-    return response.data;
+    const response = await instance.get<DefaultResponseType<MeDataType>>(
+      'auth/me'
+    )
+    return response.data
   },
-  async login(email: string, password: string,
-    rememberMe = false, captcha: null | string = null
+  async login(
+    email: string,
+    password: string,
+    rememberMe = false,
+    captcha: null | string = null
   ) {
-    const response = await instance.post<DefaultResponseType<{ userId: number }, ResultCodesEnum | ResultCodeForCaptcha>>(
-      '/auth/login', {
-      email, password, rememberMe, captcha
-    });
-    return response.data;
+    const response = await instance.post<
+      DefaultResponseType<
+        { userId: number },
+        ResultCodesEnum | ResultCodeForCaptcha
+      >
+    >('/auth/login', {
+      email,
+      password,
+      rememberMe,
+      captcha,
+    })
+    return response.data
   },
   async logout() {
-    const response = await instance.delete<DefaultResponseType>('/auth/login');
-    return response.data;
-  }
+    const response = await instance.delete<DefaultResponseType>('/auth/login')
+    return response.data
+  },
 }
+
+export default authAPI

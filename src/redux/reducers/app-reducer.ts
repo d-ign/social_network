@@ -1,21 +1,23 @@
-import { BaseThunkType, InferActionsTypes } from '../redux-store';
+import { BaseThunkType, InferActionsTypes } from '../redux-store'
+import { getAuthUserDataThunk } from './auth-reducer'
 
-import { getAuthUserDataThunk } from './auth-reducer';
-
-let initialState = {
+const initialState = {
   initialized: false,
 }
 
-const appReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
+const appReducer = (
+  state = initialState,
+  action: ActionsTypes
+): InitialStateType => {
   switch (action.type) {
     case 'INITIALIZED_SUCCESS': {
       return {
         ...state,
-        initialized: true
+        initialized: true,
       }
     }
     default:
-      return state;
+      return state
   }
 }
 
@@ -28,8 +30,8 @@ export const initializeAppThunk = (): ThunkType => async (dispatch) => {
   dispatch(actions.initializedSuccess())
 }
 
-export default appReducer;
+export default appReducer
 
-type InitialStateType = typeof initialState;
-type ActionsTypes = InferActionsTypes<typeof actions>;
-type ThunkType = BaseThunkType<ActionsTypes>;
+type InitialStateType = typeof initialState
+type ActionsTypes = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsTypes>

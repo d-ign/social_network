@@ -1,21 +1,11 @@
-import { AppStateType } from "../redux-store";
+import { AppStateType } from '../redux-store'
 
-export const getLogin = (state: AppStateType) => {
-  return state.auth.login
-}
+export const getLogin = (state: AppStateType) => state.auth.login
 
-export const getIsAuth = (state: AppStateType) => {
-  return state.auth.isAuth
-}
+export const getIsAuth = (state: AppStateType) => state.auth.isAuth
 
-export const getAuthorizedUserID = (state: AppStateType) => {
-  return state.auth.userID
-}
+export const getAuthorizedUserID = (state: AppStateType) => state.auth.userID
 
-export const getCaptchaURL = (state: AppStateType) => {
-  return state.auth.captchaURL
-}
+export const getCaptchaURL = (state: AppStateType) => state.auth.captchaURL
 
-export const getMyPhoto = (state: AppStateType) => {
-  return state.auth.myPhoto
-}
+export const getMyPhoto = (state: AppStateType) => state.auth.myPhoto
