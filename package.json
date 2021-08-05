@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "lint": "eslint src/. --fix --color",
+    "lint + editorconfig": "eslint src/. --fix --color && editorconfig-checker",
     "test": "react-scripts test",
     "build": "react-scripts build",
     "deploy": "gh-pages -d build"
@@ -69,6 +69,7 @@
     "@typescript-eslint/parser": "^4.29.0",
     "commitizen": "^4.2.4",
     "cz-customizable": "^6.3.0",
+    "editorconfig-checker": "^4.0.2",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",

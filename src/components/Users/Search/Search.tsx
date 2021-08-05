@@ -51,8 +51,8 @@ const Search: React.FC<PropsType> = React.memo(
         <div className={s.searchCount}>
           Total:{' '}
           {totalUsersCount.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ')}
-          {/* добавление пробела между числами: (?=pattern)+ - жадное 
-          повторение последнего шаблона один или несколько раз 
+          {/* добавление пробела между числами: (?=pattern)+ - жадное
+          повторение последнего шаблона один или несколько раз
           до конца строки $ */}
         </div>
       </div>

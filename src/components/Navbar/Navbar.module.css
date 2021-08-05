@@ -46,7 +46,7 @@
     border-radius: 0;
   }
   .nav:before {
-    content: "";
+    content: '';
     width: 100%;
     height: 3px;
     position: absolute;

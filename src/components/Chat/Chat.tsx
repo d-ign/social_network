@@ -40,7 +40,7 @@ const Chat: React.FC = () => {
 
   return (
     <div className={s.chat}>
-      {/* error появляется, когда пропадает интернет, на несколько 
+      {/* error появляется, когда пропадает интернет, на несколько
       миллисекунд и сменяется другим статусом? */}
       {status === 'error' && (
         <div>Some error occured. Please, refresh the page...</div>

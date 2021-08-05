@@ -38,12 +38,12 @@ body {
   grid-template-columns: 2fr 10fr;
   grid-template-rows: 60px 1fr;
   grid-template-areas:
-    "header header"
-    "nav content";
+    'header header'
+    'nav content';
   grid-gap: 10px;
 
   /* Шрифт */
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 15px;
   line-height: 25px;
   letter-spacing: 0.1px;
@@ -65,9 +65,9 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 60px;
     grid-template-areas:
-      "header"
-      "content"
-      "nav";
+      'header'
+      'content'
+      'nav';
   }
   .appWrapperContent {
     border-radius: 10px;

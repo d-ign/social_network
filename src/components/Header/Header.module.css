@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Mate+SC&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
 
 .header {
   background-color: #222831;
@@ -21,7 +21,7 @@
 .headerTitle {
   color: #eeeeee;
   font-size: 25px;
-  font-family: "Mate SC", serif;
+  font-family: 'Mate SC', serif;
   padding-right: 10px;
 }
 .rightPart {

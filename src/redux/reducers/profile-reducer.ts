@@ -11,9 +11,9 @@ const initialState = {
     {
       author: 'Denis Ignatov',
       idPost: '1',
-      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-        Facilis ut quo maiores neque laboriosam. Ratione adipisci 
-        reiciendis autem placeat alias necessitatibus pariatur saepe 
+      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Facilis ut quo maiores neque laboriosam. Ratione adipisci
+        reiciendis autem placeat alias necessitatibus pariatur saepe
         ipsum, temporibus animi, facilis minus doloribus ducimus.`,
       likesCount: 0,
       isLikeClick: false,
@@ -28,8 +28,8 @@ const initialState = {
     {
       author: 'Denis Ignatov',
       idPost: '3',
-      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-        Facilis ut quo maiores neque laboriosam. Ratione adipisci 
+      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Facilis ut quo maiores neque laboriosam. Ratione adipisci
         reiciendis autem placeat alias necessitatibus...`,
       likesCount: 0,
       isLikeClick: false,

@@ -20,7 +20,7 @@
 .job:before,
 .contacts:before,
 .aboutMe:before {
-  content: "";
+  content: '';
   width: 2px;
   height: 48px;
   position: absolute;
