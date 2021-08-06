@@ -8,9 +8,19 @@
   }
 }
 /* Chat */
+.chat {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .membersAndMessages {
   display: flex;
+  flex: 1 1 auto;
   position: relative;
+  height: 100%;
+  @media (max-width: 760px) {
+    display: block;
+  }
 }
 /* Members */
 .titleMembersWrap,
@@ -20,20 +30,46 @@
   align-items: center;
   justify-content: center;
 }
+.titleMembersWrap {
+  @media (max-width: 760px) {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    background-color: $color-darkBlue;
+    width: 150px;
+    flex-direction: row;
+    padding: 0 8px 0 8px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid $color-cyan;
+    border-top: none;
+  }
+}
 .membersContainer {
   flex: 1 1 200px;
+  background-color: $color-greyTransparent;
+  border-radius: 5px;
 }
 .titleMembers {
   font-size: 20px;
   margin-bottom: 5px;
+  @media (max-width: 760px) {
+    font-size: 12px;
+    padding-top: 5px;
+  }
 }
 .titleMembersArrow {
   display: none;
+  @media (max-width: 760px) {
+    display: inline;
+  }
 }
 .member {
   display: flex;
   align-items: center;
   padding-bottom: 10px;
+}
+.member:last-child {
+  padding-bottom: 0;
 }
 .showAllWrap {
   text-align: center;
@@ -53,6 +89,36 @@
   width: 100%;
   padding: 10px;
   overflow-y: auto;
+  @media (max-height: 1060px), (min-height: 1060px) {
+    max-height: 81vh;
+  }
+  @media (max-height: 960px) {
+    max-height: 78vh;
+  }
+  @media (max-height: 810px) {
+    max-height: 74vh;
+  }
+  @media (max-height: 680px) {
+    max-height: 71vh;
+  }
+  @media (max-height: 620px) {
+    max-height: 65vh;
+  }
+  @media (max-height: 492px) {
+    max-height: 62vh;
+  }
+  @media (max-height: 429px) {
+    max-height: 59vh;
+  }
+  @media (max-height: 390px) {
+    max-height: 56vh;
+  }
+  @media (max-height: 362px) {
+    max-height: 53vh;
+  }
+  @media (max-height: 340px) {
+    max-height: 50vh;
+  }
 }
 .membersContainerHidden {
   display: none;
@@ -70,20 +136,23 @@
   display: flex;
   justify-content: center;
 }
-%messageContainer {
+%messageContainerTemplate {
   display: flex;
   max-width: 300px;
   width: 100%;
   margin: 5px 0 5px 0;
   padding: 10px;
   border-radius: 5px;
+  @media (max-width: 420px) {
+    max-width: 200px;
+  }
 }
 .messageContainer {
-  @extend %messageContainer;
+  @extend %messageContainerTemplate;
   background-color: $color-cyanDark;
 }
 .myMessageContainer {
-  @extend %messageContainer;
+  @extend %messageContainerTemplate;
   background-color: $color-cyanMedium;
   align-self: flex-end;
 }
@@ -92,6 +161,9 @@
   text-decoration: none;
   color: white;
   font-size: 16px;
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
 }
 .nameMember {
   font-size: 12px;
@@ -115,23 +187,27 @@
 .nameAndMessage {
   margin-left: 15px;
   max-width: 200px;
+  @media (max-width: 420px) {
+    margin-left: 10px;
+    max-width: 150px;
+  }
 }
 /* AddMessageForm */
-.form {
-  background-color: $color-darkBlue;
-}
 .form {
   display: flex;
   align-items: center;
   width: 100%;
   padding: 10px;
+  background-color: $color-darkBlue;
+  @media (max-width: 470px) {
+    padding: 5px;
+  }
+  @media (max-height: 492px) {
+    padding: 3px;
+  }
 }
 
-/* width */
 @media (max-width: 760px) {
-  .titleMembersArrow {
-    display: inline;
-  }
   .buttonSortNotShowMembers,
   .chatMembersNotShowMembers {
     display: none;
@@ -154,26 +230,11 @@
     border-left: 1px solid $color-cyan;
     border-bottom: 1px solid $color-cyan;
   }
-  .membersAndMessages {
-    display: block;
-  }
   .membersContainer {
     order: 1;
   }
   .allMessages {
     order: 2;
-  }
-  .titleMembersWrap {
-    position: absolute;
-    top: 0;
-    right: 15px;
-    background-color: $color-darkBlue;
-    width: 150px;
-    flex-direction: row;
-    padding: 0 8px 0 8px;
-    border-radius: 0 0 10px 10px;
-    border: 1px solid $color-cyan;
-    border-top: none;
   }
   .titleMembersWrapDeployed {
     border-radius: 0;
@@ -183,68 +244,13 @@
   .buttonSortNotShowAll {
     border-right: 1px solid $color-cyan;
   }
-  .titleMembers {
-    font-size: 12px;
-    padding-top: 5px;
-  }
 }
 
-@media (max-width: 470px) {
-  .form {
-    padding: 5px;
-  }
-}
 @media (max-width: 420px) {
   .avatarMedium {
     display: none;
   }
   .avatarSmall {
     display: block;
-  }
-  .name {
-    font-size: 14px;
-  }
-  .messageContainer,
-  .myMessageContainer {
-    max-width: 200px;
-  }
-  .nameAndMessage {
-    margin-left: 10px;
-    max-width: 150px;
-  }
-}
-
-/* height */
-@media (max-height: 620px) {
-  .allMessages,
-  .membersContainer {
-    max-height: 65vh;
-  }
-}
-@media (max-height: 492px) {
-  .allMessages,
-  .membersContainer {
-    max-height: 62vh;
-  }
-  .form {
-    padding: 3px;
-  }
-}
-@media (max-height: 429px) {
-  .allMessages,
-  .membersContainer {
-    max-height: 59vh;
-  }
-}
-@media (max-height: 390px) {
-  .allMessages,
-  .membersContainer {
-    max-height: 56vh;
-  }
-}
-@media (max-height: 352px) {
-  .allMessages,
-  .membersContainer {
-    max-height: 53vh;
   }
 }
