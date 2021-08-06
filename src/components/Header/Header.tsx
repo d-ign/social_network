@@ -11,7 +11,7 @@ import {
   getMyPhoto,
 } from '../../redux/selectors/auth-selectors'
 
-import s from './Header.module.css'
+import s from './Header.module.scss'
 import logo from '../../img/icons/logo.svg'
 import logout from '../../img/icons/logout.svg'
 import Avatar from '../common/Avatar/Avatar'

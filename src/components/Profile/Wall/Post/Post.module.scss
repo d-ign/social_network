@@ -1,3 +1,5 @@
+@import '../../../common/styles/colors';
+
 .postContainer {
   max-width: 500px;
   margin: 10px auto;
@@ -8,7 +10,7 @@
   padding: 10px;
   border-radius: 10px;
   min-height: 115px;
-  background-color: #5e5e5e4d;
+  background-color: $color-greyTransparent;
 }
 .postDelete {
   animation: holeOut 1.2s cubic-bezier(0.31, 1.18, 0.66, 0.89);
@@ -52,7 +54,7 @@
 .avatar:hover:before,
 .postSelected:before {
   content: '';
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $color-darkBlueTransparent;
   background-image: url(../../../../img/icons/check.svg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -75,7 +77,7 @@
   width: 100%;
 }
 .name {
-  color: white;
+  color: $color-white;
   white-space: pre-wrap;
   font-weight: bold;
 }
@@ -96,6 +98,12 @@
   align-items: center;
   margin-top: 10px;
 }
-.like {
+.likesCount {
   font-size: 14px;
+}
+.like {
+  color: $color-cyan;
+}
+.noLike {
+  color: $color-cyanLight;
 }

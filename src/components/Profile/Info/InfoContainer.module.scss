@@ -1,3 +1,5 @@
+@import '../../common/styles/colors';
+
 .camera {
   position: absolute;
   top: 95px;
@@ -15,11 +17,11 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background-color: #00adb5;
+  background-color: $color-cyan;
   cursor: pointer;
 }
 .wrapImg:hover {
-  background-color: #4f4f4f;
+  background-color: $color-grey;
   transition: background-color 0.4s;
 }
 .editPhotoInput {
@@ -53,7 +55,7 @@
   align-items: center;
 }
 .successSave {
-  color: #4caf50;
+  color: $color-green;
   animation: anim 2s 2s ease;
   text-align: center;
   padding: 5px;

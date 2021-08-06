@@ -1,6 +1,6 @@
 import React from 'react'
 import { ProfileType, СontactsType } from '../../../../types/types'
-import s from './InfoData.module.css'
+import s from './InfoData.module.scss'
 
 type PropsType = {
   profile: ProfileType

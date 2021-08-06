@@ -1,18 +1,21 @@
+@import '../common/styles/colors';
+
 .nav {
-  background-color: #222831;
+  background-color: $color-darkBlue;
   grid-area: nav;
   padding: 15px;
   width: 180px;
   border-radius: 10px 10px 0 0;
   min-height: calc(100vh - 70px);
   height: 100%;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), 0 5px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 5px $color-darkBlueTransparent,
+    0 5px 5px $color-darkBlueTransparent;
 }
 .navLink {
   text-decoration: none;
   margin-top: 10px;
   font-size: 18px;
-  color: #fff;
+  color: $color-white;
   padding: 7px;
   border-radius: 5px;
   display: flex;
@@ -21,15 +24,19 @@
 .navLinkImg {
   padding-right: 8px;
   width: 36px;
+  fill: $color-white;
 }
 .navLink:hover {
-  background-color: #393e46;
+  background-color: $color-greyTransparent;
 }
 .navLink:nth-child(1) {
   margin-top: 0;
 }
 .navLink.active {
-  color: #00bcd4;
+  color: $color-cyan;
+}
+.activeIcon {
+  fill: $color-cyan;
 }
 
 @media (max-width: 600px) {
@@ -52,7 +59,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background: #00bcd4;
+    background: $color-cyan;
   }
   .navLink {
     margin-top: 0;

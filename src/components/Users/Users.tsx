@@ -23,7 +23,7 @@ import {
 import User from './User/User'
 import Search from './Search/Search'
 
-import s from './Users.module.css'
+import s from './Users.module.scss'
 
 type PathParamsType = {
   pathname: string
@@ -151,7 +151,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
         )}
 
         {totalUsersCount === 0 && !isFetching && (
-          <div className={s.nothingFound}>Nothing found</div>
+          <div className={s.noFound}>Nothing found</div>
         )}
 
         <div className={s.container}>

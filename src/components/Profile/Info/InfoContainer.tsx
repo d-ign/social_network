@@ -22,7 +22,7 @@ import Avatar from '../../common/Avatar/Avatar'
 import InfoDataForm from './InfoDataForm/InfoDataForm'
 import InfoData from './InfoData/InfoData'
 
-import s from './InfoContainer.module.css'
+import s from './InfoContainer.module.scss'
 import camera from '../../../img/icons/camera.svg'
 
 // при переходе на старницу профиля скрол обнулится

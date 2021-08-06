@@ -1,24 +1,25 @@
+@mixin wh($w, $h) {
+  width: $w;
+  height: $h;
+}
+
 .avatar {
   overflow: hidden;
   border-radius: 50%;
 }
 .avatar img {
-  width: auto;
-  height: 100%;
+  @include wh(auto, 100%);
   margin: 0 auto;
 }
 .avatarWrap {
   position: relative;
 }
 .small {
-  width: 25px;
-  height: 25px;
+  @include wh(25px, 25px);
 }
 .medium {
-  width: 50px;
-  height: 50px;
+  @include wh(50px, 50px);
 }
 .large {
-  width: 132px;
-  height: 132px;
+  @include wh(132px, 132px);
 }

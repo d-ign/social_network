@@ -1,3 +1,5 @@
+@import '../../../common/styles/colors';
+
 .containerForm {
   padding-left: 5px;
   max-width: 470px;
@@ -26,7 +28,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: #00bcd4;
+  background-color: $color-cyan;
   transition: width 0.2s;
 }
 .job:hover:before,
@@ -34,6 +36,7 @@
 .aboutMe:hover:before {
   width: 5px;
 }
+
 .text {
   overflow: hidden;
   font-style: italic;
@@ -47,7 +50,7 @@
 }
 .contactTitle {
   flex: 0 0 100px;
-  color: #919191;
+  color: $color-greyLight;
 }
 .contactTextWrap {
   max-width: 350px;
@@ -55,7 +58,7 @@
   text-overflow: ellipsis;
 }
 .contactText {
-  color: white;
+  color: $color-white;
   text-decoration: none;
 }
 .contactText:hover {

@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CloseIcon from '@material-ui/icons/Close'
 import unknown from '../../../../img/no_photo.svg'
-import s from './Post.module.css'
+import s from './Post.module.scss'
 import {
   getIsSelectedPost,
   getPostsForDelete,
@@ -111,14 +111,12 @@ const Post: React.FC<PostType & OwnPropsType> = (props) => {
             </IconButton>
           </div>
           <div className={s.wrapLike}>
-            <span className={s.like}>
+            <span className={s.likesCount}>
               {likesCount > 0 ? `+${likesCount}` : ''}
             </span>
             <IconButton aria-label='like' size='small' onClick={handleSetLike}>
               <ThumbUpAltIcon
-                style={
-                  isLikeClick ? { color: '#00bcd4' } : { color: '#b2ebf2' }
-                }
+                className={cn(s.like, { [s.noLike]: !isLikeClick })}
               />
             </IconButton>
           </div>

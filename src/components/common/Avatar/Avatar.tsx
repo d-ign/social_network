@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 import unknown from '../../../img/no_photo.svg'
-import s from './Avatar.module.css'
+import s from './Avatar.module.scss'
 
 type SizeType = 'small' | 'medium' | 'large'
 

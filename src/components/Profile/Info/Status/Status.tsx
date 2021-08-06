@@ -12,8 +12,8 @@ import {
   handleBlurCount,
 } from '../../../common/inputCount/inputCount.js'
 
-import s from './Status.module.css'
-import useStyles from '../../../common/ElementCustom/InputCustomProfileStatus.jsx'
+import s from './Status.module.scss'
+import useStyles from './stylesCustomMaterialUI.jsx'
 
 type PropsType = {
   isOwner: boolean
@@ -61,7 +61,7 @@ const Status: React.FC<PropsType> = (props) => {
             placeholder='Your status...'
             autoFocus
             inputProps={{ maxLength: 300 }}
-            className={classes.inputProfileStatus}
+            className={classes.stylesStatus}
             multiline
             fullWidth
             onInput={handleInputCount.bind(null, num300)}
@@ -100,11 +100,11 @@ const Status: React.FC<PropsType> = (props) => {
         </div>
       )}
 
+      {editMode && <div className={s.plug} />}
+
       {isOwner && !editMode && (
         <div aria-hidden='true' className={s.status} onClick={activateEditMode}>
-          {status || (
-            <span className={s.statusEmpty}>Your status is empty</span>
-          )}
+          {status || <span className={s.noStatus}>Your status is empty</span>}
         </div>
       )}
 

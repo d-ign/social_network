@@ -1,32 +1,33 @@
+@import './components/common/styles/colors';
+
 /* полоса прокрутки (скроллбар) */
 ::-webkit-scrollbar {
   width: 5px; /* ширина для вертикального скролла */
   height: 5px; /* высота для горизонтального скролла */
-  background-color: #4f4f4f;
+  background-color: $color-grey;
   border-radius: 9em;
 }
 
 /* ползунок скроллбара */
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $color-greyLight;
   border-radius: 9em;
-  box-shadow: inset 1px 1px 10px #f3faf7;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #00bcd433;
+  background-color: $color-cyan;
 }
 
 html,
 body {
   /* полоса прокрутки Mozilla Firefox */
-  scrollbar-color: #919191 #4f4f4f;
+  scrollbar-color: $color-greyLight $color-grey;
   scrollbar-width: thin;
 }
 .fon,
 .container {
   /* компенсация полосы прокрутки, когда её нет */
   padding-right: calc(5px - (100vw - 100%));
-  background-color: #4f4f4f;
+  background-color: $color-grey;
 }
 .container {
   max-width: 880px;
@@ -47,11 +48,12 @@ body {
   font-size: 15px;
   line-height: 25px;
   letter-spacing: 0.1px;
-  color: white;
+  color: $color-white;
 }
 .appWrapperContent {
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), 0 5px 5px rgba(0, 0, 0, 0.4);
-  background-color: #222831;
+  box-shadow: 0 5px 5px $color-darkBlueTransparent,
+    0 5px 5px $color-darkBlueTransparent;
+  background-color: $color-darkBlue;
   border-radius: 10px 10px 0 0;
   padding: 20px;
   padding-bottom: 10px;

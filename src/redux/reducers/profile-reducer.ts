@@ -215,8 +215,6 @@ export const getUserProfile =
   (userId: number | null): ThunkType =>
   async (dispatch) => {
     const response = await profileAPI.getProfile(userId)
-    // eslint-disable-next-line no-debugger
-    debugger
     dispatch(actions.setUserProfile(response))
   }
 

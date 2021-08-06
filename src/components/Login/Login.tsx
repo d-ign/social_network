@@ -11,7 +11,7 @@ import {
 } from '../../redux/selectors/auth-selectors'
 import { loginThunk } from '../../redux/reducers/auth-reducer'
 
-import s from './Login.module.css'
+import s from './Login.module.scss'
 import renderTextField from '../common/ElementCustom/renderTextField.jsx'
 import renderCheckbox from '../common/ElementCustom/renderCheckbox.jsx'
 

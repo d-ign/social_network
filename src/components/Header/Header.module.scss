@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
+@import '../common/styles/colors';
 
 .header {
-  background-color: #222831;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+  background-color: $color-darkBlue;
+  box-shadow: 0 3px 3px $color-darkBlueTransparent;
   grid-area: header;
   border-radius: 0 0 10px 10px;
   display: flex;
@@ -19,7 +20,7 @@
   margin: 0 10px 0 10px;
 }
 .headerTitle {
-  color: #eeeeee;
+  color: $color-white;
   font-size: 25px;
   font-family: 'Mate SC', serif;
   padding-right: 10px;
@@ -36,7 +37,7 @@
 .loginName {
   font-size: 15px;
   margin-left: 10px;
-  color: white;
+  color: $color-white;
 }
 .logoutImg {
   padding-right: 5px;

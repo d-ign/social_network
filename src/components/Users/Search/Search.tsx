@@ -3,9 +3,9 @@ import React from 'react'
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
 import debounce from 'lodash/debounce'
-import useStyles from '../../common/ElementCustom/InputCustomSearchUsers.jsx'
+import useStyles from './stylesCustomMaterialUI.jsx'
 
-import s from './Search.module.css'
+import s from './Search.module.scss'
 
 type PropsType = {
   termOfUrl?: string
@@ -19,16 +19,16 @@ const Search: React.FC<PropsType> = React.memo(
     const classes = useStyles()
 
     return (
-      <div className={s.search}>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
+      <div className={s.container}>
+        <div className={s.wrap}>
+          <div className={s.searchIcon}>
             <SearchIcon />
           </div>
           {pathname === '/users' && (
             <InputBase
               placeholder='Search by name...'
               inputProps={{ 'aria-label': 'search' }}
-              classes={{ root: classes.inputRoot, input: classes.inputInput }}
+              classes={{ input: classes.stylesSearch }}
               value={termOfUrl}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 searchUsers(e.target.value)
@@ -39,7 +39,7 @@ const Search: React.FC<PropsType> = React.memo(
             <InputBase
               placeholder='Search by name...'
               inputProps={{ 'aria-label': 'search' }}
-              classes={{ root: classes.inputRoot, input: classes.inputInput }}
+              classes={{ input: classes.stylesSearch }}
               onInput={debounce(
                 (e: React.ChangeEvent<HTMLInputElement>) =>
                   searchUsers(e.target.value),

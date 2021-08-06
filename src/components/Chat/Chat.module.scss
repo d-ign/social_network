@@ -1,7 +1,9 @@
+@import '../common/styles/colors';
+
 /* полоса прокрутки Mozilla Firefox */
 @-moz-document url-prefix() {
   .allMessages {
-    scrollbar-color: #919191 #4f4f4f;
+    scrollbar-color: $color-greyLight $color-grey;
     scrollbar-width: thin;
   }
 }
@@ -38,7 +40,7 @@
 }
 .showAll {
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.6);
+  color: $color-greyLight;
 }
 .showAll:hover {
   text-decoration: underline;
@@ -63,23 +65,26 @@
   justify-content: center;
 }
 .noMessages {
-  color: #5e5e5e;
+  color: $color-greyLight;
   font-size: 18px;
   display: flex;
   justify-content: center;
 }
-.messageContainer,
-.myMessageContainer {
+%messageContainer {
   display: flex;
   max-width: 300px;
   width: 100%;
   margin: 5px 0 5px 0;
   padding: 10px;
-  background-color: #00bcd433;
   border-radius: 5px;
 }
+.messageContainer {
+  @extend %messageContainer;
+  background-color: $color-cyanDark;
+}
 .myMessageContainer {
-  background-color: #00bcd480;
+  @extend %messageContainer;
+  background-color: $color-cyanMedium;
   align-self: flex-end;
 }
 .name {
@@ -113,7 +118,7 @@
 }
 /* AddMessageForm */
 .form {
-  background-color: #222831;
+  background-color: $color-darkBlue;
 }
 .form {
   display: flex;
@@ -137,8 +142,8 @@
     right: 15px;
     top: 36px;
     width: 150px;
-    background-color: #222831;
-    border-left: 1px solid #00bcd4;
+    background-color: $color-darkBlue;
+    border-left: 1px solid $color-cyan;
   }
   .chatMembersMedia {
     top: 67px;
@@ -146,8 +151,8 @@
     border-radius: 0 0 5px 5px;
     max-height: 300px;
     overflow: auto;
-    border-left: 1px solid #00bcd4;
-    border-bottom: 1px solid #00bcd4;
+    border-left: 1px solid $color-cyan;
+    border-bottom: 1px solid $color-cyan;
   }
   .membersAndMessages {
     display: block;
@@ -162,12 +167,12 @@
     position: absolute;
     top: 0;
     right: 15px;
-    background-color: #222831;
+    background-color: $color-darkBlue;
     width: 150px;
     flex-direction: row;
     padding: 0 8px 0 8px;
     border-radius: 0 0 10px 10px;
-    border: 1px solid #00bcd4;
+    border: 1px solid $color-cyan;
     border-top: none;
   }
   .titleMembersWrapDeployed {
@@ -176,7 +181,7 @@
     border-right: 1px solid transparent;
   }
   .buttonSortNotShowAll {
-    border-right: 1px solid #00bcd4;
+    border-right: 1px solid $color-cyan;
   }
   .titleMembers {
     font-size: 12px;

@@ -16,7 +16,7 @@ import { actions } from '../../../redux/reducers/profile-reducer'
 import Post from './Post/Post'
 import { PostType } from '../../../types/types'
 
-import s from './Wall.module.css'
+import s from './Wall.module.scss'
 import renderTextField from '../../common/ElementCustom/renderTextField.jsx'
 
 const Wall: React.FC = () => {

@@ -1,3 +1,5 @@
+@import '../../common/styles/colors';
+
 .wrapAvatarNameAndStatus {
   display: flex;
 }
@@ -21,7 +23,7 @@
 }
 .name,
 .status {
-  color: white;
+  color: $color-white;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -30,7 +32,7 @@
   font-weight: bold;
 }
 .status {
-  color: #00bcd4;
+  color: $color-cyan;
   font-style: italic;
 }
 
@@ -45,11 +47,11 @@
   z-index: 30;
   left: 0;
   top: 0;
-  background: #4f4f4f;
+  background: $color-grey;
   border-radius: 5px;
-  color: #fff;
+  color: $color-white;
   padding: 0.5em;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 5px $color-darkBlueTransparent;
   pointer-events: none;
   opacity: 0;
   transition: 0.5s;

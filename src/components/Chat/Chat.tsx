@@ -10,7 +10,7 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import Icon from '@mdi/react'
 import { Button, TextField } from '@material-ui/core'
 import { mdiChevronDown } from '@mdi/js'
-import s from './Chat.module.css'
+import s from './Chat.module.scss'
 import withAuthRedirect from '../hoc/withAuthRedirect'
 import Avatar from '../common/Avatar/Avatar'
 import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
@@ -77,10 +77,6 @@ const Members: React.FC = () => {
         onClick={() =>
           isShowMembers ? setIsShowMembers(false) : setIsShowMembers(true)
         }
-        // onKeyDown={(e) => {
-        //   if (e.code === 'Tab' && isShowMembers) setIsShowMembers(false)
-        //   if (e.code === 'Tab' && !isShowMembers) setIsShowMembers(true)
-        // }}
       >
         <div className={s.titleMembers}>Members</div>
         <Icon

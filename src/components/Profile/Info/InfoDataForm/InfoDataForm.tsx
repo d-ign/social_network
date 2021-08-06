@@ -9,7 +9,7 @@ import {
   handleFocusCount,
   handleBlurCount,
 } from '../../../common/inputCount/inputCount.js'
-import s from './InfoDataForm.module.css'
+import s from './InfoDataForm.module.scss'
 
 import { ProfileType } from '../../../../types/types'
 

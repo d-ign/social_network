@@ -5,6 +5,8 @@
   font-size: 24px;
   margin-bottom: 30px;
 }
+@import '../../../common/styles/colors';
+
 .wrap {
   margin-bottom: 12px;
   padding-bottom: 10px;
@@ -18,12 +20,12 @@
   max-width: 160px;
   font-weight: 900;
   font-size: 16px;
-  color: #919191;
+  color: $color-greyLight;
 }
 .titleContact {
   display: inline-block;
   width: 90px;
-  color: #919191;
+  color: $color-greyLight;
   margin-top: 6px;
 }
 .countStyle {
@@ -33,7 +35,7 @@
   position: relative;
 }
 .errorProfileContacts {
-  color: #f44336;
+  color: $color-red;
   padding: 5px;
 }
 @media (max-width: 420px) {

@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
 import unknown from '../../../img/no_photo.svg'
-import s from './User.module.css'
+import s from './User.module.scss'
 
 type PropsType = {
   id: number
@@ -54,14 +54,14 @@ const User: React.FC<PropsType> = (props) => {
           </div>
 
           <div className={s.nameAndStatus}>
-            {name?.length > 17 ? (
+            {name?.length > 19 ? (
               <div data-tooltip={name}>
                 <div className={s.name}>{name}</div>
               </div>
             ) : (
               <div className={s.name}>{name}</div>
             )}
-            {status?.length > 17 ? (
+            {status?.length > 19 ? (
               <div data-tooltip={status}>
                 <div className={s.status}>{status}</div>
               </div>
