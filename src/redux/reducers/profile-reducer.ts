@@ -71,7 +71,7 @@ const profileReducer = (
     case 'ADD_POST': {
       const newPost = {
         author: state.profile?.fullName,
-        idPost: v1(),
+        idPost: v1(), // TODO вызов не чистой функции
         message: action.newPostText,
         likesCount: 0,
         isLikeClick: false,

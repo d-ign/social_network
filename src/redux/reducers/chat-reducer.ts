@@ -23,6 +23,7 @@ const chatReducer = (
           ...state.messages,
           ...action.payload.messages.map((m) => ({ ...m, id: v1() })),
         ].filter((item, index, array) => index >= array.length - 100),
+        // TODO v1() - вызов не чистой функции
       }
     }
     case 'STATUS_CHANGED': {

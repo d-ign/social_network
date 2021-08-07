@@ -33,7 +33,7 @@
 .titleMembersWrap {
   @media (max-width: 760px) {
     position: absolute;
-    top: 0;
+    top: -1px;
     right: 15px;
     background-color: $color-darkBlue;
     width: 150px;
@@ -48,6 +48,7 @@
   flex: 1 1 200px;
   background-color: $color-greyTransparent;
   border-radius: 5px;
+  margin-left: 10px;
 }
 .titleMembers {
   font-size: 20px;
@@ -84,40 +85,28 @@
 /* Messages */
 .allMessages,
 .membersContainer {
-  max-height: 68vh;
+  max-height: calc(100vh - 168px);
   height: 100%;
   width: 100%;
   padding: 10px;
   overflow-y: auto;
-  @media (max-height: 1060px), (min-height: 1060px) {
-    max-height: 81vh;
+  // width
+  @media (max-width: 600px) and (max-height: 1500px) {
+    max-height: calc(100vh - 228px);
   }
-  @media (max-height: 960px) {
-    max-height: 78vh;
+  @media (max-width: 470px) and (max-height: 1500px) {
+    max-height: calc(100vh - 218px);
   }
-  @media (max-height: 810px) {
-    max-height: 74vh;
+  // height
+  @media (max-height: 600px) and (max-width: 1500px) {
+    max-height: calc(100vh - 158px);
   }
-  @media (max-height: 680px) {
-    max-height: 71vh;
+  @media (max-height: 470px) and (max-width: 1500px) {
+    max-height: calc(100vh - 148px);
   }
-  @media (max-height: 620px) {
-    max-height: 65vh;
-  }
-  @media (max-height: 492px) {
-    max-height: 62vh;
-  }
-  @media (max-height: 429px) {
-    max-height: 59vh;
-  }
-  @media (max-height: 390px) {
-    max-height: 56vh;
-  }
-  @media (max-height: 362px) {
-    max-height: 53vh;
-  }
-  @media (max-height: 340px) {
-    max-height: 50vh;
+  // width + height
+  @media (max-height: 600px) and (max-width: 600px) {
+    max-height: calc(100vh - 218px);
   }
 }
 .membersContainerHidden {
@@ -159,7 +148,7 @@
 .name {
   font-weight: 900;
   text-decoration: none;
-  color: white;
+  color: $color-white;
   font-size: 16px;
   @media (max-width: 420px) {
     font-size: 14px;
@@ -199,11 +188,8 @@
   width: 100%;
   padding: 10px;
   background-color: $color-darkBlue;
-  @media (max-width: 470px) {
+  @media (max-width: 470px), (max-height: 470px) {
     padding: 5px;
-  }
-  @media (max-height: 492px) {
-    padding: 3px;
   }
 }
 
@@ -216,13 +202,14 @@
   .chatMembersMedia {
     position: absolute;
     right: 15px;
-    top: 36px;
+    top: 34px;
     width: 150px;
     background-color: $color-darkBlue;
     border-left: 1px solid $color-cyan;
   }
   .chatMembersMedia {
-    top: 67px;
+    top: 64px;
+    z-index: 100;
     padding: 0 10px 10px 10px;
     border-radius: 0 0 5px 5px;
     max-height: 300px;
@@ -232,6 +219,7 @@
   }
   .membersContainer {
     order: 1;
+    padding: 0;
   }
   .allMessages {
     order: 2;
@@ -239,7 +227,6 @@
   .titleMembersWrapDeployed {
     border-radius: 0;
     border-bottom: 1px solid transparent;
-    border-right: 1px solid transparent;
   }
   .buttonSortNotShowAll {
     border-right: 1px solid $color-cyan;

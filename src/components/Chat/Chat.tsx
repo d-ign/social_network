@@ -246,9 +246,7 @@ const AddMessageForm: React.FC = () => {
         <TextField
           name='newMessageText'
           placeholder='Enter your message...'
-          multiline
           fullWidth
-          rowsMax='3'
           variant='outlined'
           inputProps={{ maxLength: 100 }}
           onChange={(e) => setMessage(e.currentTarget.value)}
