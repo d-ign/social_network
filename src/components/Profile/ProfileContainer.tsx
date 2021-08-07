@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { AppStateType } from '../../redux/redux-store'
 import { getUserProfile, getStatus } from '../../redux/reducers/profile-reducer'
 
-import withAuthRedirect from '../hoc/withAuthRedirect'
+import withAuthRedirect from '../common/hoc/withAuthRedirect'
 import Wall from './Wall/Wall'
 import InfoContainer from './Info/InfoContainer'
 

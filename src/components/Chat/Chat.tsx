@@ -11,7 +11,7 @@ import Icon from '@mdi/react'
 import { Button, TextField } from '@material-ui/core'
 import { mdiChevronDown } from '@mdi/js'
 import s from './Chat.module.scss'
-import withAuthRedirect from '../hoc/withAuthRedirect'
+import withAuthRedirect from '../common/hoc/withAuthRedirect'
 import Avatar from '../common/Avatar/Avatar'
 import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
 import {

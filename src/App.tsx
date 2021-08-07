@@ -6,7 +6,7 @@ import { initializeAppThunk } from './redux/reducers/app-reducer'
 import { getAuthorizedUserID } from './redux/selectors/auth-selectors'
 
 import Preloader from './components/common/Preloader/Preloader.jsx'
-import withSuspense from './components/hoc/withSuspense'
+import withSuspense from './components/common/hoc/withSuspense'
 
 import s from './App.module.scss'
 import Header from './components/Header/Header'
