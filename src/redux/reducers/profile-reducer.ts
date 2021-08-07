@@ -43,6 +43,8 @@ const initialState = {
   status: '',
   showSuccessSave: '',
   errorProfileContacts: '',
+  isEditModeProfile: false,
+  isEditInputProfileForm: false,
 }
 
 const profileReducer = (
@@ -171,6 +173,18 @@ const profileReducer = (
         errorProfileContacts: action.message,
       }
     }
+    case 'TOGGLE_EDIT_MODE_PROFILE': {
+      return {
+        ...state,
+        isEditModeProfile: action.bool,
+      }
+    }
+    case 'TOGGLE_EDIT_INPUT_PROFILE_FORM': {
+      return {
+        ...state,
+        isEditInputProfileForm: action.bool,
+      }
+    }
     default:
       return state
   }
@@ -209,6 +223,10 @@ export const actions = {
     ({ type: 'SHOW_SUCCESS_SAVE', message } as const),
   showErrorProfileContacts: (message: string) =>
     ({ type: 'SHOW_ERROR_PROFILE_CONTACTS', message } as const),
+  setEditModeProfile: (bool: boolean) =>
+    ({ type: 'TOGGLE_EDIT_MODE_PROFILE', bool } as const),
+  setEditInputProfileForm: (bool: boolean) =>
+    ({ type: 'TOGGLE_EDIT_INPUT_PROFILE_FORM', bool } as const),
 }
 
 export const getUserProfile =

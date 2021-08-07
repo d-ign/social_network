@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { submit } from 'redux-form'
 import Button from '@material-ui/core/Button'
@@ -6,11 +6,14 @@ import EditIcon from '@material-ui/icons/Edit'
 import SaveIcon from '@material-ui/icons/Save'
 import CloseIcon from '@material-ui/icons/Close'
 import {
+  getEditInputProfileForm,
+  getEditModeProfile,
   getErrorProfileContacts,
   getProfile,
   getShowSuccessSave,
 } from '../../../redux/selectors/profile-selectors'
 import {
+  actions,
   savePhotoThunk,
   saveProfileThunk,
 } from '../../../redux/reducers/profile-reducer'
@@ -48,13 +51,13 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
     marginTop: 20,
   }
 
-  const [editModeProfile, setEditModeProfile] = useState(false)
-
   // for InfoDataForm
   const errorProfileContacts = useSelector(getErrorProfileContacts)
 
   const profile = useSelector(getProfile)
   const showSuccessSave = useSelector(getShowSuccessSave)
+  const isEditModeProfile = useSelector(getEditModeProfile)
+  const isEditInputProfileForm = useSelector(getEditInputProfileForm)
   const dispatch = useDispatch()
 
   const onSubmit = (values: ProfileType) => {
@@ -65,6 +68,10 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
     if (e.target.files?.length) {
       dispatch(savePhotoThunk(e.target.files[0]))
     }
+  }
+
+  const handleEditInputProfileForm = (bool: boolean) => {
+    dispatch(actions.setEditInputProfileForm(bool))
   }
 
   if (!profile) {
@@ -78,7 +85,7 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
 
       <div className={s.columnLeft}>
         <Avatar photo={profile.photos.large} size='large'>
-          {isOwner && !editModeProfile && (
+          {isOwner && !isEditModeProfile && (
             <div className={s.camera}>
               <label htmlFor='file_out'>
                 <div className={s.wrapImg}>
@@ -95,9 +102,9 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
           )}
         </Avatar>
 
-        {isOwner && !editModeProfile && (
+        {isOwner && !isEditModeProfile && (
           <Button
-            onClick={() => setEditModeProfile(true)}
+            onClick={() => dispatch(actions.setEditModeProfile(true))}
             variant='outlined'
             style={stylesEditButton}
             startIcon={<EditIcon style={{ fontSize: 16 }} />}
@@ -106,10 +113,14 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
           </Button>
         )}
 
-        {editModeProfile && (
+        {isEditModeProfile && (
           <div className={s.buttonsSaveAndCancelProfile}>
             <Button
-              onClick={() => dispatch(submit('editProfile'))}
+              onClick={() => {
+                handleEditInputProfileForm(false)
+                dispatch(submit('editProfile'))
+              }}
+              disabled={!isEditInputProfileForm}
               variant='contained'
               color='primary'
               fullWidth
@@ -119,7 +130,10 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
               Save
             </Button>
             <Button
-              onClick={() => setEditModeProfile(false)}
+              onClick={() => {
+                handleEditInputProfileForm(false)
+                dispatch(actions.setEditModeProfile(false))
+              }}
               variant='outlined'
               fullWidth
               style={stylesSaveAndCancelButton}
@@ -130,23 +144,24 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
           </div>
         )}
 
-        {editModeProfile && showSuccessSave && (
+        {isEditModeProfile && showSuccessSave && (
           <div className={s.successSave}>{showSuccessSave}</div>
         )}
       </div>
 
       <div className={s.columnRight}>
-        {!editModeProfile && (
+        {!isEditModeProfile && (
           <div className={s.fullName}>{profile.fullName}</div>
         )}
 
-        {!editModeProfile && <Status isOwner={isOwner} />}
+        {!isEditModeProfile && <Status isOwner={isOwner} />}
 
-        {editModeProfile ? (
+        {isEditModeProfile ? (
           <InfoDataForm
             initialValues={profile}
             errorProfileContacts={errorProfileContacts}
             onSubmit={onSubmit}
+            handleEditInputProfileForm={handleEditInputProfileForm}
           />
         ) : (
           <InfoData profile={profile} />

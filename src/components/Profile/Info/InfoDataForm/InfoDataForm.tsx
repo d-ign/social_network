@@ -15,13 +15,19 @@ import { ProfileType } from '../../../../types/types'
 
 type OwnPropsType = {
   errorProfileContacts: string
+  handleEditInputProfileForm: (bool: boolean) => void
   initialValues: ProfileType
 }
 
 const DataForm: React.FC<
   InjectedFormProps<ProfileType, OwnPropsType> & OwnPropsType
 > = (props) => {
-  const { handleSubmit, initialValues, errorProfileContacts } = props
+  const {
+    handleSubmit,
+    initialValues,
+    errorProfileContacts,
+    handleEditInputProfileForm,
+  } = props
 
   const num100 = 100
   const num1000 = 1000
@@ -39,7 +45,10 @@ const DataForm: React.FC<
           variant='filled'
           fullWidth
           inputProps={{ maxLength: 100 }}
-          onInput={handleInputCount.bind(null, num100)}
+          onInput={() => {
+            handleEditInputProfileForm(true)
+            handleInputCount.bind(null, num100)
+          }}
           onFocus={handleFocusCount}
           onBlur={handleBlurCount}
         />
@@ -58,7 +67,10 @@ const DataForm: React.FC<
           fullWidth
           variant='filled'
           inputProps={{ maxLength: 1000 }}
-          onInput={handleInputCount.bind(null, num1000)}
+          onInput={() => {
+            handleEditInputProfileForm(true)
+            handleInputCount.bind(null, num1000)
+          }}
           onFocus={handleFocusCount}
           onBlur={handleBlurCount}
         />
@@ -70,6 +82,9 @@ const DataForm: React.FC<
       <div className={s.wrap}>
         <Field
           component={renderCheckbox}
+          onChange={() => {
+            handleEditInputProfileForm(true)
+          }}
           name='lookingForAJob'
           label='Are you looking for a job?'
         />
@@ -85,7 +100,10 @@ const DataForm: React.FC<
           fullWidth
           variant='filled'
           inputProps={{ maxLength: 1000 }}
-          onInput={handleInputCount.bind(null, num1000)}
+          onInput={() => {
+            handleEditInputProfileForm(true)
+            handleInputCount.bind(null, num1000)
+          }}
           onFocus={handleFocusCount}
           onBlur={handleBlurCount}
         />
@@ -108,6 +126,9 @@ const DataForm: React.FC<
             <div className={s.titleContact}>{key}:</div>
             <Field
               component={renderTextField}
+              onInput={() => {
+                handleEditInputProfileForm(true)
+              }}
               name={`contacts.${key}`}
               multiline
               fullWidth
