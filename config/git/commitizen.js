@@ -28,7 +28,7 @@ module.exports = {
     },
     {
       value: 'library',
-      name: 'library: Подключение библиотеки',
+      name: 'library: Подключение библиотеки или изменение настроек в текущих',
     },
     { value: 'test', name: 'test: Добавление тестов' },
   ],
@@ -72,5 +72,5 @@ module.exports = {
   footerPrefix: 'META DATA:',
 
   // limit subject length
-  subjectLimit: 72,
+  subjectLimit: 50,
 }
