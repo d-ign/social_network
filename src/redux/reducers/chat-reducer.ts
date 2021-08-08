@@ -86,8 +86,10 @@ export const stopMessagesListening = (): ThunkType => async (dispatch) => {
   chatAPI.stop()
 }
 
-export const sendMessage = (message: string) => {
-  chatAPI.sendMessage(message)
+export const sendMessage = (message: string): ThunkType => {
+  return async () => {
+    chatAPI.sendMessage(message)
+  }
 }
 
 export default chatReducer
