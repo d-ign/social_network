@@ -61,6 +61,12 @@ const Members: React.FC = () => {
   const itemsCount = isShowAll ? chatMembers.length : 5
   const [isShowMembers, setIsShowMembers] = useState(false)
 
+  const stylesSortByName = {
+    fontSize: '10px',
+    marginBottom: '5px',
+    padding: '3px 10px 3px 7px',
+  }
+
   return (
     <div
       className={cn(s.membersContainer, {
@@ -102,7 +108,7 @@ const Members: React.FC = () => {
           startIcon={
             isReverseSort ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
           }
-          style={{ fontSize: 10, marginBottom: 5, padding: 3 }}
+          style={stylesSortByName}
         >
           sort by name
         </Button>
