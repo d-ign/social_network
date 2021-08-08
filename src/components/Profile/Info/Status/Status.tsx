@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Input, Button } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
-import CloseIcon from '@material-ui/icons/Close'
 import { getStatusSelector } from '../../../../redux/selectors/profile-selectors'
 import { updateStatus } from '../../../../redux/reducers/profile-reducer'
 
@@ -34,25 +33,40 @@ const Status: React.FC<PropsType> = (props) => {
 
   const [editMode, setEditMode] = useState(false)
   const [statusLocal, setStatusLocal] = useState(status)
+  const num300 = 300
 
   useEffect(() => {
     setStatusLocal(status)
   }, [status])
 
-  const activateEditMode = () => setEditMode(true)
   const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setStatusLocal(e.currentTarget.value)
-  const cancelEditMode = () => setEditMode(false)
 
   const saveStatus = () => {
     dispatch(updateStatus(statusLocal))
     setEditMode(false)
   }
 
-  const num300 = 300
+  function useOutsideAlerter(ref: React.RefObject<HTMLElement>) {
+    useEffect(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      function handleClickOutside(event: MouseEvent | any) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setEditMode(false)
+        }
+      }
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }, [ref])
+  }
+
+  const statusRef = useRef(null)
+  useOutsideAlerter(statusRef)
 
   return (
-    <div className={s.container}>
+    <div ref={statusRef} className={s.container}>
       {editMode && (
         <div className={s.wrap}>
           <Input
@@ -82,16 +96,6 @@ const Status: React.FC<PropsType> = (props) => {
                 Save
               </Button>
             </div>
-            <div className={s.buttonWrap}>
-              <Button
-                onClick={cancelEditMode}
-                variant='outlined'
-                style={stylesSaveAndButton}
-                startIcon={<CloseIcon />}
-              >
-                Cancel
-              </Button>
-            </div>
 
             <span id='statusWrapCount'>
               <span id='statusCount' /> of 300
@@ -103,7 +107,11 @@ const Status: React.FC<PropsType> = (props) => {
       {editMode && <div className={s.plug} />}
 
       {isOwner && !editMode && (
-        <div aria-hidden='true' className={s.status} onClick={activateEditMode}>
+        <div
+          aria-hidden='true'
+          className={s.status}
+          onClick={() => setEditMode(true)}
+        >
           {status || <span className={s.noStatus}>Your status is empty</span>}
         </div>
       )}
