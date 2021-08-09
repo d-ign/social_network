@@ -57,8 +57,11 @@ const Header: React.FC = () => {
   React.useEffect(() => {
     // @ts-ignore
     const themeFromLocalStorage = JSON.parse(localStorage.getItem('theme'))
-    dispatch(actions.setTheme(themeFromLocalStorage))
-    setThemeLocal(themeFromLocalStorage)
+
+    if (themeFromLocalStorage) {
+      dispatch(actions.setTheme(themeFromLocalStorage))
+      setThemeLocal(themeFromLocalStorage)
+    }
   }, [dispatch])
 
   // запись темы в Local Storage
