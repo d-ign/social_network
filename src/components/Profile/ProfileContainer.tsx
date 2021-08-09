@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppStateType } from '../../redux/redux-store'
-import { getUserProfile, getStatus } from '../../redux/reducers/profile-reducer'
+import {
+  getUserProfile,
+  getStatus,
+  actions,
+} from '../../redux/reducers/profile-reducer'
 
 import withAuthRedirect from '../common/hoc/withAuthRedirect'
 import Wall from './Wall/Wall'
@@ -19,6 +23,7 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   getUserProfile: (userId: number) => void
   getStatus: (userId: number) => void
+  setEditModeProfile: (bool: boolean) => void
 }
 
 type PathParamsType = {
@@ -42,6 +47,13 @@ class ProfileContainer extends React.PureComponent<PropsType> {
     }
   }
 
+  componentWillUnmount() {
+    const { isEditModeProfile, setEditModeProfile } = this.props
+    if (isEditModeProfile) {
+      setEditModeProfile(false)
+    }
+  }
+
   refreshProfile() {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const { match, authorizedUserID, history, getUserProfile, getStatus } =
@@ -61,10 +73,12 @@ class ProfileContainer extends React.PureComponent<PropsType> {
 
   render() {
     const { match, authorizedUserID, isEditModeProfile } = this.props
+    const isOwner = +match.params.userId === authorizedUserID
+
     return (
       <>
-        <InfoContainer isOwner={+match.params.userId === authorizedUserID} />
-        {!isEditModeProfile && <Wall />}
+        <InfoContainer isOwner={isOwner} />
+        {!isEditModeProfile && isOwner && <Wall />}
       </>
     )
   }
@@ -86,6 +100,7 @@ export default compose<React.ComponentType>(
   >(mapStateToProps, {
     getUserProfile,
     getStatus,
+    setEditModeProfile: actions.setEditModeProfile,
   }),
   withRouter,
   withAuthRedirect
