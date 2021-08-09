@@ -7,13 +7,16 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CloseIcon from '@material-ui/icons/Close'
 import unknown from '../../../../img/no_photo.svg'
 import s from './Post.module.scss'
+
+import Avatar from '../../../common/Avatar/Avatar'
+
 import {
   getIsSelectedPost,
   getPostsForDelete,
   getToggleClickDeleteSelectedPosts,
 } from '../../../../redux/selectors/profile-selectors'
+import { getTheme } from '../../../../redux/selectors/app-selectors'
 import { actions } from '../../../../redux/reducers/profile-reducer'
-import Avatar from '../../../common/Avatar/Avatar'
 
 import { PostType } from '../../../../types/types'
 
@@ -40,6 +43,7 @@ const Post: React.FC<PostType & OwnPropsType> = (props) => {
   const [isClickDeletePost, setIsClickDeletePost] = useState(false)
   const [isSelectedPostLocal, setIsSelectedPostLocal] = useState(false)
 
+  const theme = useSelector(getTheme)
   const isSelectedPost = useSelector(getIsSelectedPost)
   const isClickDeleteSelectedPosts = useSelector(
     getToggleClickDeleteSelectedPosts
@@ -75,7 +79,14 @@ const Post: React.FC<PostType & OwnPropsType> = (props) => {
             aria-hidden='true'
             className={cn(
               { [s.avatar]: !isSelectedPostLocal },
-              { [s.postSelected]: isSelectedPostLocal }
+              {
+                [s.postSelectedTheme1]:
+                  isSelectedPostLocal && theme === 'theme1',
+              },
+              {
+                [s.postSelectedTheme2]:
+                  isSelectedPostLocal && theme === 'theme2',
+              }
             )}
             onClick={() => {
               if (!isSelectedPostLocal) {

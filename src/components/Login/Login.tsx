@@ -2,18 +2,20 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
+
 import cn from 'classnames'
 import Button from '@material-ui/core/Button'
+import s from './Login.module.scss'
+import renderTextField from '../common/ElementCustom/renderTextField.jsx'
+import renderCheckbox from '../common/ElementCustom/renderCheckbox.jsx'
+
 import {
   getAuthorizedUserID,
   getCaptchaURL,
   getIsAuth,
 } from '../../redux/selectors/auth-selectors'
+import { getTheme } from '../../redux/selectors/app-selectors'
 import { loginThunk } from '../../redux/reducers/auth-reducer'
-
-import s from './Login.module.scss'
-import renderTextField from '../common/ElementCustom/renderTextField.jsx'
-import renderCheckbox from '../common/ElementCustom/renderCheckbox.jsx'
 
 const validate = (values: LoginFormValuesType) => {
   type ErrorsType = {
@@ -79,14 +81,8 @@ const Login: React.FC = () => {
 const LoginForm: React.FC<
   InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType
 > = ({ handleSubmit, error, captchaURL }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const stylesLoginButton: any = {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-  }
-
   const dispatch = useDispatch()
+  const theme = useSelector(getTheme)
 
   const onTestAccountSubmit = (email: string, password: string) => {
     dispatch(loginThunk(email, password, false, null))
@@ -132,9 +128,9 @@ const LoginForm: React.FC<
               <Button
                 type='submit'
                 variant='contained'
-                color='primary'
+                color={theme === 'theme1' ? 'primary' : 'secondary'}
                 fullWidth
-                style={stylesLoginButton}
+                style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}
               >
                 Log in
               </Button>
@@ -144,7 +140,8 @@ const LoginForm: React.FC<
                   {error === 'You are not authorized' ? (
                     <>
                       <div>You are not authorized</div>
-                      <div>(please, unblock third party cookies)</div>
+                      <div>or,</div>
+                      <div>please, unblock third party cookies</div>
                     </>
                   ) : (
                     error
@@ -158,9 +155,14 @@ const LoginForm: React.FC<
         <Button
           onClick={() => onTestAccountSubmit('free@samuraijs.com', 'free')}
           variant='contained'
-          color='secondary'
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
           fullWidth
-          style={stylesLoginButton && { marginBottom: '15px' }}
+          style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: '#fff',
+            marginBottom: '15px',
+          }}
         >
           Login to test account
         </Button>

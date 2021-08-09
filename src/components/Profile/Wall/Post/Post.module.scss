@@ -48,13 +48,15 @@
   position: relative;
 }
 .avatar,
-.postSelected {
+.postSelectedTheme1,
+.postSelectedTheme2 {
   cursor: pointer;
 }
 .avatar:hover:before,
-.postSelected:before {
+.postSelectedTheme1:before,
+.postSelectedTheme2:before {
   content: '';
-  background-color: $color-darkBlueTransparent;
+  background-color: var(--color-darkBlueTransparent);
   background-image: url(../../../../img/icons/check.svg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -66,8 +68,11 @@
   top: 0;
   z-index: 10;
 }
-.postSelected:before {
-  background-image: url(../../../../img/icons/checkSelected.svg);
+.postSelectedTheme1:before {
+  background-image: url(../../../../img/icons/checkSelectedTheme1.svg);
+}
+.postSelectedTheme2:before {
+  background-image: url(../../../../img/icons/checkSelectedTheme2.svg);
 }
 .columnCenter {
   display: flex;
@@ -102,8 +107,8 @@
   font-size: 14px;
 }
 .like {
-  color: $color-cyan;
+  color: var(--color-cyan);
 }
 .noLike {
-  color: $color-cyanLight;
+  color: var(--color-cyanLight);
 }

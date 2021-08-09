@@ -11,6 +11,7 @@ type PropsType = {
   id: number
   photo: string | null
   name: string
+  theme: string
   status: string
   followed: boolean
   authorizedUserID: number | null
@@ -24,6 +25,7 @@ const User: React.FC<PropsType> = (props) => {
     id,
     photo,
     name,
+    theme,
     status,
     followed,
     unfollow,
@@ -90,7 +92,7 @@ const User: React.FC<PropsType> = (props) => {
           <Button
             onClick={() => follow(id)}
             disabled={followingInProgress.some((idUser) => idUser === id)}
-            color='primary'
+            color={theme === 'theme1' ? 'primary' : 'secondary'}
             style={stylesFollowedButton}
             startIcon={<AddIcon />}
           >

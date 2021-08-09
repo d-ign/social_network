@@ -9,20 +9,23 @@ import {
   responsiveFontSizes,
 } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import cyan from '@material-ui/core/colors/cyan'
+
 import AppContainer from './App'
 import store from './redux/redux-store'
+import './styles/theme.css'
 
 let theme = createMuiTheme({
   palette: {
-    type: 'dark', // светлый текст
+    type: 'dark',
+    // цвет главных кнопок, активных ссылок в навигации,
+    // декоративных линий, рамок у форм
     primary: {
-      main: cyan[600], // #00bcd4
-      // синий цвет (кнопки, активные ссылки в навигации, декоративные линии)
+      main: '#00bcd4',
+      // 1-ая тема, синий цвет
     },
     secondary: {
-      main: cyan[800], // #00838f
-      // кнопка в Login для входа в тестовый аккаунт
+      main: '#00d482',
+      // 2-ая тема, зелёный цвет
     },
   },
 })

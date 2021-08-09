@@ -1,10 +1,21 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { submit } from 'redux-form'
+
 import Button from '@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit'
 import SaveIcon from '@material-ui/icons/Save'
 import CloseIcon from '@material-ui/icons/Close'
+import s from './InfoContainer.module.scss'
+import camera from '../../../img/icons/camera.svg'
+
+import Preloader from '../../common/Preloader/Preloader.jsx'
+import Status from './Status/Status'
+import Avatar from '../../common/Avatar/Avatar'
+import InfoDataForm from './InfoDataForm/InfoDataForm'
+import InfoData from './InfoData/InfoData'
+
+import { getTheme } from '../../../redux/selectors/app-selectors'
 import {
   getEditInputProfileForm,
   getEditModeProfile,
@@ -17,16 +28,8 @@ import {
   savePhotoThunk,
   saveProfileThunk,
 } from '../../../redux/reducers/profile-reducer'
+
 import { ProfileType } from '../../../types/types'
-
-import Preloader from '../../common/Preloader/Preloader.jsx'
-import Status from './Status/Status'
-import Avatar from '../../common/Avatar/Avatar'
-import InfoDataForm from './InfoDataForm/InfoDataForm'
-import InfoData from './InfoData/InfoData'
-
-import s from './InfoContainer.module.scss'
-import camera from '../../../img/icons/camera.svg'
 
 // при переходе на старницу профиля скрол обнулится
 function ScrollToTopOnMount() {
@@ -54,6 +57,7 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
   // for InfoDataForm
   const errorProfileContacts = useSelector(getErrorProfileContacts)
 
+  const theme = useSelector(getTheme)
   const profile = useSelector(getProfile)
   const showSuccessSave = useSelector(getShowSuccessSave)
   const isEditModeProfile = useSelector(getEditModeProfile)
@@ -122,7 +126,7 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
               }}
               disabled={!isEditInputProfileForm}
               variant='contained'
-              color='primary'
+              color={theme === 'theme1' ? 'primary' : 'secondary'}
               fullWidth
               style={stylesSaveAndCancelButton}
               startIcon={<SaveIcon />}

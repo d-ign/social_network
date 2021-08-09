@@ -1,0 +1,34 @@
+:root {
+  --color-cyan-theme1: #00bcd4;
+  --color-cyan-theme2: #00d482;
+  --color-cyan: var(--color-cyan-theme1);
+  /* главные кнопки, активные ссылки в навигации, декоративные линии, */
+  /* ползунок скроллбара при hover */
+
+  --color-cyanLight-theme1: #b2ebf2;
+  --color-cyanLight-theme2: #b4ffe2;
+  --color-cyanLight: var(--color-cyanLight-theme1);
+  /* не нажатый лайк */
+
+  --color-cyanMedium-theme1: #00bcd480;
+  --color-cyanMedium-theme2: #009c60;
+  --color-cyanMedium: var(--color-cyanMedium-theme1);
+  /* мои сообщения в чате */
+
+  --color-cyanDark-theme1: #00bcd433;
+  --color-cyanDark-theme2: #005735;
+  --color-cyanDark: var(--color-cyanDark-theme1);
+  /* чужие сообщения в чате */
+
+  --color-darkBlue-theme1: #222831;
+  --color-darkBlue-theme2: #312b22;
+  --color-darkBlue: var(--color-grey-theme1);
+  /* фон Header, Navbar, content */
+
+  --color-darkBlueTransparent-theme1: #22283199;
+  --color-darkBlueTransparent-theme2: #312b2299;
+  --color-darkBlueTransparent: var(--color-grey-theme1);
+  /* loginBlock in Login, */
+  /* shadow header, nav, app-content, */
+  /* фон avatar:hover in Post (Wall), tooltip:hover in User */
+}

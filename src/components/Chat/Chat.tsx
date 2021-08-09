@@ -8,11 +8,14 @@ import SendIcon from '@material-ui/icons/Send'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import Icon from '@mdi/react'
-import { Button, TextField } from '@material-ui/core'
+import { TextField, Button } from '@material-ui/core'
 import { mdiChevronDown } from '@mdi/js'
 import s from './Chat.module.scss'
+
 import withAuthRedirect from '../common/hoc/withAuthRedirect'
 import Avatar from '../common/Avatar/Avatar'
+
+import { getTheme } from '../../redux/selectors/app-selectors'
 import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
 import {
   getChatMembers,
@@ -235,6 +238,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(
 
 const AddMessageForm: React.FC = () => {
   const [message, setMessage] = React.useState('')
+  const theme = useSelector(getTheme)
   const status = useSelector(getStatus)
   const dispatch = useDispatch()
 
@@ -255,12 +259,15 @@ const AddMessageForm: React.FC = () => {
           fullWidth
           variant='outlined'
           inputProps={{ maxLength: 100 }}
-          onChange={(e) => setMessage(e.currentTarget.value)}
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setMessage(e.currentTarget.value)
+          }
           value={message}
         />
         <IconButton
           aria-label='sendMessage'
-          color='primary'
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
           style={{ margin: '5px' }}
           onClick={handleSendMessage}
           disabled={status === 'pending'}

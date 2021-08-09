@@ -1,15 +1,15 @@
 @import '../../styles/colors';
 
 .nav {
-  background-color: $color-darkBlue;
+  background-color: var(--color-darkBlue);
   grid-area: nav;
   padding: 15px;
   width: 180px;
   border-radius: 10px 10px 0 0;
   min-height: calc(100vh - 70px);
   height: 100%;
-  box-shadow: 0 5px 5px $color-darkBlueTransparent,
-    0 5px 5px $color-darkBlueTransparent;
+  box-shadow: 0 5px 5px var(--color-darkBlueTransparent),
+    0 5px 5px var(--color-darkBlueTransparent);
 }
 .navLink {
   text-decoration: none;
@@ -33,10 +33,10 @@
   margin-top: 0;
 }
 .navLink.active {
-  color: $color-cyan;
+  color: var(--color-cyan);
 }
 .activeIcon {
-  fill: $color-cyan;
+  fill: var(--color-cyan);
 }
 
 @media (max-width: 600px) {
@@ -59,7 +59,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background: $color-cyan;
+    background: var(--color-cyan);
   }
   .navLink {
     margin-top: 0;

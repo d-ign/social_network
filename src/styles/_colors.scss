@@ -1,16 +1,3 @@
-$color-cyan: #00bcd4;
-// главные кнопки, активные ссылки в навигации, декоративные линии,
-// ползунок скроллбара при hover
-
-$color-cyanLight: #b2ebf2;
-// не нажатый лайк
-
-$color-cyanMedium: #00bcd480;
-// мои сообщения в чате
-
-$color-cyanDark: #00bcd433;
-// чужие сообщения в чате
-
 $color-grey: #4f4f4f;
 // фон подложки App, фон StatusProfile, tooltip in User
 
@@ -24,14 +11,6 @@ $color-greyMedium: #4f4f4f66;
 
 $color-greyTransparent: #5e5e5e4d;
 // posts in Wall, users in Users, navLink:hover (Navbar), search:hover (Users)
-
-$color-darkBlue: #222831;
-// фон Header, Navbar, content
-
-$color-darkBlueTransparent: #22283199;
-// loginBlock in Login,
-// shadow header, nav, app-content,
-// фон avatar:hover in Post (Wall), tooltip:hover in User
 
 $color-red: #f44336;
 // error

@@ -1,6 +1,8 @@
+import { useSelector } from 'react-redux'
 import { TextField } from '@material-ui/core'
+import { getTheme } from '../../../redux/selectors/app-selectors'
 
-const renderTextField = (props) => {
+const RenderTextField = (props) => {
   const {
     label,
     input,
@@ -14,10 +16,11 @@ const renderTextField = (props) => {
     fullWidth,
     ...custom
   } = props
-
+  const theme = useSelector(getTheme)
   return (
     <>
       <TextField
+        color={theme === 'theme1' ? 'primary' : 'secondary'}
         label={label}
         placeholder={placeholder}
         inputProps={inputProps}
@@ -36,4 +39,4 @@ const renderTextField = (props) => {
   )
 }
 
-export default renderTextField
+export default RenderTextField

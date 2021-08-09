@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppStateType } from './redux/redux-store'
 import { initializeAppThunk } from './redux/reducers/app-reducer'
 import { getAuthorizedUserID } from './redux/selectors/auth-selectors'
 
@@ -13,9 +12,10 @@ import Header from './components/Header/Header'
 import Navbar from './components/Navbar/Navbar'
 import ProfileContainer from './components/Profile/ProfileContainer'
 import Login from './components/Login/Login'
+import { getInitialized } from './redux/selectors/app-selectors'
 
-// TODO Nothing was returned from render. This usually means a return
-// TODO statement is missing. Or, to render nothing, return null
+// TODO Error: Nothing was returned from render. This usually means a return
+// statement is missing. Or, to render nothing, return null
 // import ErrorBoundary from './components/Error/ErrorBoundary.jsx'
 
 const ChatContainer = React.lazy(() => import('./components/Chat/Chat'))
@@ -27,9 +27,7 @@ const SuspendedChat = withSuspense(ChatContainer)
 const SuspendedUsers = withSuspense(UsersContainer)
 
 const App: React.FC = () => {
-  const initialized = useSelector(
-    (state: AppStateType) => state.app.initialized
-  )
+  const initialized = useSelector(getInitialized)
   const userID = useSelector(getAuthorizedUserID)
   const dispatch = useDispatch()
 

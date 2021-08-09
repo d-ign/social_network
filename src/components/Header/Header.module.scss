@@ -2,8 +2,8 @@
 @import '../../styles/colors';
 
 .header {
-  background-color: $color-darkBlue;
-  box-shadow: 0 3px 3px $color-darkBlueTransparent;
+  background-color: var(--color-darkBlue);
+  box-shadow: 0 3px 3px var(--color-darkBlueTransparent);
   grid-area: header;
   border-radius: 0 0 10px 10px;
   display: flex;
@@ -13,19 +13,42 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  padding: 12px;
 }
 .logoAndTitle img {
   width: 40px;
   height: 40px;
-  margin: 0 10px 0 10px;
+  margin: 0 10px 0 0;
+  @media (max-width: 440px) {
+    width: 30px;
+    height: 30px;
+  }
 }
-.headerTitle {
+.headerTitleDesctop,
+.headerTitleMobile {
   color: $color-white;
   font-size: 25px;
   font-family: 'Mate SC', serif;
-  padding-right: 10px;
+  margin-right: 10px;
 }
-.rightPart {
+.headerTitleDesctop {
+  @media (max-width: 470px) {
+    font-size: 18px;
+  }
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
+  @media (max-width: 410px) {
+    display: none;
+  }
+}
+.headerTitleMobile {
+  @media (max-width: 410px) {
+    display: block;
+    font-size: 18px;
+  }
+}
+.rightColumn {
   display: flex;
   align-items: center;
 }
@@ -33,38 +56,30 @@
   text-decoration: none;
   display: flex;
   align-items: center;
+  padding: 12px;
 }
 .loginName {
   font-size: 15px;
   margin-left: 10px;
   color: $color-white;
-}
-.logoutImg {
-  padding-right: 5px;
-}
-.buttonMobile {
-  display: none;
-}
-@media (max-width: 570px) {
-  .loginName,
-  .buttonDesctop {
+  @media (max-width: 780px) {
     display: none;
   }
-  .buttonMobile {
+}
+
+@media (max-width: 650px) {
+  .buttonThemeDesctop {
+    display: none;
+  }
+  .buttonThemeMobile {
+    display: block;
+  }
+}
+@media (max-width: 560px) {
+  .buttonLogoutDesctop {
+    display: none;
+  }
+  .buttonLogoutMobile {
     display: inline;
-  }
-}
-@media (max-width: 440px) {
-  .headerTitle {
-    font-size: 18px;
-  }
-  .logoAndTitle img {
-    width: 30px;
-    height: 30px;
-  }
-}
-@media (max-width: 360px) {
-  .headerTitle {
-    font-size: 14px;
   }
 }

@@ -38,7 +38,7 @@
   padding: 8px;
   padding-bottom: 6px;
   display: block;
-  color: $color-cyan;
+  color: var(--color-cyan);
   border-bottom: 2px solid $color-grey;
 }
 .status:hover {

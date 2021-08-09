@@ -3,7 +3,7 @@
 /* полоса прокрутки Mozilla Firefox */
 @-moz-document url-prefix() {
   .allMessages {
-    scrollbar-color: $color-greyLight $color-grey;
+    scrollbar-color: var(--color-greyLight) $color-grey;
     scrollbar-width: thin;
   }
 }
@@ -35,12 +35,12 @@
     position: absolute;
     top: -1px;
     right: 15px;
-    background-color: $color-darkBlue;
+    background-color: var(--color-darkBlue);
     width: 150px;
     flex-direction: row;
     padding: 0 8px 0 8px;
     border-radius: 0 0 10px 10px;
-    border: 1px solid $color-cyan;
+    border: 1px solid var(--color-cyan);
     border-top: none;
   }
 }
@@ -138,11 +138,11 @@
 }
 .messageContainer {
   @extend %messageContainerTemplate;
-  background-color: $color-cyanDark;
+  background-color: var(--color-cyanDark);
 }
 .myMessageContainer {
   @extend %messageContainerTemplate;
-  background-color: $color-cyanMedium;
+  background-color: var(--color-cyanMedium);
   align-self: flex-end;
 }
 .name {
@@ -187,7 +187,7 @@
   align-items: center;
   width: 100%;
   padding: 10px;
-  background-color: $color-darkBlue;
+  background-color: var(--color-darkBlue);
   @media (max-width: 470px), (max-height: 470px) {
     padding: 5px;
   }
@@ -204,8 +204,8 @@
     right: 15px;
     top: 34px;
     width: 150px;
-    background-color: $color-darkBlue;
-    border-left: 1px solid $color-cyan;
+    background-color: var(--color-darkBlue);
+    border-left: 1px solid var(--color-cyan);
   }
   .chatMembersMedia {
     top: 64px;
@@ -214,8 +214,8 @@
     border-radius: 0 0 5px 5px;
     max-height: 300px;
     overflow: auto;
-    border-left: 1px solid $color-cyan;
-    border-bottom: 1px solid $color-cyan;
+    border-left: 1px solid var(--color-cyan);
+    border-bottom: 1px solid var(--color-cyan);
   }
   .membersContainer {
     order: 1;
@@ -229,7 +229,7 @@
     border-bottom: 1px solid transparent;
   }
   .buttonSortNotShowAll {
-    border-right: 1px solid $color-cyan;
+    border-right: 1px solid var(--color-cyan);
   }
 }
 

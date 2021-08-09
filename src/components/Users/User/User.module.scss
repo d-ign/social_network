@@ -32,7 +32,7 @@
   font-weight: bold;
 }
 .status {
-  color: $color-cyan;
+  color: var(--color-cyan);
   font-style: italic;
 }
 
@@ -51,7 +51,7 @@
   border-radius: 5px;
   color: $color-white;
   padding: 0.5em;
-  box-shadow: 2px 2px 5px $color-darkBlueTransparent;
+  box-shadow: 2px 2px 5px var(--color-darkBlueTransparent);
   pointer-events: none;
   opacity: 0;
   transition: 0.5s;

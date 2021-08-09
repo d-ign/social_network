@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom'
 import * as queryString from 'querystring'
+
 import cn from 'classnames'
 import IconButton from '@material-ui/core/IconButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import s from './Users.module.scss'
+
+import User from './User/User'
+import Search from './Search/Search'
+
+import { getTheme } from '../../redux/selectors/app-selectors'
 import {
   getFollowingInProgress,
   getIsFetching,
@@ -20,11 +27,6 @@ import {
   unfollow,
 } from '../../redux/reducers/users-reducer'
 
-import User from './User/User'
-import Search from './Search/Search'
-
-import s from './Users.module.scss'
-
 type PathParamsType = {
   pathname: string
 }
@@ -35,10 +37,11 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     const followingInProgress = useSelector(getFollowingInProgress)
     const authorizedUserID = useSelector(getAuthorizedUserID)
 
-    const totalUsersCount = useSelector(getTotalUsersCount)
+    const theme = useSelector(getTheme)
     const pageSize = useSelector(getPageSize)
     const users = useSelector(getUsersSelector)
     const isFetching = useSelector(getIsFetching)
+    const totalUsersCount = useSelector(getTotalUsersCount)
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -163,6 +166,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
                   photo={u.photos.small}
                   name={u.name}
                   status={u.status}
+                  theme={theme}
                   followed={u.followed}
                   unfollow={(id: number) => dispatch(unfollow(id))}
                   follow={(id: number) => dispatch(follow(id))}

@@ -1,18 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { Input, Button } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
+import s from './Status.module.scss'
+import useStyles from './stylesCustomMaterialUI.jsx'
+import { getTheme } from '../../../../redux/selectors/app-selectors'
+
 import { getStatusSelector } from '../../../../redux/selectors/profile-selectors'
 import { updateStatus } from '../../../../redux/reducers/profile-reducer'
-
 import {
   handleInputCount,
   handleFocusCount,
   handleBlurCount,
 } from '../../../common/inputCount/inputCount.js'
-
-import s from './Status.module.scss'
-import useStyles from './stylesCustomMaterialUI.jsx'
 
 type PropsType = {
   isOwner: boolean
@@ -29,9 +30,11 @@ const Status: React.FC<PropsType> = (props) => {
   }
 
   const status = useSelector(getStatusSelector)
+  const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
   const [editMode, setEditMode] = useState(false)
+  const [isEditInputStatusForm, setIsEditInputStatusForm] = useState(false)
   const [statusLocal, setStatusLocal] = useState(status)
   const num300 = 300
 
@@ -39,11 +42,14 @@ const Status: React.FC<PropsType> = (props) => {
     setStatusLocal(status)
   }, [status])
 
-  const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEditInputStatusForm(true)
     setStatusLocal(e.currentTarget.value)
+  }
 
   const saveStatus = () => {
     dispatch(updateStatus(statusLocal))
+    setIsEditInputStatusForm(false)
     setEditMode(false)
   }
 
@@ -76,6 +82,7 @@ const Status: React.FC<PropsType> = (props) => {
             autoFocus
             inputProps={{ maxLength: 300 }}
             className={classes.stylesStatus}
+            color={theme === 'theme1' ? 'primary' : 'secondary'}
             multiline
             fullWidth
             onInput={handleInputCount.bind(null, num300)}
@@ -88,8 +95,9 @@ const Status: React.FC<PropsType> = (props) => {
             <div className={s.buttonWrap}>
               <Button
                 onClick={saveStatus}
+                disabled={!isEditInputStatusForm}
                 variant='contained'
-                color='primary'
+                color={theme === 'theme1' ? 'primary' : 'secondary'}
                 style={stylesSaveAndButton}
                 startIcon={<SaveIcon />}
               >

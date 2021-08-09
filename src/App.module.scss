@@ -14,13 +14,13 @@
   border-radius: 9em;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: $color-cyan;
+  background-color: var(--color-cyan);
 }
 
 html,
 body {
   /* полоса прокрутки Mozilla Firefox */
-  scrollbar-color: $color-greyLight $color-grey;
+  scrollbar-color: var(--color-greyLight) $color-grey;
   scrollbar-width: thin;
 }
 .fon,
@@ -51,9 +51,9 @@ body {
   color: $color-white;
 }
 .appWrapperContent {
-  box-shadow: 0 5px 5px $color-darkBlueTransparent,
-    0 5px 5px $color-darkBlueTransparent;
-  background-color: $color-darkBlue;
+  box-shadow: 0 5px 5px var(--color-darkBlueTransparent),
+    0 5px 5px var(--color-darkBlueTransparent);
+  background-color: var(--color-darkBlue);
   border-radius: 10px 10px 0 0;
   padding: 20px 20px 0 20px;
   max-width: 690px;
@@ -80,6 +80,6 @@ body {
 }
 @media (max-height: 600px) {
   .appWrapperContent {
-    padding: 10px 10px 0 10px;
+    padding: 15px 10px 0 10px;
   }
 }
