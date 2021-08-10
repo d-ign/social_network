@@ -9,7 +9,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import s from './InfoContainer.module.scss'
 import camera from '../../../img/icons/camera.svg'
 
-import Preloader from '../../common/Preloader/Preloader.jsx'
+import Preloader from '../../common/Preloader/Preloader'
 import Status from './Status/Status'
 import Avatar from '../../common/Avatar/Avatar'
 import InfoDataForm from './InfoDataForm/InfoDataForm'
