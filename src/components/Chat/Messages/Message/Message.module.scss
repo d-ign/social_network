@@ -1,0 +1,57 @@
+@import '../../../../styles/colors';
+
+%messageContainerTemplate {
+  display: flex;
+  max-width: 300px;
+  width: 100%;
+  margin: 5px 0 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  @media (max-width: 420px) {
+    max-width: 200px;
+  }
+}
+.messageContainer {
+  @extend %messageContainerTemplate;
+  background-color: var(--color-cyanDark);
+}
+.myMessageContainer {
+  @extend %messageContainerTemplate;
+  background-color: var(--color-cyanMedium);
+  align-self: flex-end;
+}
+.name {
+  font-weight: 900;
+  text-decoration: none;
+  color: $color-white;
+  font-size: 16px;
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
+}
+.name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.message {
+  overflow-wrap: break-word;
+  width: 100%;
+  padding-right: 10px;
+}
+.nameAndMessage {
+  margin-left: 15px;
+  max-width: 200px;
+  @media (max-width: 420px) {
+    margin-left: 10px;
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 420px) {
+  .avatarMedium {
+    display: none;
+  }
+  .avatarSmall {
+    display: block;
+  }
+}
