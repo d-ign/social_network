@@ -67,7 +67,7 @@ body {
   }
   .appWrapper {
     grid-template-columns: 1fr;
-    grid-template-rows: 60px 1fr 60px;
+    grid-template-rows: 60px calc(100vh - 140px) 60px;
     grid-template-areas:
       'header'
       'content'
@@ -76,6 +76,7 @@ body {
   .appWrapperContent {
     border-radius: 10px;
     padding: 10px 10px 0 10px;
+    overflow-y: auto;
   }
 }
 @media (max-height: 600px) {
