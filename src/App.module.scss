@@ -20,7 +20,7 @@
 html,
 body {
   /* полоса прокрутки Mozilla Firefox */
-  scrollbar-color: var(--color-greyLight) $color-grey;
+  scrollbar-color: $color-greyLight $color-grey;
   scrollbar-width: thin;
 }
 .fon,

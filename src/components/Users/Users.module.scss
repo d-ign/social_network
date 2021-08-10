@@ -25,6 +25,12 @@
   max-height: 120px;
   background-color: $color-greyTransparent;
   border-radius: 10px;
+  @media (max-width: 740px) {
+    flex-direction: column;
+    max-height: 210px;
+    margin: 10px;
+    flex-basis: 140px;
+  }
 }
 .buttonLoadMore {
   text-align: center;
@@ -32,16 +38,9 @@
 .hiddenButtonLoadMore {
   visibility: hidden;
 }
-
-@media (max-width: 740px) {
-  .wrapUsers {
+.wrapUsers {
+  @media (max-width: 740px) {
     display: flex;
     flex-wrap: wrap;
-  }
-  .user {
-    flex-direction: column;
-    max-height: 210px;
-    margin: 10px;
-    flex-basis: 140px;
   }
 }

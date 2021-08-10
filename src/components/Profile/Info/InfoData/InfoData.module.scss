@@ -5,6 +5,9 @@
   max-width: 470px;
   margin: 20px;
   margin-left: 0;
+  @media (max-width: 420px) {
+    margin: 5px;
+  }
 }
 .wrap {
   position: relative;
@@ -14,6 +17,9 @@
 .contacts {
   margin-top: 15px;
   padding-left: 22px;
+  @media (max-width: 420px) {
+    padding-left: 12px;
+  }
 }
 .title {
   font-weight: 900;
@@ -47,15 +53,24 @@
   display: flex;
   margin-left: 15px;
   margin-bottom: 10px;
+  @media (max-width: 370px) {
+    flex-direction: column;
+  }
 }
 .contactTitle {
   flex: 0 0 100px;
   color: $color-greyLight;
+  @media (max-width: 370px) {
+    flex-basis: auto;
+  }
 }
 .contactTextWrap {
   max-width: 350px;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media (max-width: 860px) {
+    max-width: 200px;
+  }
 }
 .contactText {
   color: $color-white;
@@ -63,27 +78,4 @@
 }
 .contactText:hover {
   text-decoration: underline;
-}
-@media (max-width: 860px) {
-  .contactTextWrap {
-    max-width: 200px;
-  }
-}
-@media (max-width: 420px) {
-  .containerForm {
-    margin: 5px;
-  }
-  .aboutMe,
-  .job,
-  .contacts {
-    padding-left: 12px;
-  }
-}
-@media (max-width: 370px) {
-  .contact {
-    flex-direction: column;
-  }
-  .contactTitle {
-    flex-basis: auto;
-  }
 }

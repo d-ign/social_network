@@ -24,20 +24,28 @@
   background-color: $color-grey;
   transition: background-color 0.4s;
 }
-.editPhotoInput {
-  display: none;
-}
 .containerMain {
   display: flex;
+  @media (max-width: 770px) {
+    display: block;
+  }
 }
 .columnLeft {
   margin: 10px;
   position: relative;
+  @media (max-width: 770px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 .columnRight {
   max-width: 535px;
   width: 100%;
   margin-left: 20px;
+  @media (max-width: 770px) {
+    margin-left: 0px;
+  }
 }
 .iconButtonEditProfile {
   padding-right: 5px;
@@ -47,12 +55,20 @@
   font-weight: bold;
   padding: 0 0 10px 5px;
   overflow-wrap: break-word;
+  @media (max-width: 770px) {
+    text-align: center;
+    padding: 10px 0 5px 0;
+  }
 }
 .buttonsSaveAndCancelProfile {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 770px) {
+    flex-direction: row;
+    margin-bottom: 15px;
+  }
 }
 .successSave {
   color: $color-green;
@@ -62,42 +78,16 @@
   margin-top: 5px;
   max-width: 130px;
   position: absolute;
-}
-@keyframes anim {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@media (max-width: 770px) {
-  .columnLeft {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .columnRight {
-    margin-left: 0px;
-  }
-  .containerMain {
-    display: block;
-  }
-  .fullName {
-    text-align: center;
-    padding: 10px 0 5px 0;
-  }
-  .buttonsSaveAndCancelProfile {
-    flex-direction: row;
-    margin-bottom: 15px;
-  }
-  .successSave {
+  @media (max-width: 770px) {
     top: 185px;
     max-width: 230px;
   }
-}
-@media (max-width: 550px) {
-  .columnRight {
-    margin-left: 0px;
+  @keyframes anim {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 }

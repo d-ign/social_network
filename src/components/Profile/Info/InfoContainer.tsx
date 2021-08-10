@@ -97,7 +97,7 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
                 </div>
                 <input
                   id='file_out'
-                  className={s.editPhotoInput}
+                  hidden
                   type='file'
                   onChange={onMainPhotoSelected}
                 />
