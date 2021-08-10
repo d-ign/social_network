@@ -15,8 +15,8 @@ const initialState = {
         Facilis ut quo maiores neque laboriosam. Ratione adipisci
         reiciendis autem placeat alias necessitatibus pariatur saepe
         ipsum, temporibus animi, facilis minus doloribus ducimus.`,
-      likesCount: 0,
-      isLikeClick: false,
+      likesCount: 1,
+      isLikeClick: true,
     },
     {
       author: 'Denis Ignatov',
