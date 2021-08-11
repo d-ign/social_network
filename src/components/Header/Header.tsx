@@ -1,5 +1,5 @@
-import React from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import React, { Dispatch, SetStateAction } from 'react'
+import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
@@ -29,11 +29,6 @@ const Header: React.FC = () => {
   const dispatch = useDispatch()
 
   const [themeLocal, setThemeLocal] = React.useState(theme)
-
-  const toggleTheme = () => {
-    dispatch(actions.setTheme(themeLocal === 'theme1' ? 'theme2' : 'theme1'))
-    setThemeLocal(themeLocal === 'theme1' ? 'theme2' : 'theme1')
-  }
 
   React.useEffect(() => {
     const colors = {
@@ -87,28 +82,11 @@ const Header: React.FC = () => {
               <span className={s.loginName}>{login}</span>
             </NavLink>
 
-            <span className={s.buttonThemeDesctop}>
-              <Button
-                color={theme === 'theme1' ? 'primary' : 'secondary'}
-                style={{ padding: '6px 12px', marginRight: '12px' }}
-                onClick={toggleTheme}
-                startIcon={<InvertColorsIcon />}
-              >
-                Change theme
-              </Button>
-            </span>
-            <span hidden className={s.buttonThemeMobile}>
-              <IconButton
-                onClick={toggleTheme}
-                aria-label='changeTheme'
-                type='submit'
-                style={{ margin: '0 12px' }}
-              >
-                <InvertColorsIcon
-                  color={theme === 'theme1' ? 'primary' : 'secondary'}
-                />
-              </IconButton>
-            </span>
+            <ButtonChangeTheme
+              theme={theme}
+              themeLocal={themeLocal}
+              setThemeLocal={setThemeLocal}
+            />
 
             <span className={s.buttonLogoutDesctop}>
               <Button
@@ -131,11 +109,57 @@ const Header: React.FC = () => {
             </span>
           </>
         ) : (
-          <Redirect to='/login' />
+          <ButtonChangeTheme
+            theme={theme}
+            themeLocal={themeLocal}
+            setThemeLocal={setThemeLocal}
+          />
         )}
       </div>
     </header>
   )
 }
 
+type PropsType = {
+  theme: string
+  themeLocal: string
+  setThemeLocal: Dispatch<SetStateAction<string>>
+}
+
+const ButtonChangeTheme: React.FC<PropsType> = (props) => {
+  const { theme, themeLocal, setThemeLocal } = props
+  const dispatch = useDispatch()
+
+  const toggleTheme = () => {
+    dispatch(actions.setTheme(themeLocal === 'theme1' ? 'theme2' : 'theme1'))
+    setThemeLocal(themeLocal === 'theme1' ? 'theme2' : 'theme1')
+  }
+
+  return (
+    <>
+      <span className={s.buttonThemeDesctop}>
+        <Button
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
+          style={{ padding: '6px 12px', marginRight: '12px' }}
+          onClick={toggleTheme}
+          startIcon={<InvertColorsIcon />}
+        >
+          Change theme
+        </Button>
+      </span>
+      <span hidden className={s.buttonThemeMobile}>
+        <IconButton
+          onClick={toggleTheme}
+          aria-label='changeTheme'
+          type='submit'
+          style={{ margin: '0 12px' }}
+        >
+          <InvertColorsIcon
+            color={theme === 'theme1' ? 'primary' : 'secondary'}
+          />
+        </IconButton>
+      </span>
+    </>
+  )
+}
 export default Header
