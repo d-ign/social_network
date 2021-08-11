@@ -83,7 +83,7 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
               className={s.showAll}
               onClick={() => setIsShowAll(true)}
             >
-              show all...
+              show all {chatMembers.length} ...
             </span>
           </div>
         ) : (
