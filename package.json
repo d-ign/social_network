@@ -27,7 +27,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "lint + editorconfig": "eslint src/. --fix --color && editorconfig-checker",
+    "eslint": "eslint src/. --fix --color",
+    "editorconfig": "editorconfig-checker",
     "test": "react-scripts test",
     "build": "react-scripts build",
     "deploy": "gh-pages -d build"
