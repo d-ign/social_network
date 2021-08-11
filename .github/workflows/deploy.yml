@@ -27,5 +27,4 @@ jobs:
         run: npm run build
       # Deploy
       - name: Deploy
-        run: gh-pages -d "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no"
-        working-directory: ./build
+        run: gh-pages -d build "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no"
