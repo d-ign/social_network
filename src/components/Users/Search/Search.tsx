@@ -43,7 +43,7 @@ const Search: React.FC<PropsType> = React.memo(
               onInput={debounce(
                 (e: React.ChangeEvent<HTMLInputElement>) =>
                   searchUsers(e.target.value),
-                1500
+                600
               )}
             />
           )}
