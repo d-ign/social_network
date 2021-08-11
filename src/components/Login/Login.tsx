@@ -139,9 +139,12 @@ const LoginForm: React.FC<
                 <div className={s.formError}>
                   {error === 'You are not authorized' ? (
                     <>
-                      <div>You are not authorized</div>
-                      <div>or,</div>
-                      <div>please, unblock third party cookies</div>
+                      <div>1. You are either not authorized</div>
+                      <div>or</div>
+                      <div>
+                        2. Please, unblock third party cookies or show all
+                        cookies (see browser settings)
+                      </div>
                     </>
                   ) : (
                     error
