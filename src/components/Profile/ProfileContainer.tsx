@@ -1,8 +1,8 @@
 import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { RouteComponentProps } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+
 import { AppStateType } from '../../redux/redux-store'
 import {
   getUserProfile,
