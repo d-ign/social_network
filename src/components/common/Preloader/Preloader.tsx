@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import preloaderTheme1 from '../../../img/preloaderTheme1.svg'
-import preloaderTheme2 from '../../../img/preloaderTheme2.svg'
+import preloaderTheme1 from '../../../img/preloader/preloaderTheme1.svg'
+import preloaderTheme2 from '../../../img/preloader/preloaderTheme2.svg'
 import s from './Preloader.module.scss'
 
 import { getTheme } from '../../../redux/selectors/app-selectors'

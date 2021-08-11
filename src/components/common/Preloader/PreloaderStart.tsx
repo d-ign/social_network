@@ -1,5 +1,5 @@
 import React from 'react'
-import preloaderStart from '../../../img/preloaderStart.svg'
+import preloaderStart from '../../../img/preloader/preloaderStart.svg'
 import s from './Preloader.module.scss'
 
 const PreloaderStart: React.FC = () => {
