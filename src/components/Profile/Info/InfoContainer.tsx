@@ -31,10 +31,11 @@ import {
 
 import { ProfileType } from '../../../types/types'
 
-// при переходе на старницу профиля скрол обнулится
+// при переходе на страницу профиля скрол прокрутится вверх до имени
 function ScrollToTopOnMount() {
   useEffect(() => {
-    window.scrollTo(0, 0)
+    const fullName = document.getElementById('scrollToTopOnMount')
+    fullName?.scrollIntoView(false)
   }, [])
   return null
 }
@@ -84,9 +85,6 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
 
   return (
     <div className={s.containerMain}>
-      {/* при переходе на старницу профиля скрол обнулится */}
-      <ScrollToTopOnMount />
-
       <div className={s.columnLeft}>
         <Avatar photo={profile.photos.large} size='large'>
           {isOwner && !isEditModeProfile && (
@@ -155,7 +153,9 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
 
       <div className={s.columnRight}>
         {!isEditModeProfile && (
-          <div className={s.fullName}>{profile.fullName}</div>
+          <div id='scrollToTopOnMount' className={s.fullName}>
+            {profile.fullName}
+          </div>
         )}
 
         {!isEditModeProfile && <Status isOwner={isOwner} />}
@@ -171,6 +171,8 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
           <InfoData profile={profile} />
         )}
       </div>
+      {/* при переходе на старницу профиля скрол обнулится */}
+      <ScrollToTopOnMount />
     </div>
   )
 }
