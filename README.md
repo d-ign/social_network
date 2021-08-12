@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![](https://github.com/ignatov-ru/social_network/workflows/ESLint/badge.svg)](https://github.com/ignatov-ru/social_network/actions?query=workflow%3AESLint)
+[![](https://github.com/ignatov-ru/social_network/workflows/EditorConfig/badge.svg)](https://github.com/ignatov-ru/social_network/actions?query=workflow%3AEditorConfig)
 
-## Available Scripts
+</div>
 
-In the project directory, you can run:
+# Описание
 
-### `npm start`
+&#9996; Это <a href="https://ignatov-ru.github.io/social_network/#/">социальная сеть</a> на React + Redux. Для входа в тестовый аккаунт нажмите "Login to test account".
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Разработка стартовала с <a href="https://github.com/facebook/create-react-app">Create React App</a>. Все компоненты находятся в папке src.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Некоторое, что используется в проекте:
 
-### `npm test`
+- React Hooks
+- Typescript
+- Material UI для стилизации элементов форм
+- axios для запросов на сервер
+- <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Что реализовано
+## В целом в проекте:
+&#120823; &#127759; **Авторизация**
+   - Валидация email на клиенте
+   - Показ ошибок с сервера
 
-### `npm run build`
+&#120824; &#127912; **Смена темы**  по нажатию кнопки на нативном CSS
+   - Сохранение темы в _Local Storage_
+   <img src="./readme_content/gif/change_theme.gif" />
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+&#120825; &#9989; **Отзывчиво-адаптивная вёрстка** для всех экранов от 320px
+   <img src="./readme_content/gif/adaptive.gif" />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+&#120826; &#9989; **Настроена маршрутизация** (_react-router-dom_)
+   - Несуществующий URL перенаправляет на профиль
+   - Redirect неавторизованных пользователей на страницу авторизации
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+&#120827; &#9989;**Показ preloader** при загрузках
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Пройдёмся по страницам в навигации соц. сети:
+1. **Профиль** &#11088;:
+   - &#9998; Редактирование профиля и статуса, сохранение данных на сервере
+   - &#128683; Вывод ошибки с сервера при указании некорректного URL в контактах профиля
+   - &#128290; Счётчик введённых символов на формах профиля и статуса с подсветкой при наборе максимального кол-ва символов
+   - &#10060; Закрытие статуса по клику вне его
+   - 🔒 Блокировка кнопок сохранения до изменений в формах
+   <img src="./readme_content/gif/change_status.gif" />&#32;&#32;
+   - &#9998; Смена аватара и сохранение фото на сервере
+   - &#10133; Добавление постов на стену, удаление постов по одному или сразу несколько (+ анимация), сохранение постов в _Local Storage_
+   <img src="./readme_content/gif/wall.gif" />
+1. **Чат** &#128172;:
+   - Общий чат среди авторизованных пользователей на [social-network](https://social-network.samuraijs.com/). _P.S.: в чате показываются 100 последних сообщений, очистка чата происходит раз в сутки_
+   - Отображение списка текущих участников чата
+   - Показ всех участников по нажатию кнопки
+   - Сортировка участников по имени
+1. **Найти пользователей** &#128587;:
+   - Подписка/ отписка на пользователей, отображение подписок на странице "Друзья", сохранение данных на сервере
+   - Дозагрузка с сервера пользователей свыше 10 человек внизу страницы по нажатию кнопки &#11015;
+   - Показ целиком имени и статуса пользователя длиной более 19 символов во всплывающем окне при наведении на них
+   - &#128270; **Поле поиска**:
+      - Синхронизация вводимого в поиск текста с query parameters URL и, наоборот, отображение по параметрам URL предвведённого поиска (_queryString_)
+      <img src="./readme_content/gif/search_url.gif" />&#32;&#32;
+      - Поиск среди всех пользователей, авторизованных на <a href="https://social-network.samuraijs.com/">social-network</a> по имени
+1. **Друзья** &#129309;:
+   - Показ только друзей
+   - _Остальной функционал как в "Найти пользователей", кроме поля поиска_
+   - &#128270; **Поле поиска**:
+      - debounce &#8987; при поиске 600 ms (_lodash_)
+      - Поиск по имени среди друзей
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+&#127937; Пока всё :&#41;
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Разработка
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Вы можете запустить этот проект локально, просто сделайте:
+```
+git clone git@github.com:ignatov-ru/social_network.git
+(или создайте форк, а затем клонируйте его вместо клона моего проекта уже из своего репозитория)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+cd social_network
+npm install
+npm start
+```
