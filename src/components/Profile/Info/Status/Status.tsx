@@ -3,17 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Input, Button } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
+import cn from 'classnames'
 import s from './Status.module.scss'
-import useStyles from './stylesCustomMaterialUI.jsx'
+import stylesField from '../../../common/FieldWithCounter/FieldWithCounter.module.scss'
+import useStyles from './stylesCustomMaterialUI'
 import { getTheme } from '../../../../redux/selectors/app-selectors'
 
 import { getStatusSelector } from '../../../../redux/selectors/profile-selectors'
 import { updateStatus } from '../../../../redux/reducers/profile-reducer'
-import {
-  handleInputCount,
-  handleFocusCount,
-  handleBlurCount,
-} from '../../../common/inputCount/inputCount.js'
 
 type PropsType = {
   isOwner: boolean
@@ -36,13 +33,26 @@ const Status: React.FC<PropsType> = (props) => {
   const [editMode, setEditMode] = useState(false)
   const [isEditInputStatusForm, setIsEditInputStatusForm] = useState(false)
   const [statusLocal, setStatusLocal] = useState(status)
-  const num300 = 300
+
+  const [isHiddenCounter, setIsHiddenCounter] = useState(true)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
     setStatusLocal(status)
   }, [status])
 
+  const onStatusFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select()
+    setCount(e.target.value.length)
+    setIsHiddenCounter(false)
+  }
+
+  const onStatusBlur = () => {
+    setIsHiddenCounter(true)
+  }
+
   const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCount(e.target.value.length)
     setIsEditInputStatusForm(true)
     setStatusLocal(e.currentTarget.value)
   }
@@ -85,9 +95,8 @@ const Status: React.FC<PropsType> = (props) => {
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             multiline
             fullWidth
-            onInput={handleInputCount.bind(null, num300)}
-            onFocus={handleFocusCount}
-            onBlur={handleBlurCount}
+            onFocus={onStatusFocus}
+            onBlur={onStatusBlur}
             onChange={onStatusChange}
           />
 
@@ -105,8 +114,15 @@ const Status: React.FC<PropsType> = (props) => {
               </Button>
             </div>
 
-            <span id='statusWrapCount'>
-              <span id='statusCount' /> of 300
+            <span
+              className={cn(
+                stylesField.count,
+                { [stylesField.countHidden]: isHiddenCounter },
+                { [stylesField.countYellow]: count >= 290 },
+                { [stylesField.countRed]: count === 300 }
+              )}
+            >
+              {count} of 300
             </span>
           </div>
         </div>

@@ -1,0 +1,21 @@
+@import '../../../styles/colors';
+
+.count {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  display: inline-block;
+  font-size: 10px;
+}
+
+.countHidden {
+  display: none;
+}
+
+.countYellow {
+  color: $color-yellow;
+}
+
+.countRed {
+  color: $color-red;
+}
