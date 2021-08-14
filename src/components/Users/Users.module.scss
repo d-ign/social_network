@@ -4,40 +4,47 @@
   margin: 0 auto;
   max-width: 470px;
 }
+
 .noFound {
+  margin: 0 auto;
   padding: 5px;
   padding-top: 20px;
-  font-size: 18px;
-  margin: 0 auto;
   width: 130px;
+  font-size: 18px;
   color: $color-greyLight;
 }
+
 .container {
-  max-width: 470px;
   width: 100%;
+  max-width: 470px;
 }
+
 .user {
   display: flex;
-  justify-content: space-between;
   flex: 1 1 auto;
-  padding: 10px;
+  justify-content: space-between;
   margin: 20px;
+  border-radius: 10px;
+  padding: 10px;
   max-height: 120px;
   background-color: $color-greyTransparent;
-  border-radius: 10px;
+
   @media (max-width: 740px) {
-    flex-direction: column;
-    max-height: 210px;
-    margin: 10px;
     flex-basis: 140px;
+    flex-direction: column;
+    margin: 10px;
+    max-height: 210px;
   }
 }
+
 .buttonLoadMore {
   text-align: center;
 }
+
 .hiddenButtonLoadMore {
   visibility: hidden;
 }
+
 .wrapUsers {
   @media (max-width: 740px) {
     display: flex;

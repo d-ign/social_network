@@ -1,42 +1,49 @@
 @import '../../../../styles/colors';
 
 .containerForm {
-  padding-left: 5px;
-  max-width: 470px;
   margin: 20px;
   margin-left: 0;
+  padding-left: 5px;
+  max-width: 470px;
+
   @media (max-width: 420px) {
     margin: 5px;
   }
 }
+
 .wrap {
   position: relative;
 }
+
 .aboutMe,
 .job,
 .contacts {
   margin-top: 15px;
   padding-left: 22px;
+
   @media (max-width: 420px) {
     padding-left: 12px;
   }
 }
+
 .title {
   font-weight: 900;
   font-size: 16px;
 }
+
 .job:before,
 .contacts:before,
 .aboutMe:before {
   content: '';
-  width: 2px;
-  height: 48px;
   position: absolute;
   left: 0;
   top: 0;
+  width: 2px;
+  height: 48px;
   background-color: var(--color-cyan);
   transition: width 0.2s;
 }
+
 .job:hover:before,
 .contacts:hover:before,
 .aboutMe:hover:before {
@@ -45,37 +52,45 @@
 
 .text {
   overflow: hidden;
-  font-style: italic;
   overflow-wrap: break-word;
   margin: 0 15px 0 20px;
+  font-style: italic;
 }
+
 .contact {
   display: flex;
-  margin-left: 15px;
   margin-bottom: 10px;
+  margin-left: 15px;
+
   @media (max-width: 370px) {
     flex-direction: column;
   }
 }
+
 .contactTitle {
   flex: 0 0 100px;
   color: $color-greyLight;
+
   @media (max-width: 370px) {
     flex-basis: auto;
   }
 }
+
 .contactTextWrap {
-  max-width: 350px;
   overflow: hidden;
+  max-width: 350px;
   text-overflow: ellipsis;
+
   @media (max-width: 860px) {
     max-width: 200px;
   }
 }
+
 .contactText {
-  color: $color-white;
   text-decoration: none;
+  color: $color-white;
 }
+
 .contactText:hover {
   text-decoration: underline;
 }

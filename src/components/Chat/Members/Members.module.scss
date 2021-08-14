@@ -2,82 +2,99 @@
 @import '../container';
 
 .container {
-  @extend %containerTemplate;
   flex: 1 1 200px;
-  background-color: $color-greyTransparent;
-  border-radius: 5px;
   margin-left: 10px;
+  border-radius: 5px;
+  background-color: $color-greyTransparent;
+
+  @extend %containerTemplate;
 }
+
 .titleWrap {
   display: flex;
   align-items: center;
   justify-content: center;
+
   @media (max-width: 760px) {
-    cursor: pointer;
     position: absolute;
-    top: -1px;
     right: 15px;
-    background-color: var(--color-darkBlue);
-    width: 150px;
+    top: -1px;
     flex-direction: row;
-    padding: 0 8px 0 8px;
-    border-radius: 0 0 10px 10px;
     border: 1px solid var(--color-cyan);
     border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 0 8px;
+    width: 150px;
+    background-color: var(--color-darkBlue);
+    cursor: pointer;
   }
 }
+
 .title {
-  font-size: 20px;
   margin-bottom: 5px;
+  font-size: 20px;
+
   @media (max-width: 760px) {
-    font-size: 12px;
     padding-top: 5px;
+    font-size: 12px;
   }
 }
+
 .titleArrow {
   display: none;
+
   @media (max-width: 760px) {
     display: inline;
   }
 }
+
 .members {
   max-height: 300px;
+
   @media (max-height: 600px) and (max-width: 760px) {
     max-height: 200px;
   }
+
   @media (max-height: 470px) and (max-width: 760px) {
     max-height: 120px;
   }
 }
+
 .member {
   display: flex;
   align-items: center;
   padding-bottom: 10px;
 }
+
 .member:last-child {
   padding-bottom: 0;
 }
+
 .name {
-  font-weight: 900;
-  text-decoration: none;
-  color: $color-white;
-  font-size: 12px;
-  padding-left: 10px;
-  text-overflow: ellipsis;
   overflow: hidden;
+  padding-left: 10px;
+  font-weight: 900;
+  font-size: 12px;
   white-space: nowrap;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  color: $color-white;
 }
+
 .name:hover {
   text-decoration: underline;
   cursor: pointer;
 }
+
 .showAllWrap {
   text-align: center;
 }
+
 .showAll {
-  cursor: pointer;
   color: $color-greyLight;
+  cursor: pointer;
 }
+
 .showAll:hover {
   text-decoration: underline;
 }
@@ -87,24 +104,27 @@
     order: 1;
     padding: 0;
   }
+
   .notShowMembers {
     display: none;
   }
+
   .members {
     position: absolute;
     right: 15px;
     top: 64px;
     z-index: 100;
     overflow-y: auto;
-    width: 150px;
-    padding: 0 10px 10px 10px;
-    background-color: var(--color-darkBlue);
-    border-radius: 0 0 5px 5px;
     border: 1px solid var(--color-cyan);
     border-top: 1px solid transparent;
+    border-radius: 0 0 5px 5px;
+    padding: 0 10px 10px;
+    width: 150px;
+    background-color: var(--color-darkBlue);
   }
+
   .titleWrapDeployed {
-    border-radius: 0;
     border-bottom: 1px solid transparent;
+    border-radius: 0;
   }
 }

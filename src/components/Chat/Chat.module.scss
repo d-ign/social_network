@@ -1,33 +1,29 @@
 @import '../../styles/colors';
 
-/* полоса прокрутки Mozilla Firefox */
-@-moz-document url-prefix() {
-  .allMessages {
-    scrollbar-color: $color-greyLight $color-grey;
-    scrollbar-width: thin;
-  }
-}
-
 .chat {
-  min-height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 }
+
 .membersAndMessages {
+  position: relative;
   display: flex;
   flex: 1 1 auto;
-  position: relative;
   height: 100%;
+
   @media (max-width: 760px) {
     display: block;
   }
 }
+
 .form {
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 10px;
+  width: 100%;
   background-color: var(--color-darkBlue);
+
   @media (max-width: 470px), (max-height: 470px) {
     padding: 5px;
   }

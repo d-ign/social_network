@@ -3,18 +3,22 @@
 .form {
   margin: 15px;
 }
+
 .titleForm {
-  font-size: 24px;
   margin-bottom: 30px;
+  font-size: 24px;
 }
+
 .wrap {
   margin-bottom: 12px;
   padding-bottom: 10px;
 }
+
 .contact {
-  padding-left: 20px;
   margin-top: 12px;
+  padding-left: 20px;
 }
+
 .titleAllContacts {
   display: inline-block;
   max-width: 160px;
@@ -22,25 +26,30 @@
   font-size: 16px;
   color: $color-greyLight;
 }
+
 .titleContact {
   display: inline-block;
+  margin-top: 6px;
   width: 90px;
   color: $color-greyLight;
-  margin-top: 6px;
 }
+
 .countStyle {
   display: none;
 }
+
 .wrapForCount {
   position: relative;
 }
+
 .errorProfileContacts {
-  color: $color-red;
   padding: 5px;
+  color: $color-red;
 }
+
 @media (max-width: 420px) {
   .titleForm {
-    font-size: 22px;
     margin-bottom: 20px;
+    font-size: 22px;
   }
 }

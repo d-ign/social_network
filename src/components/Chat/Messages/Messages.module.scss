@@ -2,19 +2,22 @@
 @import '../container';
 
 .container {
-  @extend %containerTemplate;
   display: flex;
   flex-direction: column;
+
+  @extend %containerTemplate;
 }
+
 .containerNoMessages {
   justify-content: center;
   margin-top: 50px;
 }
+
 .noMessages {
-  color: $color-greyLight;
-  font-size: 18px;
   display: flex;
   justify-content: center;
+  font-size: 18px;
+  color: $color-greyLight;
 }
 
 @media (max-width: 760px) {

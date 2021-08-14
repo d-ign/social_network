@@ -2,66 +2,78 @@
 @import '../../styles/colors';
 
 .header {
-  background-color: var(--color-darkBlue);
-  box-shadow: 0 3px 3px var(--color-darkBlueTransparent);
-  grid-area: header;
-  border-radius: 0 0 10px 10px;
   display: flex;
   justify-content: space-between;
+  grid-area: header;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 3px 3px var(--color-darkBlueTransparent);
+  background-color: var(--color-darkBlue);
 }
+
 .logoAndTitle {
   display: flex;
   align-items: center;
-  text-decoration: none;
   padding: 12px;
+  text-decoration: none;
 }
+
 .logoAndTitle img {
+  margin: 0 10px 0 0;
   width: 40px;
   height: 40px;
-  margin: 0 10px 0 0;
+
   @media (max-width: 440px) {
     width: 30px;
     height: 30px;
   }
 }
+
 .headerTitleDesctop,
 .headerTitleMobile {
-  color: $color-white;
-  font-size: 25px;
-  font-family: 'Mate SC', serif;
   margin-right: 10px;
+  font-family: 'Mate SC', serif;
+  font-size: 25px;
+  color: $color-white;
 }
+
 .headerTitleDesctop {
   @media (max-width: 470px) {
     font-size: 18px;
   }
+
   @media (max-width: 360px) {
     font-size: 14px;
   }
+
   @media (max-width: 410px) {
     display: none;
   }
 }
+
 .headerTitleMobile {
   @media (max-width: 410px) {
     display: block;
     font-size: 18px;
   }
 }
+
 .rightColumn {
   display: flex;
   align-items: center;
 }
+
 .loginAndPhoto {
-  text-decoration: none;
   display: flex;
   align-items: center;
   padding: 12px;
+  text-decoration: none;
 }
+
 .loginName {
-  font-size: 15px;
   margin-left: 10px;
+  font-size: 15px;
   color: $color-white;
+
   @media (max-width: 780px) {
     display: none;
   }
@@ -71,14 +83,17 @@
   .buttonThemeDesctop {
     display: none;
   }
+
   .buttonThemeMobile {
     display: block;
   }
 }
+
 @media (max-width: 560px) {
   .buttonLogoutDesctop {
     display: none;
   }
+
   .buttonLogoutMobile {
     display: inline;
   }

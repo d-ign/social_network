@@ -2,17 +2,18 @@
 
 /* полоса прокрутки (скроллбар) */
 ::-webkit-scrollbar {
+  border-radius: 9em;
   width: 5px; /* ширина для вертикального скролла */
   height: 5px; /* высота для горизонтального скролла */
   background-color: $color-grey;
-  border-radius: 9em;
 }
 
 /* ползунок скроллбара */
 ::-webkit-scrollbar-thumb {
-  background-color: $color-greyLight;
   border-radius: 9em;
+  background-color: $color-greyLight;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-cyan);
 }
@@ -23,25 +24,26 @@ body {
   scrollbar-color: $color-greyLight $color-grey;
   scrollbar-width: thin;
 }
+
 .fon,
 .container {
   /* компенсация полосы прокрутки, когда её нет */
   padding-right: calc(5px - (100vw - 100%));
   background-color: $color-grey;
 }
+
 .container {
-  max-width: 880px;
   margin: 0 auto;
   padding: 0 15px;
+  max-width: 880px;
 }
+
 .appWrapper {
   display: grid;
+  grid-gap: 10px;
+  grid-template-areas: 'header header' 'nav content';
   grid-template-columns: 2fr 10fr;
   grid-template-rows: 60px 1fr;
-  grid-template-areas:
-    'header header'
-    'nav content';
-  grid-gap: 10px;
 
   /* Шрифт */
   font-family: 'Roboto', sans-serif;
@@ -50,37 +52,37 @@ body {
   letter-spacing: 0.1px;
   color: $color-white;
 }
+
 .appWrapperContent {
-  box-shadow: 0 5px 5px var(--color-darkBlueTransparent),
-    0 5px 5px var(--color-darkBlueTransparent);
-  background-color: var(--color-darkBlue);
-  border-radius: 10px 10px 0 0;
-  padding: 20px 20px 0 20px;
-  max-width: 690px;
-  width: 100%;
   position: relative;
+  border-radius: 10px 10px 0 0;
+  padding: 20px 20px 0;
+  width: 100%;
+  max-width: 690px;
+  box-shadow: 0 5px 5px var(--color-darkBlueTransparent), 0 5px 5px var(--color-darkBlueTransparent);
+  background-color: var(--color-darkBlue);
 }
 
 @media (max-width: 600px) {
   .container {
     min-height: 100vh;
   }
+
   .appWrapper {
+    grid-template-areas: 'header' 'content' 'nav';
     grid-template-columns: 1fr;
     grid-template-rows: 60px calc(100vh - 140px) 60px;
-    grid-template-areas:
-      'header'
-      'content'
-      'nav';
   }
+
   .appWrapperContent {
-    border-radius: 10px;
-    padding: 10px 10px 0 10px;
     overflow-y: auto;
+    border-radius: 10px;
+    padding: 10px 10px 0;
   }
 }
+
 @media (max-height: 600px) {
   .appWrapperContent {
-    padding: 15px 10px 0 10px;
+    padding: 15px 10px 0;
   }
 }

@@ -1,79 +1,88 @@
 @import '../../styles/colors';
 
 .nav {
-  background-color: var(--color-darkBlue);
   grid-area: nav;
+  border-radius: 10px 10px 0 0;
   padding: 15px;
   width: 180px;
-  border-radius: 10px 10px 0 0;
-  min-height: calc(100vh - 70px);
   height: 100%;
-  box-shadow: 0 5px 5px var(--color-darkBlueTransparent),
-    0 5px 5px var(--color-darkBlueTransparent);
+  min-height: calc(100vh - 70px);
+  box-shadow: 0 5px 5px var(--color-darkBlueTransparent), 0 5px 5px var(--color-darkBlueTransparent);
+  background-color: var(--color-darkBlue);
 }
+
 .navLink {
-  text-decoration: none;
-  margin-top: 10px;
-  font-size: 18px;
-  color: $color-white;
-  padding: 7px;
-  border-radius: 5px;
   display: flex;
   justify-content: flex-start;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 7px;
+  font-size: 18px;
+  text-decoration: none;
+  color: $color-white;
 }
+
 .navLinkImg {
   padding-right: 8px;
   width: 36px;
   fill: $color-white;
 }
+
 .navLink:hover {
   background-color: $color-greyTransparent;
 }
+
 .navLink:nth-child(1) {
   margin-top: 0;
 }
+
 .navLink.active {
   color: var(--color-cyan);
 }
+
 .activeIcon {
   fill: var(--color-cyan);
 }
 
 @media (max-width: 600px) {
   .nav {
-    max-width: 565px;
-    min-height: 1vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     position: sticky;
     bottom: 0;
-    width: 100%;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     border-radius: 0;
+    width: 100%;
+    min-height: 1vh;
+    max-width: 565px;
   }
+
   .nav:before {
     content: '';
-    width: 100%;
-    height: 3px;
     position: absolute;
     left: 0;
     top: 0;
+    width: 100%;
+    height: 3px;
     background: var(--color-cyan);
   }
+
   .navLink {
-    margin-top: 0;
-    margin-bottom: -4px;
-    font-size: 12px;
-    padding: 5px 5px 0 5px;
+    flex-basis: 80px;
     flex-direction: column;
     align-items: center;
-    flex-basis: 80px;
+    margin-top: 0;
+    margin-bottom: -4px;
+    padding: 5px 5px 0;
+    font-size: 12px;
   }
+
   .navLinkImg {
     padding-right: 0;
   }
 }
+
 @media (max-width: 400px) {
   .nav {
     padding: 5px;

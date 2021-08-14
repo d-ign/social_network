@@ -7,19 +7,25 @@
   overflow: hidden;
   border-radius: 50%;
 }
+
 .avatar img {
   @include wh(auto, 100%);
+
   margin: 0 auto;
 }
+
 .avatarWrap {
   position: relative;
 }
+
 .small {
   @include wh(25px, 25px);
 }
+
 .medium {
   @include wh(50px, 50px);
 }
+
 .large {
   @include wh(132px, 132px);
 }
