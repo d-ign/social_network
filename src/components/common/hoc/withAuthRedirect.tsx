@@ -17,7 +17,9 @@ export default function withAuthRedirect<WCP>(
 ) {
   const RedirectComponent: React.FC<MapStatePropsType & unknown> = (props) => {
     const { isAuth, ...restProps } = props
+
     if (!isAuth) return <Redirect to='/login' />
+
     return <WrappedComponent {...(restProps as WCP)} />
   }
 

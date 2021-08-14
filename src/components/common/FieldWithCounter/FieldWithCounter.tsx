@@ -18,9 +18,9 @@ const FieldWithCounter: React.FC<PropsType> = (props) => {
   const {
     name,
     label,
-    placeholder,
     multiline,
     maxLength,
+    placeholder,
     handleOnEditInputForm,
   } = props
 

@@ -130,7 +130,7 @@ const LoginForm: React.FC<
                 variant='contained'
                 color={theme === 'theme1' ? 'primary' : 'secondary'}
                 fullWidth
-                style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}
+                style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}
               >
                 Log in
               </Button>
@@ -162,7 +162,7 @@ const LoginForm: React.FC<
           fullWidth
           style={{
             fontSize: 16,
-            fontWeight: 'bold',
+            fontWeight: 700,
             color: '#fff',
             marginBottom: '15px',
           }}

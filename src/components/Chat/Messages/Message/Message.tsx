@@ -27,6 +27,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(
             <Avatar photo={message.photo} size='small' />
           </div>
         </NavLink>
+
         <div className={s.nameAndMessage}>
           <NavLink className={s.name} to={`/profile/${message.userId}`}>
             {message.userName}

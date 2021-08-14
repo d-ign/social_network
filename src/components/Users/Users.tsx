@@ -163,15 +163,15 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
               <div key={u.id} className={s.user}>
                 <User
                   id={u.id}
-                  photo={u.photos.small}
                   name={u.name}
-                  status={u.status}
                   theme={theme}
+                  status={u.status}
                   followed={u.followed}
-                  unfollow={(id: number) => dispatch(unfollow(id))}
-                  follow={(id: number) => dispatch(follow(id))}
-                  followingInProgress={followingInProgress}
+                  photo={u.photos.small}
                   authorizedUserID={authorizedUserID}
+                  followingInProgress={followingInProgress}
+                  follow={(id: number) => dispatch(follow(id))}
+                  unfollow={(id: number) => dispatch(unfollow(id))}
                 />
               </div>
             ))}

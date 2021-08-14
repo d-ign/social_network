@@ -60,12 +60,13 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
 
   const theme = useSelector(getTheme)
   const profile = useSelector(getProfile)
+
   const showSuccessSave = useSelector(getShowSuccessSave)
   const isEditModeProfile = useSelector(getEditModeProfile)
   const isEditInputProfileForm = useSelector(getEditInputProfileForm)
   const dispatch = useDispatch()
 
-  const onSubmit = (values: ProfileType) => {
+  const onSubmitProfile = (values: ProfileType) => {
     dispatch(saveProfileThunk(values))
   }
 
@@ -163,8 +164,8 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
         {isEditModeProfile ? (
           <InfoDataForm
             initialValues={profile}
+            onSubmit={onSubmitProfile}
             errorProfileContacts={errorProfileContacts}
-            onSubmit={onSubmit}
             handleEditInputProfileForm={handleEditInputProfileForm}
           />
         ) : (

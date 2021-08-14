@@ -54,6 +54,7 @@ const Wall: React.FC = () => {
   const handleDeleteSelectedPost = () => {
     // начало анимации удаления
     dispatch(actions.toggleIsClickDeleteSelectedPosts(true))
+
     // возвращаем индивидуальные иконки-крестики у всех постов
     dispatch(actions.toggleIsSelectedPost(false))
 
@@ -79,12 +80,12 @@ const Wall: React.FC = () => {
   const postsElements = posts.map((p: PostType) => (
     <Post
       key={p.idPost}
+      photo={myPhoto}
       idPost={p.idPost}
       author={p.author}
       message={p.message}
       likesCount={p.likesCount}
       isLikeClick={p.isLikeClick}
-      photo={myPhoto}
       handleDeleteOnePost={handleDeleteOnePost}
       addIdPostBeforeDeleting={addIdPostBeforeDeleting}
       deleteIdPostBeforeDeleting={deleteIdPostBeforeDeleting}

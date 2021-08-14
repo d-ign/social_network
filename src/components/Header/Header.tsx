@@ -147,6 +147,7 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
           Change theme
         </Button>
       </span>
+
       <span hidden className={s.buttonThemeMobile}>
         <IconButton
           onClick={toggleTheme}

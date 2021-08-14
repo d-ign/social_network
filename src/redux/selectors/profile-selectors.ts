@@ -2,8 +2,7 @@ import { AppStateType } from '../redux-store'
 
 export const getProfile = (state: AppStateType) => state.profilePage.profile
 
-export const getStatusSelector = (state: AppStateType) =>
-  state.profilePage.status
+export const getStatus = (state: AppStateType) => state.profilePage.status
 
 export const getShowSuccessSave = (state: AppStateType) =>
   state.profilePage.showSuccessSave

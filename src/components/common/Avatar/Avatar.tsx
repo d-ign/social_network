@@ -7,10 +7,10 @@ type SizeType = 'small' | 'medium' | 'large'
 
 type PropsType = {
   photo: string | null | undefined
-  size: SizeType
+  size?: SizeType
 }
 
-const Avatar: React.FC<PropsType> = ({ photo, size, children }) => {
+const Avatar: React.FC<PropsType> = ({ photo, size = 'medium', children }) => {
   // Проверка тестового аккаунта с id = 1079:
   // установленное фото на тестовый аккаунт удаляется через короткое время
   // на сервере и, если с этого аккаунта написано сообщение в чат, то

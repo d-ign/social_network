@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux'
 import { TextField } from '@material-ui/core'
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
+import s from './renderTextField.module.scss'
+
 const RenderTextField = (props) => {
   const {
     label,
@@ -16,7 +18,9 @@ const RenderTextField = (props) => {
     fullWidth,
     ...custom
   } = props
+
   const theme = useSelector(getTheme)
+
   return (
     <>
       <TextField
@@ -32,8 +36,9 @@ const RenderTextField = (props) => {
         {...input}
         {...custom}
       />
+
       {touched &&
-        ((error && <span style={{ color: '#f44336' }}>{error}</span>) ||
+        ((error && <span className={s.error}>{error}</span>) ||
           (warning && <span>{warning}</span>))}
     </>
   )

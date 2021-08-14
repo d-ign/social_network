@@ -29,12 +29,12 @@ type OwnPropsType = {
 
 const Post: React.FC<PostType & OwnPropsType> = (props) => {
   const {
+    photo,
     idPost,
     author,
     message,
     likesCount,
     isLikeClick,
-    photo,
     handleDeleteOnePost,
     addIdPostBeforeDeleting,
     deleteIdPostBeforeDeleting,
@@ -90,7 +90,7 @@ const Post: React.FC<PostType & OwnPropsType> = (props) => {
             )}
             onClick={() => {
               if (!isSelectedPostLocal) {
-                // для убирания иконок-крестиков у всех постов
+                // для удаления иконок-крестиков у всех постов
                 dispatch(actions.toggleIsSelectedPost(true))
                 setIsSelectedPostLocal(true)
                 // предварительное добавление поста в список на удаление

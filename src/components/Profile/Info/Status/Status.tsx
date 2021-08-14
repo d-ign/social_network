@@ -9,7 +9,7 @@ import stylesField from '../../../common/FieldWithCounter/FieldWithCounter.modul
 import useStyles from './stylesCustomMaterialUI'
 import { getTheme } from '../../../../redux/selectors/app-selectors'
 
-import { getStatusSelector } from '../../../../redux/selectors/profile-selectors'
+import { getStatus } from '../../../../redux/selectors/profile-selectors'
 import { updateStatus } from '../../../../redux/reducers/profile-reducer'
 
 type PropsType = {
@@ -26,7 +26,7 @@ const Status: React.FC<PropsType> = (props) => {
     width: '100%',
   }
 
-  const status = useSelector(getStatusSelector)
+  const status = useSelector(getStatus)
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
