@@ -2,6 +2,7 @@
 
 [![](https://github.com/ignatov-ru/social_network/workflows/ESLint/badge.svg)](https://github.com/ignatov-ru/social_network/actions?query=workflow%3AESLint)
 [![](https://github.com/ignatov-ru/social_network/workflows/EditorConfig/badge.svg)](https://github.com/ignatov-ru/social_network/actions?query=workflow%3AEditorConfig)
+<img src="https://img.shields.io/badge/StyleLint-used%20by%20-brightgreen" />
 
 </div>
 

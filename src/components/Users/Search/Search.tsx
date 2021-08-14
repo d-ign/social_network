@@ -28,7 +28,7 @@ const Search: React.FC<PropsType> = React.memo(
             <InputBase
               placeholder='Search by name...'
               inputProps={{ 'aria-label': 'search' }}
-              classes={{ input: classes.stylesSearch }}
+              classes={{ input: classes.search }}
               value={termOfUrl}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 searchUsers(e.target.value)
@@ -39,7 +39,7 @@ const Search: React.FC<PropsType> = React.memo(
             <InputBase
               placeholder='Search by name...'
               inputProps={{ 'aria-label': 'search' }}
-              classes={{ input: classes.stylesSearch }}
+              classes={{ input: classes.search }}
               onInput={debounce(
                 (e: React.ChangeEvent<HTMLInputElement>) =>
                   searchUsers(e.target.value),

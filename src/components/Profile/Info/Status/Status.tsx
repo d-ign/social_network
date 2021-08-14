@@ -81,7 +81,7 @@ const Status: React.FC<PropsType> = (props) => {
             placeholder='Your status...'
             autoFocus
             inputProps={{ maxLength: 300 }}
-            className={classes.stylesStatus}
+            className={classes.status}
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             multiline
             fullWidth

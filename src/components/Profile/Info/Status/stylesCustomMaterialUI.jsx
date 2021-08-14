@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-  stylesStatus: {
+  status: {
+    borderRadius: '5px 5px 0 0',
+    padding: theme.spacing(1),
     minHeight: '30px',
     lineHeight: '25px',
-    padding: theme.spacing(1),
-    backgroundColor: '#4F4F4F',
-    borderRadius: '5px 5px 0 0',
+    backgroundColor: '#4f4f4f',
   },
 }))
 
