@@ -3,7 +3,7 @@ import React from 'react'
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
 import debounce from 'lodash/debounce'
-import useStyles from './stylesCustomMaterialUI.jsx'
+import useStyles from './stylesCustomMaterialUI'
 
 import s from './Search.module.scss'
 

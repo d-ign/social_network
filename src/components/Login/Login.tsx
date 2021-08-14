@@ -6,8 +6,8 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import cn from 'classnames'
 import Button from '@material-ui/core/Button'
 import s from './Login.module.scss'
-import renderTextField from '../common/ElementCustom/renderTextField.jsx'
-import renderCheckbox from '../common/ElementCustom/renderCheckbox.jsx'
+import renderTextField from '../common/ElementCustom/renderTextField'
+import renderCheckbox from '../common/ElementCustom/renderCheckbox'
 
 import {
   getAuthorizedUserID,

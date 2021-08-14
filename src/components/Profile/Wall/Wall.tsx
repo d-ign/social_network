@@ -8,7 +8,7 @@ import { IconButton } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import cn from 'classnames'
 import s from './Wall.module.scss'
-import renderTextField from '../../common/ElementCustom/renderTextField.jsx'
+import renderTextField from '../../common/ElementCustom/renderTextField'
 
 import Post from './Post/Post'
 import { PostType } from '../../../types/types'

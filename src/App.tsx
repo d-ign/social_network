@@ -7,7 +7,7 @@ import PreloaderStart from './components/common/Preloader/PreloaderStart'
 import Header from './components/Header/Header'
 import Navbar from './components/Navbar/Navbar'
 import Login from './components/Login/Login'
-import ErrorBoundary from './components/Error/ErrorBoundary.jsx'
+import ErrorBoundary from './components/Error/ErrorBoundary'
 import withSuspense from './components/common/hoc/withSuspense'
 
 import s from './App.module.scss'

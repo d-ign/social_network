@@ -35,9 +35,10 @@
     "import/extensions": [
       "error",
       "ignorePackages",
-      { "ts": "never", "tsx": "never" }
+      { "ts": "never", "tsx": "never", "jsx": "never" }
     ],
     "no-shadow": "off",
+    "object-shorthand": "warn",
     "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-use-before-define": "off",
