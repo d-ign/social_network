@@ -3,14 +3,15 @@
 [![](https://github.com/ignatov-ru/social_network/workflows/ESLint/badge.svg)](https://github.com/ignatov-ru/social_network/actions?query=workflow%3AESLint)
 [![](https://github.com/ignatov-ru/social_network/workflows/EditorConfig/badge.svg)](https://github.com/ignatov-ru/social_network/actions?query=workflow%3AEditorConfig)
 <img src="https://img.shields.io/badge/StyleLint-used%20by%20-brightgreen" />
+<img src="https://img.shields.io/badge/Commitizen-used%20by%20-brightgreen" />
 
 </div>
 
 # Описание
 
-&#9996; Это <a href="https://ignatov-ru.github.io/social_network/#/">социальная сеть</a> на React + Redux. Для входа в тестовый аккаунт нажмите "Login to test account".
+&#9996; Это <a href="https://ignatov-ru.github.io/social_network/#/">социальная сеть</a> на React + Redux. Для входа в тестовый аккаунт нажмите **Login to test account**.
 
-Разработка стартовала с <a href="https://github.com/facebook/create-react-app">Create React App</a>. Все компоненты находятся в папке src.
+Разработка стартовала с <a href="https://github.com/facebook/create-react-app">Create React App</a>. Все компоненты находятся в `./src`.
 
 Некоторое, что используется в проекте:
 
@@ -44,6 +45,7 @@
 ## Пройдёмся по страницам в навигации соц. сети:
 1. **Профиль** &#11088;:
    - &#9998; Редактирование профиля и статуса, сохранение данных на сервере
+
    - &#128683; Вывод ошибки с сервера при указании некорректного URL в контактах профиля
    - &#128290; Счётчик введённых символов на формах профиля и статуса с подсветкой при наборе максимального кол-ва символов
    - &#10060; Закрытие статуса по клику вне его
@@ -51,10 +53,12 @@
    <div align="center"><img src="./readme_content/gif/change_status.gif" width='75%' /></div>&#32;&#32;
 
    - &#9998; Смена аватара и сохранение фото на сервере
+
    - &#10133; Добавление постов на стену, удаление постов по одному или сразу несколько (+ анимация), сохранение постов в _Local Storage_
    <div align="center"><img src="./readme_content/gif/wall.gif" width='75%' /></div>
 1. **Чат** &#128172;:
    - Общий чат среди авторизованных пользователей на [social-network](https://social-network.samuraijs.com/). _P.S.: в чате показываются 100 последних сообщений, очистка чата происходит раз в сутки_
+
    - Отображение списка текущих участников чата
    - Показ всех участников по нажатию кнопки
    - Сортировка участников по имени
@@ -69,6 +73,7 @@
       - Поиск среди всех пользователей, авторизованных на <a href="https://social-network.samuraijs.com/">social-network</a> по имени
 1. **Друзья** &#129309;:
    - Показ только друзей
+
    - _Остальной функционал как в "Найти пользователей", кроме поля поиска_
    - &#128270; **Поле поиска**:
       - debounce &#8987; при поиске 600 ms (_lodash_)
