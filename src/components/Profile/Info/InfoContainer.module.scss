@@ -45,10 +45,14 @@
     flex-direction: column;
     align-items: center;
   }
+
+  @media (max-width: 600px) {
+    margin-top: 15px;
+  }
 }
 
 .columnRight {
-  margin-left: 20px;
+  margin-left: 10px;
   width: 100%;
   max-width: 535px;
 
@@ -81,21 +85,35 @@
 
   @media (max-width: 770px) {
     flex-direction: row;
-    margin-bottom: 15px;
   }
 }
 
 .successSave {
   position: absolute;
-  margin-top: 5px;
-  padding: 5px;
-  max-width: 130px;
+  left: 0;
+  right: 0;
+  top: 70px;
+  margin: 0 auto;
+  margin-right: calc(50% - 242px);
+  border-radius: 3px;
+  padding: 3px;
+  width: 100%;
+  max-width: 300px;
   text-align: center;
   color: $color-green;
+  background-color: $color-greyMedium;
   animation: anim 2s 2s ease;
 
   @media (max-width: 770px) {
-    top: 185px;
+    top: 288px;
+  }
+
+  @media (max-width: 600px) {
+    top: 70px;
+    margin-right: auto;
+  }
+
+  @media (max-width: 410px) {
     max-width: 230px;
   }
 

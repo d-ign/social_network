@@ -5,8 +5,20 @@
 }
 
 .titleForm {
-  margin-bottom: 30px;
   font-size: 24px;
+
+  @media (max-width: 770px) {
+    margin-top: 30px;
+    font-size: 22px;
+  }
+
+  @media (max-width: 600px) {
+    margin-top: 0;
+  }
+
+  @media (max-width: 420px) {
+    font-size: 22px;
+  }
 }
 
 .wrap {
@@ -37,11 +49,4 @@
 .errorProfileContacts {
   padding: 5px;
   color: $color-red;
-}
-
-@media (max-width: 420px) {
-  .titleForm {
-    margin-bottom: 20px;
-    font-size: 22px;
-  }
 }

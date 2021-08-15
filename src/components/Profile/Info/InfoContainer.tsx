@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { submit } from 'redux-form'
 
@@ -44,7 +45,7 @@ type OwnPropsType = {
   isOwner: boolean
 }
 
-const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
+const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
   const stylesSaveAndCancelButton = {
     fontSize: 12,
     color: '#fff',
@@ -148,7 +149,9 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
         )}
 
         {isEditModeProfile && showSuccessSave && (
-          <div className={s.successSave}>{showSuccessSave}</div>
+          <ShowSuccessSavePortal>
+            <div className={s.successSave}>{showSuccessSave}</div>
+          </ShowSuccessSavePortal>
         )}
       </div>
 
@@ -178,5 +181,13 @@ const ProfileInfo: React.FC<OwnPropsType> = ({ isOwner }) => {
   )
 }
 
-const InfoContainer = ProfileInfo
+const ShowSuccessSavePortal: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const el = document.createElement('div')
+  document.body.append(el)
+
+  return createPortal(children, el)
+}
+
 export default InfoContainer
