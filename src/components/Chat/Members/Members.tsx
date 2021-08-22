@@ -20,11 +20,28 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
   const [isShowAll, setIsShowAll] = useState(false)
   const [isReverseSort, setIsReverseSort] = useState(false)
   const [isShowMembers, setIsShowMembers] = useState(false)
+  const [widthScreen, setWidthScreen] = useState(window.innerWidth)
 
   const itemsCount = isShowAll ? chatMembers.length : 2
 
-  const handleClickTitle = () =>
-    isShowMembers ? setIsShowMembers(false) : setIsShowMembers(true)
+  const handleClickTitle = () => {
+    if (widthScreen <= 760) {
+      if (isShowMembers) {
+        setIsShowMembers(false)
+      } else {
+        setIsShowMembers(true)
+      }
+    }
+  }
+
+  useEffect(() => {
+    const handleResizeWindow = () => setWidthScreen(window.innerWidth)
+
+    window.addEventListener('resize', handleResizeWindow)
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow)
+    }
+  }, [widthScreen])
 
   const sortMembers = (a: ChatMessageType, b: ChatMessageType): number =>
     isReverseSort
