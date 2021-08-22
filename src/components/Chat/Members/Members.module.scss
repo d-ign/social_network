@@ -70,20 +70,8 @@
   padding-bottom: 0;
 }
 
-.name {
-  overflow: hidden;
+.wrapName {
   padding-left: 10px;
-  font-weight: 900;
-  font-size: 12px;
-  white-space: nowrap;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  color: $color-white;
-}
-
-.name:hover {
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 .showAllWrap {

@@ -3,6 +3,10 @@
   height: $h;
 }
 
+.avatarWrap {
+  position: relative;
+}
+
 .avatar {
   overflow: hidden;
   border-radius: 50%;
@@ -14,10 +18,6 @@
   margin: 0 auto;
 }
 
-.avatarWrap {
-  position: relative;
-}
-
 .small {
   @include wh(25px, 25px);
 }
@@ -27,5 +27,9 @@
 }
 
 .large {
+  @include wh(80px, 80px);
+}
+
+.extra_large {
   @include wh(132px, 132px);
 }

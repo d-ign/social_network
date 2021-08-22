@@ -1,0 +1,24 @@
+@import '../../../styles/colors';
+
+.name {
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  color: $color-white;
+
+  @media (max-width: 420px) {
+    font-size: 14px;
+  }
+}
+
+.name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.name__small {
+  font-size: 12px;
+}

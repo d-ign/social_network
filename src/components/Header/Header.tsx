@@ -77,10 +77,10 @@ const Header: React.FC = () => {
       <div className={s.rightColumn}>
         {isAuth ? (
           <>
-            <NavLink className={s.loginAndPhoto} to={`/profile/${myID}`}>
-              <Avatar photo={myPhoto} size='small' />
+            <div className={s.loginAndPhoto}>
+              <Avatar photo={myPhoto} size='small' id={myID} />
               <span className={s.loginName}>{login}</span>
-            </NavLink>
+            </div>
 
             <ButtonChangeTheme
               theme={theme}

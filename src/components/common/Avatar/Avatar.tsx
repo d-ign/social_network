@@ -1,16 +1,27 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
+
 import cn from 'classnames'
 import unknown from '../../../img/no_photo.svg'
 import s from './Avatar.module.scss'
 
-type SizeType = 'small' | 'medium' | 'large'
+type SizeType = 'small' | 'medium' | 'large' | 'extra-large'
 
 type PropsType = {
   photo: string | null | undefined
   size?: SizeType
 }
 
-const Avatar: React.FC<PropsType> = ({ photo, size = 'medium', children }) => {
+type OwnPropsType = {
+  id?: number | null
+}
+
+const Avatar: React.FC<PropsType & OwnPropsType> = ({
+  photo,
+  size = 'medium',
+  id,
+  children,
+}) => {
   // Проверка тестового аккаунта с id = 1079:
   // установленное фото на тестовый аккаунт удаляется через короткое время
   // на сервере и, если с этого аккаунта написано сообщение в чат, то
@@ -25,17 +36,35 @@ const Avatar: React.FC<PropsType> = ({ photo, size = 'medium', children }) => {
   }
 
   return (
+    <>
+      {id ? (
+        <NavLink to={`/profile/${id}`} replace>
+          <AvatarBody photo={photoTrue} size={size}>
+            {children}
+          </AvatarBody>
+        </NavLink>
+      ) : (
+        <AvatarBody photo={photoTrue} size={size}>
+          {children}
+        </AvatarBody>
+      )}
+    </>
+  )
+}
+
+const AvatarBody: React.FC<PropsType> = ({ photo, size = 'medium' }) => {
+  return (
     <div className={s.avatarWrap}>
       <div
         className={cn(
           s.avatar,
+          { [s.extra_large]: size === 'extra-large' },
           { [s.large]: size === 'large' },
           { [s.medium]: size === 'medium' },
           { [s.small]: size === 'small' }
         )}
       >
-        <img src={photoTrue || unknown} alt='avatar' />
-        {children}
+        <img src={photo || unknown} alt='avatar' />
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 
 import cn from 'classnames'
 import Icon from '@mdi/react'
@@ -8,6 +7,7 @@ import { mdiChevronDown } from '@mdi/js'
 import s from './Members.module.scss'
 
 import Avatar from '../../common/Avatar/Avatar'
+import Name from '../../common/Name/Name'
 
 import { getChatMembers } from '../../../redux/selectors/chat-selectors'
 import { ChatMessageType } from '../../../redux/reducers/chat-reducer'
@@ -79,17 +79,16 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
         )}
       >
         {chatMembers &&
-          chatMembers
+          [...chatMembers]
             .slice(0, itemsCount)
             .sort(sortMembers)
             .map((u: ChatMessageAPIType) => (
               <div className={s.member} key={u.userId}>
-                <NavLink to={`/profile/${u.userId}`}>
-                  <Avatar photo={u.photo} size='small' />
-                </NavLink>
-                <NavLink className={s.name} to={`/profile/${u.userId}`}>
-                  {u.userName}
-                </NavLink>
+                <Avatar photo={u.photo} size='small' id={u.userId} />
+
+                <div className={s.wrapName}>
+                  <Name id={u.userId} name={u.userName} size='small' />
+                </div>
               </div>
             ))}
 

@@ -26,22 +26,6 @@
   @extend %messageContainerTemplate;
 }
 
-.name {
-  font-weight: 900;
-  font-size: 16px;
-  text-decoration: none;
-  color: $color-white;
-
-  @media (max-width: 420px) {
-    font-size: 14px;
-  }
-}
-
-.name:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 .message {
   overflow-wrap: break-word;
   padding-right: 10px;
