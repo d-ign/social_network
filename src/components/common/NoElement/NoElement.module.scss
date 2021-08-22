@@ -1,0 +1,14 @@
+@import '../../../styles/colors';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px;
+  font-size: 18px;
+  color: $color-greyLight;
+}
+
+.container span:nth-child(1) {
+  padding-bottom: 10px;
+}
