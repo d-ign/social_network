@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import cn from 'classnames'
-import IconButton from '@material-ui/core/IconButton'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import s from './Users.module.scss'
+import s from '../Users/Users.module.scss'
 
 import User from '../common/User/User'
 import Search from '../common/Search/Search'
+import Preloader from '../common/Preloader/Preloader'
 import NoElement from '../common/NoElement/NoElement'
-import useQueryUrl from '../common/hooks/useQueryUrl'
+import useObserver from '../common/hooks/useObserver'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
 import {
@@ -19,7 +17,12 @@ import {
   getTotalUsersCount,
   getUsersSelector,
 } from '../../redux/selectors/users-selectors'
-import { follow, getUsers, unfollow } from '../../redux/reducers/users-reducer'
+import {
+  actions,
+  follow,
+  getUsers,
+  unfollow,
+} from '../../redux/reducers/users-reducer'
 
 import { UserType } from '../../types/types'
 
@@ -27,7 +30,7 @@ type PathParamsType = {
   pathname: string
 }
 
-const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
+const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
   ({ location: { pathname } }) => {
     const theme = useSelector(getTheme)
     const pageSize = useSelector(getPageSize)
@@ -38,55 +41,39 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
 
     const maxPageCount = Math.ceil(totalUsersCount / pageSize)
 
-    const [isShowMoreUsersButton, setIsShowMoreUsersButton] = useState(true)
     // eslint-disable-next-line prefer-const
     let [pageNumber, setPageNumber] = useState(1)
-    const [termOfUrl, setTermOfUrl] = useState('')
 
     // for Search
     const searchUsers = (term: string) => {
       setPageNumber(1)
-      setTermOfUrl(term)
-      dispatch(getUsers(1, term))
-
-      if (maxPageCount === pageNumber) {
-        setIsShowMoreUsersButton(false)
-      }
-      if (maxPageCount > pageNumber) {
-        setIsShowMoreUsersButton(true)
-      }
+      dispatch(getUsers(1, term, true))
     }
 
     useEffect(() => {
-      if (totalUsersCount > pageSize) {
-        setIsShowMoreUsersButton(true)
-      } else {
-        setIsShowMoreUsersButton(false)
-      }
-    }, [maxPageCount, totalUsersCount, pageSize])
+      dispatch(actions.clearUsers())
+      setPageNumber(1)
+      dispatch(getUsers(1, '', true))
+    }, [pathname, dispatch])
 
-    useQueryUrl(termOfUrl, setTermOfUrl, pathname)
+    const lastElement = React.useRef<HTMLDivElement>(null)
+    const [isFetchingUsers, setIsFetchingUsers] = useState(true)
+
+    useObserver(lastElement, maxPageCount > pageNumber, isFetching, () => {
+      setIsFetchingUsers(true)
+      setPageNumber(++pageNumber)
+      dispatch(getUsers(pageNumber, '', true))
+    })
 
     useEffect(() => {
-      dispatch(getUsers(1, termOfUrl))
-    }, [termOfUrl, pathname, dispatch])
-
-    const handleShowMoreUsers = () => {
-      if (maxPageCount > pageNumber) {
-        setPageNumber(++pageNumber)
-        dispatch(getUsers(pageNumber, termOfUrl))
-      }
-      if (maxPageCount === pageNumber) {
-        setIsShowMoreUsersButton(false)
-      }
-    }
+      setIsFetchingUsers(false)
+    }, [users.length])
 
     return (
       <div className={s.wrapper}>
         <Search
           searchUsers={searchUsers}
           totalUsersCount={totalUsersCount}
-          termOfUrl={termOfUrl}
           pathname={pathname}
         />
 
@@ -111,22 +98,12 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
             ))}
           </div>
 
-          <div
-            className={cn(s.buttonLoadMore, {
-              [s.hiddenButtonLoadMore]: !isShowMoreUsersButton,
-            })}
-          >
-            <IconButton
-              aria-label='load more users'
-              onClick={handleShowMoreUsers}
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </div>
+          {isFetchingUsers && <Preloader display='block' />}
+          {!isFetching && <div ref={lastElement} className={s.lastElement} />}
         </div>
       </div>
     )
   }
 )
 
-export default withRouter(Users)
+export default withRouter(Friends)

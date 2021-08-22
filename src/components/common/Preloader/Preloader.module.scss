@@ -1,6 +1,10 @@
-.container {
+.container_default {
   position: absolute;
   left: calc(50% - 85px);
+}
+
+.container_block {
+  display: block;
 }
 
 .wrap {

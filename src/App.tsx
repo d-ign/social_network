@@ -20,9 +20,13 @@ const ChatContainer = React.lazy(() => import('./components/Chat/Chat'))
 const UsersContainer = React.lazy(
   () => import('./components/Users/UsersContainer')
 )
+const FriendsContainer = React.lazy(
+  () => import('./components/Friends/FriendsContainer')
+)
 
 const SuspendedChat = withSuspense(ChatContainer)
 const SuspendedUsers = withSuspense(UsersContainer)
+const SuspendedFriends = withSuspense(FriendsContainer)
 
 const App: React.FC = () => {
   const userID = useSelector(getAuthorizedUserID)
@@ -56,7 +60,7 @@ const App: React.FC = () => {
 
                 <Route path='/chat' render={() => <SuspendedChat />} />
 
-                <Route path='/friends' render={() => <SuspendedUsers />} />
+                <Route path='/friends' render={() => <SuspendedFriends />} />
 
                 <Route path='/users' render={() => <SuspendedUsers />} />
 
