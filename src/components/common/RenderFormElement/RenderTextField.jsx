@@ -26,7 +26,7 @@ const RenderTextField = (props) => {
       <TextField
         color={theme === 'theme1' ? 'primary' : 'secondary'}
         label={label}
-        InputLabelProps={{ for: label }}
+        InputLabelProps={{ htmlFor: label }}
         inputProps={{ ...inputProps, id: label }}
         onInput={onInput}
         onFocus={onFocus}
