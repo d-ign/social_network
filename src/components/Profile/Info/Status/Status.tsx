@@ -103,7 +103,7 @@ const Status = ({ isOwner }: PropsType) => {
             onBlur={handleBlurInput}
           />
 
-          <div className={s.buttons}>
+          <div className={s.buttonAndCounter}>
             <div className={s.buttonWrap}>
               <Button
                 onClick={handleSaveStatus}

@@ -13,12 +13,16 @@
   width: 100%;
 }
 
-.buttons {
+.buttonAndCounter {
   position: absolute;
   display: flex;
   border-radius: 0 0 5px 5px;
   width: 100%;
   background-color: $color-grey;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+  }
 }
 
 .buttonWrap {
@@ -55,15 +59,4 @@
 
 .noStatus {
   color: $color-greyLight;
-}
-
-.buttonSave,
-.buttonCancel {
-  padding-right: 5px;
-}
-
-@media (max-width: 420px) {
-  .buttons {
-    flex-direction: column;
-  }
 }
