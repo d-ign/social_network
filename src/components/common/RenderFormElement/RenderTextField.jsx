@@ -26,17 +26,17 @@ const RenderTextField = (props) => {
       <TextField
         color={theme === 'theme1' ? 'primary' : 'secondary'}
         label={label}
-        placeholder={placeholder}
-        inputProps={inputProps}
+        InputLabelProps={{ for: label }}
+        inputProps={{ ...inputProps, id: label }}
         onInput={onInput}
         onFocus={onFocus}
         variant={variant}
         multiline={multiline}
         fullWidth={fullWidth}
+        placeholder={placeholder}
         {...input}
         {...custom}
       />
-
       {touched &&
         ((error && <span className={s.error}>{error}</span>) ||
           (warning && <span>{warning}</span>))}

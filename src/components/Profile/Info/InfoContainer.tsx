@@ -48,9 +48,11 @@ type PropsType = {
 const InfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   const stylesSaveAndCancelButton: React.CSSProperties = {
     fontSize: 12,
-    color: '#fff',
+    color: 'white',
+    textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
     margin: 10,
   }
+
   const stylesEditButton: React.CSSProperties = {
     fontSize: 12,
     marginTop: 20,

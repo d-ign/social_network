@@ -81,6 +81,18 @@ const Login: React.FC = () => {
 const LoginForm: React.FC<
   InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType
 > = ({ handleSubmit, error, captchaURL }) => {
+  const stylesLoginButton = {
+    fontSize: 16,
+    fontWeight: 700,
+    color: 'white',
+    textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
+  }
+
+  const stylesTestLoginButton = {
+    marginBottom: '15px',
+    ...stylesLoginButton,
+  }
+
   const dispatch = useDispatch()
   const theme = useSelector(getTheme)
 
@@ -133,7 +145,7 @@ const LoginForm: React.FC<
                 variant='contained'
                 color={theme === 'theme1' ? 'primary' : 'secondary'}
                 fullWidth
-                style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}
+                style={stylesLoginButton}
               >
                 Log in
               </Button>
@@ -163,12 +175,7 @@ const LoginForm: React.FC<
           variant='contained'
           color={theme === 'theme1' ? 'primary' : 'secondary'}
           fullWidth
-          style={{
-            fontSize: 16,
-            fontWeight: 700,
-            color: '#fff',
-            marginBottom: '15px',
-          }}
+          style={stylesTestLoginButton}
         >
           Login to test account
         </Button>

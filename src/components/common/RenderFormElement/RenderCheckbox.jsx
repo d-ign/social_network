@@ -12,6 +12,7 @@ const RenderCheckbox = ({ input, label }) => {
             checked={!!input.value}
             onChange={input.onChange}
             color={theme === 'theme1' ? 'primary' : 'secondary'}
+            style={{ marginLeft: 5, padding: 6 }}
           />
         }
         label={label}

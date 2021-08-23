@@ -1,0 +1,28 @@
+@import './colors';
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+  border-radius: 9em;
+  width: 5px; /* ширина для вертикального скролла */
+  height: 5px; /* высота для горизонтального скролла */
+  background-color: $color-grey;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  border-radius: 9em;
+  background-color: $color-greyLight;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-cyan);
+}
+
+html,
+body {
+  height: 100%;
+
+  /* полоса прокрутки Mozilla Firefox */
+  scrollbar-color: $color-greyLight $color-grey;
+  scrollbar-width: thin;
+}

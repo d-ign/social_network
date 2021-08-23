@@ -1,29 +1,5 @@
 @import './styles/colors';
-
-/* полоса прокрутки (скроллбар) */
-::-webkit-scrollbar {
-  border-radius: 9em;
-  width: 5px; /* ширина для вертикального скролла */
-  height: 5px; /* высота для горизонтального скролла */
-  background-color: $color-grey;
-}
-
-/* ползунок скроллбара */
-::-webkit-scrollbar-thumb {
-  border-radius: 9em;
-  background-color: $color-greyLight;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-cyan);
-}
-
-html,
-body {
-  /* полоса прокрутки Mozilla Firefox */
-  scrollbar-color: $color-greyLight $color-grey;
-  scrollbar-width: thin;
-}
+@import './styles/scrollbar.scss';
 
 .fon,
 .container {
@@ -47,6 +23,7 @@ body {
 
   /* Шрифт */
   font-family: 'Roboto', sans-serif;
+  font-weight: 400;
   font-size: 15px;
   line-height: 25px;
   letter-spacing: 0.1px;

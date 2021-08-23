@@ -20,7 +20,9 @@ const Status = ({ isOwner }: PropsType) => {
   const classes = useStyles()
 
   const stylesSaveAndButton: React.CSSProperties = {
-    color: '#fff',
+    color: 'white',
+    textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
+    boxShadow: '2px 2px 5px var(--color-darkBlueTransparent)',
     margin: 10,
     width: '100%',
   }

@@ -118,6 +118,7 @@ type OwnPropsType = {
 const Form: React.FC<OwnPropsType> = ({ theme }) => {
   const stylesAddPostButton: React.CSSProperties = {
     color: 'white',
+    textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
     margin: '10px 0 10px 10px',
     width: '140px',
   }
@@ -142,6 +143,7 @@ const Form: React.FC<OwnPropsType> = ({ theme }) => {
           multiline
           fullWidth
           variant='outlined'
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
           inputProps={{ maxLength: 1000, value }}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setValue(e.target.value)
@@ -159,7 +161,11 @@ const Form: React.FC<OwnPropsType> = ({ theme }) => {
           </Button>
         </div>
         <div hidden className={s.buttonIcon}>
-          <IconButton aria-label='addPost' onClick={handleAddPost}>
+          <IconButton
+            aria-label='addPost'
+            onClick={handleAddPost}
+            style={{ marginLeft: 5 }}
+          >
             <PostAddIcon color='primary' />
           </IconButton>
         </div>

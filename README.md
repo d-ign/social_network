@@ -9,7 +9,9 @@
 
 # Описание
 
-&#9996; <a href="https://ignatov-ru.github.io/social_network/#/">Это</a> социальная сеть, SPA-приложение на React + Redux. Для входа в тестовый аккаунт нажмите **Login to test account**.
+&#9996; <a href="https://ignatov-ru.github.io/social_network/#/">Это</a> социальная сеть, SPA-приложение на React + Redux.
+
+Для входа в тестовый аккаунт нажмите **Login to test account**.
 
 Разработка стартовала с <a href="https://github.com/facebook/create-react-app">Create React App</a>. Все компоненты находятся в `./src`.
 
