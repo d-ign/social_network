@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -8,7 +8,9 @@ import InvertColorsIcon from '@material-ui/icons/InvertColors'
 import { IconButton } from '@material-ui/core'
 import s from './Header.module.scss'
 import logo from '../../img/icons/logo.svg'
+
 import Avatar from '../common/Avatar/Avatar'
+import useLocalStorage from '../common/hooks/useLocalStorage'
 
 import {
   getAuthorizedUserID,
@@ -28,9 +30,9 @@ const Header: React.FC = () => {
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
-  const [themeLocal, setThemeLocal] = React.useState(theme)
+  const [themeLocal, setThemeLocal] = useState(theme)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const colors = {
       cyan: `var(--color-cyan-${themeLocal})`,
       cyanLight: `var(--color-cyanLight-${themeLocal})`,
@@ -48,21 +50,7 @@ const Header: React.FC = () => {
     }
   }, [theme, themeLocal])
 
-  // чтение и применение темы из Local Storage
-  React.useEffect(() => {
-    // @ts-ignore
-    const themeFromLocalStorage = JSON.parse(localStorage.getItem('theme'))
-
-    if (themeFromLocalStorage) {
-      dispatch(actions.setTheme(themeFromLocalStorage))
-      setThemeLocal(themeFromLocalStorage)
-    }
-  }, [dispatch])
-
-  // запись темы в Local Storage
-  React.useEffect(() => {
-    localStorage.setItem('theme', JSON.stringify(theme))
-  }, [theme])
+  useLocalStorage('theme', theme, actions.setTheme, setThemeLocal)
 
   return (
     <header className={s.header}>
@@ -130,7 +118,7 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
   const { theme, themeLocal, setThemeLocal } = props
   const dispatch = useDispatch()
 
-  const toggleTheme = () => {
+  const handleToggleTheme = () => {
     dispatch(actions.setTheme(themeLocal === 'theme1' ? 'theme2' : 'theme1'))
     setThemeLocal(themeLocal === 'theme1' ? 'theme2' : 'theme1')
   }
@@ -141,7 +129,7 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
         <Button
           color={theme === 'theme1' ? 'primary' : 'secondary'}
           style={{ padding: '6px 12px', marginRight: '12px' }}
-          onClick={toggleTheme}
+          onClick={handleToggleTheme}
           startIcon={<InvertColorsIcon />}
         >
           Change theme
@@ -150,7 +138,7 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
 
       <span hidden className={s.buttonThemeMobile}>
         <IconButton
-          onClick={toggleTheme}
+          onClick={handleToggleTheme}
           aria-label='changeTheme'
           type='submit'
           style={{ margin: '0 12px' }}
