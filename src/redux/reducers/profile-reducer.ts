@@ -1,16 +1,12 @@
-import { v1 } from 'uuid'
 import { BaseThunkType, InferActionsTypes } from '../redux-store'
-
 import { PostType, ProfileType, PhotosType } from '../../types/types'
-
 import { ResultCodesEnum } from '../../api/api'
 import profileAPI from '../../api/profile-api'
 
 const initialState = {
   posts: [
     {
-      author: 'Denis Ignatov',
-      idPost: '1',
+      idPost: 1,
       message: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Facilis ut quo maiores neque laboriosam. Ratione adipisci
         reiciendis autem placeat alias necessitatibus pariatur saepe
@@ -19,15 +15,13 @@ const initialState = {
       isLikeClick: true,
     },
     {
-      author: 'Denis Ignatov',
-      idPost: '2',
+      idPost: 2,
       message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
       likesCount: 0,
       isLikeClick: false,
     },
     {
-      author: 'Denis Ignatov',
-      idPost: '3',
+      idPost: 3,
       message: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
         Facilis ut quo maiores neque laboriosam. Ratione adipisci
         reiciendis autem placeat alias necessitatibus...`,
@@ -35,9 +29,7 @@ const initialState = {
       isLikeClick: false,
     },
   ] as Array<PostType>,
-  postsForDelete: [] as Array<string>,
-  isSelectedPost: false,
-  isClickDeleteSelectedPosts: false, // для анимации поста при удалении
+  postsForDelete: [] as Array<number>,
 
   profile: null as ProfileType | null,
   status: '',
@@ -72,8 +64,7 @@ const profileReducer = (
     }
     case 'ADD_POST': {
       const newPost = {
-        author: state.profile?.fullName,
-        idPost: v1(), // TODO вызов не чистой функции
+        idPost: Date.now(), // TODO вызов не чистой функции
         message: action.newPostText,
         likesCount: 0,
         isLikeClick: false,
@@ -81,12 +72,6 @@ const profileReducer = (
       return {
         ...state,
         posts: [newPost, ...state.posts],
-      }
-    }
-    case 'IS_SELECTED_POST': {
-      return {
-        ...state,
-        isSelectedPost: action.bool,
       }
     }
     case 'SET_POST_FOR_DELETE': {
@@ -107,12 +92,6 @@ const profileReducer = (
       return {
         ...state,
         postsForDelete: [],
-      }
-    }
-    case 'TOGGLE_CLICK_DELETE_SELECTED_POST': {
-      return {
-        ...state,
-        isClickDeleteSelectedPosts: action.bool,
       }
     }
     case 'DELETE_POST': {
@@ -179,12 +158,6 @@ const profileReducer = (
         isEditModeProfile: action.bool,
       }
     }
-    case 'TOGGLE_EDIT_INPUT_PROFILE_FORM': {
-      return {
-        ...state,
-        isEditInputProfileForm: action.bool,
-      }
-    }
     default:
       return state
   }
@@ -193,26 +166,21 @@ const profileReducer = (
 export const actions = {
   initializePosts: (posts: Array<PostType>) =>
     ({ type: 'INITIALIZE_POSTS', posts } as const),
+  // удаление одного поста
   addPost: (newPostText: string) =>
     ({ type: 'ADD_POST', newPostText } as const),
-  deletePost: (idPost: string) => ({ type: 'DELETE_POST', idPost } as const),
-  // лайки-лайки-лайки
-  setLikeOnPost: (idPost: string) =>
-    ({ type: 'SET_LIKE_ON_POST', idPost } as const),
-  deletetLikeOnPost: (idPost: string) =>
-    ({ type: 'DELETE_LIKE_ON_POST', idPost } as const),
+  deletePost: (idPost: number) => ({ type: 'DELETE_POST', idPost } as const),
   // удаление нескольких постов
-  setPostForDeleting: (idPost: string) =>
+  setPostForDeleting: (idPost: number) =>
     ({ type: 'SET_POST_FOR_DELETE', idPost } as const),
-  deletePostForDeleting: (idPost: string) =>
+  deletePostForDeleting: (idPost: number) =>
     ({ type: 'DELETE_POST_FOR_DELETE', idPost } as const),
   clearPostsForDelete: () => ({ type: 'CLEAR_POSTS_FOR_DELETE' } as const),
-  // для убирания иконок-крестиков у всех постов при выборе нескольких постов
-  toggleIsSelectedPost: (bool: boolean) =>
-    ({ type: 'IS_SELECTED_POST', bool } as const),
-  // для анимации удаления постов
-  toggleIsClickDeleteSelectedPosts: (bool: boolean) =>
-    ({ type: 'TOGGLE_CLICK_DELETE_SELECTED_POST', bool } as const),
+  // лайк
+  setLikeOnPost: (idPost: number) =>
+    ({ type: 'SET_LIKE_ON_POST', idPost } as const),
+  deleteLikeOnPost: (idPost: number) =>
+    ({ type: 'DELETE_LIKE_ON_POST', idPost } as const),
 
   setUserProfile: (profile: ProfileType) =>
     ({ type: 'SET_USER', profile } as const),
@@ -225,8 +193,6 @@ export const actions = {
     ({ type: 'SHOW_ERROR_PROFILE_CONTACTS', message } as const),
   setEditModeProfile: (bool: boolean) =>
     ({ type: 'TOGGLE_EDIT_MODE_PROFILE', bool } as const),
-  setEditInputProfileForm: (bool: boolean) =>
-    ({ type: 'TOGGLE_EDIT_INPUT_PROFILE_FORM', bool } as const),
 }
 
 export const getUserProfile =

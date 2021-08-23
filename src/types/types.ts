@@ -1,6 +1,5 @@
 export type PostType = {
-  idPost: string
-  author: string | undefined
+  idPost: number
   message: string
   likesCount: number
   isLikeClick: boolean

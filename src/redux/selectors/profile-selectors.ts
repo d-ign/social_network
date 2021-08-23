@@ -15,12 +15,6 @@ export const getPosts = (state: AppStateType) => state.profilePage.posts
 export const getPostsForDelete = (state: AppStateType) =>
   state.profilePage.postsForDelete
 
-export const getToggleClickDeleteSelectedPosts = (state: AppStateType) =>
-  state.profilePage.isClickDeleteSelectedPosts
-
-export const getIsSelectedPost = (state: AppStateType) =>
-  state.profilePage.isSelectedPost
-
 export const getEditModeProfile = (state: AppStateType) =>
   state.profilePage.isEditModeProfile
 

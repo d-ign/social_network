@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import cn from 'classnames'
@@ -9,132 +9,145 @@ import unknown from '../../../../img/no_photo.svg'
 import s from './Post.module.scss'
 
 import Avatar from '../../../common/Avatar/Avatar'
+import Name from '../../../common/Name/Name'
 
-import {
-  getIsSelectedPost,
-  getPostsForDelete,
-  getToggleClickDeleteSelectedPosts,
-} from '../../../../redux/selectors/profile-selectors'
+import { getPostsForDelete } from '../../../../redux/selectors/profile-selectors'
 import { getTheme } from '../../../../redux/selectors/app-selectors'
 import { actions } from '../../../../redux/reducers/profile-reducer'
 
-import { PostType } from '../../../../types/types'
+import { PostType, ProfileType } from '../../../../types/types'
 
 type OwnPropsType = {
-  photo: string | null
-  handleDeleteOnePost: (idPost: string) => void
-  addIdPostBeforeDeleting: (idPost: string) => void
-  deleteIdPostBeforeDeleting: (idPost: string) => void
+  profile: ProfileType | null
+  isShowAnimation: boolean
+  isHiddenAllX: boolean
+  setIsHiddenAllX: Dispatch<SetStateAction<boolean>>
+  handleDeleteOnePost: (idPost: number) => void
+  addIdPostBeforeDeleting: (idPost: number) => void
+  deleteIdPostBeforeDeleting: (idPost: number) => void
 }
 
-const Post: React.FC<PostType & OwnPropsType> = (props) => {
-  const {
-    photo,
-    idPost,
-    author,
-    message,
-    likesCount,
-    isLikeClick,
-    handleDeleteOnePost,
-    addIdPostBeforeDeleting,
-    deleteIdPostBeforeDeleting,
-  } = props
+const Post: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
+  (props) => {
+    const {
+      post: { idPost, message, likesCount, isLikeClick },
+      profile,
+      isHiddenAllX,
+      setIsHiddenAllX,
+      isShowAnimation,
+      handleDeleteOnePost,
+      addIdPostBeforeDeleting,
+      deleteIdPostBeforeDeleting,
+    } = props
 
-  const [isClickDeletePost, setIsClickDeletePost] = useState(false)
-  const [isSelectedPostLocal, setIsSelectedPostLocal] = useState(false)
+    const theme = useSelector(getTheme)
+    const postsForDelete = useSelector(getPostsForDelete)
+    const dispatch = useDispatch()
 
-  const theme = useSelector(getTheme)
-  const isSelectedPost = useSelector(getIsSelectedPost)
-  const isClickDeleteSelectedPosts = useSelector(
-    getToggleClickDeleteSelectedPosts
-  )
-  const postsForDelete = useSelector(getPostsForDelete)
-  const dispatch = useDispatch()
+    const [isClickDeletePost, setIsClickDeletePost] = useState(false)
+    const [isSelectedPost, setIsSelectedPost] = useState(false)
 
-  const handleDeletePost = () => {
-    setIsClickDeletePost(true)
-    setTimeout(() => handleDeleteOnePost(idPost), 300)
-  }
-
-  const handleSetLike = () => {
-    if (!isLikeClick) {
-      dispatch(actions.setLikeOnPost(idPost))
-    } else {
-      dispatch(actions.deletetLikeOnPost(idPost))
+    const handleClickOnAvatar = () => {
+      if (!isSelectedPost) {
+        setIsHiddenAllX(true)
+        setIsSelectedPost(true)
+        addIdPostBeforeDeleting(idPost)
+      } else {
+        if (postsForDelete.length === 0) {
+          // не возвращаем все Х, если ещё выбраны какие-то посты
+          setIsHiddenAllX(false)
+        }
+        setIsSelectedPost(false)
+        deleteIdPostBeforeDeleting(idPost)
+      }
     }
-  }
 
-  return (
-    <div
-      className={cn(s.postContainer, {
-        [s.postDelete]:
-          isClickDeletePost ||
-          (isClickDeleteSelectedPosts && postsForDelete.includes(idPost)),
-        // добавление анимации
-      })}
-    >
-      <div className={s.post}>
-        <div className={s.columnLeft}>
-          <div
-            aria-hidden='true'
-            className={cn(
-              { [s.avatar]: !isSelectedPostLocal },
-              {
-                [s.postSelectedTheme1]:
-                  isSelectedPostLocal && theme === 'theme1',
-              },
-              {
-                [s.postSelectedTheme2]:
-                  isSelectedPostLocal && theme === 'theme2',
-              }
-            )}
-            onClick={() => {
-              if (!isSelectedPostLocal) {
-                // для удаления иконок-крестиков у всех постов
-                dispatch(actions.toggleIsSelectedPost(true))
-                setIsSelectedPostLocal(true)
-                // предварительное добавление поста в список на удаление
-                addIdPostBeforeDeleting(idPost)
-              } else {
-                dispatch(actions.toggleIsSelectedPost(false))
-                setIsSelectedPostLocal(false)
-                deleteIdPostBeforeDeleting(idPost)
-              }
-            }}
-          >
-            <Avatar photo={photo || unknown} size='medium' />
-          </div>
-        </div>
+    useEffect(() => {
+      if (postsForDelete.length === 0) {
+        // возвращаем все Х, если больше нет выбранных постов
+        setIsHiddenAllX(false)
+      }
+    }, [postsForDelete, setIsHiddenAllX])
 
-        <div className={s.columnCenter}>
-          <div className={s.name}>{author}</div>
-          <div className={s.message}>{message}</div>
-        </div>
+    const handleDeletePost = () => {
+      setIsClickDeletePost(true)
+      setTimeout(() => handleDeleteOnePost(idPost), 300)
+    }
 
-        <div className={s.columnRight}>
-          <div hidden={isSelectedPost}>
-            <IconButton
-              aria-label='deletePost'
-              size='small'
-              onClick={handleDeletePost}
+    const handleSetLike = () => {
+      if (!isLikeClick) {
+        dispatch(actions.setLikeOnPost(idPost))
+      } else {
+        dispatch(actions.deleteLikeOnPost(idPost))
+      }
+    }
+
+    return (
+      <div
+        className={cn(s.postContainer, {
+          [s.postDelete]:
+            isClickDeletePost ||
+            (isShowAnimation && postsForDelete.includes(idPost)),
+        })}
+      >
+        <div className={s.post}>
+          <div className={s.columnLeft}>
+            <div
+              aria-hidden='true'
+              className={cn(
+                { [s.avatar]: !isSelectedPost },
+                {
+                  [s.postSelectedTheme1]: isSelectedPost && theme === 'theme1',
+                },
+                {
+                  [s.postSelectedTheme2]: isSelectedPost && theme === 'theme2',
+                }
+              )}
+              onClick={handleClickOnAvatar}
             >
-              <CloseIcon />
-            </IconButton>
-          </div>
-          <div className={s.wrapLike}>
-            <span className={s.likesCount}>
-              {likesCount > 0 ? `+${likesCount}` : ''}
-            </span>
-            <IconButton aria-label='like' size='small' onClick={handleSetLike}>
-              <ThumbUpAltIcon
-                className={cn(s.like, { [s.noLike]: !isLikeClick })}
+              <Avatar
+                photo={profile?.photos.large || unknown}
+                size='medium'
+                id={profile?.userId}
               />
-            </IconButton>
+            </div>
+          </div>
+
+          <div className={s.columnCenter}>
+            <Name id={profile?.userId} name={profile?.fullName} />
+            <div className={s.message}>{message}</div>
+          </div>
+
+          <div className={s.columnRight}>
+            <div hidden={isHiddenAllX}>
+              <IconButton
+                aria-label='deletePost'
+                size='small'
+                onClick={handleDeletePost}
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
+
+            <div className={s.wrapLike}>
+              <span className={s.likesCount}>
+                {likesCount > 0 ? `+${likesCount}` : ''}
+              </span>
+              <IconButton
+                aria-label='like'
+                size='small'
+                onClick={handleSetLike}
+              >
+                <ThumbUpAltIcon
+                  className={cn(s.like, { [s.noLike]: !isLikeClick })}
+                />
+              </IconButton>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
+)
 
 export default Post

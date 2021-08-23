@@ -1,62 +1,49 @@
-import React from 'react'
-import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import PostAddIcon from '@material-ui/icons/PostAdd'
-import { IconButton } from '@material-ui/core'
+import { IconButton, TextField } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import cn from 'classnames'
 import s from './Wall.module.scss'
-import renderTextField from '../../common/ElementCustom/renderTextField'
 
 import Post from './Post/Post'
-import { PostType } from '../../../types/types'
+import NoElement from '../../common/NoElement/NoElement'
+import useLocalStorage from '../../common/hooks/useLocalStorage'
 
 import {
   getPosts,
   getPostsForDelete,
+  getProfile,
 } from '../../../redux/selectors/profile-selectors'
-import { getMyPhoto } from '../../../redux/selectors/auth-selectors'
 import { actions } from '../../../redux/reducers/profile-reducer'
 import { getTheme } from '../../../redux/selectors/app-selectors'
+
+import { PostType } from '../../../types/types'
 
 const Wall: React.FC = () => {
   const posts = useSelector(getPosts)
   const postsForDelete = useSelector(getPostsForDelete)
-  const myPhoto = useSelector(getMyPhoto)
+  const profile = useSelector(getProfile)
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
-  React.useEffect(() => {
-    // @ts-ignore
-    const arr = JSON.parse(localStorage.getItem('posts'))
-    if (arr) {
-      dispatch(actions.initializePosts(arr))
-    }
-  }, [dispatch])
+  const [isShowAnimation, setIsShowAnimation] = useState(false)
+  const [isHiddenAllX, setIsHiddenAllX] = useState(false)
 
-  React.useEffect(() => {
-    localStorage.setItem('posts', JSON.stringify(posts))
-  }, [posts])
+  useLocalStorage('posts', posts, actions.initializePosts)
 
-  const handleAddPost = (values: WallValuesFormType) => {
-    if (values.newPostText && values.newPostText.length > 0) {
-      dispatch(actions.addPost(values.newPostText))
-      dispatch(reset('profileNewPostForm'))
-    }
-  }
-
-  const handleDeleteOnePost = (idPost: string) => {
+  const handleDeleteOnePost = (idPost: number) => {
     dispatch(actions.deletePost(idPost))
   }
 
   const handleDeleteSelectedPost = () => {
     // начало анимации удаления
-    dispatch(actions.toggleIsClickDeleteSelectedPosts(true))
+    setIsShowAnimation(true)
 
     // возвращаем индивидуальные иконки-крестики у всех постов
-    dispatch(actions.toggleIsSelectedPost(false))
+    setIsHiddenAllX(false)
 
     setTimeout(() => {
       postsForDelete.forEach((p) => {
@@ -65,27 +52,31 @@ const Wall: React.FC = () => {
       dispatch(actions.clearPostsForDelete())
 
       // конец анимации удаления
-      dispatch(actions.toggleIsClickDeleteSelectedPosts(false))
+      setIsShowAnimation(false)
     }, 600)
   }
 
-  const addIdPostBeforeDeleting = (idPost: string) => {
+  const addIdPostBeforeDeleting = (idPost: number) => {
     dispatch(actions.setPostForDeleting(idPost))
   }
 
-  const deleteIdPostBeforeDeleting = (idPost: string) => {
+  const deleteIdPostBeforeDeleting = (idPost: number) => {
     dispatch(actions.deletePostForDeleting(idPost))
   }
 
   const postsElements = posts.map((p: PostType) => (
     <Post
       key={p.idPost}
-      photo={myPhoto}
-      idPost={p.idPost}
-      author={p.author}
-      message={p.message}
-      likesCount={p.likesCount}
-      isLikeClick={p.isLikeClick}
+      profile={profile}
+      post={{
+        idPost: p.idPost,
+        message: p.message,
+        likesCount: p.likesCount,
+        isLikeClick: p.isLikeClick,
+      }}
+      isHiddenAllX={isHiddenAllX}
+      setIsHiddenAllX={setIsHiddenAllX}
+      isShowAnimation={isShowAnimation}
       handleDeleteOnePost={handleDeleteOnePost}
       addIdPostBeforeDeleting={addIdPostBeforeDeleting}
       deleteIdPostBeforeDeleting={deleteIdPostBeforeDeleting}
@@ -109,48 +100,56 @@ const Wall: React.FC = () => {
         </Button>
       </div>
 
-      {postsForDelete.length === 0 && (
-        // @ts-ignore
-        <PostReduxForm onSubmit={handleAddPost} theme={theme} />
-      )}
+      {postsForDelete.length === 0 && <Form theme={theme} />}
 
       <div className={s.posts}>
         {postsElements}
-        {!posts.length && (
-          <div className={s.noPosts}>
-            <span>No posts yet...</span>
-            <span>Write something!</span>
-          </div>
-        )}
+
+        {!posts.length && <NoElement elements='posts' writeSomething />}
       </div>
     </div>
   )
 }
 
-const AddNewPostForm: React.FC<
-  InjectedFormProps<WallValuesFormType, OwnPropsType> & OwnPropsType
-> = ({ handleSubmit, theme }) => {
-  const stylesAddPostButton = {
+type OwnPropsType = {
+  theme: string
+}
+
+const Form: React.FC<OwnPropsType> = ({ theme }) => {
+  const stylesAddPostButton: React.CSSProperties = {
     color: 'white',
     margin: '10px 0 10px 10px',
     width: '140px',
   }
 
+  const dispatch = useDispatch()
+  const [value, setValue] = useState('')
+
+  const handleAddPost = () => {
+    if (!value.trim()) {
+      return
+    }
+    dispatch(actions.addPost(value))
+    setValue('')
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <div className={s.form}>
-        <Field
-          component={renderTextField}
+        <TextField
           name='newPostText'
           placeholder='Enter the post text...'
           multiline
           fullWidth
           variant='outlined'
-          inputProps={{ maxLength: 1000 }}
+          inputProps={{ maxLength: 1000, value }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(e.target.value)
+          }
         />
         <div className={s.buttonBig}>
           <Button
-            type='submit'
+            onClick={handleAddPost}
             variant='contained'
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             style={stylesAddPostButton}
@@ -160,25 +159,13 @@ const AddNewPostForm: React.FC<
           </Button>
         </div>
         <div hidden className={s.buttonIcon}>
-          <IconButton aria-label='addPost' type='submit'>
+          <IconButton aria-label='addPost' onClick={handleAddPost}>
             <PostAddIcon color='primary' />
           </IconButton>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
-
-type WallValuesFormType = {
-  newPostText: string
-}
-
-type OwnPropsType = {
-  theme: string
-}
-
-const PostReduxForm = reduxForm<WallValuesFormType, OwnPropsType>({
-  form: 'profileNewPostForm',
-})(AddNewPostForm)
 
 export default Wall
