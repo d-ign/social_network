@@ -6,8 +6,8 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import cn from 'classnames'
 import Button from '@material-ui/core/Button'
 import s from './Login.module.scss'
-import renderTextField from '../common/ElementCustom/renderTextField'
-import renderCheckbox from '../common/ElementCustom/renderCheckbox'
+import RenderTextField from '../common/ElementCustom/RenderTextField'
+import RenderCheckbox from '../common/ElementCustom/RenderCheckbox'
 
 import {
   getAuthorizedUserID,
@@ -95,7 +95,7 @@ const LoginForm: React.FC<
           <div className={s.loginBlock}>
             <div className={s.row}>
               <Field
-                component={renderTextField}
+                component={RenderTextField}
                 name='email'
                 label='Email:'
                 type='email'
@@ -104,7 +104,7 @@ const LoginForm: React.FC<
             </div>
             <div className={s.row}>
               <Field
-                component={renderTextField}
+                component={RenderTextField}
                 name='password'
                 label='Password:'
                 type='password'
@@ -113,7 +113,7 @@ const LoginForm: React.FC<
             </div>
             <div className={cn(s.row, s.rowCheckbox)}>
               <Field
-                component={renderCheckbox}
+                component={RenderCheckbox}
                 name='rememberMe'
                 label='Remember me'
               />
@@ -121,7 +121,7 @@ const LoginForm: React.FC<
 
             {captchaURL && <img src={captchaURL} alt='captcha' />}
             {captchaURL && (
-              <Field component={renderTextField} fullWidth name='captcha' />
+              <Field component={RenderTextField} fullWidth name='captcha' />
             )}
 
             <div className={s.row}>

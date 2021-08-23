@@ -2,15 +2,15 @@ import React from 'react'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 
 import FieldWithCounter from '../../../common/FieldWithCounter/FieldWithCounter'
-import renderTextField from '../../../common/ElementCustom/renderTextField'
-import renderCheckbox from '../../../common/ElementCustom/renderCheckbox'
+import RenderTextField from '../../../common/ElementCustom/RenderTextField'
+import RenderCheckbox from '../../../common/ElementCustom/RenderCheckbox'
 import s from './InfoDataForm.module.scss'
 
 import { ProfileType } from '../../../../types/types'
 
 type OwnPropsType = {
   errorProfileContacts: string
-  handleEditInputProfileForm: (bool: boolean) => void
+  setIsEditInputProfileForm: (bool: boolean) => void
   initialValues: ProfileType
 }
 
@@ -21,7 +21,7 @@ const DataForm: React.FC<
     handleSubmit,
     initialValues,
     errorProfileContacts,
-    handleEditInputProfileForm,
+    setIsEditInputProfileForm,
   } = props
 
   return (
@@ -30,30 +30,52 @@ const DataForm: React.FC<
 
       <div className={s.wrap}>
         <FieldWithCounter
-          label='Name:'
-          name='fullName'
-          placeholder='Your name'
+          renderContent={(handleInput, handleFocus, handleBlur) => (
+            <Field
+              component={RenderTextField}
+              inputProps={{ maxLength: 100 }}
+              label='Name:'
+              name='fullName'
+              placeholder='Your name'
+              variant='filled'
+              fullWidth
+              onInput={handleInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          )}
+          setIsEditInputProfileForm={setIsEditInputProfileForm}
           maxLength={100}
-          handleOnEditInputForm={handleEditInputProfileForm}
         />
       </div>
 
       <div className={s.wrap}>
         <FieldWithCounter
-          multiline
-          label='About me:'
-          name='aboutMe'
-          placeholder='Write about yourself!'
+          renderContent={(handleInput, handleFocus, handleBlur) => (
+            <Field
+              component={RenderTextField}
+              inputProps={{ maxLength: 1000 }}
+              multiline
+              label='About me:'
+              name='aboutMe'
+              placeholder='Write about yourself!'
+              variant='filled'
+              fullWidth
+              onInput={handleInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          )}
+          setIsEditInputProfileForm={setIsEditInputProfileForm}
           maxLength={1000}
-          handleOnEditInputForm={handleEditInputProfileForm}
         />
       </div>
 
       <div className={s.wrap}>
         <Field
-          component={renderCheckbox}
+          component={RenderCheckbox}
           onChange={() => {
-            handleEditInputProfileForm(true)
+            setIsEditInputProfileForm(true)
           }}
           name='lookingForAJob'
           label='Are you looking for a job?'
@@ -62,12 +84,23 @@ const DataForm: React.FC<
 
       <div className={s.wrap}>
         <FieldWithCounter
-          multiline
-          label='Professional skills:'
-          name='lookingForAJobDescription'
-          placeholder='What you can do?'
+          renderContent={(handleInput, handleFocus, handleBlur) => (
+            <Field
+              component={RenderTextField}
+              inputProps={{ maxLength: 1000 }}
+              multiline
+              label='Professional skills:'
+              name='lookingForAJobDescription'
+              placeholder='What you can do?'
+              variant='filled'
+              fullWidth
+              onInput={handleInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          )}
+          setIsEditInputProfileForm={setIsEditInputProfileForm}
           maxLength={1000}
-          handleOnEditInputForm={handleEditInputProfileForm}
         />
       </div>
 
@@ -85,8 +118,8 @@ const DataForm: React.FC<
             <div className={s.titleContact}>{key}:</div>
 
             <Field
-              component={renderTextField}
-              onInput={() => handleEditInputProfileForm(true)}
+              component={RenderTextField}
+              onInput={() => setIsEditInputProfileForm(true)}
               name={`contacts.${key}`}
               placeholder='https://...'
               multiline

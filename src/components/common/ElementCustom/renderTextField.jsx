@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { TextField } from '@material-ui/core'
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
-import s from './renderTextField.module.scss'
+import s from './RenderTextField.module.scss'
 
 const RenderTextField = (props) => {
   const {
