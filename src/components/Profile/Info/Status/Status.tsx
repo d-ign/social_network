@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Input, Button } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
 import cn from 'classnames'
 import s from './Status.module.scss'
@@ -16,11 +16,10 @@ type PropsType = {
   isOwner: boolean
 }
 
-const Status: React.FC<PropsType> = (props) => {
-  const { isOwner } = props
+const Status = ({ isOwner }: PropsType) => {
   const classes = useStyles()
 
-  const stylesSaveAndButton = {
+  const stylesSaveAndButton: React.CSSProperties = {
     color: '#fff',
     margin: 10,
     width: '100%',
@@ -41,33 +40,35 @@ const Status: React.FC<PropsType> = (props) => {
     setStatusLocal(status)
   }, [status])
 
-  const onStatusFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleFocusInput = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.select()
     setCount(e.target.value.length)
     setIsHiddenCounter(false)
   }
 
-  const onStatusBlur = () => {
+  const handleBlurInput = () => {
     setIsHiddenCounter(true)
   }
 
-  const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCount(e.target.value.length)
     setIsEditInputStatusForm(true)
     setStatusLocal(e.currentTarget.value)
   }
 
-  const saveStatus = () => {
+  const handleSaveStatus = () => {
     dispatch(updateStatus(statusLocal))
     setIsEditInputStatusForm(false)
     setEditMode(false)
   }
 
-  function useOutsideAlerter(ref: React.RefObject<HTMLElement>) {
+  function useOutsideAlerter(ref: React.RefObject<HTMLDivElement>) {
     useEffect(() => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      function handleClickOutside(event: MouseEvent | any) {
-        if (ref.current && !ref.current.contains(event.target)) {
+      function handleClickOutside(e: MouseEvent) {
+        if (
+          ref.current &&
+          !ref.current.contains(e.target as HTMLInputElement)
+        ) {
           setEditMode(false)
         }
       }
@@ -78,32 +79,32 @@ const Status: React.FC<PropsType> = (props) => {
     }, [ref])
   }
 
-  const statusRef = useRef(null)
+  const statusRef = useRef<HTMLDivElement | null>(null)
   useOutsideAlerter(statusRef)
 
   return (
     <div ref={statusRef} className={s.container}>
       {editMode && (
         <div className={s.wrap}>
-          <Input
-            name='status'
-            value={statusLocal}
-            placeholder='Your status...'
+          <TextField
             autoFocus
+            multiline
+            fullWidth
+            name='newStatusText'
+            placeholder='Your status...'
             inputProps={{ maxLength: 300 }}
             className={classes.status}
             color={theme === 'theme1' ? 'primary' : 'secondary'}
-            multiline
-            fullWidth
-            onFocus={onStatusFocus}
-            onBlur={onStatusBlur}
-            onChange={onStatusChange}
+            value={statusLocal}
+            onChange={handleChangeInput}
+            onFocus={handleFocusInput}
+            onBlur={handleBlurInput}
           />
 
           <div className={s.buttons}>
             <div className={s.buttonWrap}>
               <Button
-                onClick={saveStatus}
+                onClick={handleSaveStatus}
                 disabled={!isEditInputStatusForm}
                 variant='contained'
                 color={theme === 'theme1' ? 'primary' : 'secondary'}

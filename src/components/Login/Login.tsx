@@ -84,7 +84,10 @@ const LoginForm: React.FC<
   const dispatch = useDispatch()
   const theme = useSelector(getTheme)
 
-  const onTestAccountSubmit = (email: string, password: string) => {
+  const handleEnterTestAccount = () => {
+    const email = 'free@samuraijs.com'
+    const password = 'free'
+
     dispatch(loginThunk(email, password, false, null))
   }
 
@@ -156,7 +159,7 @@ const LoginForm: React.FC<
         </div>
         <p>or</p>
         <Button
-          onClick={() => onTestAccountSubmit('free@samuraijs.com', 'free')}
+          onClick={handleEnterTestAccount}
           variant='contained'
           color={theme === 'theme1' ? 'primary' : 'secondary'}
           fullWidth

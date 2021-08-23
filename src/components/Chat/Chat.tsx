@@ -59,6 +59,9 @@ const AddMessageForm: React.FC<{ theme: string }> = ({ theme }) => {
     setMessage('')
   }
 
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setMessage(e.currentTarget.value)
+
   return (
     <div className={s.wrapForm}>
       <div className={s.form}>
@@ -69,9 +72,7 @@ const AddMessageForm: React.FC<{ theme: string }> = ({ theme }) => {
           variant='outlined'
           inputProps={{ maxLength: 100 }}
           color={theme === 'theme1' ? 'primary' : 'secondary'}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setMessage(e.currentTarget.value)
-          }
+          onChange={handleChangeInput}
           value={message}
         />
         <IconButton

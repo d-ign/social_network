@@ -71,7 +71,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
     getStatus(userId as number)
   }
 
-  render() {
+  render(): React.ReactElement<PropsType> {
     const { match, authorizedUserID, isEditModeProfile } = this.props
     const isOwner = +match.params.userId === authorizedUserID
 

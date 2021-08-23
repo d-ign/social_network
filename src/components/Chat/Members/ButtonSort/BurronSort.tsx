@@ -18,7 +18,7 @@ const ButtonSort: React.FC<PropsType> = (props) => {
   const { theme, isReverseSort, setIsReverseSort, isShowAll, isShowMembers } =
     props
 
-  const stylesSortByName = {
+  const stylesSortByName: React.CSSProperties = {
     fontSize: '10px',
     marginBottom: '5px',
     padding: '3px 10px 3px 7px',
