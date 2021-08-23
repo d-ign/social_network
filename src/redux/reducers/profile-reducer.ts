@@ -36,7 +36,6 @@ const initialState = {
   showSuccessSave: '',
   errorProfileContacts: '',
   isEditModeProfile: false,
-  isEditInputProfileForm: false,
 }
 
 const profileReducer = (

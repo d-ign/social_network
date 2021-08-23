@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { submit } from 'redux-form'
@@ -15,10 +15,10 @@ import Status from './Status/Status'
 import Avatar from '../../common/Avatar/Avatar'
 import InfoDataForm from './InfoDataForm/InfoDataForm'
 import InfoData from './InfoData/InfoData'
+import ProfilePlug from './ProfilePlug/ProfilePlug'
 
 import { getTheme } from '../../../redux/selectors/app-selectors'
 import {
-  getEditInputProfileForm,
   getEditModeProfile,
   getErrorProfileContacts,
   getProfile,
@@ -41,17 +41,17 @@ function ScrollToTopOnMount() {
   return null
 }
 
-type OwnPropsType = {
+type PropsType = {
   isOwner: boolean
 }
 
-const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
-  const stylesSaveAndCancelButton = {
+const InfoContainer: React.FC<PropsType> = ({ isOwner }) => {
+  const stylesSaveAndCancelButton: React.CSSProperties = {
     fontSize: 12,
     color: '#fff',
     margin: 10,
   }
-  const stylesEditButton = {
+  const stylesEditButton: React.CSSProperties = {
     fontSize: 12,
     marginTop: 20,
   }
@@ -64,31 +64,47 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
 
   const showSuccessSave = useSelector(getShowSuccessSave)
   const isEditModeProfile = useSelector(getEditModeProfile)
-  const isEditInputProfileForm = useSelector(getEditInputProfileForm)
   const dispatch = useDispatch()
+
+  const [isEditInputProfileForm, setIsEditInputProfileForm] = useState(false)
 
   const onSubmitProfile = (values: ProfileType) => {
     dispatch(saveProfileThunk(values))
   }
 
-  const onMainPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       dispatch(savePhotoThunk(e.target.files[0]))
     }
   }
 
-  const handleEditInputProfileForm = (bool: boolean) => {
-    dispatch(actions.setEditInputProfileForm(bool))
+  const handleEditProfile = () => {
+    dispatch(actions.setEditModeProfile(true))
+  }
+
+  const handleSaveProfile = () => {
+    setIsEditInputProfileForm(false)
+    dispatch(submit('editProfile'))
+  }
+
+  const handleCancelProfile = () => {
+    setIsEditInputProfileForm(false)
+    dispatch(actions.setEditModeProfile(false))
   }
 
   if (!profile) {
-    return <Preloader />
+    return (
+      <>
+        <Preloader />
+        <ProfilePlug isOwner={isOwner} />
+      </>
+    )
   }
 
   return (
     <div className={s.containerMain}>
       <div className={s.columnLeft}>
-        <Avatar photo={profile.photos.large} size='large'>
+        <Avatar photo={profile.photos.large} size='extra-large'>
           {isOwner && !isEditModeProfile && (
             <div className={s.camera}>
               <label htmlFor='file_out'>
@@ -99,7 +115,7 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
                   id='file_out'
                   hidden
                   type='file'
-                  onChange={onMainPhotoSelected}
+                  onChange={handleChangePhoto}
                 />
               </label>
             </div>
@@ -108,7 +124,7 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
 
         {isOwner && !isEditModeProfile && (
           <Button
-            onClick={() => dispatch(actions.setEditModeProfile(true))}
+            onClick={handleEditProfile}
             variant='outlined'
             style={stylesEditButton}
             startIcon={<EditIcon style={{ fontSize: 16 }} />}
@@ -120,10 +136,7 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
         {isEditModeProfile && (
           <div className={s.buttonsSaveAndCancelProfile}>
             <Button
-              onClick={() => {
-                handleEditInputProfileForm(false)
-                dispatch(submit('editProfile'))
-              }}
+              onClick={handleSaveProfile}
               disabled={!isEditInputProfileForm}
               variant='contained'
               color={theme === 'theme1' ? 'primary' : 'secondary'}
@@ -134,10 +147,7 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
               Save
             </Button>
             <Button
-              onClick={() => {
-                handleEditInputProfileForm(false)
-                dispatch(actions.setEditModeProfile(false))
-              }}
+              onClick={handleCancelProfile}
               variant='outlined'
               fullWidth
               style={stylesSaveAndCancelButton}
@@ -169,7 +179,7 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
             initialValues={profile}
             onSubmit={onSubmitProfile}
             errorProfileContacts={errorProfileContacts}
-            handleEditInputProfileForm={handleEditInputProfileForm}
+            setIsEditInputProfileForm={setIsEditInputProfileForm}
           />
         ) : (
           <InfoData profile={profile} />
@@ -181,10 +191,8 @@ const InfoContainer: React.FC<OwnPropsType> = ({ isOwner }) => {
   )
 }
 
-const ShowSuccessSavePortal: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const el = document.createElement('div')
+const ShowSuccessSavePortal = ({ children }: { children: React.ReactNode }) => {
+  const el: HTMLDivElement = document.createElement('div')
   document.body.append(el)
 
   return createPortal(children, el)

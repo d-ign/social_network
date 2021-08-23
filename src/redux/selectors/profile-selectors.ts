@@ -17,6 +17,3 @@ export const getPostsForDelete = (state: AppStateType) =>
 
 export const getEditModeProfile = (state: AppStateType) =>
   state.profilePage.isEditModeProfile
-
-export const getEditInputProfileForm = (state: AppStateType) =>
-  state.profilePage.isEditInputProfileForm

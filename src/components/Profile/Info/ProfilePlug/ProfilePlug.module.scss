@@ -1,0 +1,99 @@
+@import '../../../../styles/colors';
+
+@mixin wh($w, $h) {
+  width: $w;
+  height: $h;
+}
+
+.containerMainPlug {
+  @include wh(100%, 400px);
+
+  display: flex;
+
+  @media (max-width: 770px) {
+    display: block;
+  }
+}
+
+.columnLeftPlug {
+  @media (max-width: 770px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.columnRightPlug {
+  @media (max-width: 770px) {
+    margin-left: 0;
+  }
+}
+
+.avatarPlug,
+.buttonPlug,
+.namePlug,
+.statusPlug,
+.titleOnePlug,
+.titleTwoPlug,
+.textPlug {
+  border-radius: 5px;
+  background-color: $color-greyTransparent;
+}
+
+.avatarPlug {
+  @include wh(132px, 132px);
+
+  margin: 10px;
+  border-radius: 50%;
+
+  @media (max-width: 770px) {
+    margin: 0;
+  }
+}
+
+.buttonPlug {
+  @include wh(130px, 34px);
+
+  margin: 20px 10px 0;
+}
+
+.nameWrapPlug {
+  @media (max-width: 770px) {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+.namePlug {
+  @include wh(230px, 30px);
+
+  margin: 0 0 10px 10px;
+}
+
+.statusPlug {
+  @include wh(150px, 25px);
+
+  margin: 0 0 10px 10px;
+}
+
+.titleOnePlug,
+.titleTwoPlug {
+  @include wh(100px, 20px);
+
+  margin: 33px 0 6px 30px;
+
+  @media (max-width: 770px) {
+    margin: 25px 0 6px 30px;
+  }
+}
+
+.titleTwoPlug {
+  margin: 21px 0 6px 30px;
+}
+
+.textPlug {
+  @include wh(160px, 20px);
+
+  margin: 0 0 10px 50px;
+}
