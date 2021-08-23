@@ -8,7 +8,7 @@ import User from '../common/User/User'
 import Search from '../common/Search/Search'
 import Preloader from '../common/Preloader/Preloader'
 import NoElement from '../common/NoElement/NoElement'
-import useObserver from '../common/hooks/useObserver'
+import useObserver from '../../hooks/useObserver'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
 import {

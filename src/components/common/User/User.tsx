@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add'
 import s from './User.module.scss'
 
 import Avatar from '../Avatar/Avatar'
-import Popup from './Popup/Popup'
+import Tooltip from './Tooltip/Tooltip'
 import Name from '../Name/Name'
 
 import { getFollowingInProgress } from '../../../redux/selectors/users-selectors'
@@ -47,17 +47,17 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
 
         <div className={s.nameAndStatus}>
           {name?.length > 19 ? (
-            <Popup element={name}>
+            <Tooltip element={name}>
               <Name id={id} name={name} />
-            </Popup>
+            </Tooltip>
           ) : (
             <Name id={id} name={name} />
           )}
 
           {status?.length > 19 ? (
-            <Popup element={status}>
+            <Tooltip element={status}>
               <div className={s.status}>{status}</div>
-            </Popup>
+            </Tooltip>
           ) : (
             <div className={s.status}>{status}</div>
           )}

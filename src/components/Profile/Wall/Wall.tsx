@@ -10,7 +10,7 @@ import s from './Wall.module.scss'
 
 import Post from './Post/Post'
 import NoElement from '../../common/NoElement/NoElement'
-import useLocalStorage from '../../common/hooks/useLocalStorage'
+import useLocalStorage from '../../../hooks/useLocalStorage'
 
 import {
   getPosts,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { PostType } from '../../../types/types'
+import { PostType } from '../types/types'
 
 const useLocalStorage = (
   key: string,

@@ -2,8 +2,8 @@ import React from 'react'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 
 import FieldWithCounter from '../../../common/FieldWithCounter/FieldWithCounter'
-import RenderTextField from '../../../common/ElementCustom/RenderTextField'
-import RenderCheckbox from '../../../common/ElementCustom/RenderCheckbox'
+import RenderTextField from '../../../common/RenderFormElement/RenderTextField'
+import RenderCheckbox from '../../../common/RenderFormElement/RenderCheckbox'
 import s from './InfoDataForm.module.scss'
 
 import { ProfileType } from '../../../../types/types'

@@ -12,7 +12,7 @@ import {
 
 import Wall from './Wall/Wall'
 import InfoContainer from './Info/InfoContainer'
-import withAuthRedirect from '../common/hoc/withAuthRedirect'
+import withAuthRedirect from '../../hoc/withAuthRedirect'
 import { getEditModeProfile } from '../../redux/selectors/profile-selectors'
 
 type MapStatePropsType = {

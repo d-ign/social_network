@@ -10,7 +10,7 @@ import s from './Header.module.scss'
 import logo from '../../img/icons/logo.svg'
 
 import Avatar from '../common/Avatar/Avatar'
-import useLocalStorage from '../common/hooks/useLocalStorage'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 import {
   getAuthorizedUserID,

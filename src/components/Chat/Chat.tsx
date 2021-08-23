@@ -6,7 +6,7 @@ import SendIcon from '@material-ui/icons/Send'
 import { TextField } from '@material-ui/core'
 import s from './Chat.module.scss'
 
-import withAuthRedirect from '../common/hoc/withAuthRedirect'
+import withAuthRedirect from '../../hoc/withAuthRedirect'
 import Members from './Members/Members'
 import Messages from './Messages/Messages'
 

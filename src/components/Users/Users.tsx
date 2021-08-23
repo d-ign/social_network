@@ -10,7 +10,7 @@ import s from './Users.module.scss'
 import User from '../common/User/User'
 import Search from '../common/Search/Search'
 import NoElement from '../common/NoElement/NoElement'
-import useQueryUrl from '../common/hooks/useQueryUrl'
+import useQueryUrl from '../../hooks/useQueryUrl'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
 import {
