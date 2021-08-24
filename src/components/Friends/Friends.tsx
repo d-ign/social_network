@@ -40,11 +40,8 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     const dispatch = useDispatch()
 
     const maxPageCount = Math.ceil(totalUsersCount / pageSize)
+    const [pageNumber, setPageNumber] = useState(1)
 
-    // eslint-disable-next-line prefer-const
-    let [pageNumber, setPageNumber] = useState(1)
-
-    // for Search
     const searchUsers = (term: string) => {
       setPageNumber(1)
       dispatch(getUsers(1, term, true))
@@ -54,14 +51,18 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
       dispatch(actions.clearUsers())
       setPageNumber(1)
       dispatch(getUsers(1, '', true))
+      setIsFetchingUsers(true)
     }, [pathname, dispatch])
 
+    // динамическая пагинация
     const lastElement = React.useRef<HTMLDivElement>(null)
-    const [isFetchingUsers, setIsFetchingUsers] = useState(true)
+    const [isFetchingUsers, setIsFetchingUsers] = useState(false)
 
+    // ? при первом срабатывании (при запросе 2-ой страницы) скролл
+    // проваливается ниже страницы; при последующих запросах такого нет
     useObserver(lastElement, maxPageCount > pageNumber, isFetching, () => {
       setIsFetchingUsers(true)
-      setPageNumber(++pageNumber)
+      setPageNumber(() => pageNumber + 1)
       dispatch(getUsers(pageNumber, '', true))
     })
 
