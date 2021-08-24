@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import s from '../Users/Users.module.scss'
+import s from './Friends.module.scss'
 
 import User from '../common/User/User'
 import Search from '../common/Search/Search'
