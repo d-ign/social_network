@@ -1,12 +1,12 @@
 import React from 'react'
 import { ProfileType, СontactsType } from '../../../../types/types'
-import s from './InfoData.module.scss'
+import s from './ProfileData.module.scss'
 
 type PropsType = {
   profile: ProfileType
 }
 
-const InfoData: React.FC<PropsType> = ({ profile }) => (
+const ProfileData: React.FC<PropsType> = ({ profile }) => (
   <div className={s.containerForm}>
     <div className={s.wrap}>
       {profile.aboutMe && (
@@ -76,4 +76,4 @@ const Contact: React.FC<ContactPropsType> = React.memo(
   )
 )
 
-export default InfoData
+export default ProfileData

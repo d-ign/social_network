@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, TextField } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
 import cn from 'classnames'
-import s from './Status.module.scss'
+import s from './ProfileStatus.module.scss'
 import stylesField from '../../../common/FieldWithCounter/FieldWithCounter.module.scss'
 import useStyles from './stylesCustomMaterialUI'
 import { getTheme } from '../../../../redux/selectors/app-selectors'
@@ -16,7 +16,7 @@ type PropsType = {
   isOwner: boolean
 }
 
-const Status = ({ isOwner }: PropsType) => {
+const ProfileStatus = ({ isOwner }: PropsType) => {
   const classes = useStyles()
 
   const stylesSaveAndButton: React.CSSProperties = {
@@ -148,4 +148,4 @@ const Status = ({ isOwner }: PropsType) => {
   )
 }
 
-export default Status
+export default ProfileStatus

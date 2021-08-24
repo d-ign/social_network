@@ -6,9 +6,9 @@ import PostAddIcon from '@material-ui/icons/PostAdd'
 import { IconButton, TextField } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import cn from 'classnames'
-import s from './Wall.module.scss'
+import s from './ProfileWall.module.scss'
 
-import Post from './Post/Post'
+import ProfilePost from './ProfilePost/ProfilePost'
 import NoElement from '../../common/NoElement/NoElement'
 import useLocalStorage from '../../../hooks/useLocalStorage'
 
@@ -22,7 +22,7 @@ import { getTheme } from '../../../redux/selectors/app-selectors'
 
 import { PostType } from '../../../types/types'
 
-const Wall: React.FC = () => {
+const ProfileWall: React.FC = () => {
   const posts = useSelector(getPosts)
   const postsForDelete = useSelector(getPostsForDelete)
   const profile = useSelector(getProfile)
@@ -65,7 +65,7 @@ const Wall: React.FC = () => {
   }
 
   const postsElements = posts.map((p: PostType) => (
-    <Post
+    <ProfilePost
       key={p.idPost}
       profile={profile}
       post={{
@@ -174,4 +174,4 @@ const Form: React.FC<OwnPropsType> = ({ theme }) => {
   )
 }
 
-export default Wall
+export default ProfileWall

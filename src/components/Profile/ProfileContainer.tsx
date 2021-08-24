@@ -3,17 +3,17 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
+import ProfileWall from './ProfileWall/ProfileWall'
+import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer'
+import withAuthRedirect from '../../hoc/withAuthRedirect'
+
+import { getEditModeProfile } from '../../redux/selectors/profile-selectors'
 import { AppStateType } from '../../redux/redux-store'
 import {
   getUserProfile,
   getStatus,
   actions,
 } from '../../redux/reducers/profile-reducer'
-
-import Wall from './Wall/Wall'
-import InfoContainer from './Info/InfoContainer'
-import withAuthRedirect from '../../hoc/withAuthRedirect'
-import { getEditModeProfile } from '../../redux/selectors/profile-selectors'
 
 type MapStatePropsType = {
   authorizedUserID: number | null
@@ -77,8 +77,8 @@ class ProfileContainer extends React.PureComponent<PropsType> {
 
     return (
       <>
-        <InfoContainer isOwner={isOwner} />
-        {!isEditModeProfile && isOwner && <Wall />}
+        <ProfileInfoContainer isOwner={isOwner} />
+        {!isEditModeProfile && isOwner && <ProfileWall />}
       </>
     )
   }

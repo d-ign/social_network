@@ -7,15 +7,15 @@ import Button from '@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit'
 import SaveIcon from '@material-ui/icons/Save'
 import CloseIcon from '@material-ui/icons/Close'
-import s from './InfoContainer.module.scss'
+import s from './ProfileInfoContainer.module.scss'
 import camera from '../../../img/icons/camera.svg'
 
-import Preloader from '../../common/Preloader/Preloader'
-import Status from './Status/Status'
 import Avatar from '../../common/Avatar/Avatar'
-import InfoDataForm from './InfoDataForm/InfoDataForm'
-import InfoData from './InfoData/InfoData'
+import Preloader from '../../common/Preloader/Preloader'
 import ProfilePlug from './ProfilePlug/ProfilePlug'
+import ProfileStatus from './ProfileStatus/ProfileStatus'
+import ProfileData from './ProfileData/ProfileData'
+import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
 
 import { getTheme } from '../../../redux/selectors/app-selectors'
 import {
@@ -45,7 +45,7 @@ type PropsType = {
   isOwner: boolean
 }
 
-const InfoContainer: React.FC<PropsType> = ({ isOwner }) => {
+const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   const stylesSaveAndCancelButton: React.CSSProperties = {
     fontSize: 12,
     color: 'white',
@@ -174,17 +174,17 @@ const InfoContainer: React.FC<PropsType> = ({ isOwner }) => {
           </div>
         )}
 
-        {!isEditModeProfile && <Status isOwner={isOwner} />}
+        {!isEditModeProfile && <ProfileStatus isOwner={isOwner} />}
 
         {isEditModeProfile ? (
-          <InfoDataForm
+          <ProfileDataForm
             initialValues={profile}
             onSubmit={onSubmitProfile}
             errorProfileContacts={errorProfileContacts}
             setIsEditInputProfileForm={setIsEditInputProfileForm}
           />
         ) : (
-          <InfoData profile={profile} />
+          <ProfileData profile={profile} />
         )}
       </div>
       {/* при переходе на старницу профиля скрол обнулится */}
@@ -200,4 +200,4 @@ const ShowSuccessSavePortal = ({ children }: { children: React.ReactNode }) => {
   return createPortal(children, el)
 }
 
-export default InfoContainer
+export default ProfileInfoContainer

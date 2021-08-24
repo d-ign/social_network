@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CloseIcon from '@material-ui/icons/Close'
 import unknown from '../../../../img/no_photo.svg'
-import s from './Post.module.scss'
+import s from './ProfilePost.module.scss'
 
 import Avatar from '../../../common/Avatar/Avatar'
 import Name from '../../../common/Name/Name'
@@ -27,7 +27,7 @@ type OwnPropsType = {
   deleteIdPostBeforeDeleting: (idPost: number) => void
 }
 
-const Post: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
+const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
   (props) => {
     const {
       post: { idPost, message, likesCount, isLikeClick },
@@ -150,4 +150,4 @@ const Post: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
   }
 )
 
-export default Post
+export default ProfilePost

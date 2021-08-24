@@ -4,7 +4,7 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import FieldWithCounter from '../../../common/FieldWithCounter/FieldWithCounter'
 import RenderTextField from '../../../common/RenderFormElement/RenderTextField'
 import RenderCheckbox from '../../../common/RenderFormElement/RenderCheckbox'
-import s from './InfoDataForm.module.scss'
+import s from './ProfileDataForm.module.scss'
 
 import { ProfileType } from '../../../../types/types'
 
@@ -14,7 +14,7 @@ type OwnPropsType = {
   initialValues: ProfileType
 }
 
-const DataForm: React.FC<
+const Form: React.FC<
   InjectedFormProps<ProfileType, OwnPropsType> & OwnPropsType
 > = (props) => {
   const {
@@ -132,8 +132,8 @@ const DataForm: React.FC<
   )
 }
 
-const InfoDataForm = reduxForm<ProfileType, OwnPropsType>({
+const ProfileDataForm = reduxForm<ProfileType, OwnPropsType>({
   form: 'editProfile',
-})(DataForm)
+})(Form)
 
-export default InfoDataForm
+export default ProfileDataForm
