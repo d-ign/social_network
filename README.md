@@ -13,14 +13,17 @@
 
 Разработка стартовала с <a href="https://github.com/facebook/create-react-app">Create React App</a>. Все компоненты находятся в `./src`.
 
-Некоторое, что используется в проекте:
+## Основные используемые технологии:
 
-- React Hooks
+- React
+    * Hooks (в том числе свои),
+    * React.lazy,
+    * Portal (в компоненте `ProfileInfoContainer`),
+    * Render props (`ProfileDataForm`)
+- Redux
 - Typescript
-- <a href="https://github.com/axios/axios">axios</a> для запросов на сервер
-- <a href="https://github.com/sass/sass">SCSS</a>
-- <a href="https://github.com/mui-org/material-ui">Material UI</a> для стилизации элементов форм
-- <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный API
+- <a href="https://github.com/sass/sass">SCSS</a> и <a href="https://github.com/mui-org/material-ui">Material UI</a> (для стилизации элементов форм)
+- <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный REST API с помощью <a href="https://github.com/axios/axios">axios</a>
 
 # Что реализовано
 ## В целом в проекте:
@@ -87,8 +90,10 @@
 Вы можете запустить этот проект локально, просто сделайте:
 ```
 git clone git@github.com:ignatov-ru/social_network.git
+```
 (или создайте форк, а затем клонируйте его вместо клона моего проекта уже из своего репозитория)
 
+```
 cd social_network
 npm install
 npm start
