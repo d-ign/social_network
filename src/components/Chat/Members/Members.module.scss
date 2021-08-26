@@ -71,7 +71,9 @@
 }
 
 .wrapName {
+  overflow: hidden;
   padding-left: 10px;
+  text-overflow: ellipsis;
 }
 
 .showAllWrap {
