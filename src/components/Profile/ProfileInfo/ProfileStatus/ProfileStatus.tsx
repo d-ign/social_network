@@ -85,7 +85,7 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
   useOutsideAlerter(statusRef)
 
   return (
-    <div ref={statusRef} className={s.container}>
+    <div ref={statusRef} className={s.container} title='Change status'>
       {editMode && (
         <div className={s.wrap}>
           <TextField

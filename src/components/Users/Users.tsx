@@ -116,10 +116,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
               [s.hiddenButtonLoadMore]: !isShowMoreUsersButton,
             })}
           >
-            <IconButton
-              aria-label='load more users'
-              onClick={handleShowMoreUsers}
-            >
+            <IconButton title='Load more users' onClick={handleShowMoreUsers}>
               <ExpandMoreIcon />
             </IconButton>
           </div>

@@ -108,7 +108,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
       <div className={s.columnLeft}>
         <Avatar photo={profile.photos.large} size='extra-large'>
           {isOwner && !isEditModeProfile && (
-            <div className={s.camera}>
+            <div className={s.camera} title='Change avatar'>
               <label htmlFor='file_out'>
                 <div className={s.wrapImg}>
                   <img src={camera} alt='icon' />

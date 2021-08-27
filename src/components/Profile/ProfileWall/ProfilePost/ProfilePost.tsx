@@ -104,6 +104,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
                 }
               )}
               onClick={handleClickOnAvatar}
+              title='Select post to delete'
             >
               <Avatar
                 photo={profile?.photos.large || unknown}
@@ -121,7 +122,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
           <div className={s.columnRight}>
             <div hidden={isHiddenAllX}>
               <IconButton
-                aria-label='deletePost'
+                title='Delete post'
                 size='small'
                 onClick={handleDeletePost}
               >
@@ -133,11 +134,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
               <span className={s.likesCount}>
                 {likesCount > 0 ? `+${likesCount}` : ''}
               </span>
-              <IconButton
-                aria-label='like'
-                size='small'
-                onClick={handleSetLike}
-              >
+              <IconButton title='Like' size='small' onClick={handleSetLike}>
                 <ThumbUpAltIcon
                   className={cn(s.like, { [s.noLike]: !isLikeClick })}
                 />

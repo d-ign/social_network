@@ -88,9 +88,8 @@ const Header: React.FC = () => {
             </span>
             <span hidden className={s.buttonLogoutMobile}>
               <IconButton
+                title='Logout of profile'
                 onClick={() => dispatch(logoutThunk())}
-                aria-label='logout'
-                type='submit'
               >
                 <ExitToAppIcon />
               </IconButton>
@@ -142,6 +141,7 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
           aria-label='changeTheme'
           type='submit'
           style={{ margin: '0 12px' }}
+          title='Change theme'
         >
           <InvertColorsIcon
             color={theme === 'theme1' ? 'primary' : 'secondary'}

@@ -165,6 +165,7 @@ const Form: React.FC<OwnPropsType> = ({ theme }) => {
             aria-label='addPost'
             onClick={handleAddPost}
             style={{ marginLeft: 5 }}
+            title='Add post'
           >
             <PostAddIcon color='primary' />
           </IconButton>

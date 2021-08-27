@@ -76,7 +76,7 @@ const AddMessageForm: React.FC<{ theme: string }> = ({ theme }) => {
           value={message}
         />
         <IconButton
-          aria-label='sendMessage'
+          title='Send message'
           color={theme === 'theme1' ? 'primary' : 'secondary'}
           style={{ margin: '5px' }}
           onClick={handleSendMessage}
