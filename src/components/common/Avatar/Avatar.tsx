@@ -52,7 +52,11 @@ const Avatar: React.FC<PropsType & OwnPropsType> = ({
   )
 }
 
-const AvatarBody: React.FC<PropsType> = ({ photo, size = 'medium' }) => {
+const AvatarBody: React.FC<PropsType> = ({
+  photo,
+  size = 'medium',
+  children,
+}) => {
   return (
     <div className={s.avatarWrap}>
       <div
@@ -66,6 +70,7 @@ const AvatarBody: React.FC<PropsType> = ({ photo, size = 'medium' }) => {
       >
         <img src={photo || unknown} alt='avatar' />
       </div>
+      {children}
     </div>
   )
 }

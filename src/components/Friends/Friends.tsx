@@ -40,7 +40,8 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     const dispatch = useDispatch()
 
     const maxPageCount = Math.ceil(totalUsersCount / pageSize)
-    const [pageNumber, setPageNumber] = useState(1)
+    // eslint-disable-next-line prefer-const
+    let [pageNumber, setPageNumber] = useState(1)
 
     const searchUsers = (term: string) => {
       setPageNumber(1)
@@ -62,7 +63,7 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     // проваливается ниже страницы; при последующих запросах такого нет
     useObserver(lastElement, maxPageCount > pageNumber, isFetching, () => {
       setIsFetchingUsers(true)
-      setPageNumber(() => pageNumber + 1)
+      setPageNumber(++pageNumber)
       dispatch(getUsers(pageNumber, '', true))
     })
 

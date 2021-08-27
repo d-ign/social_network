@@ -12,13 +12,15 @@ type PropsType = {
 
 const Name: React.FC<PropsType> = ({ id, name, size = 'normal' }) => {
   return (
-    <NavLink
-      className={cn(s.name, { [s.name__small]: size === 'small' })}
-      to={`/profile/${id || '/login'}`}
-      replace
-    >
-      {name || 'no name'}
-    </NavLink>
+    <span>
+      <NavLink
+        className={cn(s.name, { [s.name__small]: size === 'small' })}
+        to={`/profile/${id || '/login'}`}
+        replace
+      >
+        {name || 'no name'}
+      </NavLink>
+    </span>
   )
 }
 
