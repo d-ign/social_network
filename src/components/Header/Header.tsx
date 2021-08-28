@@ -22,6 +22,8 @@ import { getTheme } from '../../redux/selectors/app-selectors'
 import { logoutThunk } from '../../redux/reducers/auth-reducer'
 import { actions } from '../../redux/reducers/app-reducer'
 
+import { ThemeType } from '../../types/types'
+
 const Header: React.FC = () => {
   const isAuth = useSelector(getIsAuth)
   const login = useSelector(getLogin)
@@ -30,7 +32,7 @@ const Header: React.FC = () => {
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
-  const [themeLocal, setThemeLocal] = useState(theme)
+  const [themeLocal, setThemeLocal] = useState(theme as ThemeType)
 
   useEffect(() => {
     const colors = {
@@ -108,9 +110,9 @@ const Header: React.FC = () => {
 }
 
 type PropsType = {
-  theme: string
-  themeLocal: string
-  setThemeLocal: Dispatch<SetStateAction<string>>
+  theme: ThemeType
+  themeLocal: ThemeType
+  setThemeLocal: Dispatch<SetStateAction<ThemeType>>
 }
 
 const ButtonChangeTheme: React.FC<PropsType> = (props) => {
@@ -139,7 +141,6 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
         <IconButton
           onClick={handleToggleTheme}
           aria-label='changeTheme'
-          type='submit'
           style={{ margin: '0 12px' }}
           title='Change theme'
         >

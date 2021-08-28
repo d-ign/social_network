@@ -1,11 +1,10 @@
 import { BaseThunkType, InferActionsTypes } from '../redux-store'
 import { getAuthUserDataThunk } from './auth-reducer'
-
-type themeType = 'theme1' | 'theme2'
+import { ThemeType } from '../../types/types'
 
 const initialState = {
   initialized: false,
-  theme: 'theme1',
+  theme: 'theme1' as ThemeType,
 }
 
 const appReducer = (
@@ -32,7 +31,7 @@ const appReducer = (
 
 export const actions = {
   initializedSuccess: () => ({ type: 'INITIALIZED_SUCCESS' } as const),
-  setTheme: (theme: themeType) => ({ type: 'TOGGLE_THEME', theme } as const),
+  setTheme: (theme: ThemeType) => ({ type: 'TOGGLE_THEME', theme } as const),
 }
 
 export const initializeAppThunk = (): ThunkType => async (dispatch) => {

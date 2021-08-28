@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
+import './styles/theme.css'
 import {
   createMuiTheme,
   ThemeProvider,
@@ -10,9 +11,8 @@ import {
 } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import AppContainer from './App'
 import store from './redux/redux-store'
-import './styles/theme.css'
+import AppContainer from './App'
 
 let theme = createMuiTheme({
   palette: {
