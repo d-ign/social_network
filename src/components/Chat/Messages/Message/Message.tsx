@@ -8,7 +8,7 @@ import Avatar from '../../../common/Avatar/Avatar'
 import Name from '../../../common/Name/Name'
 
 import { getAuthorizedUserID } from '../../../../redux/selectors/auth-selectors'
-import { ChatMessageAPIType } from '../../../../api/chat-api'
+import { ChatMessageAPIType } from '../../../../types/types'
 
 const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(
   ({ message: { userId, photo, userName, message } }) => {

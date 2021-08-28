@@ -10,8 +10,7 @@ import Avatar from '../../common/Avatar/Avatar'
 import Name from '../../common/Name/Name'
 
 import { getChatMembers } from '../../../redux/selectors/chat-selectors'
-import { ChatMessageType } from '../../../redux/reducers/chat-reducer'
-import { ChatMessageAPIType } from '../../../api/chat-api'
+import { ChatMessageAPIType, ChatMessageType } from '../../../types/types'
 import ButtonSort from './ButtonSort/BurronSort'
 
 const Members: React.FC<{ theme: string }> = ({ theme }) => {

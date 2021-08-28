@@ -8,7 +8,8 @@ import Message from './Message/Message'
 import NoElement from '../../common/NoElement/NoElement'
 
 import { getMessages } from '../../../redux/selectors/chat-selectors'
-import { ChatMessageType } from '../../../redux/reducers/chat-reducer'
+
+import { ChatMessageType } from '../../../types/types'
 
 const Messages: React.FC = () => {
   const messages = useSelector(getMessages)

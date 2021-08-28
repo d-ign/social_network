@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import IconButton from '@material-ui/core/IconButton'
@@ -11,15 +11,17 @@ import Members from './Members/Members'
 import Messages from './Messages/Messages'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
-import { getStatus } from '../../redux/selectors/chat-selectors'
+import { getStatusWS } from '../../redux/selectors/chat-selectors'
 import {
   sendMessage,
   startMessagesListening,
   stopMessagesListening,
 } from '../../redux/reducers/chat-reducer'
 
+import { StatusWSType } from '../../types/types'
+
 const Chat: React.FC = () => {
-  const status = useSelector(getStatus)
+  const status = useSelector(getStatusWS)
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
@@ -41,15 +43,19 @@ const Chat: React.FC = () => {
         <Messages />
         <Members theme={theme} />
       </div>
-      <AddMessageForm theme={theme} />
+      <AddMessageForm theme={theme} status={status} />
     </div>
   )
 }
 
-const AddMessageForm: React.FC<{ theme: string }> = ({ theme }) => {
-  const [message, setMessage] = React.useState('')
-  const status = useSelector(getStatus)
+type FormPropsType = {
+  theme: string
+  status: StatusWSType
+}
+
+const AddMessageForm: React.FC<FormPropsType> = ({ theme, status }) => {
   const dispatch = useDispatch()
+  const [message, setMessage] = useState('')
 
   const handleSendMessage = () => {
     if (!message.trim()) {

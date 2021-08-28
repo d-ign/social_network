@@ -1,16 +1,14 @@
+import { ChatMessageAPIType, StatusWSType } from '../types/types'
+
 let ws: WebSocket | null = null
 
-let subscribers = {
+const subscribers = {
   'messages-received': [] as Array<MessagesReceivedSubscriberType>,
   'status-changed': [] as Array<StatusChangedSubscriberType>,
 }
 
-type EventsCustomNamesType = 'messages-received' | 'status-changed'
-
-const notifySubscribersAboutStatus = (status: StatusType) => {
-  if (subscribers) {
-    subscribers['status-changed'].forEach((s) => s(status))
-  }
+const notifySubscribersAboutStatus = (status: StatusWSType) => {
+  subscribers['status-changed'].forEach((s) => s(status))
 }
 
 const reconnect = () => {
@@ -20,9 +18,7 @@ const reconnect = () => {
 
 const messageHandler = (e: MessageEvent) => {
   const newMessages = JSON.parse(e.data)
-  if (subscribers) {
-    subscribers['messages-received'].forEach((s) => s(newMessages))
-  }
+  subscribers['messages-received'].forEach((s) => s(newMessages))
 }
 
 const openHandler = () => {
@@ -42,7 +38,7 @@ const cleanUp = () => {
   ws?.removeEventListener('error', errorHandler)
 }
 
-function createChannel() {
+const createChannel = () => {
   cleanUp()
   ws?.close()
 
@@ -58,38 +54,25 @@ function createChannel() {
   ws.addEventListener('error', errorHandler)
 }
 
-export const chatAPI = {
+const chatAPI = {
   start() {
     createChannel()
   },
+
   stop() {
-    if (subscribers) {
-      subscribers['messages-received'] = []
-      subscribers['status-changed'] = []
-    }
+    subscribers['messages-received'] = []
+    subscribers['status-changed'] = []
+
     cleanUp()
     ws?.close()
   },
+
   subscribe(
     eventName: EventsCustomNamesType,
     callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType
   ) {
-    if (subscribers) {
-      // @ts-ignore
-      subscribers[eventName].push(callback)
-    }
-  },
-
-  // отписка (забираем возможность api уведомлять store)
-  unsubscribe(
-    eventName: EventsCustomNamesType,
-    callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType
-  ) {
-    if (subscribers) {
-      // @ts-ignore
-      subscribers = subscribers[eventName]?.filter((s) => s !== callback)
-      // оставляем всех, кроме callback
-    }
+    // @ts-ignore
+    subscribers[eventName].push(callback)
   },
 
   sendMessage(message: string) {
@@ -97,17 +80,12 @@ export const chatAPI = {
   },
 }
 
-export type ChatMessageAPIType = {
-  message: string
-  photo: string
-  userId: number
-  userName: string
-}
-
-export type StatusType = 'pending' | 'ready' | 'error'
+type EventsCustomNamesType = 'messages-received' | 'status-changed'
 
 type MessagesReceivedSubscriberType = (
   messages: Array<ChatMessageAPIType>
 ) => void
 
-type StatusChangedSubscriberType = (status: StatusType) => void
+type StatusChangedSubscriberType = (status: StatusWSType) => void
+
+export default chatAPI

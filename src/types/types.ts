@@ -39,11 +39,15 @@ export type UserType = {
   followed: boolean
 }
 
-export type DialogType = {
-  id: number
-  name: string
-}
-export type MessageType = {
-  id: number
+export type ChatMessageType = ChatMessageAPIType & { id: string }
+
+export type ChatMessageAPIType = {
   message: string
+  photo: string
+  userId: number
+  userName: string
 }
+
+export type StatusWSType = 'pending' | 'ready' | 'error'
+
+export type ThemeType = 'theme1' | 'theme2'
