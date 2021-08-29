@@ -58,7 +58,7 @@ const Header: React.FC = () => {
     <header className={s.header}>
       <NavLink className={s.logoAndTitle} to='/profile'>
         <img src={logo} alt='logo' />
-        <span className={s.headerTitleDesctop}>Social network</span>
+        <span className={s.headerTitleDesktop}>Social network</span>
         <span hidden className={s.headerTitleMobile}>
           SN
         </span>
@@ -78,7 +78,7 @@ const Header: React.FC = () => {
               setThemeLocal={setThemeLocal}
             />
 
-            <span className={s.buttonLogoutDesctop}>
+            <span className={s.buttonLogoutDesktop}>
               <Button
                 onClick={() => dispatch(logoutThunk())}
                 variant='outlined'
@@ -126,7 +126,7 @@ const ButtonChangeTheme: React.FC<PropsType> = (props) => {
 
   return (
     <>
-      <span className={s.buttonThemeDesctop}>
+      <span className={s.buttonThemeDesktop}>
         <Button
           color={theme === 'theme1' ? 'primary' : 'secondary'}
           style={{ padding: '6px 12px', marginRight: '12px' }}
