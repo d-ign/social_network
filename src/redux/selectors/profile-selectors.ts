@@ -13,7 +13,7 @@ export const getErrorProfileContacts = (state: AppStateType) =>
 export const getPosts = (state: AppStateType) => state.profilePage.posts
 
 export const getPostsForDelete = (state: AppStateType) =>
-  state.profilePage.postsForDelete
+  new Set(state.profilePage.postsForDelete)
 
 export const getEditModeProfile = (state: AppStateType) =>
   state.profilePage.isEditModeProfile

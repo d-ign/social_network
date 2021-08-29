@@ -14,22 +14,12 @@
   background-color: $color-greyTransparent;
 }
 
-.postDelete {
-  animation: holeOut 1.2s cubic-bezier(0.31, 1.18, 0.66, 0.89);
+.postSelected {
+  background-color: var(--color-cyanDark);
 }
 
-@-webkit-keyframes holeOut {
-  0% {
-    opacity: 1;
-    transform: scale(1, 1) rotateY(0deg);
-    transform-origin: 50% 50%;
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(0, 0) rotateY(180deg);
-    transform-origin: 50% 50%;
-  }
+.postDelete {
+  animation: holeOut 1.2s cubic-bezier(0.31, 1.18, 0.66, 0.89);
 }
 
 @keyframes holeOut {
@@ -59,21 +49,45 @@
   cursor: pointer;
 }
 
-.avatar:hover:before,
-.postSelectedTheme1:before,
-.postSelectedTheme2:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  z-index: 10;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  background-image: url('../../../../img/icons/check.svg');
-  background-position: 50% 50%;
-  background-size: 32px;
-  background-repeat: no-repeat;
-  background-color: var(--color-darkBlueTransparent);
+// для устройств с мышью
+@media (hover: hover) and (pointer: fine) {
+  .avatar:hover:before,
+  .postSelectedTheme1:before,
+  .postSelectedTheme2:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../../img/icons/check.svg');
+    background-position: 50% 50%;
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-color: var(--color-darkBlueTransparent);
+  }
+}
+
+// для сенсорных экранов (исп. focus вместо hover),
+// focus - чтобы исчезала галочка после отмены выбора на сенсорном экране
+@media (hover: none) and (pointer: coarse) {
+  .avatar:focus:before,
+  .postSelectedTheme1:before,
+  .postSelectedTheme2:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../../img/icons/check.svg');
+    background-position: 50% 50%;
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-color: var(--color-darkBlueTransparent);
+  }
 }
 
 .postSelectedTheme1:before {
@@ -94,11 +108,16 @@
 
 .message {
   overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .columnRight {
   position: relative;
   margin: 0 auto;
+  width: 35px;
+}
+
+.plugColumnRight {
   width: 35px;
 }
 

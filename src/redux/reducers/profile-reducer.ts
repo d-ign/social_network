@@ -7,10 +7,9 @@ const initialState = {
   posts: [
     {
       idPost: 1,
-      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Facilis ut quo maiores neque laboriosam. Ratione adipisci
-        reiciendis autem placeat alias necessitatibus pariatur saepe
-        ipsum, temporibus animi, facilis minus doloribus ducimus.`,
+      message:
+        // eslint-disable-next-line max-len
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis ut quo maiores neque laboriosam. Ratione adipisci reiciendis autem placeat alias necessitatibus pariatur saepe ipsum, temporibus animi, facilis minus doloribus ducimus',
       likesCount: 1,
       isLikeClick: true,
     },
@@ -22,9 +21,9 @@ const initialState = {
     },
     {
       idPost: 3,
-      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Facilis ut quo maiores neque laboriosam. Ratione adipisci
-        reiciendis autem placeat alias necessitatibus...`,
+      message:
+        // eslint-disable-next-line max-len
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis ut quo maiores neque laboriosam. Ratione adipisci reiciendis autem placeat alias necessitatibus...',
       likesCount: 0,
       isLikeClick: false,
     },
@@ -73,13 +72,13 @@ const profileReducer = (
         posts: [newPost, ...state.posts],
       }
     }
-    case 'SET_POST_FOR_DELETE': {
+    case 'SET_POST_FOR_DELETING': {
       return {
         ...state,
         postsForDelete: [...state.postsForDelete, action.idPost],
       }
     }
-    case 'DELETE_POST_FOR_DELETE': {
+    case 'DELETE_POST_FOR_DELETING': {
       return {
         ...state,
         postsForDelete: [
@@ -87,7 +86,7 @@ const profileReducer = (
         ],
       }
     }
-    case 'CLEAR_POSTS_FOR_DELETE': {
+    case 'CLEAR_POSTS_FOR_DELETING': {
       return {
         ...state,
         postsForDelete: [],
@@ -171,10 +170,10 @@ export const actions = {
   deletePost: (idPost: number) => ({ type: 'DELETE_POST', idPost } as const),
   // удаление нескольких постов
   setPostForDeleting: (idPost: number) =>
-    ({ type: 'SET_POST_FOR_DELETE', idPost } as const),
+    ({ type: 'SET_POST_FOR_DELETING', idPost } as const),
   deletePostForDeleting: (idPost: number) =>
-    ({ type: 'DELETE_POST_FOR_DELETE', idPost } as const),
-  clearPostsForDelete: () => ({ type: 'CLEAR_POSTS_FOR_DELETE' } as const),
+    ({ type: 'DELETE_POST_FOR_DELETING', idPost } as const),
+  clearPostsForDeleting: () => ({ type: 'CLEAR_POSTS_FOR_DELETING' } as const),
   // лайк
   setLikeOnPost: (idPost: number) =>
     ({ type: 'SET_LIKE_ON_POST', idPost } as const),

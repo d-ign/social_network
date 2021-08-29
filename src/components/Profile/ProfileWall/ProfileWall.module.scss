@@ -9,11 +9,46 @@
   max-width: 620px;
 }
 
-.basket {
-  display: block;
+.wrapButtons {
   margin: 0 auto;
+  border-radius: 10px;
+  max-width: 500px;
+  background-color: var(--color-cyanDark);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 61px;
-  max-width: 150px;
+}
+
+.buttonDesktop {
+  @media (max-width: 650px) {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+
+  @media (max-width: 460px) {
+    display: none;
+  }
+}
+
+.buttonMobile {
+  @media (max-width: 640px) {
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+
+  @media (max-width: 460px) {
+    display: block;
+  }
 }
 
 .form {
@@ -27,33 +62,5 @@
 
   @media (max-width: 600px) {
     min-height: 0;
-  }
-}
-
-.buttonBig {
-  @media (max-width: 700px) {
-    display: none;
-  }
-
-  @media (max-width: 600px) {
-    display: block;
-  }
-
-  @media (max-width: 500px) {
-    display: none;
-  }
-}
-
-.buttonIcon {
-  @media (max-width: 700px) {
-    display: block;
-  }
-
-  @media (max-width: 600px) {
-    display: none;
-  }
-
-  @media (max-width: 500px) {
-    display: block;
   }
 }

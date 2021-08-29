@@ -20,11 +20,12 @@ import { PostType, ProfileType } from '../../../../types/types'
 type OwnPropsType = {
   profile: ProfileType | null
   isShowAnimation: boolean
-  isHiddenAllX: boolean
-  setIsHiddenAllX: Dispatch<SetStateAction<boolean>>
+  isCancelDeletion: boolean
+  isSelectedAllPosts: boolean
+  isHiddenAllLikeAndX: boolean
+  setIsCancelDeletion: Dispatch<SetStateAction<boolean>>
+  setIsHiddenAllLikeAndX: Dispatch<SetStateAction<boolean>>
   handleDeleteOnePost: (idPost: number) => void
-  addIdPostBeforeDeleting: (idPost: number) => void
-  deleteIdPostBeforeDeleting: (idPost: number) => void
 }
 
 const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
@@ -32,12 +33,13 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
     const {
       post: { idPost, message, likesCount, isLikeClick },
       profile,
-      isHiddenAllX,
-      setIsHiddenAllX,
       isShowAnimation,
+      isCancelDeletion,
+      isSelectedAllPosts,
+      isHiddenAllLikeAndX,
       handleDeleteOnePost,
-      addIdPostBeforeDeleting,
-      deleteIdPostBeforeDeleting,
+      setIsCancelDeletion,
+      setIsHiddenAllLikeAndX,
     } = props
 
     const theme = useSelector(getTheme)
@@ -47,27 +49,40 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
     const [isClickDeletePost, setIsClickDeletePost] = useState(false)
     const [isSelectedPost, setIsSelectedPost] = useState(false)
 
-    const handleClickOnAvatar = () => {
-      if (!isSelectedPost) {
-        setIsHiddenAllX(true)
+    useEffect(() => {
+      if (isSelectedAllPosts || postsForDelete.has(idPost)) {
         setIsSelectedPost(true)
-        addIdPostBeforeDeleting(idPost)
       } else {
-        if (postsForDelete.length === 0) {
-          // не возвращаем все Х, если ещё выбраны какие-то посты
-          setIsHiddenAllX(false)
-        }
         setIsSelectedPost(false)
-        deleteIdPostBeforeDeleting(idPost)
       }
-    }
+    }, [isSelectedAllPosts, postsForDelete, idPost])
 
     useEffect(() => {
-      if (postsForDelete.length === 0) {
-        // возвращаем все Х, если больше нет выбранных постов
-        setIsHiddenAllX(false)
+      setIsSelectedPost(false)
+      setIsCancelDeletion(false)
+    }, [isCancelDeletion, setIsCancelDeletion])
+
+    useEffect(() => {
+      if (postsForDelete.size === 0) {
+        // возвращаем все Х и лайки, если больше нет выбранных постов
+        setIsHiddenAllLikeAndX(false)
       }
-    }, [postsForDelete, setIsHiddenAllX])
+    }, [postsForDelete, setIsHiddenAllLikeAndX])
+
+    const handleClickOnAvatar = () => {
+      if (!isSelectedPost) {
+        setIsHiddenAllLikeAndX(true)
+        setIsSelectedPost(true)
+        dispatch(actions.setPostForDeleting(idPost))
+      } else {
+        if (postsForDelete.size === 0) {
+          // не возвращаем все Х и лайки, если ещё выбраны какие-то посты
+          setIsHiddenAllLikeAndX(false)
+        }
+        setIsSelectedPost(false)
+        dispatch(actions.deletePostForDeleting(idPost))
+      }
+    }
 
     const handleDeletePost = () => {
       setIsClickDeletePost(true)
@@ -87,10 +102,10 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
         className={cn(s.postContainer, {
           [s.postDelete]:
             isClickDeletePost ||
-            (isShowAnimation && postsForDelete.includes(idPost)),
+            (isShowAnimation && postsForDelete.has(idPost)),
         })}
       >
-        <div className={s.post}>
+        <div className={cn(s.post, { [s.postSelected]: isSelectedPost })}>
           <div className={s.columnLeft}>
             <div
               aria-hidden='true'
@@ -119,8 +134,8 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
             <div className={s.message}>{message}</div>
           </div>
 
-          <div className={s.columnRight}>
-            <div hidden={isHiddenAllX}>
+          {!isHiddenAllLikeAndX ? (
+            <div className={s.columnRight}>
               <IconButton
                 title='Delete post'
                 size='small'
@@ -128,19 +143,21 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
               >
                 <CloseIcon />
               </IconButton>
-            </div>
 
-            <div className={s.wrapLike}>
-              <span className={s.likesCount}>
-                {likesCount > 0 ? `+${likesCount}` : ''}
-              </span>
-              <IconButton title='Like' size='small' onClick={handleSetLike}>
-                <ThumbUpAltIcon
-                  className={cn(s.like, { [s.noLike]: !isLikeClick })}
-                />
-              </IconButton>
+              <div className={s.wrapLike}>
+                <span className={s.likesCount}>
+                  {likesCount > 0 ? `+${likesCount}` : ''}
+                </span>
+                <IconButton title='Like' size='small' onClick={handleSetLike}>
+                  <ThumbUpAltIcon
+                    className={cn(s.like, { [s.noLike]: !isLikeClick })}
+                  />
+                </IconButton>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={s.plugColumnRight} />
+          )}
         </div>
       </div>
     )
