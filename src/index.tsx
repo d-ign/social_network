@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 
 import './styles/theme.css'
 import {
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
   responsiveFontSizes,
 } from '@material-ui/core/styles'
@@ -14,7 +14,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import store from './redux/redux-store'
 import AppContainer from './App'
 
-let theme = createMuiTheme({
+let theme = createTheme({
   palette: {
     type: 'dark',
     // цвет главных кнопок, активных ссылок в навигации,

@@ -130,7 +130,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
           </div>
 
           <div className={s.columnCenter}>
-            <Name id={profile?.userId} name={profile?.fullName} />
+            <Name id={profile?.userId} name={profile?.fullName} size='normal' />
             <div className={s.message}>{message}</div>
           </div>
 

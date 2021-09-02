@@ -5,20 +5,18 @@ import cn from 'classnames'
 import unknown from '../../../img/no_photo.svg'
 import s from './Avatar.module.scss'
 
-type SizeType = 'small' | 'medium' | 'large' | 'extra-large'
-
 type PropsType = {
   photo: string | null | undefined
-  size?: SizeType
+  size: 'small' | 'medium' | 'large' | 'extra-large'
 }
 
 type OwnPropsType = {
-  id?: number | null
+  id: number | null | undefined
 }
 
 const Avatar: React.FC<PropsType & OwnPropsType> = ({
   photo,
-  size = 'medium',
+  size,
   id,
   children,
 }) => {
@@ -52,11 +50,7 @@ const Avatar: React.FC<PropsType & OwnPropsType> = ({
   )
 }
 
-const AvatarBody: React.FC<PropsType> = ({
-  photo,
-  size = 'medium',
-  children,
-}) => {
+const AvatarBody: React.FC<PropsType> = ({ photo, size, children }) => {
   return (
     <div className={s.avatarWrap}>
       <div

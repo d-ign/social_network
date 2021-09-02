@@ -10,7 +10,7 @@ const FriendsContainer = () => {
 
   return (
     <>
-      {isFetching ? <Preloader /> : null}
+      {isFetching ? <Preloader display='default' /> : null}
       <Friends />
     </>
   )

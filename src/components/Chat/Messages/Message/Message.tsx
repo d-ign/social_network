@@ -28,7 +28,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(
         </div>
 
         <div className={s.nameAndMessage}>
-          <Name id={userId} name={userName} />
+          <Name id={userId} name={userName} size='normal' />
           <div className={s.message}>{message}</div>
         </div>
       </div>

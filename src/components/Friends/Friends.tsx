@@ -59,8 +59,6 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     const lastElement = React.useRef<HTMLDivElement>(null)
     const [isFetchingUsers, setIsFetchingUsers] = useState(false)
 
-    // ? при первом срабатывании (при запросе 2-ой страницы) скролл
-    // проваливается ниже страницы; при последующих запросах такого нет
     useObserver(lastElement, maxPageCount > pageNumber, isFetching, () => {
       setIsFetchingUsers(true)
       setPageNumber(++pageNumber)
@@ -79,7 +77,9 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
           pathname={pathname}
         />
 
-        {totalUsersCount === 0 && !isFetching && <NoElement elements='users' />}
+        {totalUsersCount === 0 && !isFetching && (
+          <NoElement elements='users' writeSomething={false} />
+        )}
 
         <div className={s.container}>
           <div className={s.wrapUsers}>

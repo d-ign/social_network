@@ -90,7 +90,9 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
           pathname={pathname}
         />
 
-        {totalUsersCount === 0 && !isFetching && <NoElement elements='users' />}
+        {totalUsersCount === 0 && !isFetching && (
+          <NoElement elements='users' writeSomething={false} />
+        )}
 
         <div className={s.container}>
           <div className={s.wrapUsers}>

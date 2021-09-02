@@ -9,10 +9,10 @@ import s from './Preloader.module.scss'
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
 type PropsType = {
-  display?: 'default' | 'block'
+  display: 'default' | 'block'
 }
 
-const Preloader: React.FC<PropsType> = ({ display = 'default' }) => {
+const Preloader: React.FC<PropsType> = ({ display }) => {
   const theme = useSelector(getTheme)
 
   return (

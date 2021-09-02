@@ -97,7 +97,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   if (!profile) {
     return (
       <>
-        <Preloader />
+        <Preloader display='default' />
         <ProfilePlug isOwner={isOwner} />
       </>
     )
@@ -106,7 +106,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   return (
     <div className={s.containerMain}>
       <div className={s.columnLeft}>
-        <Avatar photo={profile.photos.large} size='extra-large'>
+        <Avatar photo={profile.photos.large} size='extra-large' id={null}>
           {isOwner && !isEditModeProfile && (
             <div className={s.camera} title='Change avatar'>
               <label htmlFor='file_out'>

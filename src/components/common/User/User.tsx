@@ -48,10 +48,10 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
         <div className={s.nameAndStatus}>
           {name?.length > 19 ? (
             <Tooltip element={name}>
-              <Name id={id} name={name} />
+              <Name id={id} name={name} size='normal' />
             </Tooltip>
           ) : (
-            <Name id={id} name={name} />
+            <Name id={id} name={name} size='normal' />
           )}
 
           {status?.length > 19 ? (

@@ -3,13 +3,10 @@ import s from './NoElement.module.scss'
 
 type PropsType = {
   elements: string
-  writeSomething?: boolean
+  writeSomething: boolean
 }
 
-const NoElement: React.FC<PropsType> = ({
-  elements,
-  writeSomething = false,
-}) => {
+const NoElement: React.FC<PropsType> = ({ elements, writeSomething }) => {
   return (
     <div className={s.container}>
       <span>{`No ${elements} ${elements === 'users' ? 'found' : ''}`}</span>

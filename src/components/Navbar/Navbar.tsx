@@ -8,7 +8,6 @@ import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
 
 type PathParamsType = {
   pathname: string
-  profileUrl?: string
 }
 
 const Navbar: React.FC<RouteComponentProps<PathParamsType>> = ({
@@ -63,7 +62,10 @@ const Navbar: React.FC<RouteComponentProps<PathParamsType>> = ({
   )
 }
 
-const IconProfile: React.FC<PathParamsType> = ({ pathname, profileUrl }) => {
+const IconProfile: React.FC<PathParamsType & { profileUrl: string }> = ({
+  pathname,
+  profileUrl,
+}) => {
   return (
     <svg
       width='24'
