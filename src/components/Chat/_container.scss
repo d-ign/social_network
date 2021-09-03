@@ -23,6 +23,10 @@
     max-height: calc(100vh - 154px);
   }
 
+  @media (max-height: 290px) and (max-width: 1500px) {
+    max-height: calc(100vh - 105px);
+  }
+
   // width + height
   @media (max-height: 600px) and (max-width: 600px) {
     max-height: calc(100vh - 234px);
