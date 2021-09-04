@@ -9,6 +9,7 @@ import stylesField from '../../../common/FieldWithCounter/FieldWithCounter.modul
 import useStyles from './stylesCustomMaterialUI'
 import { getTheme } from '../../../../redux/selectors/app-selectors'
 
+import useOutsideAlerter from '../../../../hooks/useOutsideAlerter'
 import { getStatus } from '../../../../redux/selectors/profile-selectors'
 import { updateStatus } from '../../../../redux/reducers/profile-reducer'
 
@@ -64,25 +65,8 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
     setEditMode(false)
   }
 
-  function useOutsideAlerter(ref: React.RefObject<HTMLDivElement>) {
-    useEffect(() => {
-      function handleClickOutside(e: MouseEvent) {
-        if (
-          ref.current &&
-          !ref.current.contains(e.target as HTMLInputElement)
-        ) {
-          setEditMode(false)
-        }
-      }
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-      }
-    }, [ref])
-  }
-
   const statusRef = useRef<HTMLDivElement | null>(null)
-  useOutsideAlerter(statusRef)
+  useOutsideAlerter(statusRef, setEditMode)
 
   return (
     <div ref={statusRef} className={s.container} title='Change status'>
