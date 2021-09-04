@@ -69,12 +69,12 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className={s.wrap}>
+    <main className={s.wrap}>
       <div className={s.body}>
         <h1>Log in</h1>
         <LoginReduxForm onSubmit={onSubmit} captchaURL={captchaURL} />
       </div>
-    </div>
+    </main>
   )
 }
 

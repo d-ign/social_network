@@ -48,13 +48,13 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
       : a.userName.localeCompare(b.userName)
 
   return (
-    <div hidden={!chatMembers.length} className={s.container}>
+    <section hidden={!chatMembers.length} className={s.container}>
       <div
         aria-hidden='true'
         className={cn(s.titleWrap, { [s.titleWrapDeployed]: isShowMembers })}
         onClick={handleClickTitle}
       >
-        <div className={s.title}>Members</div>
+        <h1 className={s.title}>Members</h1>
         <Icon
           className={s.titleArrow}
           path={mdiChevronDown}
@@ -105,7 +105,7 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
           ''
         )}
       </div>
-    </div>
+    </section>
   )
 }
 

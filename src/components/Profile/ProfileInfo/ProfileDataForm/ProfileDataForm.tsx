@@ -104,7 +104,7 @@ const Form: React.FC<
         />
       </div>
 
-      <div className={s.wrap}>
+      <address className={s.wrap}>
         <div className={s.titleAllContacts}>Contacts:</div>
 
         {errorProfileContacts ? (
@@ -127,7 +127,7 @@ const Form: React.FC<
             />
           </div>
         ))}
-      </div>
+      </address>
     </form>
   )
 }

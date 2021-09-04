@@ -82,7 +82,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     }
 
     return (
-      <div className={s.wrapper}>
+      <main className={s.wrapper}>
         <Search
           searchUsers={searchUsers}
           totalUsersCount={totalUsersCount}
@@ -123,7 +123,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
             </IconButton>
           </div>
         </div>
-      </div>
+      </main>
     )
   }
 )

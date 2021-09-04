@@ -76,10 +76,10 @@ class ProfileContainer extends React.PureComponent<PropsType> {
     const isOwner = +match.params.userId === authorizedUserID
 
     return (
-      <>
+      <main>
         <ProfileInfoContainer isOwner={isOwner} />
         {!isEditModeProfile && isOwner && <ProfileWall />}
-      </>
+      </main>
     )
   }
 }

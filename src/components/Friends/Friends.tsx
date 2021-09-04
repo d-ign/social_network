@@ -70,7 +70,7 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
     }, [users.length])
 
     return (
-      <div className={s.wrapper}>
+      <main className={s.wrapper}>
         <Search
           searchUsers={searchUsers}
           totalUsersCount={totalUsersCount}
@@ -103,7 +103,7 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
           {isFetchingUsers && <Preloader display='block' />}
           {!isFetching && <div ref={lastElement} className={s.lastElement} />}
         </div>
-      </div>
+      </main>
     )
   }
 )

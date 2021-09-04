@@ -32,7 +32,7 @@ const Messages: React.FC = () => {
   }, [messages, isAutoScroll])
 
   return (
-    <div
+    <section
       className={cn(s.container, { [s.shadow]: messages.length })}
       onScroll={handleScroll}
     >
@@ -44,7 +44,7 @@ const Messages: React.FC = () => {
         <NoElement elements='messages' writeSomething />
       )}
       <div ref={lastElement} />
-    </div>
+    </section>
   )
 }
 

@@ -98,7 +98,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
     }
 
     return (
-      <div
+      <article
         className={cn(s.postContainer, {
           [s.postDelete]:
             isClickDeletePost ||
@@ -159,7 +159,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
             <div className={s.plugColumnRight} />
           )}
         </div>
-      </div>
+      </article>
     )
   }
 )

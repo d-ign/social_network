@@ -104,7 +104,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   }
 
   return (
-    <div className={s.containerMain}>
+    <section className={s.containerMain}>
       <div className={s.columnLeft}>
         <Avatar photo={profile.photos.large} size='extra-large' id={null}>
           {isOwner && !isEditModeProfile && (
@@ -189,7 +189,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
       </div>
       {/* при переходе на старницу профиля скрол обнулится */}
       <ScrollToTopOnMount />
-    </div>
+    </section>
   )
 }
 

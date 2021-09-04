@@ -33,7 +33,7 @@ const Chat: React.FC = () => {
   }, [dispatch])
 
   return (
-    <div className={s.chat}>
+    <main className={s.chat}>
       {/* error появляется, когда пропадает интернет, на несколько
       миллисекунд и сменяется другим статусом? */}
       {status === 'error' && (
@@ -44,7 +44,7 @@ const Chat: React.FC = () => {
         <Members theme={theme} />
       </div>
       <AddMessageForm theme={theme} status={status} />
-    </div>
+    </main>
   )
 }
 

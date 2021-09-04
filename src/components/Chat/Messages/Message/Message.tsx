@@ -15,7 +15,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(
     const myID = useSelector(getAuthorizedUserID)
 
     return (
-      <div
+      <article
         className={cn(s.messageContainer, {
           [s.myMessageContainer]: myID === userId,
         })}
@@ -31,7 +31,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(
           <Name id={userId} name={userName} size='normal' />
           <div className={s.message}>{message}</div>
         </div>
-      </div>
+      </article>
     )
   }
 )

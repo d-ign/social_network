@@ -121,7 +121,7 @@ const ProfileWall: React.FC = () => {
   ))
 
   return (
-    <div className={s.container}>
+    <section className={s.container}>
       <div className={s.wrapButtons}>
         <div
           hidden={postsForDelete.size === 0}
@@ -189,7 +189,7 @@ const ProfileWall: React.FC = () => {
 
         {!posts.length && <NoElement elements='posts' writeSomething />}
       </div>
-    </div>
+    </section>
   )
 }
 

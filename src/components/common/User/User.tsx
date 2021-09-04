@@ -39,7 +39,7 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
   const authorizedUserID = useSelector(getAuthorizedUserID)
 
   return (
-    <div className={s.user}>
+    <article className={s.user}>
       <div className={s.wrapAvatarNameAndStatus}>
         <div className={s.wrapAvatar}>
           <Avatar photo={photos.large} size='large' id={id} />
@@ -56,10 +56,14 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
 
           {status?.length > 19 ? (
             <Tooltip element={status}>
-              <div className={s.status}>{status}</div>
+              <div className={s.status}>
+                <i>{status}</i>
+              </div>
             </Tooltip>
           ) : (
-            <div className={s.status}>{status}</div>
+            <div className={s.status}>
+              <i>{status}</i>
+            </div>
           )}
         </div>
       </div>
@@ -90,7 +94,7 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
           </Button>
         </div>
       )}
-    </div>
+    </article>
   )
 }
 
