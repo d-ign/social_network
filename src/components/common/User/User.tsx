@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Button } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
 import s from './User.module.scss'
+
+import useResizeWindow from '../../../hooks/useResizeWindow'
 
 import Avatar from '../Avatar/Avatar'
 import Tooltip from './Tooltip/Tooltip'
@@ -38,6 +40,17 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
   const followingInProgress = useSelector(getFollowingInProgress)
   const authorizedUserID = useSelector(getAuthorizedUserID)
 
+  const [widthScreen, setWidthScreen] = useState(window.innerWidth)
+  const [symbolCount, setSymbolCount] = useState(19)
+
+  useResizeWindow(widthScreen, setWidthScreen)
+
+  useEffect(() => {
+    if (widthScreen <= 735) {
+      setSymbolCount(10)
+    }
+  }, [widthScreen])
+
   return (
     <article className={s.user}>
       <div className={s.wrapAvatarNameAndStatus}>
@@ -46,15 +59,19 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
         </div>
 
         <div className={s.nameAndStatus}>
-          {name?.length > 19 ? (
+          {name?.length > symbolCount ? (
             <Tooltip element={name}>
-              <Name id={id} name={name} size='normal' />
+              <div className={s.wrapName}>
+                <Name id={id} name={name} size='normal' />
+              </div>
             </Tooltip>
           ) : (
-            <Name id={id} name={name} size='normal' />
+            <div className={s.wrapName}>
+              <Name id={id} name={name} size='normal' />
+            </div>
           )}
 
-          {status?.length > 19 ? (
+          {status?.length > symbolCount ? (
             <Tooltip element={status}>
               <div className={s.status}>
                 <i>{status}</i>

@@ -48,6 +48,11 @@
   }
 }
 
+.wrapName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .status {
   overflow: hidden;
   white-space: nowrap;
