@@ -10,6 +10,8 @@ import s from './Users.module.scss'
 import User from '../common/User/User'
 import Search from '../common/Search/Search'
 import NoElement from '../common/NoElement/NoElement'
+import Preloader from '../common/Preloader/Preloader'
+
 import useQueryUrl from '../../hooks/useQueryUrl'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
@@ -79,6 +81,10 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
       if (maxPageCount === pageNumber) {
         setIsShowMoreUsersButton(false)
       }
+    }
+
+    if (isFetching) {
+      return <Preloader display='default' />
     }
 
     return (
