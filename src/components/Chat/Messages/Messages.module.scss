@@ -7,10 +7,6 @@
   @extend %containerTemplate;
 }
 
-.shadow {
-  box-shadow: 0 -26px 10px -20px rgba(0, 0, 0, 0.2) inset;
-}
-
 @media (max-width: 760px) {
   .container {
     order: 2;

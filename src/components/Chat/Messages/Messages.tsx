@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import cn from 'classnames'
 import s from './Messages.module.scss'
 
 import Message from './Message/Message'
@@ -32,10 +31,7 @@ const Messages: React.FC = () => {
   }, [messages, isAutoScroll])
 
   return (
-    <section
-      className={cn(s.container, { [s.shadow]: messages.length })}
-      onScroll={handleScroll}
-    >
+    <section className={s.container} onScroll={handleScroll}>
       {messages.length ? (
         messages
           .filter((m) => m.message.trim().length > 0)
