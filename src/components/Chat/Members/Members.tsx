@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import cn from 'classnames'
@@ -6,12 +6,14 @@ import Icon from '@mdi/react'
 import { mdiChevronDown } from '@mdi/js'
 import s from './Members.module.scss'
 
+import useResizeWindow from '../../../hooks/useResizeWindow'
+
+import ButtonSort from './ButtonSort/BurronSort'
 import Avatar from '../../common/Avatar/Avatar'
 import Name from '../../common/Name/Name'
 
 import { getChatMembers } from '../../../redux/selectors/chat-selectors'
 import { ChatMessageAPIType, ChatMessageType } from '../../../types/types'
-import ButtonSort from './ButtonSort/BurronSort'
 
 const Members: React.FC<{ theme: string }> = ({ theme }) => {
   const chatMembers = useSelector(getChatMembers)
@@ -21,7 +23,7 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
   const [isShowMembers, setIsShowMembers] = useState(false)
   const [widthScreen, setWidthScreen] = useState(window.innerWidth)
 
-  const itemsCount = isShowAll ? chatMembers.length : 2
+  useResizeWindow(widthScreen, setWidthScreen)
 
   const handleClickTitle = () => {
     if (widthScreen <= 760) {
@@ -33,14 +35,7 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
     }
   }
 
-  useEffect(() => {
-    const handleResizeWindow = () => setWidthScreen(window.innerWidth)
-
-    window.addEventListener('resize', handleResizeWindow)
-    return () => {
-      window.removeEventListener('resize', handleResizeWindow)
-    }
-  }, [widthScreen])
+  const itemsCount = isShowAll ? chatMembers.length : 2
 
   const sortMembers = (a: ChatMessageType, b: ChatMessageType): number =>
     isReverseSort
