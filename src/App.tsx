@@ -1,4 +1,4 @@
-import React, { useEffect, lazy } from 'react'
+import React, { useEffect, lazy, Suspense } from 'react'
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -8,8 +8,8 @@ import Header from './components/Header/Header'
 import Navbar from './components/Navbar/Navbar'
 import Login from './components/Login/Login'
 import ErrorBoundary from './components/Error/ErrorBoundary'
+import Preloader from './components/common/Preloader/Preloader'
 
-import withSuspense from './hoc/withSuspense'
 import withAuthRedirect from './hoc/withAuthRedirect'
 
 import s from './App.module.scss'
@@ -19,13 +19,13 @@ import { getAuthorizedUserID } from './redux/selectors/auth-selectors'
 import { initializeAppThunk } from './redux/reducers/app-reducer'
 
 const SuspendedChat = withAuthRedirect(
-  withSuspense(lazy(() => import('./components/Chat/Chat')))
+  lazy(() => import('./components/Chat/Chat'))
 )
 const SuspendedUsers = withAuthRedirect(
-  withSuspense(lazy(() => import('./components/Users/Users')))
+  lazy(() => import('./components/Users/Users'))
 )
 const SuspendedFriends = withAuthRedirect(
-  withSuspense(lazy(() => import('./components/Friends/Friends')))
+  lazy(() => import('./components/Friends/Friends'))
 )
 
 const App: React.FC = () => {
@@ -50,26 +50,28 @@ const App: React.FC = () => {
 
           <div className={s.appWrapperContent}>
             <ErrorBoundary>
-              <Switch>
-                <Redirect from='/profile/undefined' to='/' />
+              <Suspense fallback={<Preloader display='default' />}>
+                <Switch>
+                  <Redirect from='/profile/undefined' to='/' />
 
-                <Route
-                  path='/profile/:userId'
-                  render={() => <ProfileContainer />}
-                />
+                  <Route
+                    path='/profile/:userId'
+                    render={() => <ProfileContainer />}
+                  />
 
-                <Route path='/chat' render={() => <SuspendedChat />} />
+                  <Route path='/chat' render={() => <SuspendedChat />} />
 
-                <Route path='/friends' render={() => <SuspendedFriends />} />
+                  <Route path='/friends' render={() => <SuspendedFriends />} />
 
-                <Route path='/users' render={() => <SuspendedUsers />} />
+                  <Route path='/users' render={() => <SuspendedUsers />} />
 
-                <Route path='/login' render={() => <Login />} />
+                  <Route path='/login' render={() => <Login />} />
 
-                <Redirect exact from='/' to={`/profile/${userID}`} />
+                  <Redirect exact from='/' to={`/profile/${userID}`} />
 
-                <Redirect from='*' to='/' />
-              </Switch>
+                  <Redirect from='*' to='/' />
+                </Switch>
+              </Suspense>
             </ErrorBoundary>
           </div>
         </div>
