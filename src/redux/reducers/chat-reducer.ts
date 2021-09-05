@@ -30,6 +30,12 @@ const chatReducer = (
         // TODO v1() - вызов не чистой функции
       }
     }
+    case 'MESSAGES_CLEARED': {
+      return {
+        ...state,
+        messages: [],
+      }
+    }
     case 'STATUS_CHANGED': {
       return {
         ...state,
@@ -46,6 +52,10 @@ const actions = {
     ({
       type: 'MESSAGES_RECEIVED',
       payload: { messages },
+    } as const),
+  messagesCleared: () =>
+    ({
+      type: 'MESSAGES_CLEARED',
     } as const),
   statusChanged: (statusWS: StatusWSType) =>
     ({
@@ -65,8 +75,9 @@ export const startMessagesListening = (): ThunkType => async (dispatch) => {
   )
 }
 
-export const stopMessagesListening = (): ThunkType => async () => {
+export const stopMessagesListening = (): ThunkType => async (dispatch) => {
   chatAPI.stop()
+  dispatch(actions.messagesCleared())
 }
 
 export const sendMessage = (message: string): ThunkType => {
