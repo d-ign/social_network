@@ -69,10 +69,6 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = React.memo(
       setIsFetchingUsers(false)
     }, [users.length])
 
-    if (isFetching) {
-      return <Preloader display='default' />
-    }
-
     return (
       <main className={s.wrapper}>
         <Search

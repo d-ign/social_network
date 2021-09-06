@@ -22,10 +22,10 @@ const SuspendedChat = withAuthRedirect(
   lazy(() => import('./components/Chat/Chat'))
 )
 const SuspendedUsers = withAuthRedirect(
-  lazy(() => import('./components/Users/Users'))
+  lazy(() => import('./components/Users/UsersContainer'))
 )
 const SuspendedFriends = withAuthRedirect(
-  lazy(() => import('./components/Friends/Friends'))
+  lazy(() => import('./components/Friends/FriendsContainer'))
 )
 
 const App: React.FC = () => {
