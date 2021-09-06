@@ -6,12 +6,12 @@ import unknown from '../../../img/no_photo.svg'
 import s from './Avatar.module.scss'
 
 type PropsType = {
-  photo: string | null | undefined
+  photo: string | null
   size: 'small' | 'medium' | 'large' | 'extra-large'
 }
 
 type OwnPropsType = {
-  id: number | null | undefined
+  id: number | null
 }
 
 const Avatar: React.FC<PropsType & OwnPropsType> = ({

@@ -124,7 +124,7 @@ const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
               <Avatar
                 photo={profile?.photos.large || unknown}
                 size='medium'
-                id={profile?.userId}
+                id={profile?.userId || null}
               />
             </div>
           </div>
