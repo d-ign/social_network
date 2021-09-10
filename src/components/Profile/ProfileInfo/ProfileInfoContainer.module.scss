@@ -6,13 +6,13 @@
   top: 95px;
 }
 
-.wrapImg img {
+.wrapImgCamera img {
   margin: 0 auto;
   width: 24px;
   height: 24px;
 }
 
-.wrapImg {
+.wrapImgCamera {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +23,7 @@
   cursor: pointer;
 }
 
-.wrapImg:hover {
+.wrapImgCamera:hover {
   background-color: $color-grey;
   transition: background-color 0.4s;
 }
@@ -49,6 +49,10 @@
   @media (max-width: 600px) {
     margin-top: 15px;
   }
+}
+
+.avatarWrap {
+  position: relative;
 }
 
 .columnRight {

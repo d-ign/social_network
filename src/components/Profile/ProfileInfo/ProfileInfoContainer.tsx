@@ -106,12 +106,14 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   return (
     <section className={s.containerMain}>
       <div className={s.columnLeft}>
-        <Avatar photo={profile.photos.large} size='extra-large' id={null}>
+        <div className={s.avatarWrap}>
+          <Avatar photo={profile.photos.large} size='extra-large' id={null} />
+
           {isOwner && !isEditModeProfile && (
             <div className={s.camera} title='Change avatar'>
               <label htmlFor='file_out'>
-                <div className={s.wrapImg}>
-                  <img src={camera} alt='icon' />
+                <div className={s.wrapImgCamera}>
+                  <img src={camera} alt='change avatar' />
                 </div>
                 <input
                   id='file_out'
@@ -122,7 +124,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
               </label>
             </div>
           )}
-        </Avatar>
+        </div>
 
         {isOwner && !isEditModeProfile && (
           <Button

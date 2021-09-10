@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import cn from 'classnames'
@@ -14,12 +14,7 @@ type OwnPropsType = {
   id: number | null
 }
 
-const Avatar: React.FC<PropsType & OwnPropsType> = ({
-  photo,
-  size,
-  id,
-  children,
-}) => {
+const Avatar: React.FC<PropsType & OwnPropsType> = ({ photo, size, id }) => {
   // Проверка тестового аккаунта с id = 1079:
   // установленное фото на тестовый аккаунт удаляется через короткое время
   // на сервере и, если с этого аккаунта написано сообщение в чат, то
@@ -37,20 +32,16 @@ const Avatar: React.FC<PropsType & OwnPropsType> = ({
     <>
       {id ? (
         <NavLink to={`/profile/${id}`} replace>
-          <AvatarBody photo={photoTrue} size={size}>
-            {children}
-          </AvatarBody>
+          <AvatarBody photo={photoTrue} size={size} />
         </NavLink>
       ) : (
-        <AvatarBody photo={photoTrue} size={size}>
-          {children}
-        </AvatarBody>
+        <AvatarBody photo={photoTrue} size={size} />
       )}
     </>
   )
 }
 
-const AvatarBody: React.FC<PropsType> = ({ photo, size, children }) => {
+const AvatarBody: React.FC<PropsType> = ({ photo, size }) => {
   return (
     <div className={s.avatarWrap}>
       <div
@@ -64,9 +55,8 @@ const AvatarBody: React.FC<PropsType> = ({ photo, size, children }) => {
       >
         <img src={photo || unknown} alt='avatar' />
       </div>
-      {children}
     </div>
   )
 }
 
-export default Avatar
+export default memo(Avatar)
