@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useEffect, useState, memo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Button } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
@@ -14,21 +14,14 @@ import Name from '../Name/Name'
 
 import { getFollowingInProgress } from '../../../redux/selectors/users-selectors'
 import { getAuthorizedUserID } from '../../../redux/selectors/auth-selectors'
+import { follow, unfollow } from '../../../redux/reducers/users-reducer'
+import { getTheme } from '../../../redux/selectors/app-selectors'
 
 import { UserType } from '../../../types/types'
 
-type PropsType = {
-  theme: string
-  follow: (id: number) => void
-  unfollow: (id: number) => void
-}
-
-const User: React.FC<{ user: UserType } & PropsType> = (props) => {
+const User: React.FC<{ user: UserType }> = (props) => {
   const {
     user: { id, photos, name, status, followed },
-    theme,
-    unfollow,
-    follow,
   } = props
 
   const stylesFollowedButton: React.CSSProperties = {
@@ -39,6 +32,8 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
 
   const followingInProgress = useSelector(getFollowingInProgress)
   const authorizedUserID = useSelector(getAuthorizedUserID)
+  const theme = useSelector(getTheme)
+  const dispatch = useDispatch()
 
   const [widthScreen, setWidthScreen] = useState(window.innerWidth)
   const [symbolCount, setSymbolCount] = useState(19)
@@ -50,6 +45,13 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
       setSymbolCount(10)
     }
   }, [widthScreen])
+
+  const followHandler = useCallback(() => dispatch(follow(id)), [dispatch, id])
+
+  const unfollowHandler = useCallback(
+    () => dispatch(unfollow(id)),
+    [dispatch, id]
+  )
 
   return (
     <article className={s.user}>
@@ -88,7 +90,7 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
       {followed ? (
         <div className={s.button}>
           <Button
-            onClick={() => unfollow(id)}
+            onClick={unfollowHandler}
             disabled={followingInProgress.some((idUser) => idUser === id)}
             style={stylesFollowedButton}
             startIcon={<RemoveIcon />}
@@ -101,7 +103,7 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
       ) : (
         <div className={s.button}>
           <Button
-            onClick={() => follow(id)}
+            onClick={followHandler}
             disabled={followingInProgress.some((idUser) => idUser === id)}
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             style={stylesFollowedButton}
@@ -115,4 +117,4 @@ const User: React.FC<{ user: UserType } & PropsType> = (props) => {
   )
 }
 
-export default User
+export default memo(User)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, memo } from 'react'
 import debounce from 'lodash/debounce'
 
 import InputBase from '@material-ui/core/InputBase'
@@ -7,18 +7,22 @@ import useStyles from './stylesCustomMaterialUI'
 import s from './Search.module.scss'
 
 type PropsType = {
-  termOfUrl?: string
+  termOfUrl: string
   pathname: string
   totalUsersCount: number
   searchUsers: (term: string) => void
 }
 
-const Search: React.FC<PropsType> = React.memo((props) => {
-  const { pathname, termOfUrl = '', searchUsers, totalUsersCount } = props
+const Search: React.FC<PropsType> = (props) => {
+  const { pathname, termOfUrl, searchUsers, totalUsersCount } = props
   const classes = useStyles()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    searchUsers(e.target.value)
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      searchUsers(e.target.value)
+    },
+    [searchUsers]
+  )
 
   return (
     <div className={s.container}>
@@ -52,6 +56,6 @@ const Search: React.FC<PropsType> = React.memo((props) => {
       </div>
     </div>
   )
-})
+}
 
-export default Search
+export default memo(Search)

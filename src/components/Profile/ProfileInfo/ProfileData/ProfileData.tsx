@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { ProfileType, СontactsType } from '../../../../types/types'
 import s from './ProfileData.module.scss'
 
@@ -59,7 +59,7 @@ type ContactPropsType = {
   contactValue: string
 }
 
-const Contact: React.FC<ContactPropsType> = React.memo(
+const Contact: React.FC<ContactPropsType> = memo(
   ({ contactTitle, contactValue }) => (
     <>
       {contactValue && (

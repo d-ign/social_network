@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import cn from 'classnames'
@@ -24,4 +24,4 @@ const Name: React.FC<PropsType> = ({ id, name, size = 'normal' }) => {
   )
 }
 
-export default Name
+export default memo(Name)

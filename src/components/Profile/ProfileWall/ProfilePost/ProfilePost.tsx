@@ -1,4 +1,11 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import React, {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  memo,
+  useCallback,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import cn from 'classnames'
@@ -17,7 +24,8 @@ import { actions } from '../../../../redux/reducers/profile-reducer'
 
 import { PostType, ProfileType } from '../../../../types/types'
 
-type OwnPropsType = {
+type PropsType = {
+  post: PostType
   profile: ProfileType | null
   isShowAnimation: boolean
   isCancelDeletion: boolean
@@ -28,140 +36,137 @@ type OwnPropsType = {
   handleDeleteOnePost: (idPost: number) => void
 }
 
-const ProfilePost: React.FC<{ post: PostType } & OwnPropsType> = React.memo(
-  (props) => {
-    const {
-      post: { idPost, message, likesCount, isLikeClick },
-      profile,
-      isShowAnimation,
-      isCancelDeletion,
-      isSelectedAllPosts,
-      isHiddenAllLikeAndX,
-      handleDeleteOnePost,
-      setIsCancelDeletion,
-      setIsHiddenAllLikeAndX,
-    } = props
+const ProfilePost: React.FC<PropsType> = (props) => {
+  const {
+    post: { idPost, message, likesCount, isLikeClick },
+    profile,
+    isShowAnimation,
+    isCancelDeletion,
+    isSelectedAllPosts,
+    isHiddenAllLikeAndX,
+    handleDeleteOnePost,
+    setIsCancelDeletion,
+    setIsHiddenAllLikeAndX,
+  } = props
 
-    const theme = useSelector(getTheme)
-    const postsForDelete = useSelector(getPostsForDelete)
-    const dispatch = useDispatch()
+  const theme = useSelector(getTheme)
+  const postsForDelete = useSelector(getPostsForDelete)
+  const dispatch = useDispatch()
 
-    const [isClickDeletePost, setIsClickDeletePost] = useState(false)
-    const [isSelectedPost, setIsSelectedPost] = useState(false)
+  const [isClickDeletePost, setIsClickDeletePost] = useState(false)
+  const [isSelectedPost, setIsSelectedPost] = useState(false)
 
-    useEffect(() => {
-      if (isSelectedAllPosts || postsForDelete.has(idPost)) {
-        setIsSelectedPost(true)
-      } else {
-        setIsSelectedPost(false)
-      }
-    }, [isSelectedAllPosts, postsForDelete, idPost])
-
-    useEffect(() => {
+  useEffect(() => {
+    if (isSelectedAllPosts || postsForDelete.has(idPost)) {
+      setIsSelectedPost(true)
+    } else {
       setIsSelectedPost(false)
-      setIsCancelDeletion(false)
-    }, [isCancelDeletion, setIsCancelDeletion])
+    }
+  }, [isSelectedAllPosts, postsForDelete, idPost])
 
-    useEffect(() => {
+  useEffect(() => {
+    setIsSelectedPost(false)
+    setIsCancelDeletion(false)
+  }, [isCancelDeletion, setIsCancelDeletion])
+
+  useEffect(() => {
+    if (postsForDelete.size === 0) {
+      // возвращаем все Х и лайки, если больше нет выбранных постов
+      setIsHiddenAllLikeAndX(false)
+    }
+  }, [postsForDelete, setIsHiddenAllLikeAndX])
+
+  const handleClickOnAvatar = () => {
+    if (!isSelectedPost) {
+      setIsHiddenAllLikeAndX(true)
+      setIsSelectedPost(true)
+      dispatch(actions.setPostForDeleting(idPost))
+    } else {
       if (postsForDelete.size === 0) {
-        // возвращаем все Х и лайки, если больше нет выбранных постов
+        // не возвращаем все Х и лайки, если ещё выбраны какие-то посты
         setIsHiddenAllLikeAndX(false)
       }
-    }, [postsForDelete, setIsHiddenAllLikeAndX])
-
-    const handleClickOnAvatar = () => {
-      if (!isSelectedPost) {
-        setIsHiddenAllLikeAndX(true)
-        setIsSelectedPost(true)
-        dispatch(actions.setPostForDeleting(idPost))
-      } else {
-        if (postsForDelete.size === 0) {
-          // не возвращаем все Х и лайки, если ещё выбраны какие-то посты
-          setIsHiddenAllLikeAndX(false)
-        }
-        setIsSelectedPost(false)
-        dispatch(actions.deletePostForDeleting(idPost))
-      }
+      setIsSelectedPost(false)
+      dispatch(actions.deletePostForDeleting(idPost))
     }
-
-    const handleDeletePost = () => {
-      setIsClickDeletePost(true)
-      setTimeout(() => handleDeleteOnePost(idPost), 300)
-    }
-
-    const handleSetLike = () => {
-      if (!isLikeClick) {
-        dispatch(actions.setLikeOnPost(idPost))
-      } else {
-        dispatch(actions.deleteLikeOnPost(idPost))
-      }
-    }
-
-    return (
-      <article
-        className={cn(s.postContainer, {
-          [s.postDelete]:
-            isClickDeletePost ||
-            (isShowAnimation && postsForDelete.has(idPost)),
-        })}
-      >
-        <div className={cn(s.post, { [s.postSelected]: isSelectedPost })}>
-          <div className={s.columnLeft}>
-            <div
-              aria-hidden='true'
-              className={cn(
-                { [s.avatar]: !isSelectedPost },
-                {
-                  [s.postSelectedTheme1]: isSelectedPost && theme === 'theme1',
-                },
-                {
-                  [s.postSelectedTheme2]: isSelectedPost && theme === 'theme2',
-                }
-              )}
-              onClick={handleClickOnAvatar}
-              title='Select post to delete'
-            >
-              <Avatar
-                photo={profile?.photos.large || unknown}
-                size='medium'
-                id={profile?.userId || null}
-              />
-            </div>
-          </div>
-
-          <div className={s.columnCenter}>
-            <Name id={profile?.userId} name={profile?.fullName} size='normal' />
-            <div className={s.message}>{message}</div>
-          </div>
-
-          {!isHiddenAllLikeAndX ? (
-            <div className={s.columnRight}>
-              <IconButton
-                title='Delete post'
-                size='small'
-                onClick={handleDeletePost}
-              >
-                <CloseIcon />
-              </IconButton>
-
-              <div className={s.wrapLike}>
-                <span className={s.likesCount}>
-                  {likesCount > 0 ? `+${likesCount}` : ''}
-                </span>
-                <IconButton title='Like' size='small' onClick={handleSetLike}>
-                  <ThumbUpAltIcon
-                    className={cn(s.like, { [s.noLike]: !isLikeClick })}
-                  />
-                </IconButton>
-              </div>
-            </div>
-          ) : (
-            <div className={s.plugColumnRight} />
-          )}
-        </div>
-      </article>
-    )
   }
-)
 
-export default ProfilePost
+  const handleDeletePost = useCallback(() => {
+    setIsClickDeletePost(true)
+    setTimeout(() => handleDeleteOnePost(idPost), 300)
+  }, [handleDeleteOnePost, idPost])
+
+  const handleSetLike = useCallback(() => {
+    if (!isLikeClick) {
+      dispatch(actions.setLikeOnPost(idPost))
+    } else {
+      dispatch(actions.deleteLikeOnPost(idPost))
+    }
+  }, [dispatch, idPost, isLikeClick])
+
+  return (
+    <article
+      className={cn(s.postContainer, {
+        [s.postDelete]:
+          isClickDeletePost || (isShowAnimation && postsForDelete.has(idPost)),
+      })}
+    >
+      <div className={cn(s.post, { [s.postSelected]: isSelectedPost })}>
+        <div className={s.columnLeft}>
+          <div
+            aria-hidden='true'
+            className={cn(
+              { [s.avatar]: !isSelectedPost },
+              {
+                [s.postSelectedTheme1]: isSelectedPost && theme === 'theme1',
+              },
+              {
+                [s.postSelectedTheme2]: isSelectedPost && theme === 'theme2',
+              }
+            )}
+            onClick={handleClickOnAvatar}
+            title='Select post to delete'
+          >
+            <Avatar
+              photo={profile?.photos.large || unknown}
+              size='medium'
+              id={profile?.userId || null}
+            />
+          </div>
+        </div>
+
+        <div className={s.columnCenter}>
+          <Name id={profile?.userId} name={profile?.fullName} size='normal' />
+          <div className={s.message}>{message}</div>
+        </div>
+
+        {!isHiddenAllLikeAndX ? (
+          <div className={s.columnRight}>
+            <IconButton
+              title='Delete post'
+              size='small'
+              onClick={handleDeletePost}
+            >
+              <CloseIcon />
+            </IconButton>
+
+            <div className={s.wrapLike}>
+              <span className={s.likesCount}>
+                {likesCount > 0 ? `+${likesCount}` : ''}
+              </span>
+              <IconButton title='Like' size='small' onClick={handleSetLike}>
+                <ThumbUpAltIcon
+                  className={cn(s.like, { [s.noLike]: !isLikeClick })}
+                />
+              </IconButton>
+            </div>
+          </div>
+        ) : (
+          <div className={s.plugColumnRight} />
+        )}
+      </div>
+    </article>
+  )
+}
+
+export default memo(ProfilePost)

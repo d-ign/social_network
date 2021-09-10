@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import './Tooltip.module.scss'
 
 type PropsType = {
@@ -10,4 +10,4 @@ const Tooltip: React.FC<PropsType> = ({ element, children }) => {
   return <div data-tooltip={element}>{children}</div>
 }
 
-export default Tooltip
+export default memo(Tooltip)

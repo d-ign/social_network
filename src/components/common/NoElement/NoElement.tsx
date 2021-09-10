@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import s from './NoElement.module.scss'
 
 type PropsType = {
@@ -15,4 +15,4 @@ const NoElement: React.FC<PropsType> = ({ elements, writeSomething }) => {
   )
 }
 
-export default NoElement
+export default memo(NoElement)

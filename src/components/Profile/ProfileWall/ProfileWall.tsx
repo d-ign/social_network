@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
@@ -50,9 +50,12 @@ const ProfileWall: React.FC = () => {
 
   useLocalStorage('posts', posts, actions.initializePosts)
 
-  const handleDeleteOnePost = (idPost: number) => {
-    dispatch(actions.deletePost(idPost))
-  }
+  const handleDeleteOnePost = useCallback(
+    (idPost: number) => {
+      dispatch(actions.deletePost(idPost))
+    },
+    [dispatch]
+  )
 
   const handleDeleteSelectedPost = () => {
     // начало анимации удаления
@@ -103,13 +106,13 @@ const ProfileWall: React.FC = () => {
   const postsElements = posts.map((p: PostType) => (
     <ProfilePost
       key={p.idPost}
-      profile={profile}
       post={{
         idPost: p.idPost,
         message: p.message,
         likesCount: p.likesCount,
         isLikeClick: p.isLikeClick,
       }}
+      profile={profile}
       isSelectedAllPosts={isSelectedAllPosts}
       isHiddenAllLikeAndX={isHiddenAllLikeAndX}
       setIsHiddenAllLikeAndX={setIsHiddenAllLikeAndX}
@@ -144,7 +147,7 @@ const ProfileWall: React.FC = () => {
               style={stylesButton}
               startIcon={<DeleteIcon />}
               color={theme === 'theme1' ? 'primary' : 'secondary'}
-              onClick={() => handleDeleteSelectedPost()}
+              onClick={handleDeleteSelectedPost}
             >
               Delete
             </Button>
@@ -153,7 +156,7 @@ const ProfileWall: React.FC = () => {
             <IconButton
               title='Delete'
               color={theme === 'theme1' ? 'primary' : 'secondary'}
-              onClick={() => handleDeleteSelectedPost()}
+              onClick={handleDeleteSelectedPost}
             >
               <DeleteIcon />
             </IconButton>
@@ -182,7 +185,7 @@ const ProfileWall: React.FC = () => {
         </div>
       </div>
 
-      {postsForDelete.size === 0 && <Form theme={theme} />}
+      {postsForDelete.size === 0 && <AddPostForm theme={theme} />}
 
       <div className={s.posts}>
         {postsElements}
@@ -197,7 +200,7 @@ type OwnPropsType = {
   theme: string
 }
 
-const Form: React.FC<OwnPropsType> = ({ theme }) => {
+const AddPostForm: React.FC<OwnPropsType> = memo(({ theme }) => {
   const stylesAddPostButton: React.CSSProperties = {
     color: 'white',
     textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
@@ -255,6 +258,6 @@ const Form: React.FC<OwnPropsType> = ({ theme }) => {
       </div>
     </div>
   )
-}
+})
 
-export default ProfileWall
+export default memo(ProfileWall)

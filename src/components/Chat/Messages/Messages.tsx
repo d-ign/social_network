@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, memo } from 'react'
 import { useSelector } from 'react-redux'
 
 import s from './Messages.module.scss'
@@ -44,4 +44,4 @@ const Messages: React.FC = () => {
   )
 }
 
-export default Messages
+export default memo(Messages)
