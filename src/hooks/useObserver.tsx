@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 
 const useObserver = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ref: any,
+  elementTrigger: React.RefObject<any>,
   canLoad: boolean,
   isFetching: boolean,
   callback: () => void
@@ -20,8 +20,8 @@ const useObserver = (
       }
     }
     observer.current = new IntersectionObserver(_callback)
-    observer.current.observe(ref.current)
-  }, [isFetching, callback, canLoad, ref])
+    observer.current.observe(elementTrigger.current)
+  }, [isFetching, callback, canLoad, elementTrigger])
 }
 
 export default useObserver
