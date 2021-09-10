@@ -24,7 +24,7 @@
 }
 
 .buttonDesktop {
-  @media (max-width: 650px) {
+  @media (max-width: 665px) {
     display: none;
   }
 
@@ -38,7 +38,7 @@
 }
 
 .buttonMobile {
-  @media (max-width: 640px) {
+  @media (max-width: 665px) {
     display: block;
   }
 
