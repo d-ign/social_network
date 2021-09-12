@@ -41,7 +41,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
   const [isShowMoreUsersButton, setIsShowMoreUsersButton] = useState(true)
   // eslint-disable-next-line prefer-const
   let [pageNumber, setPageNumber] = useState(1)
-  const [termOfUrl, setTermOfUrl] = useState('')
+  const { termOfUrl, setTermOfUrl } = useQueryUrl(pathname)
 
   // for Search
   const searchUsers = useCallback(
@@ -57,7 +57,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
         setIsShowMoreUsersButton(true)
       }
     },
-    [dispatch, maxPageCount, pageNumber]
+    [dispatch, maxPageCount, pageNumber, setTermOfUrl]
   )
 
   useEffect(() => {
@@ -67,8 +67,6 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
       setIsShowMoreUsersButton(false)
     }
   }, [maxPageCount, totalUsersCount, pageSize])
-
-  useQueryUrl(termOfUrl, setTermOfUrl, pathname)
 
   useEffect(() => {
     dispatch(getUsers(1, termOfUrl))

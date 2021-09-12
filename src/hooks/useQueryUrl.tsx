@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import * as queryString from 'querystring'
+import queryString from 'query-string'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useQueryUrl = (termOfUrl: string, setTermOfUrl: any, pathname: any) => {
+const useQueryUrl = (pathname: string) => {
   const history = useHistory()
+  const [termOfUrl, setTermOfUrl] = useState('')
 
   // если есть, достаём из URL term
   useEffect(() => {
@@ -20,9 +20,12 @@ const useQueryUrl = (termOfUrl: string, setTermOfUrl: any, pathname: any) => {
   // пуш введённого из поиска в URL
   useEffect(() => {
     history.replace({
-      pathname: '/users',
+      pathname,
       search: termOfUrl ? `?term=${termOfUrl}` : '',
     })
   }, [termOfUrl, history, pathname])
+
+  return { termOfUrl, setTermOfUrl }
 }
+
 export default useQueryUrl
