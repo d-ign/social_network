@@ -21,9 +21,7 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
   const [isShowAll, setIsShowAll] = useState(false)
   const [isReverseSort, setIsReverseSort] = useState(false)
   const [isShowMembers, setIsShowMembers] = useState(false)
-  const [widthScreen, setWidthScreen] = useState(window.innerWidth)
-
-  useResizeWindow(widthScreen, setWidthScreen)
+  const widthScreen = useResizeWindow()
 
   const handleClickTitle = () => {
     if (widthScreen <= 760) {

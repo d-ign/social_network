@@ -35,10 +35,8 @@ const User: React.FC<{ user: UserType }> = (props) => {
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
-  const [widthScreen, setWidthScreen] = useState(window.innerWidth)
   const [symbolCount, setSymbolCount] = useState(19)
-
-  useResizeWindow(widthScreen, setWidthScreen)
+  const widthScreen = useResizeWindow()
 
   useEffect(() => {
     if (widthScreen <= 735) {

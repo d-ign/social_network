@@ -1,17 +1,18 @@
-import { useEffect, Dispatch, SetStateAction } from 'react'
+import { useEffect, useState } from 'react'
 
-const useResizeWindow = (
-  width: number,
-  action: Dispatch<SetStateAction<number>>
-) => {
+const useResizeWindow = () => {
+  const [widthScreen, setWidthScreen] = useState(window.innerWidth)
+
   useEffect(() => {
-    const handleResizeWindow = () => action(window.innerWidth)
+    const handleResizeWindow = () => setWidthScreen(window.innerWidth)
 
     window.addEventListener('resize', handleResizeWindow)
     return () => {
       window.removeEventListener('resize', handleResizeWindow)
     }
-  }, [width, action])
+  }, [widthScreen, setWidthScreen])
+
+  return widthScreen
 }
 
 export default useResizeWindow
