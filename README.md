@@ -19,7 +19,8 @@
     * Hooks (в том числе свои),
     * React.lazy,
     * Portal (в компоненте `ProfileInfoContainer`),
-    * Render props (`ProfileDataForm`)
+    * Render-prop (ProfileDataForm)
+- React-redux
 - Redux
 - Typescript
 - WebSocket (чат)
