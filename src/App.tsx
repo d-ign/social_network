@@ -16,7 +16,7 @@ import s from './App.module.scss'
 
 import { getInitialized } from './redux/selectors/app-selectors'
 import { getAuthorizedUserID } from './redux/selectors/auth-selectors'
-import { initializeAppThunk } from './redux/reducers/app-reducer'
+import { initializeApp } from './redux/reducers/app-reducer'
 
 const SuspendedChat = withAuthRedirect(
   lazy(() => import('./components/Chat/Chat'))
@@ -34,7 +34,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initializeAppThunk())
+    dispatch(initializeApp())
   }, [dispatch])
 
   if (!initialized) {

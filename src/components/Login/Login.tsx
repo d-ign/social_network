@@ -38,6 +38,7 @@ const validate = (values: LoginFormValuesType) => {
 
 type OwnPropsType = {
   captchaURL: string | null
+  handleEnterTestAccount: () => void
 }
 
 type LoginFormValuesType = {
@@ -64,6 +65,12 @@ const Login: React.FC = () => {
     )
   }
 
+  const handleEnterTestAccount = () => {
+    const email = 'free@samuraijs.com'
+    const password = 'free'
+    dispatch(loginThunk(email, password, false, null))
+  }
+
   if (isAuth) {
     return <Redirect to={`/profile/${userID}`} />
   }
@@ -72,7 +79,11 @@ const Login: React.FC = () => {
     <main className={s.wrap}>
       <div className={s.body}>
         <h1>Log in</h1>
-        <LoginReduxForm onSubmit={onSubmit} captchaURL={captchaURL} />
+        <LoginReduxForm
+          onSubmit={onSubmit}
+          captchaURL={captchaURL}
+          handleEnterTestAccount={handleEnterTestAccount}
+        />
       </div>
     </main>
   )
@@ -80,7 +91,7 @@ const Login: React.FC = () => {
 
 const LoginForm: React.FC<
   InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType
-> = ({ handleSubmit, error, captchaURL }) => {
+> = ({ handleSubmit, handleEnterTestAccount, error, captchaURL }) => {
   const stylesLoginButton = {
     fontSize: 16,
     fontWeight: 700,
@@ -93,94 +104,88 @@ const LoginForm: React.FC<
     ...stylesLoginButton,
   }
 
-  const dispatch = useDispatch()
   const theme = useSelector(getTheme)
 
-  const handleEnterTestAccount = () => {
-    const email = 'free@samuraijs.com'
-    const password = 'free'
-
-    dispatch(loginThunk(email, password, false, null))
-  }
-
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div className={s.loginBlockSubstrate}>
-          <div className={s.loginBlock}>
-            <div className={s.row}>
-              <Field
-                component={RenderTextField}
-                name='email'
-                label='Email:'
-                type='email'
-                fullWidth
-              />
-            </div>
-            <div className={s.row}>
-              <Field
-                component={RenderTextField}
-                name='password'
-                label='Password:'
-                type='password'
-                fullWidth
-              />
-            </div>
-            <div className={cn(s.row, s.rowCheckbox)}>
-              <Field
-                component={RenderCheckbox}
-                name='rememberMe'
-                label='Remember me'
-              />
-            </div>
+    <form onSubmit={handleSubmit}>
+      <div className={s.loginBlockSubstrate}>
+        <div className={s.loginBlock}>
+          <div className={s.row}>
+            <Field
+              component={RenderTextField}
+              autoComplete='username'
+              name='email'
+              label='Email:'
+              type='email'
+              fullWidth
+            />
+          </div>
+          <div className={s.row}>
+            <Field
+              component={RenderTextField}
+              autoComplete='current-password'
+              name='password'
+              label='Password:'
+              type='password'
+              fullWidth
+            />
+          </div>
+          <div className={cn(s.row, s.rowCheckbox)}>
+            <Field
+              component={RenderCheckbox}
+              name='rememberMe'
+              label='Remember me'
+            />
+          </div>
 
-            {captchaURL && <img src={captchaURL} alt='captcha' />}
-            {captchaURL && (
-              <Field component={RenderTextField} fullWidth name='captcha' />
+          {captchaURL && <img src={captchaURL} alt='captcha' />}
+          {captchaURL && (
+            <Field component={RenderTextField} fullWidth name='captcha' />
+          )}
+
+          <div className={s.row}>
+            <Button
+              type='submit'
+              variant='contained'
+              color={theme === 'theme1' ? 'primary' : 'secondary'}
+              fullWidth
+              style={stylesLoginButton}
+            >
+              Log in
+            </Button>
+
+            {error && (
+              <article className={s.formError}>
+                {error === 'You are not authorized' ? (
+                  <div className={s.error}>
+                    <p>1. You are either not authorized</p>
+                    <p>or</p>
+                    <p>
+                      2. Please, unblock third party cookies or show all cookies
+                      (see browser settings)
+                    </p>
+                  </div>
+                ) : (
+                  error
+                )}
+              </article>
             )}
-
-            <div className={s.row}>
-              <Button
-                type='submit'
-                variant='contained'
-                color={theme === 'theme1' ? 'primary' : 'secondary'}
-                fullWidth
-                style={stylesLoginButton}
-              >
-                Log in
-              </Button>
-
-              {error && (
-                <div className={s.formError}>
-                  {error === 'You are not authorized' ? (
-                    <>
-                      <div>1. You are either not authorized</div>
-                      <div>or</div>
-                      <div>
-                        2. Please, unblock third party cookies or show all
-                        cookies (see browser settings)
-                      </div>
-                    </>
-                  ) : (
-                    error
-                  )}
-                </div>
-              )}
-            </div>
           </div>
         </div>
-        <p>or</p>
-        <Button
-          onClick={handleEnterTestAccount}
-          variant='contained'
-          color={theme === 'theme1' ? 'primary' : 'secondary'}
-          fullWidth
-          style={stylesTestLoginButton}
-        >
-          Login to test account
-        </Button>
-      </form>
-    </>
+      </div>
+
+      <p>or</p>
+
+      <Button
+        onClick={handleEnterTestAccount}
+        variant='contained'
+        color={theme === 'theme1' ? 'primary' : 'secondary'}
+        fullWidth
+        style={stylesTestLoginButton}
+      >
+        Login to test account
+      </Button>
+    </form>
   )
 }
 

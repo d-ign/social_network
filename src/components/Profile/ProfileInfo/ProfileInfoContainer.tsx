@@ -58,12 +58,11 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
     marginTop: 20,
   }
 
-  // for InfoDataForm
+  // for ProfileInfoDataForm
   const errorProfileContacts = useSelector(getErrorProfileContacts)
 
   const theme = useSelector(getTheme)
   const profile = useSelector(getProfile)
-
   const showSuccessSave = useSelector(getShowSuccessSave)
   const isEditModeProfile = useSelector(getEditModeProfile)
   const dispatch = useDispatch()
@@ -74,7 +73,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
     dispatch(saveProfileThunk(values))
   }
 
-  const handleChangePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       dispatch(savePhotoThunk(e.target.files[0]))
     }
@@ -108,22 +107,11 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
       <div className={s.columnLeft}>
         <div className={s.avatarWrap}>
           <Avatar photo={profile.photos.large} size='extra-large' id={null} />
-
-          {isOwner && !isEditModeProfile && (
-            <div className={s.camera} title='Change avatar'>
-              <label htmlFor='file_out'>
-                <div className={s.wrapImgCamera}>
-                  <img src={camera} alt='change avatar' />
-                </div>
-                <input
-                  id='file_out'
-                  hidden
-                  type='file'
-                  onChange={handleChangePhoto}
-                />
-              </label>
-            </div>
-          )}
+          <ButtonChangeAvatar
+            isOwner={isOwner}
+            isEditModeProfile={isEditModeProfile}
+            handleChangeAvatar={handleChangeAvatar}
+          />
         </div>
 
         {isOwner && !isEditModeProfile && (
@@ -189,11 +177,42 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
           <ProfileData profile={profile} />
         )}
       </div>
+
       {/* при переходе на старницу профиля скрол обнулится */}
       <ScrollToTopOnMount />
     </section>
   )
 }
+
+type ButtonChangeAvatarPropsType = {
+  isOwner: boolean
+  isEditModeProfile: boolean
+  handleChangeAvatar: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const ButtonChangeAvatar: React.FC<ButtonChangeAvatarPropsType> = ({
+  isOwner,
+  isEditModeProfile,
+  handleChangeAvatar,
+}) => (
+  <>
+    {isOwner && !isEditModeProfile && (
+      <div className={s.camera} title='Change avatar'>
+        <label htmlFor='file_out'>
+          <div className={s.wrapImgCamera}>
+            <img src={camera} alt='change avatar' />
+          </div>
+          <input
+            id='file_out'
+            hidden
+            type='file'
+            onChange={handleChangeAvatar}
+          />
+        </label>
+      </div>
+    )}
+  </>
+)
 
 const ShowSuccessSavePortal = ({ children }: { children: React.ReactNode }) => {
   const el: HTMLDivElement = document.createElement('div')

@@ -37,15 +37,15 @@ const ProfileWall: React.FC = () => {
     textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
   }
 
+  const theme = useSelector(getTheme)
+  const profile = useSelector(getProfile)
   const posts = useSelector(getPosts)
   const postsForDelete = useSelector(getPostsForDelete)
-  const profile = useSelector(getProfile)
-  const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
   const [isShowAnimation, setIsShowAnimation] = useState(false)
-  const [isSelectedAllPosts, setIsSelectedAllPosts] = useState(false)
   const [isCancelDeletion, setIsCancelDeletion] = useState(false)
+  const [isSelectedAllPosts, setIsSelectedAllPosts] = useState(false)
   const [isHiddenAllLikeAndX, setIsHiddenAllLikeAndX] = useState(false)
 
   useLocalStorage('posts', posts, actions.initializePosts)

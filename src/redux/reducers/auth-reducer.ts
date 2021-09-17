@@ -66,7 +66,7 @@ const actions = {
   }),
 }
 
-export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
+export const getAuthUserData = (): ThunkType => async (dispatch) => {
   const response = await authAPI.me()
 
   if (response.resultCode === ResultCodesEnum.Success) {
@@ -79,8 +79,7 @@ export const getAuthUserDataThunk = (): ThunkType => async (dispatch) => {
     const action = stopSubmit('loginForm', {
       _error: message.length > 0 ? message[0] : 'Some error',
     })
-    // Some error - на всякий случай, если с сервера придёт пустое сообщение
-    // при ошибке
+    // Some error - на всякий случай, если с сервера придёт пустое сообщение при ошибке
     dispatch(action)
   }
 
@@ -107,7 +106,7 @@ export const loginThunk =
     const response = await authAPI.login(email, password, rememberMe, captcha)
 
     if (response.resultCode === ResultCodesEnum.Success) {
-      dispatch(getAuthUserDataThunk())
+      dispatch(getAuthUserData())
       dispatch(actions.setCaptcha(null))
     }
 
