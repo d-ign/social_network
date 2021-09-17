@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { useEffect, useState, memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -54,16 +54,18 @@ const Header: React.FC = () => {
 
   useLocalStorage('theme', theme, actions.setTheme, setThemeLocal)
 
+  const handleToggleTheme = useCallback(() => {
+    dispatch(actions.setTheme(themeLocal === 'theme1' ? 'theme2' : 'theme1'))
+    setThemeLocal(themeLocal === 'theme1' ? 'theme2' : 'theme1')
+  }, [dispatch, themeLocal])
+
+  const handleLogout = useCallback(() => {
+    dispatch(logoutThunk())
+  }, [dispatch])
+
   return (
     <header className={s.header}>
-      <NavLink className={s.logoAndTitle} to='/profile'>
-        <img src={logo} alt='logo' />
-        <span className={s.headerTitleDesktop}>Social network</span>
-        <span hidden className={s.headerTitleMobile}>
-          SN
-        </span>
-      </NavLink>
-
+      <Logo />
       <div className={s.rightColumn}>
         {isAuth ? (
           <>
@@ -71,37 +73,16 @@ const Header: React.FC = () => {
               <Avatar photo={myPhoto} size='small' id={myID} />
               <span className={s.loginName}>{login}</span>
             </div>
-
             <ButtonChangeTheme
               theme={theme}
-              themeLocal={themeLocal}
-              setThemeLocal={setThemeLocal}
+              handleToggleTheme={handleToggleTheme}
             />
-
-            <span className={s.buttonLogoutDesktop}>
-              <Button
-                onClick={() => dispatch(logoutThunk())}
-                variant='outlined'
-                style={{ marginRight: '12px' }}
-                startIcon={<ExitToAppIcon />}
-              >
-                Log out
-              </Button>
-            </span>
-            <span hidden className={s.buttonLogoutMobile}>
-              <IconButton
-                title='Logout of profile'
-                onClick={() => dispatch(logoutThunk())}
-              >
-                <ExitToAppIcon />
-              </IconButton>
-            </span>
+            <ButtonLogout handleLogout={handleLogout} />
           </>
         ) : (
           <ButtonChangeTheme
             theme={theme}
-            themeLocal={themeLocal}
-            setThemeLocal={setThemeLocal}
+            handleToggleTheme={handleToggleTheme}
           />
         )}
       </div>
@@ -109,47 +90,72 @@ const Header: React.FC = () => {
   )
 }
 
-type PropsType = {
+const Logo: React.FC = memo(() => (
+  <NavLink className={s.logoAndTitle} to='/profile'>
+    <img src={logo} alt='logo' />
+    <span className={s.headerTitleDesktop}>Social network</span>
+    <span hidden className={s.headerTitleMobile}>
+      SN
+    </span>
+  </NavLink>
+))
+
+type ButtonChangeThemePropsType = {
   theme: ThemeType
-  themeLocal: ThemeType
-  setThemeLocal: Dispatch<SetStateAction<ThemeType>>
+  handleToggleTheme: () => void
 }
 
-const ButtonChangeTheme: React.FC<PropsType> = (props) => {
-  const { theme, themeLocal, setThemeLocal } = props
-  const dispatch = useDispatch()
+const ButtonChangeTheme: React.FC<ButtonChangeThemePropsType> = ({
+  theme,
+  handleToggleTheme,
+}) => (
+  <>
+    <span className={s.buttonThemeDesktop}>
+      <Button
+        color={theme === 'theme1' ? 'primary' : 'secondary'}
+        style={{ padding: '6px 12px', marginRight: '12px' }}
+        onClick={handleToggleTheme}
+        startIcon={<InvertColorsIcon />}
+      >
+        Change theme
+      </Button>
+    </span>
 
-  const handleToggleTheme = () => {
-    dispatch(actions.setTheme(themeLocal === 'theme1' ? 'theme2' : 'theme1'))
-    setThemeLocal(themeLocal === 'theme1' ? 'theme2' : 'theme1')
-  }
-
-  return (
-    <>
-      <span className={s.buttonThemeDesktop}>
-        <Button
+    <span hidden className={s.buttonThemeMobile}>
+      <IconButton
+        onClick={handleToggleTheme}
+        aria-label='changeTheme'
+        style={{ margin: '0 12px' }}
+        title='Change theme'
+      >
+        <InvertColorsIcon
           color={theme === 'theme1' ? 'primary' : 'secondary'}
-          style={{ padding: '6px 12px', marginRight: '12px' }}
-          onClick={handleToggleTheme}
-          startIcon={<InvertColorsIcon />}
+        />
+      </IconButton>
+    </span>
+  </>
+)
+
+const ButtonLogout: React.FC<{ handleLogout: () => void }> = memo(
+  ({ handleLogout }) => (
+    <>
+      <span className={s.buttonLogoutDesktop}>
+        <Button
+          onClick={handleLogout}
+          variant='outlined'
+          style={{ marginRight: '12px' }}
+          startIcon={<ExitToAppIcon />}
         >
-          Change theme
+          Log out
         </Button>
       </span>
-
-      <span hidden className={s.buttonThemeMobile}>
-        <IconButton
-          onClick={handleToggleTheme}
-          aria-label='changeTheme'
-          style={{ margin: '0 12px' }}
-          title='Change theme'
-        >
-          <InvertColorsIcon
-            color={theme === 'theme1' ? 'primary' : 'secondary'}
-          />
+      <span hidden className={s.buttonLogoutMobile}>
+        <IconButton title='Logout of profile' onClick={handleLogout}>
+          <ExitToAppIcon />
         </IconButton>
       </span>
     </>
   )
-}
+)
+
 export default Header

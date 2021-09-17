@@ -24,17 +24,6 @@ const User: React.FC<{ user: UserType }> = (props) => {
     user: { id, photos, name, status, followed },
   } = props
 
-  const stylesFollowedButton: React.CSSProperties = {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    flexBasis: '200px',
-  }
-
-  const followingInProgress = useSelector(getFollowingInProgress)
-  const authorizedUserID = useSelector(getAuthorizedUserID)
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
-
   const [symbolCount, setSymbolCount] = useState(19)
   const widthScreen = useResizeWindow()
 
@@ -44,75 +33,132 @@ const User: React.FC<{ user: UserType }> = (props) => {
     }
   }, [widthScreen])
 
-  const followHandler = useCallback(() => dispatch(follow(id)), [dispatch, id])
-
-  const unfollowHandler = useCallback(
-    () => dispatch(unfollow(id)),
-    [dispatch, id]
-  )
-
   return (
     <article className={s.user}>
       <div className={s.wrapAvatarNameAndStatus}>
         <div className={s.wrapAvatar}>
           <Avatar photo={photos.large} size='large' id={id} />
         </div>
-
         <div className={s.nameAndStatus}>
-          {name?.length > symbolCount ? (
-            <Tooltip element={name}>
-              <div className={s.wrapName}>
-                <Name id={id} name={name} size='normal' />
-              </div>
-            </Tooltip>
-          ) : (
-            <div className={s.wrapName}>
-              <Name id={id} name={name} size='normal' />
-            </div>
-          )}
-
-          {status?.length > symbolCount ? (
-            <Tooltip element={status}>
-              <div className={s.status}>
-                <i>{status}</i>
-              </div>
-            </Tooltip>
-          ) : (
-            <div className={s.status}>
-              <i>{status}</i>
-            </div>
-          )}
+          <NameWithTooltip id={id} name={name} symbolCount={symbolCount} />
+          <StatusWithTooltip status={status} symbolCount={symbolCount} />
         </div>
       </div>
-
-      {followed ? (
-        <div className={s.button}>
-          <Button
-            onClick={unfollowHandler}
-            disabled={followingInProgress.some((idUser) => idUser === id)}
-            style={stylesFollowedButton}
-            startIcon={<RemoveIcon />}
-          >
-            Unfollow
-          </Button>
-        </div>
-      ) : id === authorizedUserID ? (
-        <></>
-      ) : (
-        <div className={s.button}>
-          <Button
-            onClick={followHandler}
-            disabled={followingInProgress.some((idUser) => idUser === id)}
-            color={theme === 'theme1' ? 'primary' : 'secondary'}
-            style={stylesFollowedButton}
-            startIcon={<AddIcon />}
-          >
-            Follow
-          </Button>
-        </div>
-      )}
+      <ButtonFollow id={id} followed={followed} />
     </article>
   )
 }
+
+type NameWithTooltipPropsType = {
+  id: number
+  name: string
+  symbolCount: number
+}
+
+const NameWithTooltip: React.FC<NameWithTooltipPropsType> = memo(
+  ({ id, name, symbolCount }) => (
+    <>
+      {name?.length > symbolCount ? (
+        <Tooltip element={name}>
+          <div className={s.wrapName}>
+            <Name id={id} name={name} size='normal' />
+          </div>
+        </Tooltip>
+      ) : (
+        <div className={s.wrapName}>
+          <Name id={id} name={name} size='normal' />
+        </div>
+      )}
+    </>
+  )
+)
+
+type StatusWithTooltipPropsType = {
+  status: string
+  symbolCount: number
+}
+
+const StatusWithTooltip: React.FC<StatusWithTooltipPropsType> = memo(
+  ({ status, symbolCount }) => (
+    <>
+      {status?.length > symbolCount ? (
+        <Tooltip element={status}>
+          <div className={s.status}>
+            <i>{status}</i>
+          </div>
+        </Tooltip>
+      ) : (
+        <div className={s.status}>
+          <i>{status}</i>
+        </div>
+      )}
+    </>
+  )
+)
+
+type ButtonFollowPropsType = {
+  followed: boolean
+  id: number
+}
+
+const ButtonFollow: React.FC<ButtonFollowPropsType> = memo(
+  ({ id, followed }) => {
+    const stylesFollowedButton: React.CSSProperties = {
+      justifyContent: 'flex-end',
+      alignItems: 'flex-start',
+      flexBasis: '200px',
+    }
+
+    const followingInProgress = useSelector(getFollowingInProgress)
+    const authorizedUserID = useSelector(getAuthorizedUserID)
+    const theme = useSelector(getTheme)
+    const dispatch = useDispatch()
+
+    const followHandler = useCallback(
+      () => dispatch(follow(id)),
+      [dispatch, id]
+    )
+
+    const unfollowHandler = useCallback(
+      () => dispatch(unfollow(id)),
+      [dispatch, id]
+    )
+
+    const isDisabledButton = followingInProgress.some(
+      (idUser: number) => idUser === id
+    )
+
+    return (
+      <>
+        {followed ? (
+          <div className={s.button}>
+            <Button
+              onClick={unfollowHandler}
+              disabled={isDisabledButton}
+              style={stylesFollowedButton}
+              startIcon={<RemoveIcon />}
+            >
+              Unfollow
+            </Button>
+          </div>
+        ) : id === authorizedUserID ? (
+          <></>
+        ) : (
+          <div className={s.button}>
+            <Button
+              onClick={followHandler}
+              disabled={isDisabledButton}
+              color={theme === 'theme1' ? 'primary' : 'secondary'}
+              style={stylesFollowedButton}
+              startIcon={<AddIcon />}
+            >
+              Follow
+            </Button>
+          </div>
+        )}
+      </>
+    )
+  }
+)
 
 export default memo(User)

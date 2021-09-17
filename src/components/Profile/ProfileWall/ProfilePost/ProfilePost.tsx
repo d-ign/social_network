@@ -142,24 +142,12 @@ const ProfilePost: React.FC<PropsType> = (props) => {
 
         {!isHiddenAllLikeAndX ? (
           <div className={s.columnRight}>
-            <IconButton
-              title='Delete post'
-              size='small'
-              onClick={handleDeletePost}
-            >
-              <CloseIcon />
-            </IconButton>
-
-            <div className={s.wrapLike}>
-              <span className={s.likesCount}>
-                {likesCount > 0 ? `+${likesCount}` : ''}
-              </span>
-              <IconButton title='Like' size='small' onClick={handleSetLike}>
-                <ThumbUpAltIcon
-                  className={cn(s.like, { [s.noLike]: !isLikeClick })}
-                />
-              </IconButton>
-            </div>
+            <ButtonDeletePost handleDeletePost={handleDeletePost} />
+            <ButtonSetLike
+              likesCount={likesCount}
+              handleSetLike={handleSetLike}
+              isLikeClick={isLikeClick}
+            />
           </div>
         ) : (
           <div className={s.plugColumnRight} />
@@ -168,5 +156,38 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     </article>
   )
 }
+
+const ButtonDeletePost: React.FC<{ handleDeletePost: () => void }> = memo(
+  ({ handleDeletePost }) => {
+    return (
+      <IconButton title='Delete post' size='small' onClick={handleDeletePost}>
+        <CloseIcon />
+      </IconButton>
+    )
+  }
+)
+
+type ButtonSetLikePropsType = {
+  likesCount: number
+  handleSetLike: () => void
+  isLikeClick: boolean
+}
+
+const ButtonSetLike: React.FC<ButtonSetLikePropsType> = memo(
+  ({ likesCount, handleSetLike, isLikeClick }) => {
+    return (
+      <div className={s.wrapLike}>
+        <span className={s.likesCount}>
+          {likesCount > 0 ? `+${likesCount}` : ''}
+        </span>
+        <IconButton title='Like' size='small' onClick={handleSetLike}>
+          <ThumbUpAltIcon
+            className={cn(s.like, { [s.noLike]: !isLikeClick })}
+          />
+        </IconButton>
+      </div>
+    )
+  }
+)
 
 export default memo(ProfilePost)
