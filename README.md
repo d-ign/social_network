@@ -21,11 +21,14 @@
     * Portal (в компоненте `ProfileInfoContainer`),
     * Render-prop (ProfileDataForm)
 - React-redux
+- React-router-dom
 - Redux
+- Redux-thunk
+- Redux-form (`Login`, `ProfileDataForm`)
 - Typescript
 - WebSocket (чат)
-- <a href="https://github.com/sass/sass">SCSS</a> и <a href="https://github.com/mui-org/material-ui">Material UI</a> (для стилизации элементов форм)
-- <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный REST API с помощью <a href="https://github.com/axios/axios">axios</a>
+- SCSS и Material UI (для стилизации элементов форм)
+- <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный REST API с помощью axios
 
 # Что реализовано
 &#120823; &#127759; **Авторизация** (_redux-form_)
@@ -39,7 +42,7 @@
 &#120825; &#9989; **Отзывчиво-адаптивная вёрстка** для всех экранов от 320px
    <div align="center"><img src="./readme_content/gif/adaptive.gif" width='75%' /></div>
 
-&#120826; &#9989; **Настроена маршрутизация** (_react-router_)
+&#120826; &#9989; **Настроена маршрутизация** (_react-router-dom_)
    - Несуществующий URL перенаправляет на профиль
    - Redirect неавторизованных пользователей на страницу авторизации
 
