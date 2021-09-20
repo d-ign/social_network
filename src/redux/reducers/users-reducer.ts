@@ -20,7 +20,7 @@ const usersReducer = (
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'FOLLOW': {
+    case 'sn/users/FOLLOW': {
       return {
         ...state,
         users: state.users.map((u) => {
@@ -31,7 +31,7 @@ const usersReducer = (
         }),
       }
     }
-    case 'UNFOLLOW': {
+    case 'sn/users/UNFOLLOW': {
       return {
         ...state,
         users: state.users.map((u) => {
@@ -42,37 +42,37 @@ const usersReducer = (
         }),
       }
     }
-    case 'SET_USERS': {
+    case 'sn/users/SET_USERS': {
       return {
         ...state,
         users: [...action.users],
       }
     }
-    case 'ADD_USERS': {
+    case 'sn/users/ADD_USERS': {
       return {
         ...state,
         users: [...state.users, ...action.users],
       }
     }
-    case 'CLEAR_USERS': {
+    case 'sn/users/CLEAR_USERS': {
       return {
         ...state,
         users: [],
       }
     }
-    case 'SET_TOTAL_USERS_COUNT': {
+    case 'sn/users/SET_TOTAL_USERS_COUNT': {
       return {
         ...state,
         totalUsersCount: action.count,
       }
     }
-    case 'TOGGLE_IS_FETCHING': {
+    case 'sn/users/TOGGLE_IS_FETCHING': {
       return {
         ...state,
         isFetching: action.isFetching,
       }
     }
-    case 'TOGGLE_IS_FOLLOWING_PROGRESS': {
+    case 'sn/users/TOGGLE_IS_FOLLOWING_PROGRESS': {
       return {
         ...state,
         followingInProgress: action.isFetching
@@ -86,23 +86,27 @@ const usersReducer = (
 }
 
 export const actions = {
-  followSuccess: (userID: number) => ({ type: 'FOLLOW', userID } as const),
-  unfollowSuccess: (userID: number) => ({ type: 'UNFOLLOW', userID } as const),
+  followSuccess: (userID: number) =>
+    ({ type: 'sn/users/FOLLOW', userID } as const),
+  unfollowSuccess: (userID: number) =>
+    ({ type: 'sn/users/UNFOLLOW', userID } as const),
 
-  setUsers: (users: Array<UserType>) => ({ type: 'SET_USERS', users } as const),
-  addUsers: (users: Array<UserType>) => ({ type: 'ADD_USERS', users } as const),
+  setUsers: (users: Array<UserType>) =>
+    ({ type: 'sn/users/SET_USERS', users } as const),
+  addUsers: (users: Array<UserType>) =>
+    ({ type: 'sn/users/ADD_USERS', users } as const),
   setTotalUsersCount: (totalUsersCount: number) =>
     ({
-      type: 'SET_TOTAL_USERS_COUNT',
+      type: 'sn/users/SET_TOTAL_USERS_COUNT',
       count: totalUsersCount,
     } as const),
-  clearUsers: () => ({ type: 'CLEAR_USERS' } as const),
+  clearUsers: () => ({ type: 'sn/users/CLEAR_USERS' } as const),
 
   toggleIsFetching: (isFetching: boolean) =>
-    ({ type: 'TOGGLE_IS_FETCHING', isFetching } as const),
+    ({ type: 'sn/users/TOGGLE_IS_FETCHING', isFetching } as const),
   toggleFollowingProgress: (isFetching: boolean, userID: number) =>
     ({
-      type: 'TOGGLE_IS_FOLLOWING_PROGRESS',
+      type: 'sn/users/TOGGLE_IS_FOLLOWING_PROGRESS',
       isFetching,
       userID,
     } as const),

@@ -20,14 +20,14 @@ const authReducer = (
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'SET_USER_DATA':
-    case 'GET_CAPTCHA_URL_SUCCESS': {
+    case 'sn/auth/SET_USER_DATA':
+    case 'sn/auth/GET_CAPTCHA_URL_SUCCESS': {
       return {
         ...state,
         ...action.payload,
       }
     }
-    case 'SET_MY_PHOTO': {
+    case 'sn/auth/SET_MY_PHOTO': {
       return {
         ...state,
         // @ts-ignore
@@ -46,7 +46,7 @@ const actions = {
     login: string | null,
     isAuth: boolean
   ) => ({
-    type: 'SET_USER_DATA',
+    type: 'sn/auth/SET_USER_DATA',
     payload: {
       userID,
       email,
@@ -56,12 +56,12 @@ const actions = {
   }),
 
   setCaptcha: (captchaURL: string | null) => ({
-    type: 'GET_CAPTCHA_URL_SUCCESS',
+    type: 'sn/auth/GET_CAPTCHA_URL_SUCCESS',
     payload: { captchaURL } as const,
   }),
 
   setMyPhoto: (photo: string | null) => ({
-    type: 'SET_MY_PHOTO',
+    type: 'sn/auth/SET_MY_PHOTO',
     payload: { photo } as const,
   }),
 }

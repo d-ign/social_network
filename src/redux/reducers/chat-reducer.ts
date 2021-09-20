@@ -20,7 +20,7 @@ const chatReducer = (
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'MESSAGES_RECEIVED': {
+    case 'sn/chat/MESSAGES_RECEIVED': {
       return {
         ...state,
         messages: [
@@ -30,13 +30,13 @@ const chatReducer = (
         // TODO v1() - вызов не чистой функции
       }
     }
-    case 'MESSAGES_CLEARED': {
+    case 'sn/chat/MESSAGES_CLEARED': {
       return {
         ...state,
         messages: [],
       }
     }
-    case 'STATUS_CHANGED': {
+    case 'sn/chat/STATUS_CHANGED': {
       return {
         ...state,
         statusWS: action.payload.statusWS,
@@ -50,16 +50,16 @@ const chatReducer = (
 const actions = {
   messagesReceived: (messages: ChatMessageAPIType[]) =>
     ({
-      type: 'MESSAGES_RECEIVED',
+      type: 'sn/chat/MESSAGES_RECEIVED',
       payload: { messages },
     } as const),
   messagesCleared: () =>
     ({
-      type: 'MESSAGES_CLEARED',
+      type: 'sn/chat/MESSAGES_CLEARED',
     } as const),
   statusChanged: (statusWS: StatusWSType) =>
     ({
-      type: 'STATUS_CHANGED',
+      type: 'sn/chat/STATUS_CHANGED',
       payload: { statusWS },
     } as const),
 }

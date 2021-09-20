@@ -12,13 +12,13 @@ const appReducer = (
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'INITIALIZED_SUCCESS': {
+    case 'sn/app/INITIALIZED_SUCCESS': {
       return {
         ...state,
         initialized: true,
       }
     }
-    case 'TOGGLE_THEME': {
+    case 'sn/app/TOGGLE_THEME': {
       return {
         ...state,
         theme: action.theme,
@@ -30,8 +30,9 @@ const appReducer = (
 }
 
 export const actions = {
-  initializedSuccess: () => ({ type: 'INITIALIZED_SUCCESS' } as const),
-  setTheme: (theme: ThemeType) => ({ type: 'TOGGLE_THEME', theme } as const),
+  initializedSuccess: () => ({ type: 'sn/app/INITIALIZED_SUCCESS' } as const),
+  setTheme: (theme: ThemeType) =>
+    ({ type: 'sn/app/TOGGLE_THEME', theme } as const),
 }
 
 export const initializeApp = (): ThunkType => async (dispatch) => {

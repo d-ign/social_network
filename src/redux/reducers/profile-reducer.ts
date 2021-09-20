@@ -42,25 +42,25 @@ const profileReducer = (
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
-    case 'SET_USER': {
+    case 'sn/profile/SET_USER': {
       return {
         ...state,
         profile: action.profile,
       }
     }
-    case 'SET_STATUS': {
+    case 'sn/profile/SET_STATUS': {
       return {
         ...state,
         status: action.status,
       }
     }
-    case 'INITIALIZE_POSTS': {
+    case 'sn/profile/INITIALIZE_POSTS': {
       return {
         ...state,
         posts: action.posts,
       }
     }
-    case 'ADD_POST': {
+    case 'sn/profile/ADD_POST': {
       const newPost = {
         idPost: Date.now(), // TODO вызов не чистой функции
         message: action.newPostText,
@@ -72,13 +72,13 @@ const profileReducer = (
         posts: [newPost, ...state.posts],
       }
     }
-    case 'SET_POST_FOR_DELETING': {
+    case 'sn/profile/SET_POST_FOR_DELETING': {
       return {
         ...state,
         postsForDelete: [...state.postsForDelete, action.idPost],
       }
     }
-    case 'DELETE_POST_FOR_DELETING': {
+    case 'sn/profile/DELETE_POST_FOR_DELETING': {
       return {
         ...state,
         postsForDelete: [
@@ -86,19 +86,19 @@ const profileReducer = (
         ],
       }
     }
-    case 'CLEAR_POSTS_FOR_DELETING': {
+    case 'sn/profile/CLEAR_POSTS_FOR_DELETING': {
       return {
         ...state,
         postsForDelete: [],
       }
     }
-    case 'DELETE_POST': {
+    case 'sn/profile/DELETE_POST': {
       return {
         ...state,
         posts: state.posts.filter((p) => p.idPost !== action.idPost),
       }
     }
-    case 'SET_LIKE_ON_POST': {
+    case 'sn/profile/SET_LIKE_ON_POST': {
       return {
         ...state,
         posts: [
@@ -115,7 +115,7 @@ const profileReducer = (
         ],
       }
     }
-    case 'DELETE_LIKE_ON_POST': {
+    case 'sn/profile/DELETE_LIKE_ON_POST': {
       return {
         ...state,
         posts: [
@@ -132,25 +132,25 @@ const profileReducer = (
         ],
       }
     }
-    case 'SAVE_PHOTO_SUCCESS': {
+    case 'sn/profile/SAVE_PHOTO_SUCCESS': {
       return {
         ...state,
         profile: { ...state.profile, photos: action.photos } as ProfileType,
       }
     }
-    case 'SHOW_SUCCESS_SAVE': {
+    case 'sn/profile/SHOW_SUCCESS_SAVE': {
       return {
         ...state,
         showSuccessSave: action.message,
       }
     }
-    case 'SHOW_ERROR_PROFILE_CONTACTS': {
+    case 'sn/profile/SHOW_ERROR_PROFILE_CONTACTS': {
       return {
         ...state,
         errorProfileContacts: action.message,
       }
     }
-    case 'TOGGLE_EDIT_MODE_PROFILE': {
+    case 'sn/profile/TOGGLE_EDIT_MODE_PROFILE': {
       return {
         ...state,
         isEditModeProfile: action.bool,
@@ -163,34 +163,37 @@ const profileReducer = (
 
 export const actions = {
   initializePosts: (posts: Array<PostType>) =>
-    ({ type: 'INITIALIZE_POSTS', posts } as const),
+    ({ type: 'sn/profile/INITIALIZE_POSTS', posts } as const),
   // удаление одного поста
   addPost: (newPostText: string) =>
-    ({ type: 'ADD_POST', newPostText } as const),
-  deletePost: (idPost: number) => ({ type: 'DELETE_POST', idPost } as const),
+    ({ type: 'sn/profile/ADD_POST', newPostText } as const),
+  deletePost: (idPost: number) =>
+    ({ type: 'sn/profile/DELETE_POST', idPost } as const),
   // удаление нескольких постов
   setPostForDeleting: (idPost: number) =>
-    ({ type: 'SET_POST_FOR_DELETING', idPost } as const),
+    ({ type: 'sn/profile/SET_POST_FOR_DELETING', idPost } as const),
   deletePostForDeleting: (idPost: number) =>
-    ({ type: 'DELETE_POST_FOR_DELETING', idPost } as const),
-  clearPostsForDeleting: () => ({ type: 'CLEAR_POSTS_FOR_DELETING' } as const),
+    ({ type: 'sn/profile/DELETE_POST_FOR_DELETING', idPost } as const),
+  clearPostsForDeleting: () =>
+    ({ type: 'sn/profile/CLEAR_POSTS_FOR_DELETING' } as const),
   // лайк
   setLikeOnPost: (idPost: number) =>
-    ({ type: 'SET_LIKE_ON_POST', idPost } as const),
+    ({ type: 'sn/profile/SET_LIKE_ON_POST', idPost } as const),
   deleteLikeOnPost: (idPost: number) =>
-    ({ type: 'DELETE_LIKE_ON_POST', idPost } as const),
+    ({ type: 'sn/profile/DELETE_LIKE_ON_POST', idPost } as const),
 
   setUserProfile: (profile: ProfileType) =>
-    ({ type: 'SET_USER', profile } as const),
-  setStatus: (status: string) => ({ type: 'SET_STATUS', status } as const),
+    ({ type: 'sn/profile/SET_USER', profile } as const),
+  setStatus: (status: string) =>
+    ({ type: 'sn/profile/SET_STATUS', status } as const),
   savePhotoSuccess: (photos: PhotosType) =>
-    ({ type: 'SAVE_PHOTO_SUCCESS', photos } as const),
+    ({ type: 'sn/profile/SAVE_PHOTO_SUCCESS', photos } as const),
   showSuccessSaveProfile: (message: string) =>
-    ({ type: 'SHOW_SUCCESS_SAVE', message } as const),
+    ({ type: 'sn/profile/SHOW_SUCCESS_SAVE', message } as const),
   showErrorProfileContacts: (message: string) =>
-    ({ type: 'SHOW_ERROR_PROFILE_CONTACTS', message } as const),
+    ({ type: 'sn/profile/SHOW_ERROR_PROFILE_CONTACTS', message } as const),
   setEditModeProfile: (bool: boolean) =>
-    ({ type: 'TOGGLE_EDIT_MODE_PROFILE', bool } as const),
+    ({ type: 'sn/profile/TOGGLE_EDIT_MODE_PROFILE', bool } as const),
 }
 
 export const getUserProfile =
