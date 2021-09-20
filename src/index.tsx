@@ -12,7 +12,7 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import store from './redux/redux-store'
-import AppContainer from './App'
+import App from './App'
 
 let theme = createTheme({
   palette: {
@@ -37,7 +37,7 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <CssBaseline />
-        <AppContainer />
+        <App />
       </Provider>
     </ThemeProvider>
   </HashRouter>,

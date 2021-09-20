@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import cn from 'classnames'
 import IconButton from '@material-ui/core/IconButton'
@@ -23,18 +23,14 @@ import { getUsers } from '../../redux/reducers/users-reducer'
 
 import { UserType } from '../../types/types'
 
-type PathParamsType = {
-  pathname: string
-}
-
-const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
-  location: { pathname },
-}) => {
+const Users: React.FC = () => {
   const pageSize = useSelector(getPageSize)
   const users = useSelector(getUsersSelector)
   const isFetching = useSelector(getIsFetching)
   const totalUsersCount = useSelector(getTotalUsersCount)
   const dispatch = useDispatch()
+
+  const { pathname } = useLocation()
 
   const maxPageCount = Math.ceil(totalUsersCount / pageSize)
 
@@ -125,4 +121,4 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
   )
 }
 
-export default memo(withRouter(Users))
+export default memo(Users)

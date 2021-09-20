@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react'
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ProfileContainer from './components/Profile/ProfileContainer'
@@ -80,5 +80,4 @@ const App: React.FC = () => {
   )
 }
 
-const AppContainer = withRouter(App)
-export default AppContainer
+export default App

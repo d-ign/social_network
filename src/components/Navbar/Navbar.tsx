@@ -1,23 +1,16 @@
 /* eslint-disable max-len */
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import cn from 'classnames'
 import s from './Navbar.module.scss'
 import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
 
-type PageType = {
-  id: number
-  name: string
-  to: string
-  exact: boolean
-}
-
-const Navbar: React.FC<RouteComponentProps<{ pathname: string }>> = ({
-  location: { pathname },
-}) => {
+const Navbar: React.FC = () => {
   const authorizedUserID = useSelector(getAuthorizedUserID)
+  const { pathname } = useLocation()
+
   const profileUrl = `/profile/${authorizedUserID}`
 
   const pages = [
@@ -26,6 +19,13 @@ const Navbar: React.FC<RouteComponentProps<{ pathname: string }>> = ({
     { id: 3, name: 'Find Users', to: '/users', exact: false },
     { id: 4, name: 'Friends', to: '/friends', exact: false },
   ]
+
+  type PageType = {
+    id: number
+    name: string
+    to: string
+    exact: boolean
+  }
 
   return (
     <nav className={s.nav}>
@@ -77,4 +77,4 @@ const friendsPath = (
   <path d='M12 5.5A3.5 3.5 0 0115.5 9a3.5 3.5 0 01-3.5 3.5A3.5 3.5 0 018.5 9 3.5 3.5 0 0112 5.5M5 8c.56 0 1.08.15 1.53.42a5.54 5.54 0 001.13 3.96A3 3 0 015 14a3 3 0 01-3-3 3 3 0 013-3m14 0a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-2.66-1.62 5.54 5.54 0 001.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13v-1.75M0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9a4.04 4.04 0 00-.95 2.65V20H0m24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9V20z' />
 )
 
-export default withRouter(Navbar)
+export default Navbar

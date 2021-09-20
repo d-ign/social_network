@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import s from './Friends.module.scss'
 
@@ -20,18 +20,14 @@ import { actions, getUsers } from '../../redux/reducers/users-reducer'
 
 import { UserType } from '../../types/types'
 
-type PathParamsType = {
-  pathname: string
-}
-
-const Friends: React.FC<RouteComponentProps<PathParamsType>> = ({
-  location: { pathname },
-}) => {
+const Friends: React.FC = () => {
   const pageSize = useSelector(getPageSize)
   const users = useSelector(getUsersSelector)
   const isFetching = useSelector(getIsFetching)
   const totalUsersCount = useSelector(getTotalUsersCount)
   const dispatch = useDispatch()
+
+  const { pathname } = useLocation()
 
   const maxPageCount = Math.ceil(totalUsersCount / pageSize)
   // eslint-disable-next-line prefer-const
@@ -104,4 +100,4 @@ const Friends: React.FC<RouteComponentProps<PathParamsType>> = ({
   )
 }
 
-export default withRouter(memo(Friends))
+export default memo(Friends)
