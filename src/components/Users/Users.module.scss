@@ -1,11 +1,11 @@
 @import './../../styles/colors';
 
-.wrapper {
+.container {
   margin: 0 auto;
   max-width: 470px;
 }
 
-.container {
+.wrapUsers {
   width: 100%;
   max-width: 470px;
 }
@@ -19,7 +19,7 @@
   visibility: hidden;
 }
 
-.wrapUsers {
+.users {
   @media (max-width: 740px) {
     display: flex;
     flex-wrap: wrap;

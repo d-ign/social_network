@@ -83,7 +83,7 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
   }, [dispatch, maxPageCount, pageNumber, termOfUrl])
 
   return (
-    <main className={s.wrapper}>
+    <main className={s.container}>
       <Search
         searchUsers={searchUsers}
         totalUsersCount={totalUsersCount}
@@ -95,8 +95,8 @@ const Users: React.FC<RouteComponentProps<PathParamsType>> = ({
         <NoElement elements='users' writeSomething={false} />
       )}
 
-      <div className={s.container}>
-        <div className={s.wrapUsers}>
+      <div className={s.wrapUsers}>
+        <div className={s.users}>
           {users.map((u: UserType) => (
             <User
               key={u.id}

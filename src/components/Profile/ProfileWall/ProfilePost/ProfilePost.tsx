@@ -107,7 +107,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
   return (
     <article
       className={cn(s.postContainer, {
-        [s.postDelete]:
+        [s.postContainerDelete]:
           isClickDeletePost || (isShowAnimation && postsForDelete.has(idPost)),
       })}
     >

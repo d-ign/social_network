@@ -26,7 +26,7 @@ const Search: React.FC<PropsType> = (props) => {
 
   return (
     <div className={s.container}>
-      <div className={s.wrap}>
+      <div className={s.searchWrap}>
         <div className={s.searchIcon}>
           <SearchIcon />
         </div>

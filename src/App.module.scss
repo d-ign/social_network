@@ -1,6 +1,11 @@
 @import './styles/colors';
 @import './styles/scrollbar.scss';
 
+html,
+body {
+  height: 100%;
+}
+
 .fon,
 .container {
   /* компенсация полосы прокрутки, когда её нет */
@@ -12,6 +17,10 @@
   margin: 0 auto;
   padding: 0 15px;
   max-width: 880px;
+
+  @media (max-width: 600px) {
+    min-height: 100vh;
+  }
 }
 
 .appWrapper {
@@ -28,6 +37,12 @@
   line-height: 25px;
   letter-spacing: 0.1px;
   color: $color-white;
+
+  @media (max-width: 600px) {
+    grid-template-areas: 'header' 'content' 'nav';
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px calc(100vh - 140px) 60px;
+  }
 }
 
 .appWrapperContent {
@@ -36,30 +51,18 @@
   padding: 20px 20px 0;
   width: 100%;
   max-width: 690px;
-  box-shadow: 0 5px 5px var(--color-darkBlueTransparent), 0 5px 5px var(--color-darkBlueTransparent);
+  box-shadow:
+    0 5px 5px var(--color-darkBlueTransparent),
+    0 5px 5px var(--color-darkBlueTransparent);
   background-color: var(--color-darkBlue);
-}
 
-@media (max-width: 600px) {
-  .container {
-    min-height: 100vh;
-  }
-
-  .appWrapper {
-    grid-template-areas: 'header' 'content' 'nav';
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px calc(100vh - 140px) 60px;
-  }
-
-  .appWrapperContent {
+  @media (max-width: 600px) {
     overflow-y: auto;
     border-radius: 10px;
     padding: 10px 10px 0;
   }
-}
 
-@media (max-height: 600px) {
-  .appWrapperContent {
+  @media (max-height: 600px) {
     padding: 15px 10px 0;
   }
 }

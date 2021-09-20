@@ -21,10 +21,10 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = ({
         [s.myMessageContainer]: myID === userId,
       })}
     >
-      <div className={s.avatarMedium}>
+      <div className={s.avatar_medium}>
         <Avatar photo={photo} size='medium' id={userId} />
       </div>
-      <div hidden className={s.avatarSmall}>
+      <div hidden className={s.avatar_small}>
         <Avatar photo={photo} size='small' id={userId} />
       </div>
 

@@ -71,7 +71,7 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
   return (
     <div ref={statusRef} className={s.container} title='Change status'>
       {editMode && (
-        <div className={s.wrap}>
+        <div className={s.statusEditMode}>
           <TextField
             autoFocus
             multiline
@@ -120,7 +120,7 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
       {isOwner && !editMode && (
         <div
           aria-hidden='true'
-          className={s.status}
+          className={s.statusMy}
           onClick={() => setEditMode(true)}
         >
           {status || <span className={s.noStatus}>Your status is empty</span>}

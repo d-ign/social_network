@@ -5,7 +5,7 @@
   height: $h;
 }
 
-.containerMainPlug {
+.container {
   @include wh(100%, 400px);
 
   display: flex;
@@ -15,7 +15,7 @@
   }
 }
 
-.columnLeftPlug {
+.columnLeft {
   @media (max-width: 770px) {
     display: flex;
     flex-direction: column;
@@ -23,24 +23,24 @@
   }
 }
 
-.columnRightPlug {
+.columnRight {
   @media (max-width: 770px) {
     margin-left: 0;
   }
 }
 
-.avatarPlug,
-.buttonPlug,
-.namePlug,
-.statusPlug,
-.titleOnePlug,
-.titleTwoPlug,
-.textPlug {
+.avatar,
+.button,
+.name,
+.status,
+.titleOne,
+.titleTwo,
+.text {
   border-radius: 5px;
   background-color: $color-greyTransparent;
 }
 
-.avatarPlug {
+.avatar {
   @include wh(132px, 132px);
 
   margin: 10px;
@@ -51,13 +51,13 @@
   }
 }
 
-.buttonPlug {
+.button {
   @include wh(130px, 34px);
 
   margin: 20px 10px 0;
 }
 
-.nameWrapPlug {
+.nameWrap {
   @media (max-width: 770px) {
     display: flex;
     justify-content: center;
@@ -65,20 +65,20 @@
   }
 }
 
-.namePlug {
+.name {
   @include wh(230px, 30px);
 
   margin: 0 0 10px 10px;
 }
 
-.statusPlug {
+.status {
   @include wh(150px, 25px);
 
   margin: 0 0 10px 10px;
 }
 
-.titleOnePlug,
-.titleTwoPlug {
+.titleOne,
+.titleTwo {
   @include wh(100px, 20px);
 
   margin: 33px 0 6px 30px;
@@ -88,11 +88,11 @@
   }
 }
 
-.titleTwoPlug {
+.titleTwo {
   margin: 21px 0 6px 30px;
 }
 
-.textPlug {
+.text {
   @include wh(160px, 20px);
 
   margin: 0 0 10px 50px;

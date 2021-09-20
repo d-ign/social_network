@@ -76,7 +76,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <main className={s.wrap}>
+    <main className={s.container}>
       <div className={s.body}>
         <h1>Log in</h1>
         <LoginReduxForm
@@ -110,7 +110,7 @@ const LoginForm: React.FC<
     <form onSubmit={handleSubmit}>
       <div className={s.loginBlockSubstrate}>
         <div className={s.loginBlock}>
-          <div className={s.row}>
+          <div className={s.wrapElementForm}>
             <Field
               component={RenderTextField}
               autoComplete='username'
@@ -120,7 +120,7 @@ const LoginForm: React.FC<
               fullWidth
             />
           </div>
-          <div className={s.row}>
+          <div className={s.wrapElementForm}>
             <Field
               component={RenderTextField}
               autoComplete='current-password'
@@ -130,7 +130,7 @@ const LoginForm: React.FC<
               fullWidth
             />
           </div>
-          <div className={cn(s.row, s.rowCheckbox)}>
+          <div className={cn(s.wrapElementForm, s.wrapCheckbox)}>
             <Field
               component={RenderCheckbox}
               name='rememberMe'
@@ -143,7 +143,7 @@ const LoginForm: React.FC<
             <Field component={RenderTextField} fullWidth name='captcha' />
           )}
 
-          <div className={s.row}>
+          <div className={s.wrapElementForm}>
             <Button
               type='submit'
               variant='contained'
@@ -155,16 +155,18 @@ const LoginForm: React.FC<
             </Button>
 
             {error && (
-              <article className={s.formError}>
+              <article className={s.error}>
                 {error === 'You are not authorized' ? (
-                  <div className={s.error}>
+                  <>
                     <p>1. You are either not authorized</p>
                     <p>or</p>
                     <p>
                       2. Please, unblock third party cookies or show all cookies
-                      (see browser settings)
+                      or add an exception for <br />
+                      <u>ignatov-ru.github.io</u>
+                      <br /> to resolve (see browser settings)
                     </p>
-                  </div>
+                  </>
                 ) : (
                   error
                 )}

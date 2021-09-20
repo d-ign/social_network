@@ -103,7 +103,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   }
 
   return (
-    <section className={s.containerMain}>
+    <section className={s.container}>
       <div className={s.columnLeft}>
         <div className={s.avatarWrap}>
           <Avatar photo={profile.photos.large} size='extra-large' id={null} />

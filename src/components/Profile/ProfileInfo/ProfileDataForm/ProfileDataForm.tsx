@@ -28,7 +28,7 @@ const Form: React.FC<
     <form onSubmit={handleSubmit} className={s.form}>
       <h1 className={s.titleForm}>Edit profile</h1>
 
-      <div className={s.wrap}>
+      <div className={s.block}>
         <FieldWithCounter
           renderContent={(handleInput, handleFocus, handleBlur) => (
             <Field
@@ -49,7 +49,7 @@ const Form: React.FC<
         />
       </div>
 
-      <div className={s.wrap}>
+      <div className={s.block}>
         <FieldWithCounter
           renderContent={(handleInput, handleFocus, handleBlur) => (
             <Field
@@ -71,7 +71,7 @@ const Form: React.FC<
         />
       </div>
 
-      <div className={s.wrap}>
+      <div className={s.block}>
         <Field
           component={RenderCheckbox}
           onChange={() => {
@@ -82,7 +82,7 @@ const Form: React.FC<
         />
       </div>
 
-      <div className={s.wrap}>
+      <div className={s.block}>
         <FieldWithCounter
           renderContent={(handleInput, handleFocus, handleBlur) => (
             <Field
@@ -104,7 +104,7 @@ const Form: React.FC<
         />
       </div>
 
-      <address className={s.wrap}>
+      <address className={s.block}>
         <div className={s.titleAllContacts}>Contacts:</div>
 
         {errorProfileContacts ? (

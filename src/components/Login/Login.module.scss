@@ -1,6 +1,6 @@
 @import '../../styles/colors';
 
-.wrap {
+.container {
   display: flex;
 }
 
@@ -22,16 +22,16 @@
   background-color: var(--color-darkBlueTransparent);
 }
 
-.row {
+.wrapElementForm {
   margin-top: 10px;
 }
 
-.rowCheckbox {
+.wrapCheckbox {
   margin: 10px 0;
   text-align: left;
 }
 
-.formError {
+.error {
   padding-top: 15px;
   color: $color-red;
 }

@@ -7,8 +7,37 @@
   width: 180px;
   height: 100%;
   min-height: calc(100vh - 70px);
-  box-shadow: 0 5px 5px var(--color-darkBlueTransparent), 0 5px 5px var(--color-darkBlueTransparent);
+  box-shadow:
+    0 5px 5px var(--color-darkBlueTransparent),
+    0 5px 5px var(--color-darkBlueTransparent);
   background-color: var(--color-darkBlue);
+
+  @media (max-width: 600px) {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 0;
+    width: 100%;
+    min-height: 1vh;
+    max-width: 565px;
+
+    .nav:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--color-cyan);
+    }
+  }
+
+  @media (max-width: 400px) {
+    padding: 5px;
+  }
 }
 
 .navLink {
@@ -20,12 +49,26 @@
   font-size: 18px;
   text-decoration: none;
   color: $color-white;
+
+  @media (max-width: 600px) {
+    flex-basis: 80px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: -4px;
+    padding: 5px 5px 0;
+    font-size: 12px;
+  }
 }
 
 .navLinkImg {
   padding-right: 8px;
   width: 36px;
   fill: $color-white;
+
+  @media (max-width: 600px) {
+    padding-right: 0;
+  }
 }
 
 .navLink:hover {
@@ -42,49 +85,4 @@
 
 .activeIcon {
   fill: var(--color-cyan);
-}
-
-@media (max-width: 600px) {
-  .nav {
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 0;
-    width: 100%;
-    min-height: 1vh;
-    max-width: 565px;
-  }
-
-  .nav:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--color-cyan);
-  }
-
-  .navLink {
-    flex-basis: 80px;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 0;
-    margin-bottom: -4px;
-    padding: 5px 5px 0;
-    font-size: 12px;
-  }
-
-  .navLinkImg {
-    padding-right: 0;
-  }
-}
-
-@media (max-width: 400px) {
-  .nav {
-    padding: 5px;
-  }
 }

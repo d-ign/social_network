@@ -131,7 +131,7 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = memo(
     return (
       <>
         {followed ? (
-          <div className={s.button}>
+          <div className={s.buttonFollow}>
             <Button
               onClick={unfollowHandler}
               disabled={isDisabledButton}
@@ -144,7 +144,7 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = memo(
         ) : id === authorizedUserID ? (
           <></>
         ) : (
-          <div className={s.button}>
+          <div className={s.buttonFollow}>
             <Button
               onClick={followHandler}
               disabled={isDisabledButton}

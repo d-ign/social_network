@@ -7,8 +7,8 @@ type PropsType = {
 }
 
 const ProfileData: React.FC<PropsType> = ({ profile }) => (
-  <div className={s.containerForm}>
-    <div className={s.wrap}>
+  <div className={s.container}>
+    <div className={s.block}>
       {profile.aboutMe && (
         <div className={s.aboutMe}>
           <div className={s.title}>About me:</div>
@@ -17,7 +17,7 @@ const ProfileData: React.FC<PropsType> = ({ profile }) => (
       )}
     </div>
 
-    <div className={s.wrap}>
+    <div className={s.block}>
       <div className={s.job}>
         <div className={s.title}>Job search:</div>
         {profile.lookingForAJob ? (
@@ -28,7 +28,7 @@ const ProfileData: React.FC<PropsType> = ({ profile }) => (
       </div>
     </div>
 
-    <div className={s.wrap}>
+    <div className={s.block}>
       {profile.lookingForAJobDescription && (
         <div className={s.job}>
           <div className={s.title}>Professional skills:</div>
@@ -37,7 +37,7 @@ const ProfileData: React.FC<PropsType> = ({ profile }) => (
       )}
     </div>
 
-    <div className={s.wrap}>
+    <div className={s.block}>
       {Object.values(profile.contacts).some((el) => el && el !== '') && (
         <div className={s.contacts}>
           <div className={s.title}>My contacts</div>
