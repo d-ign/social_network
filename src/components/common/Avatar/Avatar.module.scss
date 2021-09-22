@@ -14,18 +14,18 @@
   margin: 0 auto;
 }
 
-.avatar_small {
+.avatar_size_small {
   @include wh(25px, 25px);
 }
 
-.avatar_medium {
+.avatar_size_medium {
   @include wh(50px, 50px);
 }
 
-.avatar_large {
+.avatar_size_large {
   @include wh(80px, 80px);
 }
 
-.avatar_extraLarge {
+.avatar_size_extraLarge {
   @include wh(132px, 132px);
 }

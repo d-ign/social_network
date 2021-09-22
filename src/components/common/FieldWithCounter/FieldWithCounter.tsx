@@ -40,8 +40,8 @@ const FieldWithCounter: React.FC<PropsType> = (props) => {
         className={cn(
           s.count,
           { [s.countHidden]: isHiddenCounter },
-          { [s.count_yellow]: count >= maxLength - 10 },
-          { [s.count_red]: count === maxLength }
+          { [s.count_color_yellow]: count >= maxLength - 10 },
+          { [s.count_color_red]: count === maxLength }
         )}
       >
         {count} of {maxLength}

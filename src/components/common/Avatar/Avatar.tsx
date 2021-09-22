@@ -47,10 +47,10 @@ const AvatarBody: React.FC<PropsType> = ({ photo, size }) => {
       <div
         className={cn(
           s.avatar,
-          { [s.avatar_extraLarge]: size === 'extra-large' },
-          { [s.avatar_large]: size === 'large' },
-          { [s.avatar_medium]: size === 'medium' },
-          { [s.avatar_small]: size === 'small' }
+          { [s.avatar_size_extraLarge]: size === 'extra-large' },
+          { [s.avatar_size_large]: size === 'large' },
+          { [s.avatar_size_medium]: size === 'medium' },
+          { [s.avatar_size_small]: size === 'small' }
         )}
       >
         <img src={photo || unknown} alt='avatar' />

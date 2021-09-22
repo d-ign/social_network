@@ -14,7 +14,7 @@ const Name: React.FC<PropsType> = ({ id, name, size = 'normal' }) => {
   return (
     <span>
       <NavLink
-        className={cn(s.name, { [s.name_small]: size === 'small' })}
+        className={cn(s.name, { [s.name_size_small]: size === 'small' })}
         to={`/profile/${id || '/login'}`}
         replace
       >
