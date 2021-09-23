@@ -1,33 +1,5 @@
 @import '../../../styles/colors';
 
-.camera {
-  position: absolute;
-  left: 95px;
-  top: 95px;
-}
-
-.wrapImgCamera img {
-  margin: 0 auto;
-  width: 24px;
-  height: 24px;
-}
-
-.wrapImgCamera {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  background-color: var(--color-cyan);
-  cursor: pointer;
-}
-
-.wrapImgCamera:hover {
-  background-color: $color-grey;
-  transition: background-color 0.4s;
-}
-
 .container {
   display: flex;
 

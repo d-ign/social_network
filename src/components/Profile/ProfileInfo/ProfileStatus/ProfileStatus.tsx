@@ -118,12 +118,16 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
       {editMode && <div className={s.plug} />}
 
       {isOwner && !editMode && (
-        <div
-          aria-hidden='true'
-          className={s.statusMy}
-          onClick={() => setEditMode(true)}
-        >
-          {status || <span className={s.noStatus}>Your status is empty</span>}
+        // внешний div и input для работы с клавиатуры
+        <div aria-hidden='true' onChange={() => setEditMode(true)}>
+          <input className={s.visuallyHidden} />
+          <div
+            aria-hidden='true'
+            className={cn(s.statusMy, s.elementInteractive)}
+            onClick={() => setEditMode(true)}
+          >
+            {status || <span className={s.noStatus}>Your status is empty</span>}
+          </div>
         </div>
       )}
 

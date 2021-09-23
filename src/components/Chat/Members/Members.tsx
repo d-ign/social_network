@@ -42,18 +42,24 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
 
   return (
     <section hidden={!chatMembers.length} className={s.container}>
-      <div
-        aria-hidden='true'
-        className={cn(s.titleWrap, { [s.titleWrapDeployed]: isShowMembers })}
-        onClick={handleClickTitle}
-      >
-        <h1 className={s.title}>Members</h1>
-        <Icon
-          className={s.titleArrow}
-          path={mdiChevronDown}
-          title='ArrowShowMembers'
-          size='18px'
-        />
+      {/* внешний div и input для работы с клавиатуры */}
+      <div aria-hidden='true' onChange={handleClickTitle}>
+        <input className={s.visuallyHidden} />
+        <div
+          aria-hidden='true'
+          className={cn(s.titleWrap, s.elementInteractive, {
+            [s.titleWrapDeployed]: isShowMembers,
+          })}
+          onClick={handleClickTitle}
+        >
+          <h1 className={s.title}>Members</h1>
+          <Icon
+            className={s.titleArrow}
+            path={mdiChevronDown}
+            title='ArrowShowMembers'
+            size='18px'
+          />
+        </div>
       </div>
 
       <ButtonSort

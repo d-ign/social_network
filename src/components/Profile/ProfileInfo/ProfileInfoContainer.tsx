@@ -8,7 +8,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import SaveIcon from '@material-ui/icons/Save'
 import CloseIcon from '@material-ui/icons/Close'
 import s from './ProfileInfoContainer.module.scss'
-import camera from '../../../img/icons/camera.svg'
 
 import Avatar from '../../common/Avatar/Avatar'
 import Preloader from '../../common/Preloader/Preloader'
@@ -16,6 +15,7 @@ import ProfilePlug from './ProfilePlug/ProfilePlug'
 import ProfileStatus from './ProfileStatus/ProfileStatus'
 import ProfileData from './ProfileData/ProfileData'
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
+import ProfileInputChangeAvatar from './ProfileInputChangeAvatar/ProfileInputChangeAvatar'
 
 import { getTheme } from '../../../redux/selectors/app-selectors'
 import {
@@ -107,7 +107,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
       <div className={s.columnLeft}>
         <div className={s.avatarWrap}>
           <Avatar photo={profile.photos.large} size='extra-large' id={null} />
-          <ButtonChangeAvatar
+          <ProfileInputChangeAvatar
             isOwner={isOwner}
             isEditModeProfile={isEditModeProfile}
             handleChangeAvatar={handleChangeAvatar}
@@ -183,36 +183,6 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
     </section>
   )
 }
-
-type ButtonChangeAvatarPropsType = {
-  isOwner: boolean
-  isEditModeProfile: boolean
-  handleChangeAvatar: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
-
-const ButtonChangeAvatar: React.FC<ButtonChangeAvatarPropsType> = ({
-  isOwner,
-  isEditModeProfile,
-  handleChangeAvatar,
-}) => (
-  <>
-    {isOwner && !isEditModeProfile && (
-      <div className={s.camera} title='Change avatar'>
-        <label htmlFor='file_out'>
-          <div className={s.wrapImgCamera}>
-            <img src={camera} alt='change avatar' />
-          </div>
-          <input
-            id='file_out'
-            hidden
-            type='file'
-            onChange={handleChangeAvatar}
-          />
-        </label>
-      </div>
-    )}
-  </>
-)
 
 const ShowSuccessSavePortal = ({ children }: { children: React.ReactNode }) => {
   const el: HTMLDivElement = document.createElement('div')

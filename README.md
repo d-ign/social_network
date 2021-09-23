@@ -39,7 +39,7 @@
    - Сохранение темы в _Local Storage_
    <div align="center"><img src="./readme_content/gif/change_theme.gif" width='75%' /></div>
 
-&#120825; &#9989; **Отзывчиво-адаптивная вёрстка** для всех экранов от 320px
+&#120825; &#9989; **Отзывчивая вёрстка** (от desktop) для всех экранов до 320px с возможностью навигации по приложению **с клавиатуры**
    <div align="center"><img src="./readme_content/gif/adaptive.gif" width='75%' /></div>
 
 &#120826; &#9989; **Настроена маршрутизация** (_react-router-dom_)

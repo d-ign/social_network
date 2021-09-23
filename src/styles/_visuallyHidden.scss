@@ -1,0 +1,19 @@
+// стили для кастомизации браузерных элементов форм;
+// для их скрытия (visuallyHidden) и добавления своих (elementInteractive)
+
+.visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
+}
+
+.visuallyHidden:focus + .elementInteractive {
+  border-radius: 5px;
+  box-shadow: 0 0 0 0.1em $color-white;
+  background-color: $color-grey;
+}
