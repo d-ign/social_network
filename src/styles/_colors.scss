@@ -1,25 +1,25 @@
-$color-grey: #4f4f4f;
+$color-grey: hsla(0, 0%, 31%, 1);
 // фон подложки App, фон StatusProfile, tooltip in User
 
-$color-greyLight: #919191;
+$color-greyLight: hsla(0, 0%, 57%, 1);
 // titleContact in Profile,
 // noStatus в Profile, noFound in Users, noMessages in Chat и noPosts in Wall,
 // ползунок скроллбара, searchCount in Search, showAll in Chat
 
-$color-greyMedium: transparentize($color-grey, 0.6);
+$color-greyMedium: hsla(0, 0%, 31%, 0.4);
 // фон search (Users)
 
-$color-greyTransparent: transparentize(#5e5e5e, 0.7);
+$color-greyTransparent: hsla(0, 0%, 37%, 0.3);
 // posts in Wall, users in Users, navLink:hover (Navbar), search:hover (Users)
 
-$color-red: #f44336;
+$color-red: hsla(4, 90%, 58%, 1);
 // error, maxLength у InputCount в ProfileForm
 
-$color-yellow: #ebeb0c;
+$color-yellow: hsla(60, 90%, 48%, 1);
 // InputCount в ProfileForm
 
-$color-green: #4caf50;
+$color-green: hsla(122, 39%, 49%, 1);
 // successSave in InfoContainer (Profile)
 
-$color-white: #eee;
+$color-white: hsla(0, 0%, 93%, 1);
 // all main text
