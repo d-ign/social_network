@@ -4,18 +4,18 @@ import { useSelector } from 'react-redux'
 import cn from 'classnames'
 import Icon from '@mdi/react'
 import { mdiChevronDown } from '@mdi/js'
-import s from './Members.module.scss'
+import s from './ChatMembers.module.scss'
 
 import useResizeWindow from '../../../hooks/useResizeWindow'
 
-import ButtonSort from './ButtonSort/BurronSort'
+import ChatButtonSort from './ChatButtonSort/ChatBurronSort'
 import Avatar from '../../common/Avatar/Avatar'
 import Name from '../../common/Name/Name'
 
 import { getChatMembers } from '../../../redux/selectors/chat-selectors'
 import { ChatMessageAPIType, ChatMessageType } from '../../../types/types'
 
-const Members: React.FC<{ theme: string }> = ({ theme }) => {
+const ChatMembers: React.FC<{ theme: string }> = ({ theme }) => {
   const chatMembers = useSelector(getChatMembers)
 
   const [isShowAll, setIsShowAll] = useState(false)
@@ -62,7 +62,7 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
         </div>
       </div>
 
-      <ButtonSort
+      <ChatButtonSort
         theme={theme}
         isShowAll={isShowAll}
         isShowMembers={isShowMembers}
@@ -108,4 +108,4 @@ const Members: React.FC<{ theme: string }> = ({ theme }) => {
   )
 }
 
-export default Members
+export default ChatMembers

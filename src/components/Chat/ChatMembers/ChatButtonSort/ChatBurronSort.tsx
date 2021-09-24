@@ -4,7 +4,7 @@ import cn from 'classnames'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import { Button } from '@material-ui/core'
-import s from './ButtonSort.module.scss'
+import s from './ChatButtonSort.module.scss'
 
 type PropsType = {
   theme: string
@@ -14,7 +14,7 @@ type PropsType = {
   setIsReverseSort: Dispatch<SetStateAction<boolean>>
 }
 
-const ButtonSort: React.FC<PropsType> = (props) => {
+const ChatButtonSort: React.FC<PropsType> = (props) => {
   const { theme, isReverseSort, setIsReverseSort, isShowAll, isShowMembers } =
     props
 
@@ -48,4 +48,4 @@ const ButtonSort: React.FC<PropsType> = (props) => {
   )
 }
 
-export default ButtonSort
+export default ChatButtonSort

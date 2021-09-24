@@ -6,8 +6,8 @@ import SendIcon from '@material-ui/icons/Send'
 import { TextField } from '@material-ui/core'
 import s from './Chat.module.scss'
 
-import Members from './Members/Members'
-import Messages from './Messages/Messages'
+import ChatMembers from './ChatMembers/ChatMembers'
+import ChatMessages from './ChatMessages/ChatMessages'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
 import { getStatusWS } from '../../redux/selectors/chat-selectors'
@@ -39,8 +39,8 @@ const Chat: React.FC = () => {
         <div>Some error occured. Please, refresh the page...</div>
       )}
       <div className={s.membersAndMessages}>
-        <Messages />
-        <Members theme={theme} />
+        <ChatMessages />
+        <ChatMembers theme={theme} />
       </div>
       <AddMessageForm theme={theme} status={status} />
     </main>
