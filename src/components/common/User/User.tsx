@@ -1,21 +1,13 @@
-import React, { useCallback, useEffect, useState, memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState, memo } from 'react'
 
-import { Button } from '@material-ui/core'
-import RemoveIcon from '@material-ui/icons/Remove'
-import AddIcon from '@material-ui/icons/Add'
 import s from './User.module.scss'
 
 import useResizeWindow from '../../../hooks/useResizeWindow'
 
-import Avatar from '../Avatar/Avatar'
+import ButtonFollow from './ButtonFollow/ButtonFollow'
 import Tooltip from './Tooltip/Tooltip'
+import Avatar from '../Avatar/Avatar'
 import Name from '../Name/Name'
-
-import { getFollowingInProgress } from '../../../redux/selectors/users-selectors'
-import { getAuthorizedUserID } from '../../../redux/selectors/auth-selectors'
-import { follow, unfollow } from '../../../redux/reducers/users-reducer'
-import { getTheme } from '../../../redux/selectors/app-selectors'
 
 import { UserType } from '../../../types/types'
 
@@ -40,8 +32,8 @@ const User: React.FC<{ user: UserType }> = (props) => {
           <Avatar photo={photos.large} size='large' id={id} />
         </div>
         <div className={s.nameAndStatus}>
-          <NameWithTooltip id={id} name={name} symbolCount={symbolCount} />
-          <StatusWithTooltip status={status} symbolCount={symbolCount} />
+          <WithTooltip.Name id={id} name={name} symbolCount={symbolCount} />
+          <WithTooltip.Status status={status} symbolCount={symbolCount} />
         </div>
       </div>
       <ButtonFollow id={id} followed={followed} />
@@ -55,8 +47,13 @@ type NameWithTooltipPropsType = {
   symbolCount: number
 }
 
-const NameWithTooltip: React.FC<NameWithTooltipPropsType> = memo(
-  ({ id, name, symbolCount }) => (
+type StatusWithTooltipPropsType = {
+  status: string
+  symbolCount: number
+}
+
+const WithTooltip = {
+  Name: memo<NameWithTooltipPropsType>(({ id, name, symbolCount }) => (
     <>
       {name?.length > symbolCount ? (
         <Tooltip element={name}>
@@ -70,16 +67,9 @@ const NameWithTooltip: React.FC<NameWithTooltipPropsType> = memo(
         </div>
       )}
     </>
-  )
-)
+  )),
 
-type StatusWithTooltipPropsType = {
-  status: string
-  symbolCount: number
-}
-
-const StatusWithTooltip: React.FC<StatusWithTooltipPropsType> = memo(
-  ({ status, symbolCount }) => (
+  Status: memo<StatusWithTooltipPropsType>(({ status, symbolCount }) => (
     <>
       {status?.length > symbolCount ? (
         <Tooltip element={status}>
@@ -93,72 +83,7 @@ const StatusWithTooltip: React.FC<StatusWithTooltipPropsType> = memo(
         </div>
       )}
     </>
-  )
-)
-
-type ButtonFollowPropsType = {
-  followed: boolean
-  id: number
+  )),
 }
-
-const ButtonFollow: React.FC<ButtonFollowPropsType> = memo(
-  ({ id, followed }) => {
-    const stylesFollowedButton: React.CSSProperties = {
-      justifyContent: 'flex-end',
-      alignItems: 'flex-start',
-      flexBasis: '200px',
-    }
-
-    const followingInProgress = useSelector(getFollowingInProgress)
-    const authorizedUserID = useSelector(getAuthorizedUserID)
-    const theme = useSelector(getTheme)
-    const dispatch = useDispatch()
-
-    const followHandler = useCallback(
-      () => dispatch(follow(id)),
-      [dispatch, id]
-    )
-
-    const unfollowHandler = useCallback(
-      () => dispatch(unfollow(id)),
-      [dispatch, id]
-    )
-
-    const isDisabledButton = followingInProgress.some(
-      (idUser: number) => idUser === id
-    )
-
-    return (
-      <>
-        {followed ? (
-          <div className={s.buttonFollow}>
-            <Button
-              onClick={unfollowHandler}
-              disabled={isDisabledButton}
-              style={stylesFollowedButton}
-              startIcon={<RemoveIcon />}
-            >
-              Unfollow
-            </Button>
-          </div>
-        ) : id === authorizedUserID ? (
-          <></>
-        ) : (
-          <div className={s.buttonFollow}>
-            <Button
-              onClick={followHandler}
-              disabled={isDisabledButton}
-              color={theme === 'theme1' ? 'primary' : 'secondary'}
-              style={stylesFollowedButton}
-              startIcon={<AddIcon />}
-            >
-              Follow
-            </Button>
-          </div>
-        )}
-      </>
-    )
-  }
-)
 
 export default memo(User)
