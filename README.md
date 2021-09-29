@@ -19,14 +19,14 @@
     * Hooks (в том числе свои),
     * React.lazy,
     * Portal (в компоненте `ProfileInfoContainer`),
-    * Render-prop (ProfileDataForm)
+    * Render-prop (`ProfileDataForm`)
 - React-redux
 - React-router-dom
 - Redux
 - Redux-thunk
-- Redux-form (`Login`, `ProfileDataForm`)
+- Redux-form (компоненты `Login`, `ProfileDataForm`)
 - Typescript
-- WebSocket (чат)
+- WebSocket (`Chat`)
 - SCSS и Material UI (для стилизации элементов форм)
 - <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный REST API с помощью axios
 
