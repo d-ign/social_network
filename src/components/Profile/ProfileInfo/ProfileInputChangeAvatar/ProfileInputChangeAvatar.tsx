@@ -25,7 +25,10 @@ const ProfileInputChangeAvatar: React.FC<PropsType> = ({
             className={s.visuallyHidden}
             onChange={handleChangeAvatar}
           />
-          <span className={cn(s.wrapImg, s.elementInteractive)}>
+          <span
+            className={cn(s.wrapImg, s.elementInteractive)}
+            style={{ borderRadius: '50%' }}
+          >
             <img src={camera} alt='change avatar' />
           </span>
         </label>
