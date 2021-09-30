@@ -4,7 +4,7 @@ export const instance = axios.create({
   withCredentials: true, // цепляем cookie к запросу
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
   headers: {
-    'API-KEY': 'ddfbc45b-6923-498e-99d5-3a4897cbb31f',
+    'API-KEY': process.env.REACT_APP_API_KEY,
   },
 })
 
