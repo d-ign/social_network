@@ -1,4 +1,4 @@
-import React, { useCallback, memo } from 'react'
+import React, { useCallback, memo, useMemo, useEffect } from 'react'
 import debounce from 'lodash/debounce'
 
 import InputBase from '@material-ui/core/InputBase'
@@ -24,6 +24,17 @@ const Search: React.FC<PropsType> = (props) => {
     [searchUsers]
   )
 
+  const handleDebounce = useMemo(
+    () => debounce(handleChange, 600),
+    [handleChange]
+  )
+
+  useEffect(() => {
+    return function cleanup() {
+      handleDebounce.cancel()
+    }
+  })
+
   return (
     <div className={s.container}>
       <div className={s.searchWrap}>
@@ -44,7 +55,7 @@ const Search: React.FC<PropsType> = (props) => {
             placeholder='Search by name...'
             inputProps={{ 'aria-label': 'search' }}
             classes={{ input: classes.search }}
-            onInput={debounce(handleChange, 600)}
+            onInput={handleDebounce}
           />
         )}
       </div>
