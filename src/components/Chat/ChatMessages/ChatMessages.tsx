@@ -32,6 +32,7 @@ const ChatMessages: React.FC = () => {
 
   return (
     <section className={s.container} onScroll={handleScroll}>
+      <h1 className={s.visuallyHidden}>Chat messages</h1>
       {messages.length ? (
         messages
           .filter((m) => m.message.trim().length > 0)

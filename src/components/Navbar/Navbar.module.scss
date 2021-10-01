@@ -2,6 +2,10 @@
 
 .nav {
   grid-area: nav;
+}
+
+.nav ul {
+  margin: 0;
   border-radius: 10px 10px 0 0;
   padding: 15px;
   width: 180px;
@@ -40,10 +44,23 @@
   }
 }
 
+.nav ul li {
+  flex-basis: 80px;
+  list-style-type: none;
+  margin-top: 10px;
+
+  @media (max-width: 600px) {
+    margin-top: 0;
+  }
+}
+
+.nav ul li:nth-child(1) {
+  margin-top: 0;
+}
+
 .navLink {
   display: flex;
   justify-content: flex-start;
-  margin-top: 10px;
   border-radius: 5px;
   padding: 7px;
   font-size: 18px;
@@ -51,10 +68,8 @@
   color: $color-white;
 
   @media (max-width: 600px) {
-    flex-basis: 80px;
     flex-direction: column;
     align-items: center;
-    margin-top: 0;
     margin-bottom: -4px;
     padding: 5px 5px 0;
     font-size: 12px;
@@ -73,10 +88,6 @@
 
 .navLink:hover {
   background-color: $color-greyTransparent;
-}
-
-.navLink:nth-child(1) {
-  margin-top: 0;
 }
 
 .navLink.active {

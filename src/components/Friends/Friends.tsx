@@ -66,6 +66,7 @@ const Friends: React.FC = () => {
 
   return (
     <main className={s.wrapper}>
+      <h1 className={s.visuallyHidden}>Friends</h1>
       <Search
         termOfUrl=''
         searchUsers={searchUsers}

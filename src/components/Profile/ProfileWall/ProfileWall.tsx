@@ -125,6 +125,7 @@ const ProfileWall: React.FC = () => {
 
   return (
     <section className={s.container}>
+      <h1 className={s.visuallyHidden}>Profile wall</h1>
       <div className={s.wrapButtons}>
         <div
           hidden={postsForDelete.size === 0}

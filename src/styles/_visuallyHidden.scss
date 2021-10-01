@@ -1,5 +1,10 @@
-// стили для кастомизации браузерных элементов форм;
-// для их скрытия (visuallyHidden) и добавления своих (elementInteractive)
+@import './colors';
+
+// Стили для кастомизации браузерных элементов форм;
+// для их скрытия (visuallyHidden) и добавления своих (elementInteractive).
+
+// Также visuallyHidden скрывает заголовки, которые добавлены для
+// доступности, но которых нет в дизайне.
 
 .visuallyHidden {
   position: absolute;

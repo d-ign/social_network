@@ -115,6 +115,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
         <div className={s.columnLeft}>
           <div
             aria-hidden='true'
+            onClick={handleClickOnAvatar}
             className={cn(
               { [s.avatar]: !isSelectedPost },
               {
@@ -122,10 +123,9 @@ const ProfilePost: React.FC<PropsType> = (props) => {
               },
               {
                 [s.postSelectedTheme2]: isSelectedPost && theme === 'theme2',
-              }
+              },
+              s.elementInteractive
             )}
-            onClick={handleClickOnAvatar}
-            title='Select post to delete'
           >
             <Avatar
               photo={profile?.photos.large || unknown}

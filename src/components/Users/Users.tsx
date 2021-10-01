@@ -80,6 +80,7 @@ const Users: React.FC = () => {
 
   return (
     <main className={s.container}>
+      <h1 className={s.visuallyHidden}>Users</h1>
       <Search
         searchUsers={searchUsers}
         totalUsersCount={totalUsersCount}

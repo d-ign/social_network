@@ -104,6 +104,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
 
   return (
     <section className={s.container}>
+      <h1 className={s.visuallyHidden}>Profile information</h1>
       <div className={s.columnLeft}>
         <div className={s.avatarWrap}>
           <Avatar photo={profile.photos.large} size='extra-large' id={null} />

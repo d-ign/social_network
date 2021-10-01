@@ -42,9 +42,10 @@ const ChatMembers: React.FC<{ theme: string }> = ({ theme }) => {
 
   return (
     <section hidden={!chatMembers.length} className={s.container}>
+      <h1 className={s.visuallyHidden}>Chat members</h1>
       {/* внешний div и input для работы с клавиатуры */}
       <div aria-hidden='true' onChange={handleClickTitle}>
-        <input className={s.visuallyHidden} />
+        <input className={cn(s.visuallyHidden, s.inputHiddenBeforeFolding)} />
         <div
           aria-hidden='true'
           className={cn(s.titleWrap, s.elementInteractive, {
@@ -91,14 +92,14 @@ const ChatMembers: React.FC<{ theme: string }> = ({ theme }) => {
             ))}
 
         {chatMembers.length > 2 && !isShowAll ? (
-          <div className={s.showAllWrap}>
-            <span
-              aria-hidden='true'
-              className={s.showAll}
+          <div className={s.buttonShowAllWrap}>
+            <button
+              type='button'
+              className={s.buttonShowAll}
               onClick={() => setIsShowAll(true)}
             >
               show all {chatMembers.length} ...
-            </span>
+            </button>
           </div>
         ) : (
           ''

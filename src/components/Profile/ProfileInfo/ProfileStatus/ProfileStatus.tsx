@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Button, TextField } from '@material-ui/core'
@@ -18,6 +24,73 @@ type PropsType = {
 }
 
 const ProfileStatus = ({ isOwner }: PropsType) => {
+  const status = useSelector(getStatus)
+
+  const [editMode, setEditMode] = useState(false)
+  const [statusLocal, setStatusLocal] = useState(status)
+
+  useEffect(() => {
+    setStatusLocal(status)
+  }, [status])
+
+  const statusRef = useRef<HTMLDivElement | null>(null)
+  useOutsideAlerter(statusRef, setEditMode)
+
+  return (
+    <div ref={statusRef} className={s.container}>
+      {isOwner && !editMode && (
+        <Status status={status} setEditMode={setEditMode} />
+      )}
+
+      {!isOwner && status && <div className={s.statusNotMy}>{status}</div>}
+
+      {editMode && (
+        <StatusForm
+          statusLocal={statusLocal}
+          setStatusLocal={setStatusLocal}
+          setEditMode={setEditMode}
+        />
+      )}
+    </div>
+  )
+}
+
+type StatusPropsType = {
+  status: string
+  setEditMode: Dispatch<SetStateAction<boolean>>
+}
+
+const Status: React.FC<StatusPropsType> = ({ status, setEditMode }) => {
+  const handleClick = () => {
+    setEditMode(true)
+  }
+
+  return (
+    // внешний div и input для работы с клавиатуры
+    <div title='Change status' aria-hidden='true' onChange={handleClick}>
+      <input className={s.visuallyHidden} aria-label='Change status profile' />
+      <div
+        aria-hidden='true'
+        className={cn(s.statusMy, s.elementInteractive)}
+        onClick={handleClick}
+      >
+        {status || <span className={s.noStatus}>Your status is empty</span>}
+      </div>
+    </div>
+  )
+}
+
+type StatusFormPropsType = {
+  statusLocal: string
+  setStatusLocal: Dispatch<SetStateAction<string>>
+  setEditMode: Dispatch<SetStateAction<boolean>>
+}
+
+const StatusForm: React.FC<StatusFormPropsType> = ({
+  statusLocal,
+  setStatusLocal,
+  setEditMode,
+}) => {
   const classes = useStyles()
 
   const stylesSaveAndButton: React.CSSProperties = {
@@ -28,20 +101,12 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
     width: '100%',
   }
 
-  const status = useSelector(getStatus)
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
-  const [editMode, setEditMode] = useState(false)
   const [isEditInputStatusForm, setIsEditInputStatusForm] = useState(false)
-  const [statusLocal, setStatusLocal] = useState(status)
-
   const [isHiddenCounter, setIsHiddenCounter] = useState(true)
   const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    setStatusLocal(status)
-  }, [status])
 
   const handleFocusInput = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.select()
@@ -65,74 +130,52 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
     setEditMode(false)
   }
 
-  const statusRef = useRef<HTMLDivElement | null>(null)
-  useOutsideAlerter(statusRef, setEditMode)
-
   return (
-    <div ref={statusRef} className={s.container} title='Change status'>
-      {editMode && (
-        <div className={s.statusEditMode}>
-          <TextField
-            autoFocus
-            multiline
-            fullWidth
-            name='newStatusText'
-            placeholder='Your status...'
-            inputProps={{ maxLength: 300 }}
-            className={classes.status}
-            color={theme === 'theme1' ? 'primary' : 'secondary'}
-            value={statusLocal}
-            onChange={handleChangeInput}
-            onFocus={handleFocusInput}
-            onBlur={handleBlurInput}
-          />
+    <>
+      <div className={s.statusEditMode}>
+        <TextField
+          autoFocus
+          multiline
+          fullWidth
+          name='newStatusText'
+          placeholder='Your status...'
+          inputProps={{ maxLength: 300 }}
+          className={classes.status}
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
+          value={statusLocal}
+          onChange={handleChangeInput}
+          onFocus={handleFocusInput}
+          onBlur={handleBlurInput}
+        />
 
-          <div className={s.buttonAndCounter}>
-            <div className={s.buttonWrap}>
-              <Button
-                onClick={handleSaveStatus}
-                disabled={!isEditInputStatusForm}
-                variant='contained'
-                color={theme === 'theme1' ? 'primary' : 'secondary'}
-                style={stylesSaveAndButton}
-                startIcon={<SaveIcon />}
-              >
-                Save
-              </Button>
-            </div>
-
-            <span
-              className={cn(
-                stylesField.count,
-                { [stylesField.countHidden]: isHiddenCounter },
-                { [stylesField.countYellow]: count >= 290 },
-                { [stylesField.countRed]: count === 300 }
-              )}
+        <div className={s.buttonAndCounter}>
+          <div className={s.buttonWrap}>
+            <Button
+              onClick={handleSaveStatus}
+              disabled={!isEditInputStatusForm}
+              variant='contained'
+              color={theme === 'theme1' ? 'primary' : 'secondary'}
+              style={stylesSaveAndButton}
+              startIcon={<SaveIcon />}
             >
-              {count} of 300
-            </span>
+              Save
+            </Button>
           </div>
-        </div>
-      )}
 
-      {editMode && <div className={s.plug} />}
-
-      {isOwner && !editMode && (
-        // внешний div и input для работы с клавиатуры
-        <div aria-hidden='true' onChange={() => setEditMode(true)}>
-          <input className={s.visuallyHidden} />
-          <div
-            aria-hidden='true'
-            className={cn(s.statusMy, s.elementInteractive)}
-            onClick={() => setEditMode(true)}
+          <span
+            className={cn(
+              stylesField.count,
+              { [stylesField.countHidden]: isHiddenCounter },
+              { [stylesField.countYellow]: count >= 290 },
+              { [stylesField.countRed]: count === 300 }
+            )}
           >
-            {status || <span className={s.noStatus}>Your status is empty</span>}
-          </div>
+            {count} of 300
+          </span>
         </div>
-      )}
-
-      {!isOwner && status && <div className={s.statusNotMy}>{status}</div>}
-    </div>
+      </div>
+      <div className={s.plug} />
+    </>
   )
 }
 

@@ -11,6 +11,14 @@
   @extend %containerTemplate;
 }
 
+.inputHiddenBeforeFolding {
+  display: none;
+
+  @media (max-width: 760px) {
+    display: inline-block;
+  }
+}
+
 .titleWrap {
   display: flex;
   align-items: center;
@@ -78,16 +86,19 @@
   text-overflow: ellipsis;
 }
 
-.showAllWrap {
+.buttonShowAllWrap {
   text-align: center;
 }
 
-.showAll {
+.buttonShowAll {
+  border: 0 none transparent;
+  padding: 0;
   color: $color-greyLight;
+  background-color: transparent;
   cursor: pointer;
 }
 
-.showAll:hover {
+.buttonShowAll:hover {
   text-decoration: underline;
 }
 

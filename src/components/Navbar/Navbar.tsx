@@ -29,34 +29,37 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={s.nav}>
-      {pages.map((p: PageType) => (
-        <NavLink
-          key={p.id}
-          exact={p.exact}
-          to={p.to}
-          activeClassName={s.active}
-          className={s.navLink}
-          replace
-        >
-          <svg
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            className={cn(s.navLinkImg, {
-              [s.activeIcon]: pathname === p.to,
-            })}
-          >
-            {/\/profile*/.test(p.to)
-              ? profilePath
-              : p.to === '/chat'
-              ? chatPath
-              : p.to === '/users'
-              ? usersPath
-              : friendsPath}
-          </svg>
-          {p.name}
-        </NavLink>
-      ))}
+      <ul>
+        {pages.map((p: PageType) => (
+          <li key={p.id}>
+            <NavLink
+              exact={p.exact}
+              to={p.to}
+              activeClassName={s.active}
+              className={s.navLink}
+              replace
+            >
+              <svg
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                className={cn(s.navLinkImg, {
+                  [s.activeIcon]: pathname === p.to,
+                })}
+              >
+                {/\/profile*/.test(p.to)
+                  ? profilePath
+                  : p.to === '/chat'
+                  ? chatPath
+                  : p.to === '/users'
+                  ? usersPath
+                  : friendsPath}
+              </svg>
+              {p.name}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
     </nav>
   )
 }
