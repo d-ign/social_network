@@ -32,7 +32,7 @@ import {
 
 import { ProfileType } from '../../../types/types'
 
-// при переходе на страницу профиля скрол прокрутится вверх до имени
+// when going to the profile page, scroll up to the name
 function ScrollToTopOnMount() {
   useEffect(() => {
     const fullName = document.getElementById('scrollToTopOnMount')
@@ -179,7 +179,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
         )}
       </div>
 
-      {/* при переходе на старницу профиля скрол обнулится */}
+      {/* when you go to the profile page, the scroll will be reset */}
       <ScrollToTopOnMount />
     </section>
   )

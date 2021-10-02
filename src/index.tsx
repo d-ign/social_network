@@ -17,15 +17,15 @@ import App from './App'
 let theme = createTheme({
   palette: {
     type: 'dark',
-    // цвет главных кнопок, активных ссылок в навигации,
-    // декоративных линий, рамок у форм
+    // color of main buttons, active links in navigation,
+    // decorative lines, borders for forms elements
     primary: {
       main: '#00bcd4',
-      // 1-ая тема, синий цвет
+      // 1st theme, blue
     },
     secondary: {
       main: '#00d482',
-      // 2-ая тема, зелёный цвет
+      // 2nd theme, green
     },
   },
 })

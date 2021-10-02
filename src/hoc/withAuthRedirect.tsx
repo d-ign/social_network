@@ -11,7 +11,7 @@ type MapStatePropsType = {
   isAuth: boolean
 }
 
-// WCP - пропсы WrappedComponent
+// WCP = WrappedComponentProps
 export default function withAuthRedirect<WCP>(
   WrappedComponent: React.ComponentType<WCP>
 ) {

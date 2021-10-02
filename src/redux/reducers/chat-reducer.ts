@@ -27,7 +27,7 @@ const chatReducer = (
           ...state.messages,
           ...action.payload.messages.map((m) => ({ ...m, id: v1() })),
         ].filter((item, index, array) => index >= array.length - 100),
-        // TODO v1() - вызов не чистой функции
+        // TODO v1() = impure function call
       }
     }
     case 'sn/chat/MESSAGES_CLEARED': {

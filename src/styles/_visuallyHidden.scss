@@ -1,10 +1,10 @@
 @import './colors';
 
-// Стили для кастомизации браузерных элементов форм;
-// для их скрытия (visuallyHidden) и добавления своих (elementInteractive).
+// Styles for customizing browser form elements;
+// to hide them (visuallyHidden) and add our own (elementInteractive).
 
-// Также visuallyHidden скрывает заголовки, которые добавлены для
-// доступности, но которых нет в дизайне.
+// Also visuallyHidden hides the headers that are added for accessibility,
+// but which is not in the design.
 
 .visuallyHidden {
   position: absolute;

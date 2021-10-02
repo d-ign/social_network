@@ -1,10 +1,10 @@
 import { FormAction, stopSubmit } from 'redux-form'
-import { ResultCodesEnum, ResultCodeForCaptcha } from '../../api/api'
-import authAPI from '../../api/auth-api'
-import securityAPI from '../../api/security-api'
-
 import { BaseThunkType, InferActionsTypes } from '../redux-store'
+
+import authAPI from '../../api/auth-api'
 import profileAPI from '../../api/profile-api'
+import securityAPI from '../../api/security-api'
+import { ResultCodesEnum, ResultCodeForCaptcha } from '../../api/api'
 
 const initialState = {
   userID: null as number | null,
@@ -20,18 +20,12 @@ const authReducer = (
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {
+    case 'sn/auth/SET_MY_PHOTO':
     case 'sn/auth/SET_USER_DATA':
     case 'sn/auth/GET_CAPTCHA_URL_SUCCESS': {
       return {
         ...state,
         ...action.payload,
-      }
-    }
-    case 'sn/auth/SET_MY_PHOTO': {
-      return {
-        ...state,
-        // @ts-ignore
-        myPhoto: action.payload.photo,
       }
     }
     default:
@@ -60,9 +54,9 @@ const actions = {
     payload: { captchaURL } as const,
   }),
 
-  setMyPhoto: (photo: string | null) => ({
+  setMyPhoto: (myPhoto: string | null) => ({
     type: 'sn/auth/SET_MY_PHOTO',
-    payload: { photo } as const,
+    payload: { myPhoto } as const,
   }),
 }
 
@@ -79,7 +73,7 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     const action = stopSubmit('loginForm', {
       _error: message.length > 0 ? message[0] : 'Some error',
     })
-    // Some error - на всякий случай, если с сервера придёт пустое сообщение при ошибке
+    // Some error - if an empty message comes from the server
     dispatch(action)
   }
 
@@ -115,8 +109,7 @@ export const loginThunk =
       const action = stopSubmit('loginForm', {
         _error: message.length > 0 ? message[0] : 'Some error',
       })
-      // Some error - на всякий случай, если с сервера придёт пустое сообщение
-      // при ошибке
+      // Some error - if an empty message comes from the server
       dispatch(action)
     }
 

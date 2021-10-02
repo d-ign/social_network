@@ -1,25 +1,26 @@
 $color-grey: hsla(0, 0%, 31%, 1);
-// фон подложки App, фон StatusProfile, tooltip in User
+// background: App, ProfileStatus, Tooltip (User)
 
 $color-greyLight: hsla(0, 0%, 57%, 1);
-// titleContact in Profile,
-// noStatus в Profile, noFound in Users, noMessages in Chat и noPosts in Wall,
-// ползунок скроллбара, searchCount in Search, showAll in Chat
+// text: titleContact (Profile), searchCount (Search), showAll (Chat),
+// noStatus (ProfileStatus), noPosts (ProfileWall), noFound (Users),
+// noMessages (Chat) and scrollbar slider
 
 $color-greyMedium: hsla(0, 0%, 31%, 0.4);
-// фон search (Users)
+// background: Search (Users, Friends)
 
 $color-greyTransparent: hsla(0, 0%, 37%, 0.3);
-// posts in Wall, users in Users, navLink:hover (Navbar), search:hover (Users)
+// background: posts (Wall), users (Users),
+// navLink:hover (Navbar), search:hover (Users)
 
 $color-red: hsla(4, 90%, 58%, 1);
-// error, maxLength у InputCount в ProfileForm
+// text: error, maxLength (FieldWithCounter)
 
 $color-yellow: hsla(60, 90%, 48%, 1);
-// InputCount в ProfileForm
+// text: maxLength minus 10 (FieldWithCounter)
 
 $color-green: hsla(122, 39%, 49%, 1);
-// successSave in InfoContainer (Profile)
+// text: successSave (ProfileInfoContainer)
 
 $color-white: hsla(0, 0%, 93%, 1);
 // all main text

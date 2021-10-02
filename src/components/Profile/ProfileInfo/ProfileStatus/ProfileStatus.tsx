@@ -66,7 +66,7 @@ const Status: React.FC<StatusPropsType> = ({ status, setEditMode }) => {
   }
 
   return (
-    // внешний div и input для работы с клавиатуры
+    // outer div and input for keyboard operation
     <div title='Change status' aria-hidden='true' onChange={handleClick}>
       <input className={s.visuallyHidden} aria-label='Change status profile' />
       <div

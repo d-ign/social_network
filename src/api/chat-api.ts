@@ -27,8 +27,6 @@ const openHandler = () => {
 
 const errorHandler = () => {
   notifySubscribersAboutStatus('error')
-  // eslint-disable-next-line no-console
-  console.error('REFRESH PAGE')
 }
 
 const cleanUp = () => {
@@ -82,10 +80,7 @@ const chatAPI = {
 
 type EventsCustomNamesType = 'messages-received' | 'status-changed'
 
-type MessagesReceivedSubscriberType = (
-  messages: Array<ChatMessageAPIType>
-) => void
-
+type MessagesReceivedSubscriberType = (messages: ChatMessageAPIType[]) => void
 type StatusChangedSubscriberType = (status: StatusWSType) => void
 
 export default chatAPI

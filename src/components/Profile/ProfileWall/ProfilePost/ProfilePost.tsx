@@ -71,7 +71,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
 
   useEffect(() => {
     if (postsForDelete.size === 0) {
-      // возвращаем все Х и лайки, если больше нет выбранных постов
+      // return all X and likes if there are no more selected posts
       setIsHiddenAllLikeAndX(false)
     }
   }, [postsForDelete, setIsHiddenAllLikeAndX])
@@ -83,7 +83,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
       dispatch(actions.setPostForDeleting(idPost))
     } else {
       if (postsForDelete.size === 0) {
-        // не возвращаем все Х и лайки, если ещё выбраны какие-то посты
+        // do not return all X and likes, if some posts are still selected
         setIsHiddenAllLikeAndX(false)
       }
       setIsSelectedPost(false)

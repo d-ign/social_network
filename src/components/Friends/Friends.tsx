@@ -50,7 +50,7 @@ const Friends: React.FC = () => {
     setIsFetchingUsers(true)
   }, [pathname, dispatch])
 
-  // динамическая пагинация
+  // dynamic pagination
   const lastElement = React.useRef<HTMLDivElement>(null)
   const [isFetchingUsers, setIsFetchingUsers] = useState(false)
 

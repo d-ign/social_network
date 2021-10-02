@@ -43,7 +43,7 @@ const ChatMembers: React.FC<{ theme: string }> = ({ theme }) => {
   return (
     <section hidden={!chatMembers.length} className={s.container}>
       <h1 className={s.visuallyHidden}>Chat members</h1>
-      {/* внешний div и input для работы с клавиатуры */}
+      {/* outer div and input for keyboard operation */}
       <div aria-hidden='true' onChange={handleClickTitle}>
         <input className={cn(s.visuallyHidden, s.inputHiddenBeforeFolding)} />
         <div

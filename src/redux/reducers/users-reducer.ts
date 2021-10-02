@@ -124,15 +124,15 @@ export const getUsers =
       friend
     )
 
-    // первичная загрузка
+    // primary download
     if (term.length === 0 && page === 1) {
       dispatch(actions.setUsers(response.items))
     }
-    // получение больше пользователей
+    // get more users
     if (page > 1) {
       dispatch(actions.addUsers(response.items))
     }
-    // первичный поиск
+    // primary search
     if (term.length > 0 && page === 1) {
       dispatch(actions.clearUsers())
       dispatch(actions.setUsers(response.items))

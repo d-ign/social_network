@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 
-// для устройств с мышью
+// for devices with mouse
 @media (hover: hover) and (pointer: fine) {
   .avatar:hover:before,
   .postSelectedTheme1:before,
@@ -70,8 +70,9 @@
   }
 }
 
-// для сенсорных экранов (исп. focus вместо hover),
-// focus - чтобы исчезала галочка после отмены выбора на сенсорном экране
+// for touch screens (use 'focus' instead of 'hover'),
+// 'focus' is needed so that the checkmark disappears after canceling
+// the selection on the touch screen
 @media (hover: none) and (pointer: coarse) {
   .avatar:focus:before,
   .postSelectedTheme1:before,

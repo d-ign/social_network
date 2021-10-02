@@ -43,9 +43,9 @@ export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<
   A
 >
 
-// @ts-ignore
+// @ts-ignore because of Redux DevTools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-// @ts-ignore
+
 const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunkMiddleware))

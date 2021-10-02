@@ -58,12 +58,12 @@ const ProfileWall: React.FC = () => {
   )
 
   const handleDeleteSelectedPost = () => {
-    // начало анимации удаления
+    // start delete animation
     setIsShowAnimation(true)
 
     setIsSelectedAllPosts(false)
 
-    // возвращаем Х и лайки у всех постов
+    // return X and likes on all posts
     setIsHiddenAllLikeAndX(false)
 
     setTimeout(() => {
@@ -72,7 +72,7 @@ const ProfileWall: React.FC = () => {
       })
       dispatch(actions.clearPostsForDeleting())
 
-      // конец анимации удаления
+      // end of delete animation
       setIsShowAnimation(false)
     }, 600)
   }

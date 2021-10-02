@@ -61,9 +61,8 @@ const Search: React.FC<PropsType> = (props) => {
       </div>
       <div className={s.searchCount}>
         Total: {totalUsersCount.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ')}
-        {/* добавление пробела между числами: (?=pattern)+ - жадное
-          повторение последнего шаблона один или несколько раз
-          до конца строки $ */}
+        {/* adding space between numbers: (? = pattern) + - greedy repeating
+        the last pattern one or more times to the end of the line $ */}
       </div>
     </div>
   )

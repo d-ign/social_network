@@ -14,7 +14,8 @@ const useObserver = (
     if (observer.current) observer.current.disconnect()
 
     const _callback = (entries: IntersectionObserverEntry[]) => {
-      // при исчезании ref из зоны видимости callback отрабатывать не будет
+      // when the ref disappears from the visibility zone,
+      // the callback will not work
       if (entries[0].isIntersecting && canLoad) {
         callback()
       }

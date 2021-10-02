@@ -62,7 +62,7 @@ const profileReducer = (
     }
     case 'sn/profile/ADD_POST': {
       const newPost = {
-        idPost: Date.now(), // TODO вызов не чистой функции
+        idPost: Date.now(), // TODO impure function call
         message: action.newPostText,
         likesCount: 0,
         isLikeClick: false,
@@ -164,19 +164,19 @@ const profileReducer = (
 export const actions = {
   initializePosts: (posts: Array<PostType>) =>
     ({ type: 'sn/profile/INITIALIZE_POSTS', posts } as const),
-  // удаление одного поста
+  // delete one post
   addPost: (newPostText: string) =>
     ({ type: 'sn/profile/ADD_POST', newPostText } as const),
   deletePost: (idPost: number) =>
     ({ type: 'sn/profile/DELETE_POST', idPost } as const),
-  // удаление нескольких постов
+  // delete multiple posts
   setPostForDeleting: (idPost: number) =>
     ({ type: 'sn/profile/SET_POST_FOR_DELETING', idPost } as const),
   deletePostForDeleting: (idPost: number) =>
     ({ type: 'sn/profile/DELETE_POST_FOR_DELETING', idPost } as const),
   clearPostsForDeleting: () =>
     ({ type: 'sn/profile/CLEAR_POSTS_FOR_DELETING' } as const),
-  // лайк
+  // like
   setLikeOnPost: (idPost: number) =>
     ({ type: 'sn/profile/SET_LIKE_ON_POST', idPost } as const),
   deleteLikeOnPost: (idPost: number) =>
@@ -242,7 +242,7 @@ export const saveProfileThunk =
     }
 
     if (response.resultCode === ResultCodesEnum.Error) {
-      // заготовка для показа ошибки конкретного поля
+      // a template for showing the error of a specific field:
       // const key = response.data.messages[0]
       // .match(/Contacts->(\w+)/)[1].toLowerCase()
       // dispatch(stopSubmit('editProfile', {

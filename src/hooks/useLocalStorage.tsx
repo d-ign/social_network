@@ -1,31 +1,44 @@
-import { useEffect } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { PostType } from '../types/types'
+import { PostType, ThemeType } from '../types/types'
+
+type ActionPostsType = (posts: Array<PostType>) => {
+  type: string
+  posts: Array<PostType>
+}
+
+type ActionThemeType = (theme: ThemeType) => {
+  type: string
+  theme: ThemeType
+}
 
 const useLocalStorage = (
   key: string,
   value: string | PostType[],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  action: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  callback?: any
+  action: ActionPostsType | ActionThemeType,
+  callback?: Dispatch<SetStateAction<ThemeType>>
 ) => {
   const dispatch = useDispatch()
 
-  // чтение и применение темы из Local Storage
+  // reading and applying theme from Local Storage
   useEffect(() => {
-    // @ts-ignore
-    const arr = JSON.parse(localStorage.getItem(key))
+    let currentValue
+    const currentValueJson = localStorage.getItem(key)
 
-    if (arr) {
-      dispatch(action(arr))
-      if (callback) callback(arr)
+    if (currentValueJson) {
+      currentValue = JSON.parse(currentValueJson)
+    }
+
+    if (currentValue) {
+      dispatch(action(currentValue))
+      if (callback) callback(currentValue)
     }
   }, [action, key, callback, dispatch])
 
-  // запись темы в Local Storage
+  // writing a theme to Local Storage
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value))
   }, [key, value])
 }
+
 export default useLocalStorage

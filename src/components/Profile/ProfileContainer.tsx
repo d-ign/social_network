@@ -41,7 +41,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
 
   componentDidUpdate(prevProps: PropsType) {
     const { match } = this.props
-    // рендер при переходе с одной страницы на другую
+    // render when switching from one page to another
     if (match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile()
     }
@@ -55,6 +55,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
   }
 
   refreshProfile() {
+    // getUserProfile and getStatus are already declared in the upper scope
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const { match, authorizedUserID, history, getUserProfile, getStatus } =
       this.props
