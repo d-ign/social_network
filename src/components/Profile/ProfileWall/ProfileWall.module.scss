@@ -10,48 +10,6 @@
   max-width: 620px;
 }
 
-.wrapButtons {
-  margin: 0 auto;
-  border-radius: 10px;
-  max-width: 500px;
-  background-color: var(--color-cyanDark);
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 61px;
-}
-
-.buttonDesktop {
-  @media (max-width: 665px) {
-    display: none;
-  }
-
-  @media (max-width: 600px) {
-    display: block;
-  }
-
-  @media (max-width: 460px) {
-    display: none;
-  }
-}
-
-.buttonMobile {
-  @media (max-width: 665px) {
-    display: block;
-  }
-
-  @media (max-width: 600px) {
-    display: none;
-  }
-
-  @media (max-width: 460px) {
-    display: block;
-  }
-}
-
 .form {
   display: flex;
   align-items: center;

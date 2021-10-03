@@ -12,14 +12,12 @@ import cn from 'classnames'
 import IconButton from '@material-ui/core/IconButton'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CloseIcon from '@material-ui/icons/Close'
-import unknown from '../../../../img/no_photo.svg'
 import s from './ProfilePost.module.scss'
 
-import Avatar from '../../../common/Avatar/Avatar'
+import ProfileAvatarPost from './ProfileAvatarPost/ProfileAvatarPost'
 import Name from '../../../common/Name/Name'
 
 import { getPostsForDelete } from '../../../../redux/selectors/profile-selectors'
-import { getTheme } from '../../../../redux/selectors/app-selectors'
 import { actions } from '../../../../redux/reducers/profile-reducer'
 
 import { PostType, ProfileType } from '../../../../types/types'
@@ -49,9 +47,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     setIsHiddenAllLikeAndX,
   } = props
 
-  const theme = useSelector(getTheme)
   const postsForDelete = useSelector(getPostsForDelete)
-  const dispatch = useDispatch()
 
   const [isClickDeletePost, setIsClickDeletePost] = useState(false)
   const [isSelectedPost, setIsSelectedPost] = useState(false)
@@ -76,34 +72,6 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     }
   }, [postsForDelete, setIsHiddenAllLikeAndX])
 
-  const handleClickOnAvatar = () => {
-    if (!isSelectedPost) {
-      setIsHiddenAllLikeAndX(true)
-      setIsSelectedPost(true)
-      dispatch(actions.setPostForDeleting(idPost))
-    } else {
-      if (postsForDelete.size === 0) {
-        // do not return all X and likes, if some posts are still selected
-        setIsHiddenAllLikeAndX(false)
-      }
-      setIsSelectedPost(false)
-      dispatch(actions.deletePostForDeleting(idPost))
-    }
-  }
-
-  const handleDeletePost = useCallback(() => {
-    setIsClickDeletePost(true)
-    setTimeout(() => handleDeleteOnePost(idPost), 300)
-  }, [handleDeleteOnePost, idPost])
-
-  const handleSetLike = useCallback(() => {
-    if (!isLikeClick) {
-      dispatch(actions.setLikeOnPost(idPost))
-    } else {
-      dispatch(actions.deleteLikeOnPost(idPost))
-    }
-  }, [dispatch, idPost, isLikeClick])
-
   return (
     <article
       className={cn(s.postContainer, {
@@ -113,26 +81,14 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     >
       <div className={cn(s.post, { [s.postSelected]: isSelectedPost })}>
         <div className={s.columnLeft}>
-          <div
-            aria-hidden='true'
-            onClick={handleClickOnAvatar}
-            className={cn(
-              { [s.avatar]: !isSelectedPost },
-              {
-                [s.postSelectedTheme1]: isSelectedPost && theme === 'theme1',
-              },
-              {
-                [s.postSelectedTheme2]: isSelectedPost && theme === 'theme2',
-              },
-              s.elementInteractive
-            )}
-          >
-            <Avatar
-              photo={profile?.photos.large || unknown}
-              size='medium'
-              id={profile?.userId || null}
-            />
-          </div>
+          <ProfileAvatarPost
+            idPost={idPost}
+            profile={profile}
+            postsForDelete={postsForDelete}
+            isSelectedPost={isSelectedPost}
+            setIsSelectedPost={setIsSelectedPost}
+            setIsHiddenAllLikeAndX={setIsHiddenAllLikeAndX}
+          />
         </div>
 
         <div className={s.columnCenter}>
@@ -142,10 +98,14 @@ const ProfilePost: React.FC<PropsType> = (props) => {
 
         {!isHiddenAllLikeAndX ? (
           <div className={s.columnRight}>
-            <ButtonDeletePost handleDeletePost={handleDeletePost} />
+            <ButtonDeletePost
+              idPost={idPost}
+              handleDeleteOnePost={handleDeleteOnePost}
+              setIsClickDeletePost={setIsClickDeletePost}
+            />
             <ButtonSetLike
+              idPost={idPost}
               likesCount={likesCount}
-              handleSetLike={handleSetLike}
               isLikeClick={isLikeClick}
             />
           </div>
@@ -157,8 +117,19 @@ const ProfilePost: React.FC<PropsType> = (props) => {
   )
 }
 
-const ButtonDeletePost: React.FC<{ handleDeletePost: () => void }> = memo(
-  ({ handleDeletePost }) => {
+type ButtonDeletePostPropsType = {
+  idPost: number
+  handleDeleteOnePost: (idPost: number) => void
+  setIsClickDeletePost: Dispatch<SetStateAction<boolean>>
+}
+
+const ButtonDeletePost: React.FC<ButtonDeletePostPropsType> = memo(
+  ({ idPost, handleDeleteOnePost, setIsClickDeletePost }) => {
+    const handleDeletePost = useCallback(() => {
+      setIsClickDeletePost(true)
+      setTimeout(() => handleDeleteOnePost(idPost), 300)
+    }, [handleDeleteOnePost, idPost, setIsClickDeletePost])
+
     return (
       <IconButton title='Delete post' size='small' onClick={handleDeletePost}>
         <CloseIcon />
@@ -167,14 +138,20 @@ const ButtonDeletePost: React.FC<{ handleDeletePost: () => void }> = memo(
   }
 )
 
-type ButtonSetLikePropsType = {
-  likesCount: number
-  handleSetLike: () => void
-  isLikeClick: boolean
-}
+type ButtonSetLikePropsType = Omit<PostType, 'message'>
 
 const ButtonSetLike: React.FC<ButtonSetLikePropsType> = memo(
-  ({ likesCount, handleSetLike, isLikeClick }) => {
+  ({ idPost, likesCount, isLikeClick }) => {
+    const dispatch = useDispatch()
+
+    const handleSetLike = useCallback(() => {
+      if (!isLikeClick) {
+        dispatch(actions.setLikeOnPost(idPost))
+      } else {
+        dispatch(actions.deleteLikeOnPost(idPost))
+      }
+    }, [dispatch, idPost, isLikeClick])
+
     return (
       <div className={s.wrapLike}>
         <span className={s.likesCount}>

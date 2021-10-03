@@ -1,0 +1,55 @@
+.avatar,
+.postSelectedTheme1,
+.postSelectedTheme2 {
+  cursor: pointer;
+}
+
+// for devices with mouse
+@media (hover: hover) and (pointer: fine) {
+  .avatar:hover:before,
+  .postSelectedTheme1:before,
+  .postSelectedTheme2:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../../../img/icons/check.svg');
+    background-position: 50% 50%;
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-color: var(--color-darkBlueTransparent);
+  }
+}
+
+// for touch screens (use 'focus' instead of 'hover'),
+// 'focus' is needed so that the checkmark disappears after canceling
+// the selection on the touch screen
+@media (hover: none) and (pointer: coarse) {
+  .avatar:focus:before,
+  .postSelectedTheme1:before,
+  .postSelectedTheme2:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../../../img/icons/check.svg');
+    background-position: 50% 50%;
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-color: var(--color-darkBlueTransparent);
+  }
+}
+
+.postSelectedTheme1:before {
+  background-image: url('../../../../../img/icons/checkSelectedTheme1.svg');
+}
+
+.postSelectedTheme2:before {
+  background-image: url('../../../../../img/icons/checkSelectedTheme2.svg');
+}
