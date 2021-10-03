@@ -17,7 +17,7 @@ import {
   stopMessagesListening,
 } from '../../redux/reducers/chat-reducer'
 
-import { StatusWSType } from '../../types/types'
+import { StatusWSType, ThemeType } from '../../types/types'
 
 const Chat: React.FC = () => {
   const status = useSelector(getStatusWS)
@@ -46,7 +46,7 @@ const Chat: React.FC = () => {
 }
 
 type FormPropsType = {
-  theme: string
+  theme: ThemeType
   status: StatusWSType
 }
 

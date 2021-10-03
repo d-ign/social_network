@@ -92,14 +92,14 @@ const Login: React.FC = () => {
 const LoginForm: React.FC<
   InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType
 > = ({ handleSubmit, handleEnterTestAccount, error, captchaURL }) => {
-  const stylesLoginButton = {
+  const stylesLoginButton: React.CSSProperties = {
     fontSize: 16,
     fontWeight: 700,
     color: 'white',
     textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
   }
 
-  const stylesTestLoginButton = {
+  const stylesTestLoginButton: React.CSSProperties = {
     marginBottom: '15px',
     ...stylesLoginButton,
   }

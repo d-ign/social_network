@@ -6,8 +6,10 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import { Button } from '@material-ui/core'
 import s from './ChatButtonSort.module.scss'
 
+import { ThemeType } from '../../../../types/types'
+
 type PropsType = {
-  theme: string
+  theme: ThemeType
   isShowAll: boolean
   isShowMembers: boolean
   isReverseSort: boolean
