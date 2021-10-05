@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 
 import FieldWithCounter from '../../../common/FieldWithCounter/FieldWithCounter'
@@ -9,9 +9,9 @@ import s from './ProfileDataForm.module.scss'
 import { ProfileType } from '../../../../types/types'
 
 type OwnPropsType = {
-  errorProfileContacts: string
-  setIsEditInputProfileForm: (bool: boolean) => void
   initialValues: ProfileType
+  errorProfileContacts: string
+  setIsEditInputProfileForm: Dispatch<SetStateAction<boolean>>
 }
 
 const Form: React.FC<
@@ -28,48 +28,23 @@ const Form: React.FC<
     <form onSubmit={handleSubmit} className={s.form}>
       <h1 className={s.titleForm}>Edit profile</h1>
 
-      <div className={s.block}>
-        <FieldWithCounter
-          renderContent={(handleInput, handleFocus, handleBlur) => (
-            <Field
-              component={RenderTextField}
-              inputProps={{ maxLength: 100 }}
-              label='Name:'
-              name='fullName'
-              placeholder='Your name'
-              variant='filled'
-              fullWidth
-              onInput={handleInput}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          )}
-          setIsEditInputProfileForm={setIsEditInputProfileForm}
-          maxLength={100}
-        />
-      </div>
+      <FieldDataForm
+        label='Name:'
+        name='fullName'
+        placeholder='Your name'
+        maxLength={100}
+        multiline='false'
+        setIsEditInputProfileForm={setIsEditInputProfileForm}
+      />
 
-      <div className={s.block}>
-        <FieldWithCounter
-          renderContent={(handleInput, handleFocus, handleBlur) => (
-            <Field
-              component={RenderTextField}
-              inputProps={{ maxLength: 1000 }}
-              multiline
-              label='About me:'
-              name='aboutMe'
-              placeholder='Write about yourself!'
-              variant='filled'
-              fullWidth
-              onInput={handleInput}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          )}
-          setIsEditInputProfileForm={setIsEditInputProfileForm}
-          maxLength={1000}
-        />
-      </div>
+      <FieldDataForm
+        label='About me:'
+        name='aboutMe'
+        placeholder='Write about yourself!'
+        maxLength={1000}
+        multiline='true'
+        setIsEditInputProfileForm={setIsEditInputProfileForm}
+      />
 
       <div className={s.block}>
         <Field
@@ -82,27 +57,14 @@ const Form: React.FC<
         />
       </div>
 
-      <div className={s.block}>
-        <FieldWithCounter
-          renderContent={(handleInput, handleFocus, handleBlur) => (
-            <Field
-              component={RenderTextField}
-              inputProps={{ maxLength: 1000 }}
-              multiline
-              label='Professional skills:'
-              name='lookingForAJobDescription'
-              placeholder='What you can do?'
-              variant='filled'
-              fullWidth
-              onInput={handleInput}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          )}
-          setIsEditInputProfileForm={setIsEditInputProfileForm}
-          maxLength={1000}
-        />
-      </div>
+      <FieldDataForm
+        label='Professional skills:'
+        name='lookingForAJobDescription'
+        placeholder='What you can do?'
+        maxLength={1000}
+        multiline='true'
+        setIsEditInputProfileForm={setIsEditInputProfileForm}
+      />
 
       <address className={s.block}>
         <div className={s.titleAllContacts}>Contacts:</div>
@@ -129,6 +91,50 @@ const Form: React.FC<
         ))}
       </address>
     </form>
+  )
+}
+
+type FieldDataFormPropsType = {
+  label: string
+  name: string
+  placeholder: string
+  maxLength: number
+  multiline: 'true' | 'false'
+  setIsEditInputProfileForm: Dispatch<SetStateAction<boolean>>
+}
+
+const FieldDataForm: React.FC<FieldDataFormPropsType> = (props) => {
+  const {
+    label,
+    name,
+    placeholder,
+    maxLength,
+    multiline,
+    setIsEditInputProfileForm,
+  } = props
+
+  return (
+    <div className={s.block}>
+      <FieldWithCounter
+        renderContent={(handleInput, handleFocus, handleBlur) => (
+          <Field
+            component={RenderTextField}
+            label={label}
+            name={name}
+            placeholder={placeholder}
+            inputProps={{ maxLength }}
+            multiline={multiline === 'true'}
+            fullWidth
+            variant='filled'
+            onInput={handleInput}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        )}
+        maxLength={maxLength}
+        setIsEditInputProfileForm={setIsEditInputProfileForm}
+      />
+    </div>
   )
 }
 

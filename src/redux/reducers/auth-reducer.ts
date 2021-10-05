@@ -1,3 +1,4 @@
+import { Dispatch } from 'react'
 import { FormAction, stopSubmit } from 'redux-form'
 import { BaseThunkType, InferActionsTypes } from '../redux-store'
 
@@ -60,14 +61,8 @@ const actions = {
   }),
 }
 
-export const getAuthUserData = (): ThunkType => async (dispatch) => {
-  const response = await authAPI.me()
-
-  if (response.resultCode === ResultCodesEnum.Success) {
-    const { id, email, login } = response.data
-    dispatch(actions.setAuthUserData(id, email, login, true))
-  }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const _handleError = (dispatch: Dispatch<FormAction>, response: any) => {
   if (response.resultCode === ResultCodesEnum.Error) {
     const message = response.messages
     const action = stopSubmit('loginForm', {
@@ -76,6 +71,17 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     // Some error - if an empty message comes from the server
     dispatch(action)
   }
+}
+
+export const getAuthUserData = (): ThunkType => async (dispatch) => {
+  const response = await authAPI.me()
+
+  if (response.resultCode === ResultCodesEnum.Success) {
+    const { id, email, login } = response.data
+    dispatch(actions.setAuthUserData(id, email, login, true))
+  }
+
+  _handleError(dispatch, response)
 
   if (Object.keys(response.data).length !== 0) {
     const myProfile = await profileAPI.getProfile(response.data.id)
@@ -104,14 +110,7 @@ export const loginThunk =
       dispatch(actions.setCaptcha(null))
     }
 
-    if (response.resultCode === ResultCodesEnum.Error) {
-      const message = response.messages
-      const action = stopSubmit('loginForm', {
-        _error: message.length > 0 ? message[0] : 'Some error',
-      })
-      // Some error - if an empty message comes from the server
-      dispatch(action)
-    }
+    _handleError(dispatch, response)
 
     if (response.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
       dispatch(setCaptchaThunk())
