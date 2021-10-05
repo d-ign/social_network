@@ -8,7 +8,7 @@ body {
 
 .fon,
 .container {
-  /* компенсация полосы прокрутки, когда её нет */
+  /* scrolling bar compensation when there is none */
   padding-right: calc(5px - (100vw - 100%));
   background-color: $color-grey;
 }
@@ -30,7 +30,7 @@ body {
   grid-template-columns: 2fr 10fr;
   grid-template-rows: 60px 1fr;
 
-  /* Шрифт */
+  /* Font */
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 15px;

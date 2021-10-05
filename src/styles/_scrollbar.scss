@@ -1,12 +1,12 @@
-/* полоса прокрутки (скроллбар) */
+/* scroll bar */
 ::-webkit-scrollbar {
   border-radius: 9em;
-  width: 5px; /* ширина для вертикального скролла */
-  height: 5px; /* высота для горизонтального скролла */
+  width: 5px; /* width for vertical scrolling */
+  height: 5px; /* height for horizontal scrolling */
   background-color: $color-grey;
 }
 
-/* ползунок скроллбара */
+/* scrollbar slider */
 ::-webkit-scrollbar-thumb {
   border-radius: 9em;
   background-color: $color-greyLight;
@@ -18,7 +18,7 @@
 
 html,
 body {
-  /* полоса прокрутки Mozilla Firefox */
+  /* scroll bar Mozilla Firefox */
   scrollbar-color: $color-greyLight $color-grey;
   scrollbar-width: thin;
 }
