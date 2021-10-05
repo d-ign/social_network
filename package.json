@@ -8,7 +8,7 @@
     "@material-ui/icons": "^4.11.2",
     "@mdi/js": "^5.9.55",
     "@mdi/react": "^1.5.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "query-string": "^7.0.1",
@@ -26,8 +26,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "eslint": "eslint src/. --fix --color",
+    "check for duplicates": "npx jscpd ./src",
     "editorconfig": "editorconfig-checker",
+    "eslint": "eslint src/. --fix --color",
     "test": "react-scripts test",
     "build": "react-scripts build",
     "deploy": "gh-pages -d build"
@@ -39,6 +40,14 @@
     "cz-customizable": {
       "config": "config/git/commitizen.js"
     }
+  },
+  "jscpd": {
+    "threshold": 0.69,
+    "reporters": [
+      "markdown",
+      "console"
+    ],
+    "output": "./readme_content"
   },
   "browserslist": {
     "production": [
@@ -81,6 +90,7 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^3.2.3",
+    "jscpd": "^3.3.26",
     "node-sass": "^4.14.1",
     "prettier": "^2.3.2",
     "react-test-renderer": "^17.0.2",
