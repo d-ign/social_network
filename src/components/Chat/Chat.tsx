@@ -8,6 +8,7 @@ import s from './Chat.module.scss'
 
 import ChatMembers from './ChatMembers/ChatMembers'
 import ChatMessages from './ChatMessages/ChatMessages'
+import withAuthRedirect from '../../hoc/withAuthRedirect'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
 import { getStatusWS } from '../../redux/selectors/chat-selectors'
@@ -92,4 +93,4 @@ const AddMessageForm: React.FC<FormPropsType> = ({ theme, status }) => {
   )
 }
 
-export default Chat
+export default withAuthRedirect(Chat)

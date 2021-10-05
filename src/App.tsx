@@ -10,22 +10,16 @@ import Login from './components/Login/Login'
 import ErrorBoundary from './components/Error/ErrorBoundary'
 import Preloader from './components/common/Preloader/Preloader'
 
-import withAuthRedirect from './hoc/withAuthRedirect'
-
 import s from './App.module.scss'
 
 import { getInitialized } from './redux/selectors/app-selectors'
 import { getAuthorizedUserID } from './redux/selectors/auth-selectors'
 import { initializeApp } from './redux/reducers/app-reducer'
 
-const SuspendedChat = withAuthRedirect(
-  lazy(() => import('./components/Chat/Chat'))
-)
-const SuspendedUsers = withAuthRedirect(
-  lazy(() => import('./components/Users/UsersContainer'))
-)
-const SuspendedFriends = withAuthRedirect(
-  lazy(() => import('./components/Friends/FriendsContainer'))
+const SuspendedChat = lazy(() => import('./components/Chat/Chat'))
+const SuspendedUsers = lazy(() => import('./components/Users/UsersContainer'))
+const SuspendedFriends = lazy(
+  () => import('./components/Friends/FriendsContainer')
 )
 
 const App: React.FC = () => {

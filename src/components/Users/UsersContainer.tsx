@@ -1,8 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { getIsFetching } from '../../redux/selectors/users-selectors'
-import Preloader from '../common/Preloader/Preloader'
+
 import Users from './Users'
+import Preloader from '../common/Preloader/Preloader'
+import withAuthRedirect from '../../hoc/withAuthRedirect'
+
+import { getIsFetching } from '../../redux/selectors/users-selectors'
 
 const UsersContainer = () => {
   const isFetching = useSelector(getIsFetching)
@@ -15,4 +18,4 @@ const UsersContainer = () => {
   )
 }
 
-export default UsersContainer
+export default withAuthRedirect(UsersContainer)
