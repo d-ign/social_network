@@ -18,7 +18,7 @@ type PropsType = {
   postsForDelete: Set<number>
   isSelectedPost: boolean
   setIsSelectedPost: Dispatch<SetStateAction<boolean>>
-  setIsHiddenAllLikeAndX: Dispatch<SetStateAction<boolean>>
+  setIsHiddenAllLikeAndXAndPrompt: Dispatch<SetStateAction<boolean>>
 }
 
 const ProfileAvatarPost: React.FC<PropsType> = ({
@@ -27,20 +27,20 @@ const ProfileAvatarPost: React.FC<PropsType> = ({
   postsForDelete,
   isSelectedPost,
   setIsSelectedPost,
-  setIsHiddenAllLikeAndX,
+  setIsHiddenAllLikeAndXAndPrompt,
 }) => {
   const theme = useSelector(getTheme)
   const dispatch = useDispatch()
 
   const handleClickOnAvatar = () => {
     if (!isSelectedPost) {
-      setIsHiddenAllLikeAndX(true)
+      setIsHiddenAllLikeAndXAndPrompt(true)
       setIsSelectedPost(true)
       dispatch(actions.setPostForDeleting(idPost))
     } else {
       if (postsForDelete.size === 0) {
         // do not return all X and likes, if some posts are still selected
-        setIsHiddenAllLikeAndX(false)
+        setIsHiddenAllLikeAndXAndPrompt(false)
       }
       setIsSelectedPost(false)
       dispatch(actions.deletePostForDeleting(idPost))
@@ -62,9 +62,9 @@ const ProfileAvatarPost: React.FC<PropsType> = ({
       )}
     >
       <Avatar
-        photo={profile?.photos.large || unknown}
         size='medium'
         id={profile?.userId || null}
+        photo={profile?.photos.large || unknown}
       />
     </div>
   )

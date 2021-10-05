@@ -9,9 +9,10 @@ import s from './Users.module.scss'
 
 import User from '../common/User/User'
 import Search from '../common/Search/Search'
+import Prompt from '../common/Prompt/Prompt'
 import NoElement from '../common/NoElement/NoElement'
-
 import useQueryUrl from '../../hooks/useQueryUrl'
+import useObserver from '../../hooks/useObserver'
 
 import {
   getIsFetching,
@@ -28,16 +29,16 @@ const Users: React.FC = () => {
   const users = useSelector(getUsersSelector)
   const isFetching = useSelector(getIsFetching)
   const totalUsersCount = useSelector(getTotalUsersCount)
+
   const dispatch = useDispatch()
-
   const { pathname } = useLocation()
+  const { termOfUrl, setTermOfUrl } = useQueryUrl(pathname)
 
-  const maxPageCount = Math.ceil(totalUsersCount / pageSize)
-
-  const [isShowMoreUsersButton, setIsShowMoreUsersButton] = useState(true)
   // eslint-disable-next-line prefer-const
   let [pageNumber, setPageNumber] = useState(1)
-  const { termOfUrl, setTermOfUrl } = useQueryUrl(pathname)
+  const [isShowMoreUsersButton, setIsShowMoreUsersButton] = useState(true)
+
+  const maxPageCount = Math.ceil(totalUsersCount / pageSize)
 
   // for Search
   const searchUsers = useCallback(
@@ -78,9 +79,21 @@ const Users: React.FC = () => {
     }
   }, [dispatch, maxPageCount, pageNumber, termOfUrl])
 
+  // removing a prompt
+  const [isShowPrompt, setIsShowPrompt] = useState(true)
+  const lastElement = React.useRef<HTMLDivElement>(null)
+
+  useObserver(lastElement, pageNumber === 1, isFetching, () => {
+    setIsShowPrompt(false)
+  })
+
   return (
     <main className={s.container}>
       <h1 className={s.visuallyHidden}>Users</h1>
+      {pageNumber === 1 && isShowPrompt && (
+        <Prompt.PaginationUsers pathname={pathname} />
+      )}
+
       <Search
         searchUsers={searchUsers}
         totalUsersCount={totalUsersCount}
@@ -109,6 +122,7 @@ const Users: React.FC = () => {
         </div>
 
         <div
+          ref={lastElement}
           className={cn(s.buttonLoadMore, {
             [s.hiddenButtonLoadMore]: !isShowMoreUsersButton,
           })}

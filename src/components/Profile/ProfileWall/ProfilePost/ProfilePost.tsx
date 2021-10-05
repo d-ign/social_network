@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import s from './ProfilePost.module.scss'
 
 import ProfileAvatarPost from './ProfileAvatarPost/ProfileAvatarPost'
+import Prompt from '../../../common/Prompt/Prompt'
 import Name from '../../../common/Name/Name'
 
 import { getPostsForDelete } from '../../../../redux/selectors/profile-selectors'
@@ -25,12 +26,13 @@ import { PostType, ProfileType } from '../../../../types/types'
 type PropsType = {
   post: PostType
   profile: ProfileType | null
+  idPostFirst: number
   isShowAnimation: boolean
   isCancelDeletion: boolean
   isSelectedAllPosts: boolean
-  isHiddenAllLikeAndX: boolean
+  isHiddenAllLikeAndXAndPrompt: boolean
   setIsCancelDeletion: Dispatch<SetStateAction<boolean>>
-  setIsHiddenAllLikeAndX: Dispatch<SetStateAction<boolean>>
+  setIsHiddenAllLikeAndXAndPrompt: Dispatch<SetStateAction<boolean>>
   handleDeleteOnePost: (idPost: number) => void
 }
 
@@ -38,19 +40,27 @@ const ProfilePost: React.FC<PropsType> = (props) => {
   const {
     post: { idPost, message, likesCount, isLikeClick },
     profile,
+    idPostFirst,
     isShowAnimation,
     isCancelDeletion,
     isSelectedAllPosts,
-    isHiddenAllLikeAndX,
     handleDeleteOnePost,
     setIsCancelDeletion,
-    setIsHiddenAllLikeAndX,
+    isHiddenAllLikeAndXAndPrompt,
+    setIsHiddenAllLikeAndXAndPrompt,
   } = props
 
   const postsForDelete = useSelector(getPostsForDelete)
 
-  const [isClickDeletePost, setIsClickDeletePost] = useState(false)
+  const [isShowPrompt, setIsShowPrompt] = useState(true)
   const [isSelectedPost, setIsSelectedPost] = useState(false)
+  const [isClickDeletePost, setIsClickDeletePost] = useState(false)
+
+  useEffect(() => {
+    if (isHiddenAllLikeAndXAndPrompt) {
+      setIsShowPrompt(false)
+    }
+  }, [isHiddenAllLikeAndXAndPrompt])
 
   useEffect(() => {
     if (isSelectedAllPosts || postsForDelete.has(idPost)) {
@@ -68,9 +78,9 @@ const ProfilePost: React.FC<PropsType> = (props) => {
   useEffect(() => {
     if (postsForDelete.size === 0) {
       // return all X and likes if there are no more selected posts
-      setIsHiddenAllLikeAndX(false)
+      setIsHiddenAllLikeAndXAndPrompt(false)
     }
-  }, [postsForDelete, setIsHiddenAllLikeAndX])
+  }, [postsForDelete, setIsHiddenAllLikeAndXAndPrompt])
 
   return (
     <article
@@ -87,16 +97,20 @@ const ProfilePost: React.FC<PropsType> = (props) => {
             postsForDelete={postsForDelete}
             isSelectedPost={isSelectedPost}
             setIsSelectedPost={setIsSelectedPost}
-            setIsHiddenAllLikeAndX={setIsHiddenAllLikeAndX}
+            setIsHiddenAllLikeAndXAndPrompt={setIsHiddenAllLikeAndXAndPrompt}
           />
         </div>
+
+        {idPostFirst === idPost && isShowPrompt && (
+          <Prompt.DeletingProfilePosts />
+        )}
 
         <div className={s.columnCenter}>
           <Name id={profile?.userId} name={profile?.fullName} size='normal' />
           <div className={s.message}>{message}</div>
         </div>
 
-        {!isHiddenAllLikeAndX ? (
+        {!isHiddenAllLikeAndXAndPrompt ? (
           <div className={s.columnRight}>
             <ButtonDeletePost
               idPost={idPost}

@@ -32,7 +32,8 @@ const ProfileWall: React.FC = () => {
   const [isShowAnimation, setIsShowAnimation] = useState(false)
   const [isCancelDeletion, setIsCancelDeletion] = useState(false)
   const [isSelectedAllPosts, setIsSelectedAllPosts] = useState(false)
-  const [isHiddenAllLikeAndX, setIsHiddenAllLikeAndX] = useState(false)
+  const [isHiddenAllLikeAndXAndPrompt, setIsHiddenAllLikeAndXAndPrompt] =
+    useState(false)
 
   useLocalStorage('posts', posts, actions.initializePosts)
 
@@ -60,10 +61,11 @@ const ProfileWall: React.FC = () => {
         likesCount: p.likesCount,
         isLikeClick: p.isLikeClick,
       }}
+      idPostFirst={posts[0].idPost}
       profile={profile}
       isSelectedAllPosts={isSelectedAllPosts}
-      isHiddenAllLikeAndX={isHiddenAllLikeAndX}
-      setIsHiddenAllLikeAndX={setIsHiddenAllLikeAndX}
+      isHiddenAllLikeAndXAndPrompt={isHiddenAllLikeAndXAndPrompt}
+      setIsHiddenAllLikeAndXAndPrompt={setIsHiddenAllLikeAndXAndPrompt}
       isShowAnimation={isShowAnimation}
       isCancelDeletion={isCancelDeletion}
       setIsCancelDeletion={setIsCancelDeletion}
@@ -80,7 +82,7 @@ const ProfileWall: React.FC = () => {
         postsForDelete={postsForDelete}
         isSelectedAllPosts={isSelectedAllPosts}
         setIsSelectedAllPosts={setIsSelectedAllPosts}
-        setIsHiddenAllLikeAndX={setIsHiddenAllLikeAndX}
+        setIsHiddenAllLikeAndXAndPrompt={setIsHiddenAllLikeAndXAndPrompt}
         setIsCancelDeletion={setIsCancelDeletion}
         setIsShowAnimation={setIsShowAnimation}
       />
@@ -117,42 +119,42 @@ const AddPostForm: React.FC = memo(() => {
     setValue('')
   }
 
+  const handleChangeTextField = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
+  }
+
   return (
-    <div>
-      <div className={s.form}>
-        <TextField
-          name='newPostText'
-          placeholder='Enter the post text...'
-          multiline
-          fullWidth
-          variant='outlined'
+    <div className={s.form}>
+      <TextField
+        name='newPostText'
+        placeholder='Enter the post text...'
+        multiline
+        fullWidth
+        variant='outlined'
+        color={theme === 'theme1' ? 'primary' : 'secondary'}
+        inputProps={{ maxLength: 1000, value }}
+        onChange={handleChangeTextField}
+      />
+      <div className={stylesAdaptiveButtons.buttonDesktop}>
+        <Button
+          variant='contained'
           color={theme === 'theme1' ? 'primary' : 'secondary'}
-          inputProps={{ maxLength: 1000, value }}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setValue(e.target.value)
-          }
-        />
-        <div className={stylesAdaptiveButtons.buttonDesktop}>
-          <Button
-            onClick={handleAddPost}
-            variant='contained'
-            color={theme === 'theme1' ? 'primary' : 'secondary'}
-            style={stylesAddPostButton}
-            endIcon={<PostAddIcon />}
-          >
-            Add post
-          </Button>
-        </div>
-        <div hidden className={stylesAdaptiveButtons.buttonMobile}>
-          <IconButton
-            aria-label='addPost'
-            onClick={handleAddPost}
-            style={{ marginLeft: 5 }}
-            title='Add post'
-          >
-            <PostAddIcon color={theme === 'theme1' ? 'primary' : 'secondary'} />
-          </IconButton>
-        </div>
+          style={stylesAddPostButton}
+          endIcon={<PostAddIcon />}
+          onClick={handleAddPost}
+        >
+          Add post
+        </Button>
+      </div>
+      <div hidden className={stylesAdaptiveButtons.buttonMobile}>
+        <IconButton
+          title='Add post'
+          aria-label='Add post'
+          style={{ marginLeft: 5 }}
+          onClick={handleAddPost}
+        >
+          <PostAddIcon color={theme === 'theme1' ? 'primary' : 'secondary'} />
+        </IconButton>
       </div>
     </div>
   )

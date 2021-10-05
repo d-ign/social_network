@@ -7,17 +7,17 @@ const initialState = {
   posts: [
     {
       idPost: 1,
+      message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      likesCount: 0,
+      isLikeClick: false,
+    },
+    {
+      idPost: 2,
       message:
         // eslint-disable-next-line max-len
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis ut quo maiores neque laboriosam. Ratione adipisci reiciendis autem placeat alias necessitatibus pariatur saepe ipsum, temporibus animi, facilis minus doloribus ducimus',
       likesCount: 1,
       isLikeClick: true,
-    },
-    {
-      idPost: 2,
-      message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      likesCount: 0,
-      isLikeClick: false,
     },
     {
       idPost: 3,

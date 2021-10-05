@@ -18,7 +18,7 @@ type PropsType = {
   postsForDelete: Set<number>
   isSelectedAllPosts: boolean
   setIsSelectedAllPosts: Dispatch<SetStateAction<boolean>>
-  setIsHiddenAllLikeAndX: Dispatch<SetStateAction<boolean>>
+  setIsHiddenAllLikeAndXAndPrompt: Dispatch<SetStateAction<boolean>>
   setIsCancelDeletion: Dispatch<SetStateAction<boolean>>
   setIsShowAnimation: Dispatch<SetStateAction<boolean>>
 }
@@ -29,7 +29,7 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
     postsForDelete,
     isSelectedAllPosts,
     setIsSelectedAllPosts,
-    setIsHiddenAllLikeAndX,
+    setIsHiddenAllLikeAndXAndPrompt,
     setIsCancelDeletion,
     setIsShowAnimation,
   } = props
@@ -52,7 +52,7 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
     setIsSelectedAllPosts(false)
 
     // return X and likes on all posts
-    setIsHiddenAllLikeAndX(false)
+    setIsHiddenAllLikeAndXAndPrompt(false)
 
     setTimeout(() => {
       postsForDelete.forEach((p) => {

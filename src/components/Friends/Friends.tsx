@@ -6,6 +6,7 @@ import s from './Friends.module.scss'
 
 import User from '../common/User/User'
 import Search from '../common/Search/Search'
+import Prompt from '../common/Prompt/Prompt'
 import Preloader from '../common/Preloader/Preloader'
 import NoElement from '../common/NoElement/NoElement'
 import useObserver from '../../hooks/useObserver'
@@ -25,14 +26,16 @@ const Friends: React.FC = () => {
   const users = useSelector(getUsersSelector)
   const isFetching = useSelector(getIsFetching)
   const totalUsersCount = useSelector(getTotalUsersCount)
-  const dispatch = useDispatch()
 
+  const dispatch = useDispatch()
   const { pathname } = useLocation()
 
-  const maxPageCount = Math.ceil(totalUsersCount / pageSize)
   // eslint-disable-next-line prefer-const
   let [pageNumber, setPageNumber] = useState(1)
   const [termLocal, setTermLocal] = useState('')
+  const [isShowPrompt, setIsShowPrompt] = useState(true)
+
+  const maxPageCount = Math.ceil(totalUsersCount / pageSize)
 
   const searchUsers = useCallback(
     (term: string) => {
@@ -55,6 +58,7 @@ const Friends: React.FC = () => {
   const [isFetchingUsers, setIsFetchingUsers] = useState(false)
 
   useObserver(lastElement, maxPageCount > pageNumber, isFetching, () => {
+    setIsShowPrompt(false)
     setIsFetchingUsers(true)
     setPageNumber(++pageNumber)
     dispatch(getUsers(pageNumber, termLocal, true))
@@ -65,8 +69,10 @@ const Friends: React.FC = () => {
   }, [users.length])
 
   return (
-    <main className={s.wrapper}>
+    <main className={s.container}>
       <h1 className={s.visuallyHidden}>Friends</h1>
+      {isShowPrompt && <Prompt.PaginationUsers pathname={pathname} />}
+
       <Search
         termOfUrl=''
         searchUsers={searchUsers}
@@ -78,8 +84,8 @@ const Friends: React.FC = () => {
         <NoElement elements='users' writeSomething={false} />
       )}
 
-      <div className={s.container}>
-        <div className={s.wrapUsers}>
+      <div className={s.wrapUsers}>
+        <div className={s.users}>
           {users.map((u: UserType) => (
             <User
               key={u.id}

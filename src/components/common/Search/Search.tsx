@@ -1,10 +1,12 @@
-import React, { useCallback, memo, useMemo, useEffect } from 'react'
+import React, { useCallback, memo, useMemo, useEffect, useState } from 'react'
 import debounce from 'lodash/debounce'
 
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
 import useStyles from './stylesCustomMaterialUI'
 import s from './Search.module.scss'
+
+import Prompt from '../Prompt/Prompt'
 
 type PropsType = {
   termOfUrl: string
@@ -17,9 +19,12 @@ const Search: React.FC<PropsType> = (props) => {
   const { pathname, termOfUrl, searchUsers, totalUsersCount } = props
   const classes = useStyles()
 
+  const [isShowPrompt, setIsShowPrompt] = useState(true)
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       searchUsers(e.target.value)
+      setIsShowPrompt(false)
     },
     [searchUsers]
   )
@@ -64,6 +69,8 @@ const Search: React.FC<PropsType> = (props) => {
         {/* adding space between numbers: (? = pattern) + - greedy repeating
         the last pattern one or more times to the end of the line $ */}
       </div>
+
+      {isShowPrompt && <Prompt.SearchUsers pathname={pathname} />}
     </div>
   )
 }

@@ -2,6 +2,7 @@
 @import './../../styles/visuallyHidden';
 
 .container {
+  position: relative;
   margin: 0 auto;
   max-width: 470px;
 }

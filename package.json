@@ -42,7 +42,7 @@
     }
   },
   "jscpd": {
-    "threshold": 0.69,
+    "threshold": 3.00,
     "reporters": [
       "markdown",
       "console"
