@@ -12,6 +12,14 @@
   @include wh(auto, 100%);
 
   margin: 0 auto;
+
+  // for bright pictures on a dark theme
+  opacity: 0.8;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.avatar img:hover {
+  opacity: 1;
 }
 
 .avatar_size_small {
