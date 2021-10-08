@@ -6,16 +6,16 @@
   /* scrollbar slider on :hover */
 
   --color-cyanLight-theme1: hsla(187, 71%, 82%, 1);
-  --color-cyanLight-theme2: hsla(157, 100%, 85%, 1);
+  --color-cyanLight-theme2: hsla(157, 100%, 82%, 1);
   --color-cyanLight: var(--color-cyanLight-theme1);
   /* not clicked like (Profile-Wall-Post) */
 
-  --color-cyanMedium-theme1: hsla(187, 100%, 42%, 0.5);
+  --color-cyanMedium-theme1: hsla(187, 100%, 31%, 1);
   --color-cyanMedium-theme2: hsla(157, 100%, 31%, 1);
   --color-cyanMedium: var(--color-cyanMedium-theme1);
-  /* background: my messages (Chat) */
+  /* background: my messages (Chat), Prompt */
 
-  --color-cyanDark-theme1: hsla(187, 100%, 42%, 0.2);
+  --color-cyanDark-theme1: hsla(187, 100%, 17%, 1);
   --color-cyanDark-theme2: hsla(157, 100%, 17%, 1);
   --color-cyanDark: var(--color-cyanDark-theme1);
   /* background: other people's messages (Chat), */
