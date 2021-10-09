@@ -1,16 +1,15 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 import cn from 'classnames'
 import Icon from '@mdi/react'
 import { mdiChevronDown } from '@mdi/js'
 import s from './ChatMembers.module.scss'
 
-import useResizeWindow from '../../../hooks/useResizeWindow'
-
 import ChatButtonSort from './ChatButtonSort/ChatBurronSort'
 import Avatar from '../../common/Avatar/Avatar'
 import Name from '../../common/Name/Name'
+import useResizeWindow from '../../../hooks/useResizeWindow'
+import { useAppSelector } from '../../../hooks/useApp'
 
 import { getChatMembers } from '../../../redux/selectors/chat-selectors'
 import {
@@ -20,7 +19,7 @@ import {
 } from '../../../types/types'
 
 const ChatMembers: React.FC<{ theme: ThemeType }> = ({ theme }) => {
-  const chatMembers = useSelector(getChatMembers)
+  const chatMembers = useAppSelector(getChatMembers)
 
   const [isShowAll, setIsShowAll] = useState(false)
   const [isReverseSort, setIsReverseSort] = useState(false)

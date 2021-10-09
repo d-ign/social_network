@@ -1,14 +1,15 @@
 /* eslint-disable max-len */
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import cn from 'classnames'
 import s from './Navbar.module.scss'
 import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
 
+import { useAppSelector } from '../../hooks/useApp'
+
 const Navbar: React.FC = () => {
-  const authorizedUserID = useSelector(getAuthorizedUserID)
+  const authorizedUserID = useAppSelector(getAuthorizedUserID)
   const { pathname } = useLocation()
 
   const profileUrl = `/profile/${authorizedUserID}`

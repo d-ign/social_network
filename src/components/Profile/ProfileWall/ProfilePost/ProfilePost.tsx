@@ -6,7 +6,6 @@ import React, {
   memo,
   useCallback,
 } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import cn from 'classnames'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,12 +13,16 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import CloseIcon from '@material-ui/icons/Close'
 import s from './ProfilePost.module.scss'
 
-import ProfileAvatarPost from './ProfileAvatarPost/ProfileAvatarPost'
-import Prompt from '../../../common/Prompt/Prompt'
 import Name from '../../../common/Name/Name'
+import Prompt from '../../../common/Prompt/Prompt'
+import ProfileAvatarPost from './ProfileAvatarPost/ProfileAvatarPost'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/useApp'
 
+import {
+  setLikeOnPost,
+  deleteLikeOnPost,
+} from '../../../../redux/reducers/profile-wall-reducer'
 import { getPostsForDelete } from '../../../../redux/selectors/profile-selectors'
-import { actions } from '../../../../redux/reducers/profile-reducer'
 
 import { PostType, ProfileType } from '../../../../types/types'
 
@@ -27,10 +30,12 @@ type PropsType = {
   post: PostType
   profile: ProfileType | null
   idPostFirst: number
+  isShowPrompt: boolean
   isShowAnimation: boolean
   isCancelDeletion: boolean
   isSelectedAllPosts: boolean
   isHiddenAllLikeAndXAndPrompt: boolean
+  setIsShowPrompt: Dispatch<SetStateAction<boolean>>
   setIsCancelDeletion: Dispatch<SetStateAction<boolean>>
   setIsHiddenAllLikeAndXAndPrompt: Dispatch<SetStateAction<boolean>>
   handleDeleteOnePost: (idPost: number) => void
@@ -41,6 +46,8 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     post: { idPost, message, likesCount, isLikeClick },
     profile,
     idPostFirst,
+    isShowPrompt,
+    setIsShowPrompt,
     isShowAnimation,
     isCancelDeletion,
     isSelectedAllPosts,
@@ -50,9 +57,8 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     setIsHiddenAllLikeAndXAndPrompt,
   } = props
 
-  const postsForDelete = useSelector(getPostsForDelete)
+  const postsForDelete = useAppSelector(getPostsForDelete)
 
-  const [isShowPrompt, setIsShowPrompt] = useState(true)
   const [isSelectedPost, setIsSelectedPost] = useState(false)
   const [isClickDeletePost, setIsClickDeletePost] = useState(false)
 
@@ -60,7 +66,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
     if (isHiddenAllLikeAndXAndPrompt) {
       setIsShowPrompt(false)
     }
-  }, [isHiddenAllLikeAndXAndPrompt])
+  }, [isHiddenAllLikeAndXAndPrompt, setIsShowPrompt])
 
   useEffect(() => {
     if (isSelectedAllPosts || postsForDelete.has(idPost)) {
@@ -156,13 +162,13 @@ type ButtonSetLikePropsType = Omit<PostType, 'message'>
 
 const ButtonSetLike: React.FC<ButtonSetLikePropsType> = memo(
   ({ idPost, likesCount, isLikeClick }) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const handleSetLike = useCallback(() => {
       if (!isLikeClick) {
-        dispatch(actions.setLikeOnPost(idPost))
+        dispatch(setLikeOnPost({ idPost }))
       } else {
-        dispatch(actions.deleteLikeOnPost(idPost))
+        dispatch(deleteLikeOnPost({ idPost }))
       }
     }, [dispatch, idPost, isLikeClick])
 

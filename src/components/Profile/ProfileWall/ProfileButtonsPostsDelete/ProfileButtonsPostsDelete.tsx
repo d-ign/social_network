@@ -1,5 +1,4 @@
 import React, { SetStateAction, Dispatch } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import { Checkbox, FormControlLabel, IconButton } from '@material-ui/core'
@@ -8,8 +7,13 @@ import CloseIcon from '@material-ui/icons/Close'
 import cn from 'classnames'
 import s from './ProfileButtonsPostsDelete.module.scss'
 
-import { actions } from '../../../../redux/reducers/profile-reducer'
+import {
+  deletePost,
+  setPostForDeleting,
+  clearPostsForDeleting,
+} from '../../../../redux/reducers/profile-wall-reducer'
 import { getTheme } from '../../../../redux/selectors/app-selectors'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/useApp'
 
 import { PostType } from '../../../../types/types'
 
@@ -42,8 +46,8 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
     textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
   }
 
-  const dispatch = useDispatch()
-  const theme = useSelector(getTheme)
+  const dispatch = useAppDispatch()
+  const theme = useAppSelector(getTheme)
 
   const handleDeleteSelectedPost = () => {
     // start delete animation
@@ -56,9 +60,9 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
 
     setTimeout(() => {
       postsForDelete.forEach((p) => {
-        dispatch(actions.deletePost(p))
+        dispatch(deletePost({ idPost: p }))
       })
-      dispatch(actions.clearPostsForDeleting())
+      dispatch(clearPostsForDeleting())
 
       // end of delete animation
       setIsShowAnimation(false)
@@ -66,7 +70,7 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
   }
 
   const handleCancelDeletion = () => {
-    dispatch(actions.clearPostsForDeleting())
+    dispatch(clearPostsForDeleting())
     setIsCancelDeletion(true)
     setIsSelectedAllPosts(false)
   }
@@ -74,11 +78,11 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
   const handleSelectedAllPosts = () => {
     if (!isSelectedAllPosts) {
       posts.forEach((post) => {
-        dispatch(actions.setPostForDeleting(post.idPost))
+        dispatch(setPostForDeleting({ idPost: post.idPost }))
       })
       setIsSelectedAllPosts(true)
     } else {
-      dispatch(actions.clearPostsForDeleting())
+      dispatch(clearPostsForDeleting())
       setIsSelectedAllPosts(false)
     }
   }

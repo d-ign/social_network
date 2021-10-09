@@ -1,13 +1,14 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 
 import cn from 'classnames'
 import Button from '@material-ui/core/Button'
-import s from './Login.module.scss'
+import s from './Auth.module.scss'
 import RenderTextField from '../common/RenderFormElement/RenderTextField'
 import RenderCheckbox from '../common/RenderFormElement/RenderCheckbox'
+
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 
 import {
   getAuthorizedUserID,
@@ -17,7 +18,9 @@ import {
 import { getTheme } from '../../redux/selectors/app-selectors'
 import { loginThunk } from '../../redux/reducers/auth-reducer'
 
-const validate = (values: LoginFormValuesType) => {
+import { LoginType } from '../../types/types'
+
+const validate = (values: LoginType) => {
   type ErrorsType = {
     email?: string
     password?: string
@@ -41,34 +44,28 @@ type OwnPropsType = {
   handleEnterTestAccount: () => void
 }
 
-type LoginFormValuesType = {
-  email: string
-  password: string
-  rememberMe: boolean
-  captcha: string
-}
+const Auth: React.FC = () => {
+  const isAuth = useAppSelector(getIsAuth)
+  const captchaURL = useAppSelector(getCaptchaURL)
+  const userID = useAppSelector(getAuthorizedUserID)
+  const dispatch = useAppDispatch()
 
-const Login: React.FC = () => {
-  const isAuth = useSelector(getIsAuth)
-  const captchaURL = useSelector(getCaptchaURL)
-  const userID = useSelector(getAuthorizedUserID)
-  const dispatch = useDispatch()
-
-  const onSubmit = (values: LoginFormValuesType) => {
-    dispatch(
-      loginThunk(
-        values.email,
-        values.password,
-        values.rememberMe,
-        values.captcha
-      )
-    )
+  const onSubmit: (param: LoginType) => void = (param) => {
+    // const { email, password, rememberMe, captcha } = param
+    dispatch(loginThunk(param))
   }
 
   const handleEnterTestAccount = () => {
     const email = 'free@samuraijs.com'
     const password = 'free'
-    dispatch(loginThunk(email, password, false, null))
+    dispatch(
+      loginThunk({
+        email,
+        password,
+        rememberMe: false,
+        captcha: null,
+      })
+    )
   }
 
   if (isAuth) {
@@ -90,7 +87,7 @@ const Login: React.FC = () => {
 }
 
 const LoginForm: React.FC<
-  InjectedFormProps<LoginFormValuesType, OwnPropsType> & OwnPropsType
+  InjectedFormProps<LoginType, OwnPropsType> & OwnPropsType
 > = ({ handleSubmit, handleEnterTestAccount, error, captchaURL }) => {
   const stylesLoginButton: React.CSSProperties = {
     fontSize: 16,
@@ -104,7 +101,7 @@ const LoginForm: React.FC<
     ...stylesLoginButton,
   }
 
-  const theme = useSelector(getTheme)
+  const theme = useAppSelector(getTheme)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -191,9 +188,9 @@ const LoginForm: React.FC<
   )
 }
 
-const LoginReduxForm = reduxForm<LoginFormValuesType, OwnPropsType>({
+const LoginReduxForm = reduxForm<LoginType, OwnPropsType>({
   form: 'loginForm',
   validate,
 })(LoginForm)
 
-export default Login
+export default Auth

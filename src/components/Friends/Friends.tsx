@@ -1,5 +1,4 @@
 import React, { useState, useEffect, memo, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
 import s from './Friends.module.scss'
@@ -10,6 +9,7 @@ import Prompt from '../common/Prompt/Prompt'
 import Preloader from '../common/Preloader/Preloader'
 import NoElement from '../common/NoElement/NoElement'
 import useObserver from '../../hooks/useObserver'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 
 import {
   getIsFetching,
@@ -17,17 +17,17 @@ import {
   getTotalUsersCount,
   getUsersSelector,
 } from '../../redux/selectors/users-selectors'
-import { actions, getUsers } from '../../redux/reducers/users-reducer'
+import { clearUsers, getUsers } from '../../redux/reducers/users-reducer'
 
 import { UserType } from '../../types/types'
 
 const Friends: React.FC = () => {
-  const pageSize = useSelector(getPageSize)
-  const users = useSelector(getUsersSelector)
-  const isFetching = useSelector(getIsFetching)
-  const totalUsersCount = useSelector(getTotalUsersCount)
+  const pageSize = useAppSelector(getPageSize)
+  const users = useAppSelector(getUsersSelector)
+  const isFetching = useAppSelector(getIsFetching)
+  const totalUsersCount = useAppSelector(getTotalUsersCount)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { pathname } = useLocation()
 
   // eslint-disable-next-line prefer-const
@@ -41,15 +41,15 @@ const Friends: React.FC = () => {
     (term: string) => {
       setPageNumber(1)
       setTermLocal(term)
-      dispatch(getUsers(1, term, true))
+      dispatch(getUsers({ page: 1, term, friend: true }))
     },
     [dispatch]
   )
 
   useEffect(() => {
-    dispatch(actions.clearUsers())
+    dispatch(clearUsers())
     setPageNumber(1)
-    dispatch(getUsers(1, '', true))
+    dispatch(getUsers({ page: 1, term: '', friend: true }))
     setIsFetchingUsers(true)
   }, [pathname, dispatch])
 
@@ -61,7 +61,7 @@ const Friends: React.FC = () => {
     setIsShowPrompt(false)
     setIsFetchingUsers(true)
     setPageNumber(++pageNumber)
-    dispatch(getUsers(pageNumber, termLocal, true))
+    dispatch(getUsers({ page: pageNumber, term: termLocal, friend: true }))
   })
 
   useEffect(() => {

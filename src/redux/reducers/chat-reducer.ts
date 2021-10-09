@@ -1,6 +1,5 @@
-import { FormAction } from 'redux-form'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v1 } from 'uuid'
-import { BaseThunkType, InferActionsTypes } from '../redux-store'
 
 import chatAPI from '../../api/chat-api'
 
@@ -10,84 +9,66 @@ import {
   StatusWSType,
 } from '../../types/types'
 
-const initialState = {
-  messages: [] as ChatMessageType[],
-  statusWS: 'pending' as StatusWSType,
-}
+const chatSlice = createSlice({
+  name: 'chatPage',
+  initialState: {
+    messages: [] as ChatMessageType[],
+    statusWS: 'pending' as StatusWSType,
+  },
+  reducers: {
+    messagesReceived: (
+      state,
+      action: PayloadAction<{ messages: ChatMessageAPIType[] }>
+    ) => {
+      state.messages = [
+        ...state.messages,
+        ...action.payload.messages.map((m) => ({ ...m, id: v1() })),
+      ].filter((_, index, array) => index >= array.length - 100)
+      // TODO v1() = impure function call
+    },
 
-const chatReducer = (
-  state = initialState,
-  action: ActionsTypes
-): InitialStateType => {
-  switch (action.type) {
-    case 'sn/chat/MESSAGES_RECEIVED': {
-      return {
-        ...state,
-        messages: [
-          ...state.messages,
-          ...action.payload.messages.map((m) => ({ ...m, id: v1() })),
-        ].filter((item, index, array) => index >= array.length - 100),
-        // TODO v1() = impure function call
-      }
-    }
-    case 'sn/chat/MESSAGES_CLEARED': {
-      return {
-        ...state,
-        messages: [],
-      }
-    }
-    case 'sn/chat/STATUS_CHANGED': {
-      return {
-        ...state,
-        statusWS: action.payload.statusWS,
-      }
-    }
-    default:
-      return state
+    messagesCleared: (state) => {
+      state.messages = []
+    },
+
+    statusChanged: (
+      state,
+      action: PayloadAction<{ statusWS: StatusWSType }>
+    ) => {
+      state.statusWS = action.payload.statusWS
+    },
+  },
+})
+
+const { messagesReceived, messagesCleared, statusChanged } = chatSlice.actions
+
+export const startMessagesListening = createAsyncThunk(
+  'chatPage/startMessagesListening',
+  async (_, { dispatch }) => {
+    chatAPI.start()
+
+    chatAPI.subscribe('messages-received', (messages: ChatMessageAPIType[]) =>
+      dispatch(messagesReceived({ messages }))
+    )
+    chatAPI.subscribe('status-changed', (statusWS: StatusWSType) =>
+      dispatch(statusChanged({ statusWS }))
+    )
   }
-}
+)
 
-const actions = {
-  messagesReceived: (messages: ChatMessageAPIType[]) =>
-    ({
-      type: 'sn/chat/MESSAGES_RECEIVED',
-      payload: { messages },
-    } as const),
-  messagesCleared: () =>
-    ({
-      type: 'sn/chat/MESSAGES_CLEARED',
-    } as const),
-  statusChanged: (statusWS: StatusWSType) =>
-    ({
-      type: 'sn/chat/STATUS_CHANGED',
-      payload: { statusWS },
-    } as const),
-}
+export const stopMessagesListening = createAsyncThunk(
+  'chatPage/stopMessagesListening',
+  async (_, { dispatch }) => {
+    chatAPI.stop()
+    dispatch(messagesCleared())
+  }
+)
 
-export const startMessagesListening = (): ThunkType => async (dispatch) => {
-  chatAPI.start()
-
-  chatAPI.subscribe('messages-received', (messages: ChatMessageAPIType[]) =>
-    dispatch(actions.messagesReceived(messages))
-  )
-  chatAPI.subscribe('status-changed', (statusWS: StatusWSType) =>
-    dispatch(actions.statusChanged(statusWS))
-  )
-}
-
-export const stopMessagesListening = (): ThunkType => async (dispatch) => {
-  chatAPI.stop()
-  dispatch(actions.messagesCleared())
-}
-
-export const sendMessage = (message: string): ThunkType => {
-  return async () => {
+export const sendMessage = createAsyncThunk(
+  'chatPage/sendMessage',
+  async (message: string) => {
     chatAPI.sendMessage(message)
   }
-}
+)
 
-export default chatReducer
-
-type InitialStateType = typeof initialState
-type ActionsTypes = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionsTypes | FormAction>
+export default chatSlice.reducer

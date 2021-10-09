@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import IconButton from '@material-ui/core/IconButton'
 import SendIcon from '@material-ui/icons/Send'
@@ -9,6 +8,7 @@ import s from './Chat.module.scss'
 import ChatMembers from './ChatMembers/ChatMembers'
 import ChatMessages from './ChatMessages/ChatMessages'
 import withAuthRedirect from '../../hoc/withAuthRedirect'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 
 import { getTheme } from '../../redux/selectors/app-selectors'
 import { getStatusWS } from '../../redux/selectors/chat-selectors'
@@ -21,9 +21,9 @@ import {
 import { StatusWSType, ThemeType } from '../../types/types'
 
 const Chat: React.FC = () => {
-  const status = useSelector(getStatusWS)
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
+  const status = useAppSelector(getStatusWS)
+  const theme = useAppSelector(getTheme)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(startMessagesListening())
@@ -52,7 +52,7 @@ type FormPropsType = {
 }
 
 const AddMessageForm: React.FC<FormPropsType> = ({ theme, status }) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [message, setMessage] = useState('')
 
   const handleSendMessage = () => {

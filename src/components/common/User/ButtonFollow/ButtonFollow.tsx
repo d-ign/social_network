@@ -1,9 +1,10 @@
 import React, { useCallback, memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { Button } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
+
+import { useAppDispatch, useAppSelector } from '../../../../hooks/useApp'
 
 import { getFollowingInProgress } from '../../../../redux/selectors/users-selectors'
 import { getAuthorizedUserID } from '../../../../redux/selectors/auth-selectors'
@@ -26,10 +27,10 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({ id, followed }) => {
     flexBasis: '200px',
   }
 
-  const followingInProgress = useSelector(getFollowingInProgress)
-  const authorizedUserID = useSelector(getAuthorizedUserID)
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
+  const followingInProgress = useAppSelector(getFollowingInProgress)
+  const authorizedUserID = useAppSelector(getAuthorizedUserID)
+  const theme = useAppSelector(getTheme)
+  const dispatch = useAppDispatch()
 
   const followHandler = useCallback(() => dispatch(follow(id)), [dispatch, id])
 

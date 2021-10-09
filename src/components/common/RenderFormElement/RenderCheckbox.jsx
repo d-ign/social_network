@@ -1,9 +1,9 @@
 import { FormControlLabel, Checkbox } from '@material-ui/core'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../../hooks/useApp'
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
 const RenderCheckbox = ({ input, label }) => {
-  const theme = useSelector(getTheme)
+  const theme = useAppSelector(getTheme)
   return (
     <div>
       <FormControlLabel

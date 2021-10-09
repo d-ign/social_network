@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { submit } from 'redux-form'
 
 import Button from '@material-ui/core/Button'
@@ -10,12 +9,13 @@ import CloseIcon from '@material-ui/icons/Close'
 import s from './ProfileInfoContainer.module.scss'
 
 import Avatar from '../../common/Avatar/Avatar'
-import Preloader from '../../common/Preloader/Preloader'
 import ProfilePlug from './ProfilePlug/ProfilePlug'
-import ProfileStatus from './ProfileStatus/ProfileStatus'
 import ProfileData from './ProfileData/ProfileData'
+import Preloader from '../../common/Preloader/Preloader'
+import ProfileStatus from './ProfileStatus/ProfileStatus'
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
 import ProfileInputChangeAvatar from './ProfileInputChangeAvatar/ProfileInputChangeAvatar'
+import { useAppDispatch, useAppSelector } from '../../../hooks/useApp'
 
 import { getTheme } from '../../../redux/selectors/app-selectors'
 import {
@@ -25,10 +25,10 @@ import {
   getShowSuccessSave,
 } from '../../../redux/selectors/profile-selectors'
 import {
-  actions,
+  setEditModeProfile,
   savePhotoThunk,
   saveProfileThunk,
-} from '../../../redux/reducers/profile-reducer'
+} from '../../../redux/reducers/profile-info-reducer'
 
 import { ProfileType } from '../../../types/types'
 
@@ -59,13 +59,13 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   }
 
   // for ProfileInfoDataForm
-  const errorProfileContacts = useSelector(getErrorProfileContacts)
+  const errorProfileContacts = useAppSelector(getErrorProfileContacts)
 
-  const theme = useSelector(getTheme)
-  const profile = useSelector(getProfile)
-  const showSuccessSave = useSelector(getShowSuccessSave)
-  const isEditModeProfile = useSelector(getEditModeProfile)
-  const dispatch = useDispatch()
+  const theme = useAppSelector(getTheme)
+  const profile = useAppSelector(getProfile)
+  const showSuccessSave = useAppSelector(getShowSuccessSave)
+  const isEditModeProfile = useAppSelector(getEditModeProfile)
+  const dispatch = useAppDispatch()
 
   const [isEditInputProfileForm, setIsEditInputProfileForm] = useState(false)
 
@@ -80,7 +80,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   }
 
   const handleEditProfile = () => {
-    dispatch(actions.setEditModeProfile(true))
+    dispatch(setEditModeProfile({ bool: true }))
   }
 
   const handleSaveProfile = () => {
@@ -90,7 +90,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
 
   const handleCancelProfile = () => {
     setIsEditInputProfileForm(false)
-    dispatch(actions.setEditModeProfile(false))
+    dispatch(setEditModeProfile({ bool: false }))
   }
 
   if (!profile) {
@@ -105,6 +105,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   return (
     <section className={s.container}>
       <h1 className={s.visuallyHidden}>Profile information</h1>
+
       <div className={s.columnLeft}>
         <div className={s.avatarWrap}>
           <Avatar photo={profile.photos.large} size='extra-large' id={null} />

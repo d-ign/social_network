@@ -1,19 +1,20 @@
 import React, { memo } from 'react'
-import { useSelector } from 'react-redux'
 
 import cn from 'classnames'
 import s from './ChatMessage.module.scss'
 
 import Avatar from '../../../common/Avatar/Avatar'
 import Name from '../../../common/Name/Name'
+import { useAppSelector } from '../../../../hooks/useApp'
 
 import { getAuthorizedUserID } from '../../../../redux/selectors/auth-selectors'
+
 import { ChatMessageAPIType } from '../../../../types/types'
 
 const ChatMessage: React.FC<{ message: ChatMessageAPIType }> = ({
   message: { userId, photo, userName, message },
 }) => {
-  const myID = useSelector(getAuthorizedUserID)
+  const myID = useAppSelector(getAuthorizedUserID)
 
   return (
     <article

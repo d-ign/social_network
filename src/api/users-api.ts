@@ -2,7 +2,7 @@ import { UserType } from '../types/types'
 import { DefaultResponseType, instance } from './api'
 
 type GetUsersType = {
-  items: Array<UserType>
+  items: UserType[]
   totalCount: number
   error: string
 }

@@ -1,108 +1,47 @@
-import React from 'react'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import ProfileWall from './ProfileWall/ProfileWall'
 import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer'
 import withAuthRedirect from '../../hoc/withAuthRedirect'
+import { useAppDispatch } from '../../hooks/useApp'
 
 import { getEditModeProfile } from '../../redux/selectors/profile-selectors'
-import { AppStateType } from '../../redux/redux-store'
 import {
-  getUserProfile,
   getStatus,
-  actions,
-} from '../../redux/reducers/profile-reducer'
+  getUserProfile,
+  setEditModeProfile,
+} from '../../redux/reducers/profile-info-reducer'
+import { getAuthorizedUserID } from '../../redux/selectors/auth-selectors'
 
-type MapStatePropsType = {
-  authorizedUserID: number | null
-  isEditModeProfile: boolean
-}
+const ProfileContainer: React.FC = () => {
+  const authorizedUserID = useSelector(getAuthorizedUserID)
+  const isEditModeProfile = useSelector(getEditModeProfile)
+  const dispatch = useAppDispatch()
 
-type MapDispatchPropsType = {
-  getUserProfile: (userId: number) => void
-  getStatus: (userId: number) => void
-  setEditModeProfile: (bool: boolean) => void
-}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const match: any = useParams()
+  const userId = Number(match.userId)
+  const isOwner = userId === authorizedUserID
 
-type PathParamsType = {
-  userId: string
-}
+  useEffect(() => {
+    dispatch(getUserProfile(userId as number))
+    dispatch(getStatus(userId as number))
 
-type PropsType = MapStatePropsType &
-  MapDispatchPropsType &
-  RouteComponentProps<PathParamsType>
-
-class ProfileContainer extends React.PureComponent<PropsType> {
-  componentDidMount() {
-    this.refreshProfile()
-  }
-
-  componentDidUpdate(prevProps: PropsType) {
-    const { match } = this.props
-    // render when switching from one page to another
-    if (match.params.userId !== prevProps.match.params.userId) {
-      this.refreshProfile()
-    }
-  }
-
-  componentWillUnmount() {
-    const { isEditModeProfile, setEditModeProfile } = this.props
-    if (isEditModeProfile) {
-      setEditModeProfile(false)
-    }
-  }
-
-  refreshProfile() {
-    // getUserProfile and getStatus are already declared in the upper scope
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { match, authorizedUserID, history, getUserProfile, getStatus } =
-      this.props
-    let userId: number | null = +match.params.userId
-
-    if (!userId) {
-      userId = authorizedUserID
-      if (!userId) {
-        history.push('/login')
+    return () => {
+      if (isEditModeProfile) {
+        dispatch(setEditModeProfile({ bool: false }))
       }
     }
+  }, [authorizedUserID, dispatch, isEditModeProfile, userId])
 
-    getUserProfile(userId as number)
-    getStatus(userId as number)
-  }
-
-  render(): React.ReactElement<PropsType> {
-    const { match, authorizedUserID, isEditModeProfile } = this.props
-    const isOwner = +match.params.userId === authorizedUserID
-
-    return (
-      <main>
-        <ProfileInfoContainer isOwner={isOwner} />
-        {!isEditModeProfile && isOwner && <ProfileWall />}
-      </main>
-    )
-  }
+  return (
+    <main>
+      <ProfileInfoContainer isOwner={isOwner} />
+      {!isEditModeProfile && isOwner && <ProfileWall />}
+    </main>
+  )
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-  return {
-    authorizedUserID: state.auth.userID,
-    isEditModeProfile: getEditModeProfile(state),
-  }
-}
-
-export default compose<React.ComponentType>(
-  connect<
-    MapStatePropsType,
-    MapDispatchPropsType,
-    RouteComponentProps<PathParamsType>,
-    AppStateType
-  >(mapStateToProps, {
-    getUserProfile,
-    getStatus,
-    setEditModeProfile: actions.setEditModeProfile,
-  }),
-  withRouter,
-  withAuthRedirect
-)(ProfileContainer)
+export default withAuthRedirect(ProfileContainer)

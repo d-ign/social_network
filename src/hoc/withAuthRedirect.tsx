@@ -1,7 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-
+import { useAppSelector } from '../hooks/useApp'
 import { getIsAuth } from '../redux/selectors/auth-selectors'
 
 // WCP = WrappedComponentProps
@@ -9,7 +8,7 @@ export default function withAuthRedirect<WCP>(
   WrappedComponent: React.ComponentType<WCP>
 ) {
   const RedirectComponent: React.FC = (props) => {
-    const isAuth = useSelector(getIsAuth)
+    const isAuth = useAppSelector(getIsAuth)
 
     if (!isAuth) {
       return <Redirect to='/login' />

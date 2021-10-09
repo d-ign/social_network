@@ -1,10 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 import cn from 'classnames'
 import preloaderTheme1 from '../../../img/preloader/preloaderTheme1.svg'
 import preloaderTheme2 from '../../../img/preloader/preloaderTheme2.svg'
 import s from './Preloader.module.scss'
+
+import { useAppSelector } from '../../../hooks/useApp'
 
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
@@ -13,7 +14,7 @@ type PropsType = {
 }
 
 const Preloader: React.FC<PropsType> = ({ display }) => {
-  const theme = useSelector(getTheme)
+  const theme = useAppSelector(getTheme)
 
   return (
     <div

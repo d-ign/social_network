@@ -3,8 +3,8 @@ import { ChatMessageAPIType, StatusWSType } from '../types/types'
 let ws: WebSocket | null = null
 
 const subscribers = {
-  'messages-received': [] as Array<MessagesReceivedSubscriberType>,
-  'status-changed': [] as Array<StatusChangedSubscriberType>,
+  'messages-received': [] as MessagesReceivedSubscriberType[],
+  'status-changed': [] as StatusChangedSubscriberType[],
 }
 
 const notifySubscribersAboutStatus = (status: StatusWSType) => {
