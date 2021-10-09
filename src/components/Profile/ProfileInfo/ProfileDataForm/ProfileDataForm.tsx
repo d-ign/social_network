@@ -24,6 +24,10 @@ const Form: React.FC<
     setIsEditInputProfileForm,
   } = props
 
+  const handleEditInput = () => {
+    setIsEditInputProfileForm(true)
+  }
+
   return (
     <form onSubmit={handleSubmit} className={s.form}>
       <h1 className={s.titleForm}>Edit profile</h1>
@@ -49,9 +53,7 @@ const Form: React.FC<
       <div className={s.block}>
         <Field
           component={RenderCheckbox}
-          onChange={() => {
-            setIsEditInputProfileForm(true)
-          }}
+          onChange={handleEditInput}
           name='lookingForAJob'
           label='Are you looking for a job?'
         />
@@ -81,7 +83,7 @@ const Form: React.FC<
 
             <Field
               component={RenderTextField}
-              onInput={() => setIsEditInputProfileForm(true)}
+              onInput={handleEditInput}
               name={`contacts.${key}`}
               placeholder='https://...'
               multiline

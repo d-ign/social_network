@@ -20,5 +20,5 @@ export enum ResultCodeForCaptcha {
 export type DefaultResponseType<D = never, RC = ResultCodesEnum> = {
   data: D
   resultCode: RC
-  messages: Array<string> | string
+  messages: string[] | string
 }
