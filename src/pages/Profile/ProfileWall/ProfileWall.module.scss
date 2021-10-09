@@ -1,0 +1,25 @@
+@import '../../../assets/styles/colors';
+@import '../../../assets/styles/visuallyHidden';
+
+.container {
+  margin: 0 auto;
+  margin-top: 20px;
+  border-top: 2px var(--color-cyan) solid;
+  padding-top: 15px;
+  width: 100%;
+  max-width: 620px;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.posts {
+  min-height: 300px;
+
+  @media (max-width: 600px) {
+    min-height: 0;
+  }
+}

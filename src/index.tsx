@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import './styles/theme.css'
+import './assets/styles/theme.css'
 import {
   createTheme,
   ThemeProvider,
@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import store from './redux/redux-store'
+import store from './store/store'
 import App from './App'
 
 let theme = createTheme({

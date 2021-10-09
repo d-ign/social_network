@@ -1,0 +1,29 @@
+@import '../../../assets/styles/colors';
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]:after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  overflow-wrap: break-word;
+  border-radius: 5px;
+  padding: 0.5em;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 2px 2px 5px var(--color-darkBlueTransparent);
+  color: $color-white;
+  background: $color-grey;
+  opacity: 0;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+[data-tooltip]:hover:after {
+  top: 2em;
+  opacity: 1;
+}

@@ -1,0 +1,99 @@
+@import '../../assets/styles/colors';
+
+.nav {
+  grid-area: nav;
+}
+
+.nav ul {
+  margin: 0;
+  border-radius: 10px 10px 0 0;
+  padding: 15px;
+  width: 180px;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  box-shadow:
+    0 5px 5px var(--color-darkBlueTransparent),
+    0 5px 5px var(--color-darkBlueTransparent);
+  background-color: var(--color-darkBlue);
+
+  @media (max-width: 600px) {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 0;
+    width: 100%;
+    min-height: 1vh;
+    max-width: 565px;
+
+    .nav:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--color-cyan);
+    }
+  }
+
+  @media (max-width: 400px) {
+    padding: 5px;
+  }
+}
+
+.nav ul li {
+  flex-basis: 80px;
+  list-style-type: none;
+  margin-top: 10px;
+
+  @media (max-width: 600px) {
+    margin-top: 0;
+  }
+}
+
+.nav ul li:nth-child(1) {
+  margin-top: 0;
+}
+
+.navLink {
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 5px;
+  padding: 7px;
+  font-size: 18px;
+  text-decoration: none;
+  color: $color-white;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: -4px;
+    padding: 5px 5px 0;
+    font-size: 12px;
+  }
+}
+
+.navLinkImg {
+  padding-right: 8px;
+  width: 36px;
+  fill: $color-white;
+
+  @media (max-width: 600px) {
+    padding-right: 0;
+  }
+}
+
+.navLink:hover {
+  background-color: $color-greyTransparent;
+}
+
+.navLink.active {
+  color: var(--color-cyan);
+}
+
+.activeIcon {
+  fill: var(--color-cyan);
+}

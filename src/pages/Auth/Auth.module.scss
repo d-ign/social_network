@@ -1,0 +1,41 @@
+@import '../../assets/styles/colors';
+
+.container {
+  display: flex;
+}
+
+.body {
+  flex: 1 1 auto;
+  margin: 0 auto;
+  max-width: 260px;
+  text-align: center;
+}
+
+.loginBlockSubstrate {
+  border-radius: 10px;
+  background-color: $color-grey;
+}
+
+.loginBlock {
+  border-radius: 10px;
+  padding: 5px 15px 15px;
+  background-color: var(--color-darkBlueTransparent);
+}
+
+.wrapElementForm {
+  margin-top: 10px;
+}
+
+.wrapCheckbox {
+  margin: 10px 0;
+  text-align: left;
+}
+
+.error {
+  padding-top: 15px;
+  color: $color-red;
+}
+
+.error p {
+  margin: 0;
+}

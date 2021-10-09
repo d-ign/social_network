@@ -1,0 +1,106 @@
+@import '../../../assets/styles/colors';
+@import '../../../assets/styles/visuallyHidden';
+
+.container {
+  display: flex;
+
+  @media (max-width: 770px) {
+    display: block;
+  }
+}
+
+.columnLeft {
+  position: relative;
+  margin: 10px;
+
+  @media (max-width: 770px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    margin-top: 15px;
+  }
+}
+
+.avatarWrap {
+  position: relative;
+}
+
+.columnRight {
+  margin-left: 10px;
+  width: 100%;
+  max-width: 535px;
+
+  @media (max-width: 770px) {
+    margin-left: 0;
+  }
+}
+
+.iconButtonEditProfile {
+  padding-right: 5px;
+}
+
+.fullName {
+  overflow-wrap: break-word;
+  padding: 0 0 10px 5px;
+  font-weight: 700;
+  font-size: 25px;
+
+  @media (max-width: 770px) {
+    padding: 10px 0 5px;
+    text-align: center;
+  }
+}
+
+.buttonsSaveAndCancelProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+
+  @media (max-width: 770px) {
+    flex-direction: row;
+  }
+}
+
+.successSave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70px;
+  margin: 0 auto;
+  margin-right: calc(50% - 242px);
+  border-radius: 3px;
+  padding: 3px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  color: $color-green;
+  background-color: $color-greyMedium;
+  animation: anim 2s 2s ease;
+
+  @media (max-width: 770px) {
+    top: 288px;
+  }
+
+  @media (max-width: 600px) {
+    top: 70px;
+    margin-right: auto;
+  }
+
+  @media (max-width: 410px) {
+    max-width: 230px;
+  }
+
+  @keyframes anim {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}

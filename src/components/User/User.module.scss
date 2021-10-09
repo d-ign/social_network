@@ -1,0 +1,61 @@
+@import '../../assets/styles/colors';
+
+.user {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  margin: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 120px;
+  background-color: $color-greyTransparent;
+
+  @media (max-width: 740px) {
+    flex-basis: 140px;
+    flex-direction: column;
+    margin: 10px;
+    max-height: 210px;
+  }
+}
+
+.wrapAvatarNameAndStatus {
+  display: flex;
+
+  @media (max-width: 740px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.wrapAvatar {
+  margin: 10px;
+}
+
+.nameAndStatus {
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+  max-width: 200px;
+
+  @media (max-width: 740px) {
+    max-width: 120px;
+    text-align: center;
+  }
+
+  @media (max-width: 380px) {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+.wrapName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-cyan);
+}

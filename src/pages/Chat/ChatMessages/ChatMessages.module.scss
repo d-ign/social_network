@@ -1,0 +1,15 @@
+@import '../container';
+@import '../../../assets/styles/visuallyHidden';
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  @extend %containerTemplate;
+}
+
+@media (max-width: 760px) {
+  .container {
+    order: 2;
+  }
+}

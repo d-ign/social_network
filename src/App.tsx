@@ -1,26 +1,24 @@
 import React, { useEffect, lazy, Suspense } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import ProfileContainer from './components/Profile/ProfileContainer'
-import PreloaderStart from './components/common/Preloader/PreloaderStart'
-import Header from './components/Header/Header'
-import Navbar from './components/Navbar/Navbar'
-import Auth from './components/Auth/Auth'
-import ErrorBoundary from './components/Error/ErrorBoundary'
-import Preloader from './components/common/Preloader/Preloader'
+import ProfileContainer from './pages/Profile/ProfileContainer'
+import PreloaderStart from './components/Preloader/PreloaderStart'
+import Header from './parts/Header/Header'
+import Navbar from './parts/Navbar/Navbar'
+import Auth from './pages/Auth/Auth'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
+import Preloader from './components/Preloader/Preloader'
 
 import s from './App.module.scss'
 
-import { getInitialized } from './redux/selectors/app-selectors'
-import { getAuthorizedUserID } from './redux/selectors/auth-selectors'
-import { initializeApp } from './redux/reducers/app-reducer'
-import { useAppDispatch, useAppSelector } from './hooks/useApp'
+import { getInitialized } from './store/selectors/app-selectors'
+import { getAuthorizedUserID } from './store/selectors/auth-selectors'
+import { initializeApp } from './store/reducers/app-reducer'
+import { useAppDispatch, useAppSelector } from './services/hooks/useApp'
 
-const SuspendedChat = lazy(() => import('./components/Chat/Chat'))
-const SuspendedUsers = lazy(() => import('./components/Users/UsersContainer'))
-const SuspendedFriends = lazy(
-  () => import('./components/Friends/FriendsContainer')
-)
+const SuspendedChat = lazy(() => import('./pages/Chat/Chat'))
+const SuspendedUsers = lazy(() => import('./pages/Users/UsersContainer'))
+const SuspendedFriends = lazy(() => import('./pages/Friends/FriendsContainer'))
 
 const App: React.FC = () => {
   const userID = useAppSelector(getAuthorizedUserID)

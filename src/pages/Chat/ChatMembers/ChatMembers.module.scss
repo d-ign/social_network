@@ -1,0 +1,133 @@
+@import '../container';
+@import '../../../assets/styles/colors';
+@import '../../../assets/styles/visuallyHidden';
+
+.container {
+  flex: 1 1 200px;
+  margin-left: 10px;
+  border-radius: 5px;
+  background-color: $color-greyTransparent;
+
+  @extend %containerTemplate;
+}
+
+.inputHiddenBeforeFolding {
+  display: none;
+
+  @media (max-width: 760px) {
+    display: inline-block;
+  }
+}
+
+.titleWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 760px) {
+    position: absolute;
+    right: 15px;
+    top: -1px;
+    flex-direction: row;
+    border: 1px solid var(--color-cyan);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 0 8px;
+    width: 150px;
+    background-color: var(--color-darkBlue);
+    cursor: pointer;
+  }
+}
+
+.title {
+  margin: 0 0 5px;
+  font-weight: 400;
+  font-size: 20px;
+
+  @media (max-width: 760px) {
+    padding-top: 5px;
+    font-size: 12px;
+  }
+}
+
+.titleArrow {
+  display: none;
+
+  @media (max-width: 760px) {
+    display: inline;
+  }
+}
+
+.members {
+  max-height: 300px;
+
+  @media (max-height: 600px) and (max-width: 760px) {
+    max-height: 200px;
+  }
+
+  @media (max-height: 470px) and (max-width: 760px) {
+    max-height: 120px;
+  }
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.member:last-child {
+  padding-bottom: 0;
+}
+
+.wrapName {
+  overflow: hidden;
+  padding-left: 10px;
+  text-overflow: ellipsis;
+}
+
+.buttonShowAllWrap {
+  text-align: center;
+}
+
+.buttonShowAll {
+  border: 0 none transparent;
+  padding: 0;
+  color: $color-greyLight;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.buttonShowAll:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .container {
+    order: 1;
+    padding: 0;
+  }
+
+  .notShowMembers {
+    display: none;
+  }
+
+  .members {
+    position: absolute;
+    right: 15px;
+    top: 64px;
+    z-index: 100;
+    overflow-y: auto;
+    border: 1px solid var(--color-cyan);
+    border-top: 1px solid transparent;
+    border-radius: 0 0 5px 5px;
+    padding: 0 10px 10px;
+    width: 150px;
+    background-color: var(--color-darkBlue);
+  }
+
+  .titleWrapDeployed {
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,63 @@
+@import '../../../../assets/styles/colors';
+@import '../../../../assets/styles/visuallyHidden';
+
+.container {
+  position: relative;
+  margin-right: 30px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.statusEditMode {
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+}
+
+.buttonAndCounter {
+  position: absolute;
+  display: flex;
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+  background-color: $color-grey;
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+  }
+}
+
+.buttonWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+}
+
+.plug {
+  height: 41px;
+}
+
+.statusMy,
+.statusNotMy {
+  display: block;
+  overflow: hidden;
+  border-bottom: 2px solid $color-grey;
+  padding: 8px;
+  padding-bottom: 6px;
+  min-height: 30px;
+  max-height: 241px;
+  font-size: 16px;
+  line-height: 25px;
+  word-break: break-word;
+  color: var(--color-cyan);
+}
+
+.statusMy:hover {
+  border-radius: 5px;
+  background-color: $color-grey;
+  cursor: pointer;
+}
+
+.noStatus {
+  color: $color-greyLight;
+}
