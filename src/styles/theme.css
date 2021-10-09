@@ -29,7 +29,7 @@
   --color-darkBlueTransparent-theme1: hsla(216, 18%, 16%, 0.6);
   --color-darkBlueTransparent-theme2: hsla(36, 18%, 16%, 0.6);
   --color-darkBlueTransparent: var(--color-grey-theme1);
-  /* background: Login, Avatar on :hover (Profile-Wall-Post), */
+  /* background: Auth, Avatar on :hover (Profile-Wall-Post), */
   /* Tooltip on :hover (User) */
   /* box-shadow: Header, Navbar, app-content (App), */
 }

@@ -1,65 +1,55 @@
 import { Dispatch } from 'react'
 import { FormAction, stopSubmit } from 'redux-form'
-import { BaseThunkType, InferActionsTypes } from '../redux-store'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import authAPI from '../../api/auth-api'
 import profileAPI from '../../api/profile-api'
 import securityAPI from '../../api/security-api'
 import { ResultCodesEnum, ResultCodeForCaptcha } from '../../api/api'
 
-const initialState = {
-  userID: null as number | null,
-  email: null as string | null,
-  login: null as string | null,
-  isAuth: false,
-  captchaURL: null as string | null,
-  myPhoto: null as string | null,
-}
+import { LoginType } from '../../types/types'
 
-const authReducer = (
-  state = initialState,
-  action: ActionsTypes
-): InitialStateType => {
-  switch (action.type) {
-    case 'sn/auth/SET_MY_PHOTO':
-    case 'sn/auth/SET_USER_DATA':
-    case 'sn/auth/GET_CAPTCHA_URL_SUCCESS': {
-      return {
-        ...state,
-        ...action.payload,
-      }
-    }
-    default:
-      return state
-  }
-}
+const authSlice = createSlice({
+  name: 'authPage',
+  initialState: {
+    userID: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false,
+    captchaURL: null as string | null,
+    myPhoto: null as string | null,
+  },
+  reducers: {
+    setAuthUserData: (
+      state,
+      action: PayloadAction<{
+        userID: number | null
+        email: string | null
+        login: string | null
+        isAuth: boolean
+      }>
+    ) => {
+      const { userID, email, login, isAuth } = action.payload
+      state.userID = userID
+      state.email = email
+      state.login = login
+      state.isAuth = isAuth
+    },
 
-const actions = {
-  setAuthUserData: (
-    userID: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean
-  ) => ({
-    type: 'sn/auth/SET_USER_DATA',
-    payload: {
-      userID,
-      email,
-      login,
-      isAuth,
-    } as const,
-  }),
+    setCaptcha: (
+      state,
+      action: PayloadAction<{ captchaURL: string | null }>
+    ) => {
+      state.captchaURL = action.payload.captchaURL
+    },
 
-  setCaptcha: (captchaURL: string | null) => ({
-    type: 'sn/auth/GET_CAPTCHA_URL_SUCCESS',
-    payload: { captchaURL } as const,
-  }),
+    setMyPhoto: (state, action: PayloadAction<{ myPhoto: string | null }>) => {
+      state.myPhoto = action.payload.myPhoto
+    },
+  },
+})
 
-  setMyPhoto: (myPhoto: string | null) => ({
-    type: 'sn/auth/SET_MY_PHOTO',
-    payload: { myPhoto } as const,
-  }),
-}
+const { setAuthUserData, setCaptcha, setMyPhoto } = authSlice.actions
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const _handleError = (dispatch: Dispatch<FormAction>, response: any) => {
@@ -73,41 +63,43 @@ const _handleError = (dispatch: Dispatch<FormAction>, response: any) => {
   }
 }
 
-export const getAuthUserData = (): ThunkType => async (dispatch) => {
-  const response = await authAPI.me()
+export const getAuthUserData = createAsyncThunk(
+  'authPage/getAuthUserData',
+  async (_, { dispatch }) => {
+    const response = await authAPI.me()
 
-  if (response.resultCode === ResultCodesEnum.Success) {
-    const { id, email, login } = response.data
-    dispatch(actions.setAuthUserData(id, email, login, true))
+    if (response.resultCode === ResultCodesEnum.Success) {
+      const { id, email, login } = response.data
+      dispatch(setAuthUserData({ userID: id, email, login, isAuth: true }))
+    }
+
+    _handleError(dispatch, response)
+
+    if (Object.keys(response.data).length !== 0) {
+      const myProfile = await profileAPI.getProfile(response.data.id)
+      const myPhoto = myProfile.photos.large
+      dispatch(setMyPhoto({ myPhoto }))
+    }
   }
+)
 
-  _handleError(dispatch, response)
-
-  if (Object.keys(response.data).length !== 0) {
-    const myProfile = await profileAPI.getProfile(response.data.id)
-    dispatch(actions.setMyPhoto(myProfile.photos.large))
+const setCaptchaThunk = createAsyncThunk(
+  'authPage/setCaptchaThunk',
+  async (_, { dispatch }) => {
+    const response = await securityAPI.getCaptchaURL()
+    dispatch(setCaptcha({ captchaURL: response.url }))
   }
-}
+)
 
-const setCaptchaThunk = (): ThunkType => async (dispatch) => {
-  const response = await securityAPI.getCaptchaURL()
-  const captcha = response.url
-  dispatch(actions.setCaptcha(captcha))
-}
-
-export const loginThunk =
-  (
-    email: string,
-    password: string,
-    rememberMe: boolean,
-    captcha: string | null
-  ): ThunkType =>
-  async (dispatch) => {
+export const loginThunk = createAsyncThunk(
+  'authPage/loginThunk',
+  async (props: LoginType, { dispatch }) => {
+    const { email, password, rememberMe, captcha } = props
     const response = await authAPI.login(email, password, rememberMe, captcha)
 
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(getAuthUserData())
-      dispatch(actions.setCaptcha(null))
+      dispatch(setCaptcha({ captchaURL: null }))
     }
 
     _handleError(dispatch, response)
@@ -116,18 +108,25 @@ export const loginThunk =
       dispatch(setCaptchaThunk())
     }
   }
+)
 
-export const logoutThunk = (): ThunkType => async (dispatch) => {
-  const response = await authAPI.logout()
+export const logoutThunk = createAsyncThunk(
+  'authPage/logoutThunk',
+  async (_, { dispatch }) => {
+    const response = await authAPI.logout()
 
-  if (response.resultCode === ResultCodesEnum.Success) {
-    dispatch(actions.setAuthUserData(null, null, null, false))
-    dispatch(actions.setMyPhoto(null))
+    if (response.resultCode === ResultCodesEnum.Success) {
+      dispatch(
+        setAuthUserData({
+          userID: null,
+          email: null,
+          login: null,
+          isAuth: false,
+        })
+      )
+      dispatch(setMyPhoto({ myPhoto: null }))
+    }
   }
-}
+)
 
-export default authReducer
-
-type InitialStateType = typeof initialState
-type ActionsTypes = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionsTypes | FormAction>
+export default authSlice.reducer

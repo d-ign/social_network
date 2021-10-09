@@ -5,7 +5,6 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { Button, TextField } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save'
@@ -13,18 +12,21 @@ import cn from 'classnames'
 import s from './ProfileStatus.module.scss'
 import stylesField from '../../../common/FieldWithCounter/FieldWithCounter.module.scss'
 import useStyles from './stylesCustomMaterialUI'
-import { getTheme } from '../../../../redux/selectors/app-selectors'
 
+import { useAppDispatch, useAppSelector } from '../../../../hooks/useApp'
 import useOutsideAlerter from '../../../../hooks/useOutsideAlerter'
+
+import { getTheme } from '../../../../redux/selectors/app-selectors'
 import { getStatus } from '../../../../redux/selectors/profile-selectors'
-import { updateStatus } from '../../../../redux/reducers/profile-reducer'
+
+import { updateStatus } from '../../../../redux/reducers/profile-info-reducer'
 
 type PropsType = {
   isOwner: boolean
 }
 
 const ProfileStatus = ({ isOwner }: PropsType) => {
-  const status = useSelector(getStatus)
+  const status = useAppSelector(getStatus)
 
   const [editMode, setEditMode] = useState(false)
   const [statusLocal, setStatusLocal] = useState(status)
@@ -101,8 +103,8 @@ const StatusForm: React.FC<StatusFormPropsType> = ({
     width: '100%',
   }
 
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
+  const theme = useAppSelector(getTheme)
+  const dispatch = useAppDispatch()
 
   const [isEditInputStatusForm, setIsEditInputStatusForm] = useState(false)
   const [isHiddenCounter, setIsHiddenCounter] = useState(true)

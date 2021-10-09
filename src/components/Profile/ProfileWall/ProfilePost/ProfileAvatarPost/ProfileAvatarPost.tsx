@@ -1,14 +1,17 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import cn from 'classnames'
 import s from './ProfileAvatarPost.module.scss'
 
-import { actions } from '../../../../../redux/reducers/profile-reducer'
-import { getTheme } from '../../../../../redux/selectors/app-selectors'
-
 import unknown from '../../../../../img/no_photo.svg'
 import Avatar from '../../../../common/Avatar/Avatar'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/useApp'
+
+import {
+  setPostForDeleting,
+  deletePostForDeleting,
+} from '../../../../../redux/reducers/profile-wall-reducer'
+import { getTheme } from '../../../../../redux/selectors/app-selectors'
 
 import { ProfileType } from '../../../../../types/types'
 
@@ -29,21 +32,21 @@ const ProfileAvatarPost: React.FC<PropsType> = ({
   setIsSelectedPost,
   setIsHiddenAllLikeAndXAndPrompt,
 }) => {
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
+  const theme = useAppSelector(getTheme)
+  const dispatch = useAppDispatch()
 
   const handleClickOnAvatar = () => {
     if (!isSelectedPost) {
       setIsHiddenAllLikeAndXAndPrompt(true)
       setIsSelectedPost(true)
-      dispatch(actions.setPostForDeleting(idPost))
+      dispatch(setPostForDeleting({ idPost }))
     } else {
       if (postsForDelete.size === 0) {
         // do not return all X and likes, if some posts are still selected
         setIsHiddenAllLikeAndXAndPrompt(false)
       }
       setIsSelectedPost(false)
-      dispatch(actions.deletePostForDeleting(idPost))
+      dispatch(deletePostForDeleting({ idPost }))
     }
   }
 

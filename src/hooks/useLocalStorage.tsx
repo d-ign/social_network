@@ -1,39 +1,31 @@
-import { Dispatch, SetStateAction, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { PropsWithChildren, useEffect } from 'react'
+import { PayloadActionCreator } from '@reduxjs/toolkit'
+import { useAppDispatch } from './useApp'
+
 import { PostType, ThemeType } from '../types/types'
 
-type ActionPostsType = (posts: Array<PostType>) => {
-  type: string
-  posts: Array<PostType>
+type ActionPostsType = PayloadActionCreator<PostType[]>
+type ActionThemeType = PayloadActionCreator<ThemeType>
+
+type PropsType = {
+  key: string
+  value: ThemeType | PostType[]
+  action: ActionPostsType | ActionThemeType
 }
 
-type ActionThemeType = (theme: ThemeType) => {
-  type: string
-  theme: ThemeType
-}
+type HookType = (props: PropsWithChildren<PropsType>) => void
 
-const useLocalStorage = (
-  key: string,
-  value: string | PostType[],
-  action: ActionPostsType | ActionThemeType,
-  callback?: Dispatch<SetStateAction<ThemeType>>
-) => {
-  const dispatch = useDispatch()
+const useLocalStorage: HookType = ({ key, value, action }) => {
+  const dispatch = useAppDispatch()
 
   // reading and applying theme from Local Storage
   useEffect(() => {
-    let currentValue
     const currentValueJson = localStorage.getItem(key)
 
     if (currentValueJson) {
-      currentValue = JSON.parse(currentValueJson)
+      dispatch(action(JSON.parse(currentValueJson)))
     }
-
-    if (currentValue) {
-      dispatch(action(currentValue))
-      if (callback) callback(currentValue)
-    }
-  }, [action, key, callback, dispatch])
+  }, [action, key, dispatch])
 
   // writing a theme to Local Storage
   useEffect(() => {

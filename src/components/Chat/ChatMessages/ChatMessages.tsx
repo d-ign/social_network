@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState, memo } from 'react'
-import { useSelector } from 'react-redux'
 
 import s from './ChatMessages.module.scss'
 
 import ChatMessage from './ChatMessage/ChatMessage'
 import NoElement from '../../common/NoElement/NoElement'
+import { useAppSelector } from '../../../hooks/useApp'
 
 import { getMessages } from '../../../redux/selectors/chat-selectors'
 
 import { ChatMessageType } from '../../../types/types'
 
 const ChatMessages: React.FC = () => {
-  const messages = useSelector(getMessages)
+  const messages = useAppSelector(getMessages)
   const lastElement = useRef<HTMLDivElement>(null)
   const [isAutoScroll, setIsAutoScroll] = useState(true)
 
@@ -35,7 +35,7 @@ const ChatMessages: React.FC = () => {
       <h1 className={s.visuallyHidden}>Chat messages</h1>
       {messages.length ? (
         messages
-          .filter((m) => m.message.trim().length > 0)
+          .filter((m: ChatMessageType) => m.message.trim().length > 0)
           .map((m: ChatMessageType) => <ChatMessage key={m.id} message={m} />)
       ) : (
         <NoElement elements='messages' writeSomething />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { PayloadActionCreator } from '@reduxjs/toolkit'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -8,12 +9,12 @@ import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer'
 import withAuthRedirect from '../../hoc/withAuthRedirect'
 
 import { getEditModeProfile } from '../../redux/selectors/profile-selectors'
-import { AppStateType } from '../../redux/redux-store'
+import { RootStateType } from '../../redux/redux-store'
 import {
-  getUserProfile,
   getStatus,
-  actions,
-} from '../../redux/reducers/profile-reducer'
+  getUserProfile,
+  setEditModeProfile,
+} from '../../redux/reducers/profile-info-reducer'
 
 type MapStatePropsType = {
   authorizedUserID: number | null
@@ -23,7 +24,7 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   getUserProfile: (userId: number) => void
   getStatus: (userId: number) => void
-  setEditModeProfile: (bool: boolean) => void
+  setEditModeProfile: PayloadActionCreator<{ bool: boolean }>
 }
 
 type PathParamsType = {
@@ -48,9 +49,10 @@ class ProfileContainer extends React.PureComponent<PropsType> {
   }
 
   componentWillUnmount() {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const { isEditModeProfile, setEditModeProfile } = this.props
     if (isEditModeProfile) {
-      setEditModeProfile(false)
+      setEditModeProfile({ bool: false })
     }
   }
 
@@ -85,9 +87,9 @@ class ProfileContainer extends React.PureComponent<PropsType> {
   }
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+const mapStateToProps = (state: RootStateType): MapStatePropsType => {
   return {
-    authorizedUserID: state.auth.userID,
+    authorizedUserID: state.authPage.userID,
     isEditModeProfile: getEditModeProfile(state),
   }
 }
@@ -97,11 +99,11 @@ export default compose<React.ComponentType>(
     MapStatePropsType,
     MapDispatchPropsType,
     RouteComponentProps<PathParamsType>,
-    AppStateType
+    RootStateType
   >(mapStateToProps, {
     getUserProfile,
     getStatus,
-    setEditModeProfile: actions.setEditModeProfile,
+    setEditModeProfile,
   }),
   withRouter,
   withAuthRedirect

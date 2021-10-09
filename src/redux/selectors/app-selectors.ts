@@ -1,5 +1,5 @@
-import { AppStateType } from '../redux-store'
+import { RootStateType } from '../redux-store'
 
-export const getInitialized = (state: AppStateType) => state.app.initialized
+export const getInitialized = (state: RootStateType) => state.app.initialized
 
-export const getTheme = (state: AppStateType) => state.app.theme
+export const getTheme = (state: RootStateType) => state.app.theme

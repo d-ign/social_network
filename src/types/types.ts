@@ -1,10 +1,4 @@
-export type PostType = {
-  idPost: number
-  message: string
-  likesCount: number
-  isLikeClick: boolean
-}
-
+// Profile
 export type ProfileType = {
   userId: number
   lookingForAJob: boolean
@@ -31,6 +25,14 @@ export type PhotosType = {
   large: string | null
 }
 
+export type PostType = {
+  idPost: number
+  message: string
+  likesCount: number
+  isLikeClick: boolean
+}
+
+// Users
 export type UserType = {
   id: number
   name: string
@@ -38,6 +40,9 @@ export type UserType = {
   photos: PhotosType
   followed: boolean
 }
+
+// Chat
+export type StatusWSType = 'pending' | 'ready' | 'error'
 
 export type ChatMessageType = ChatMessageAPIType & { id: string }
 
@@ -48,6 +53,13 @@ export type ChatMessageAPIType = {
   userName: string
 }
 
-export type StatusWSType = 'pending' | 'ready' | 'error'
-
+// App
 export type ThemeType = 'theme1' | 'theme2'
+
+// Auth
+export type LoginType = {
+  email: string
+  password: string
+  rememberMe: boolean
+  captcha: string | null
+}

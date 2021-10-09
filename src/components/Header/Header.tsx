@@ -1,6 +1,5 @@
-import React, { useEffect, useState, memo, useCallback } from 'react'
+import React, { useEffect, memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
@@ -11,6 +10,7 @@ import logo from '../../img/icons/logo.svg'
 
 import Avatar from '../common/Avatar/Avatar'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 
 import {
   getAuthorizedUserID,
@@ -20,28 +20,29 @@ import {
 } from '../../redux/selectors/auth-selectors'
 import { getTheme } from '../../redux/selectors/app-selectors'
 import { logoutThunk } from '../../redux/reducers/auth-reducer'
-import { actions } from '../../redux/reducers/app-reducer'
+import { setTheme } from '../../redux/reducers/app-reducer'
 
 import { ThemeType } from '../../types/types'
 
 const Header: React.FC = () => {
-  const isAuth = useSelector(getIsAuth)
-  const login = useSelector(getLogin)
-  const myID = useSelector(getAuthorizedUserID)
-  const myPhoto = useSelector(getMyPhoto)
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
+  const isAuth = useAppSelector(getIsAuth)
+  const login = useAppSelector(getLogin)
+  const myID = useAppSelector(getAuthorizedUserID)
+  const myPhoto = useAppSelector(getMyPhoto)
+  const theme = useAppSelector(getTheme)
+  const dispatch = useAppDispatch()
 
-  const [themeLocal, setThemeLocal] = useState(theme as ThemeType)
+  // useLocalStorage('theme', theme, setTheme)
+  useLocalStorage({ key: 'theme', value: theme, action: setTheme })
 
   useEffect(() => {
     const colors = {
-      cyan: `var(--color-cyan-${themeLocal})`,
-      cyanLight: `var(--color-cyanLight-${themeLocal})`,
-      cyanMedium: `var(--color-cyanMedium-${themeLocal})`,
-      cyanDark: `var(--color-cyanDark-${themeLocal})`,
-      darkBlue: `var(--color-darkBlue-${themeLocal})`,
-      darkBlueTransparent: `var(--color-darkBlueTransparent-${themeLocal})`,
+      cyan: `var(--color-cyan-${theme})`,
+      cyanLight: `var(--color-cyanLight-${theme})`,
+      cyanMedium: `var(--color-cyanMedium-${theme})`,
+      cyanDark: `var(--color-cyanDark-${theme})`,
+      darkBlue: `var(--color-darkBlue-${theme})`,
+      darkBlueTransparent: `var(--color-darkBlueTransparent-${theme})`,
     }
 
     const keys = Object.keys(colors)
@@ -50,14 +51,11 @@ const Header: React.FC = () => {
     for (let i = 0; i < keys.length; i++) {
       document.body.style.setProperty(`--color-${keys[i]}`, values[i])
     }
-  }, [theme, themeLocal])
-
-  useLocalStorage('theme', theme, actions.setTheme, setThemeLocal)
+  }, [theme])
 
   const handleToggleTheme = useCallback(() => {
-    dispatch(actions.setTheme(themeLocal === 'theme1' ? 'theme2' : 'theme1'))
-    setThemeLocal(themeLocal === 'theme1' ? 'theme2' : 'theme1')
-  }, [dispatch, themeLocal])
+    dispatch(setTheme(theme === 'theme1' ? 'theme2' : 'theme1'))
+  }, [dispatch, theme])
 
   const handleLogout = useCallback(() => {
     dispatch(logoutThunk())

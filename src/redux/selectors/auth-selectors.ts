@@ -1,11 +1,12 @@
-import { AppStateType } from '../redux-store'
+import { RootStateType } from '../redux-store'
 
-export const getLogin = (state: AppStateType) => state.auth.login
+export const getLogin = (state: RootStateType) => state.authPage.login
 
-export const getIsAuth = (state: AppStateType) => state.auth.isAuth
+export const getIsAuth = (state: RootStateType) => state.authPage.isAuth
 
-export const getAuthorizedUserID = (state: AppStateType) => state.auth.userID
+export const getAuthorizedUserID = (state: RootStateType) =>
+  state.authPage.userID
 
-export const getCaptchaURL = (state: AppStateType) => state.auth.captchaURL
+export const getCaptchaURL = (state: RootStateType) => state.authPage.captchaURL
 
-export const getMyPhoto = (state: AppStateType) => state.auth.myPhoto
+export const getMyPhoto = (state: RootStateType) => state.authPage.myPhoto

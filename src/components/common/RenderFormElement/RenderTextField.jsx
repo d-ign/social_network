@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux'
 import { TextField } from '@material-ui/core'
+import { useAppSelector } from '../../../hooks/useApp'
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
 import s from './RenderTextField.module.scss'
@@ -19,7 +19,7 @@ const RenderTextField = (props) => {
     ...custom
   } = props
 
-  const theme = useSelector(getTheme)
+  const theme = useAppSelector(getTheme)
 
   return (
     <>

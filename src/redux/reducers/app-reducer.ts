@@ -1,47 +1,33 @@
-import { BaseThunkType, InferActionsTypes } from '../redux-store'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import { getAuthUserData } from './auth-reducer'
 import { ThemeType } from '../../types/types'
 
-const initialState = {
-  initialized: false,
-  theme: 'theme1' as ThemeType,
-}
+const appSlice = createSlice({
+  name: 'app',
+  initialState: {
+    initialized: false,
+    theme: 'theme1' as ThemeType,
+  },
+  reducers: {
+    initializedSuccess: (state) => {
+      state.initialized = true
+    },
 
-const appReducer = (
-  state = initialState,
-  action: ActionsTypes
-): InitialStateType => {
-  switch (action.type) {
-    case 'sn/app/INITIALIZED_SUCCESS': {
-      return {
-        ...state,
-        initialized: true,
-      }
-    }
-    case 'sn/app/TOGGLE_THEME': {
-      return {
-        ...state,
-        theme: action.theme,
-      }
-    }
-    default:
-      return state
+    setTheme: (state, action: PayloadAction<ThemeType>) => {
+      state.theme = action.payload
+    },
+  },
+})
+
+export const { initializedSuccess, setTheme } = appSlice.actions
+
+export const initializeApp = createAsyncThunk(
+  'app/initializeApp',
+  async (_, { dispatch }) => {
+    await dispatch(getAuthUserData())
+    dispatch(initializedSuccess())
   }
-}
+)
 
-export const actions = {
-  initializedSuccess: () => ({ type: 'sn/app/INITIALIZED_SUCCESS' } as const),
-  setTheme: (theme: ThemeType) =>
-    ({ type: 'sn/app/TOGGLE_THEME', theme } as const),
-}
-
-export const initializeApp = (): ThunkType => async (dispatch) => {
-  await dispatch(getAuthUserData())
-  dispatch(actions.initializedSuccess())
-}
-
-export default appReducer
-
-type InitialStateType = typeof initialState
-type ActionsTypes = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionsTypes>
+export default appSlice.reducer

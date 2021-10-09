@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
 import cn from 'classnames'
@@ -13,6 +12,7 @@ import Prompt from '../common/Prompt/Prompt'
 import NoElement from '../common/NoElement/NoElement'
 import useQueryUrl from '../../hooks/useQueryUrl'
 import useObserver from '../../hooks/useObserver'
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp'
 
 import {
   getIsFetching,
@@ -25,12 +25,12 @@ import { getUsers } from '../../redux/reducers/users-reducer'
 import { UserType } from '../../types/types'
 
 const Users: React.FC = () => {
-  const pageSize = useSelector(getPageSize)
-  const users = useSelector(getUsersSelector)
-  const isFetching = useSelector(getIsFetching)
-  const totalUsersCount = useSelector(getTotalUsersCount)
+  const pageSize = useAppSelector(getPageSize)
+  const users = useAppSelector(getUsersSelector)
+  const isFetching = useAppSelector(getIsFetching)
+  const totalUsersCount = useAppSelector(getTotalUsersCount)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { pathname } = useLocation()
   const { termOfUrl, setTermOfUrl } = useQueryUrl(pathname)
 
@@ -45,7 +45,7 @@ const Users: React.FC = () => {
     (term: string) => {
       setPageNumber(1)
       setTermOfUrl(term)
-      dispatch(getUsers(1, term))
+      dispatch(getUsers({ page: 1, term }))
 
       if (maxPageCount === pageNumber) {
         setIsShowMoreUsersButton(false)
@@ -66,13 +66,13 @@ const Users: React.FC = () => {
   }, [maxPageCount, totalUsersCount, pageSize])
 
   useEffect(() => {
-    dispatch(getUsers(1, termOfUrl))
+    dispatch(getUsers({ page: 1, term: termOfUrl }))
   }, [termOfUrl, pathname, dispatch])
 
   const handleShowMoreUsers = useCallback(() => {
     if (maxPageCount > pageNumber) {
       setPageNumber(++pageNumber)
-      dispatch(getUsers(pageNumber, termOfUrl))
+      dispatch(getUsers({ page: pageNumber, term: termOfUrl }))
     }
     if (maxPageCount === pageNumber) {
       setIsShowMoreUsersButton(false)

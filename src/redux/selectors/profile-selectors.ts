@@ -1,19 +1,20 @@
-import { AppStateType } from '../redux-store'
+import { RootStateType } from '../redux-store'
 
-export const getProfile = (state: AppStateType) => state.profilePage.profile
+export const getProfile = (state: RootStateType) =>
+  state.profilePage.info.profile
 
-export const getStatus = (state: AppStateType) => state.profilePage.status
+export const getStatus = (state: RootStateType) => state.profilePage.info.status
 
-export const getShowSuccessSave = (state: AppStateType) =>
-  state.profilePage.showSuccessSave
+export const getShowSuccessSave = (state: RootStateType) =>
+  state.profilePage.info.showSuccessSave
 
-export const getErrorProfileContacts = (state: AppStateType) =>
-  state.profilePage.errorProfileContacts
+export const getErrorProfileContacts = (state: RootStateType) =>
+  state.profilePage.info.errorProfileContacts
 
-export const getPosts = (state: AppStateType) => state.profilePage.posts
+export const getPosts = (state: RootStateType) => state.profilePage.wall.posts
 
-export const getPostsForDelete = (state: AppStateType) =>
-  new Set(state.profilePage.postsForDelete)
+export const getPostsForDelete = (state: RootStateType) =>
+  new Set(state.profilePage.wall.postsForDelete)
 
-export const getEditModeProfile = (state: AppStateType) =>
-  state.profilePage.isEditModeProfile
+export const getEditModeProfile = (state: RootStateType) =>
+  state.profilePage.info.isEditModeProfile

@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React, { useCallback, useEffect, useState, memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import PostAddIcon from '@material-ui/icons/PostAdd'
@@ -12,34 +11,40 @@ import ProfileButtonsPostsDelete from './ProfileButtonsPostsDelete/ProfileButton
 import ProfilePost from './ProfilePost/ProfilePost'
 import NoElement from '../../common/NoElement/NoElement'
 import useLocalStorage from '../../../hooks/useLocalStorage'
+import { useAppDispatch, useAppSelector } from '../../../hooks/useApp'
 
 import {
   getPosts,
-  getPostsForDelete,
   getProfile,
+  getPostsForDelete,
 } from '../../../redux/selectors/profile-selectors'
-import { actions } from '../../../redux/reducers/profile-reducer'
+import {
+  addPost,
+  deletePost,
+  initializePosts,
+} from '../../../redux/reducers/profile-wall-reducer'
 import { getTheme } from '../../../redux/selectors/app-selectors'
 
 import { PostType } from '../../../types/types'
 
 const ProfileWall: React.FC = () => {
-  const profile = useSelector(getProfile)
-  const posts = useSelector(getPosts)
-  const postsForDelete = useSelector(getPostsForDelete)
-  const dispatch = useDispatch()
+  const posts = useAppSelector(getPosts)
+  const profile = useAppSelector(getProfile)
+  const postsForDelete = useAppSelector(getPostsForDelete)
+  const dispatch = useAppDispatch()
 
+  const [isShowPrompt, setIsShowPrompt] = useState(true)
   const [isShowAnimation, setIsShowAnimation] = useState(false)
   const [isCancelDeletion, setIsCancelDeletion] = useState(false)
   const [isSelectedAllPosts, setIsSelectedAllPosts] = useState(false)
   const [isHiddenAllLikeAndXAndPrompt, setIsHiddenAllLikeAndXAndPrompt] =
     useState(false)
 
-  useLocalStorage('posts', posts, actions.initializePosts)
+  useLocalStorage({ key: 'posts', value: posts, action: initializePosts })
 
   const handleDeleteOnePost = useCallback(
     (idPost: number) => {
-      dispatch(actions.deletePost(idPost))
+      dispatch(deletePost({ idPost }))
     },
     [dispatch]
   )
@@ -61,8 +66,10 @@ const ProfileWall: React.FC = () => {
         likesCount: p.likesCount,
         isLikeClick: p.isLikeClick,
       }}
-      idPostFirst={posts[0].idPost}
       profile={profile}
+      idPostFirst={posts[0].idPost}
+      isShowPrompt={isShowPrompt}
+      setIsShowPrompt={setIsShowPrompt}
       isSelectedAllPosts={isSelectedAllPosts}
       isHiddenAllLikeAndXAndPrompt={isHiddenAllLikeAndXAndPrompt}
       setIsHiddenAllLikeAndXAndPrompt={setIsHiddenAllLikeAndXAndPrompt}
@@ -106,21 +113,21 @@ const AddPostForm: React.FC = memo(() => {
     width: '140px',
   }
 
-  const theme = useSelector(getTheme)
-  const dispatch = useDispatch()
+  const theme = useAppSelector(getTheme)
+  const dispatch = useAppDispatch()
 
-  const [value, setValue] = useState('')
+  const [newPostTextLocal, setNewPostTextLocal] = useState('')
 
   const handleAddPost = () => {
-    if (!value.trim()) {
+    if (!newPostTextLocal.trim()) {
       return
     }
-    dispatch(actions.addPost(value))
-    setValue('')
+    dispatch(addPost({ newPostText: newPostTextLocal }))
+    setNewPostTextLocal('')
   }
 
   const handleChangeTextField = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
+    setNewPostTextLocal(e.target.value)
   }
 
   return (
@@ -132,7 +139,7 @@ const AddPostForm: React.FC = memo(() => {
         fullWidth
         variant='outlined'
         color={theme === 'theme1' ? 'primary' : 'secondary'}
-        inputProps={{ maxLength: 1000, value }}
+        inputProps={{ maxLength: 1000, value: newPostTextLocal }}
         onChange={handleChangeTextField}
       />
       <div className={stylesAdaptiveButtons.buttonDesktop}>
