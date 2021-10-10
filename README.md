@@ -6,7 +6,7 @@
 <img src="https://img.shields.io/badge/Commitizen-used%20by%20-brightgreen" />
 
 
-<a href="./readme_content/jscpd-report.md">0.98% duplicated lines</a> by <a href="https://github.com/kucherenko/jscpd">jscpd</a>
+<a href="./readme_content/jscpd-report.md">1.12% duplicated lines</a> by <a href="https://github.com/kucherenko/jscpd">jscpd</a>
 
 </div>
 
@@ -25,9 +25,9 @@
     * Render-prop (`ProfileDataForm`)
 - React-redux
 - React-router-dom
-- Redux
-- Redux-thunk
-- Redux-form (компоненты `Login`, `ProfileDataForm`)
+- ~~Redux и Redux-thunk (до коммита `2f7fc10` от 10.10.2021)~~
+- Redux-toolkit
+- Redux-form (компоненты `Auth`, `ProfileDataForm`)
 - Typescript
 - WebSocket (`Chat`)
 - SCSS и Material UI (для стилизации элементов форм)
