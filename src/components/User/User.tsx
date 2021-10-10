@@ -5,7 +5,7 @@ import s from './User.module.scss'
 import Name from '../Name/Name'
 import Avatar from '../Avatar/Avatar'
 import Tooltip from './Tooltip/Tooltip'
-import ButtonFollow from './ButtonFollow/ButtonFollow'
+import ButtonFollow from '../ButtonFollow/ButtonFollow'
 import useResizeWindow from '../../services/hooks/useResizeWindow'
 
 import { UserType } from '../../types/types'
@@ -35,7 +35,7 @@ const User: React.FC<{ user: UserType }> = (props) => {
           <WithTooltip.Status status={status} symbolCount={symbolCount} />
         </div>
       </div>
-      <ButtonFollow id={id} followed={followed} />
+      <ButtonFollow id={id} followed={followed} setIsFollowed={null} />
     </article>
   )
 }

@@ -1,22 +1,27 @@
-import React, { useCallback, memo } from 'react'
+import React, { useCallback, memo, SetStateAction, Dispatch } from 'react'
 
 import { Button } from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddIcon from '@material-ui/icons/Add'
 
-import { useAppDispatch, useAppSelector } from '../../../services/hooks/useApp'
+import { useAppDispatch, useAppSelector } from '../../services/hooks/useApp'
 
-import { getFollowingInProgress } from '../../../store/selectors/users-selectors'
-import { getAuthorizedUserID } from '../../../store/selectors/auth-selectors'
-import { follow, unfollow } from '../../../store/reducers/users-reducer'
-import { getTheme } from '../../../store/selectors/app-selectors'
+import { getFollowingInProgress } from '../../store/selectors/users-selectors'
+import { getAuthorizedUserID } from '../../store/selectors/auth-selectors'
+import { follow, unfollow } from '../../store/reducers/users-reducer'
+import { getTheme } from '../../store/selectors/app-selectors'
 
 type ButtonFollowPropsType = {
-  followed: boolean
+  followed: boolean | undefined | unknown
   id: number
+  setIsFollowed: Dispatch<SetStateAction<boolean>> | null
 }
 
-const ButtonFollow: React.FC<ButtonFollowPropsType> = ({ id, followed }) => {
+const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
+  id,
+  followed,
+  setIsFollowed = null,
+}) => {
   const stylesWrapButton: React.CSSProperties = {
     textAlign: 'center',
   }
@@ -32,12 +37,15 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({ id, followed }) => {
   const theme = useAppSelector(getTheme)
   const dispatch = useAppDispatch()
 
-  const followHandler = useCallback(() => dispatch(follow(id)), [dispatch, id])
+  const followHandler = useCallback(() => {
+    dispatch(follow(id))
+    if (setIsFollowed) setIsFollowed(true)
+  }, [dispatch, id, setIsFollowed])
 
-  const unfollowHandler = useCallback(
-    () => dispatch(unfollow(id)),
-    [dispatch, id]
-  )
+  const unfollowHandler = useCallback(() => {
+    dispatch(unfollow(id))
+    if (setIsFollowed) setIsFollowed(false)
+  }, [dispatch, id, setIsFollowed])
 
   const isDisabledButton = followingInProgress.some(
     (idUser: number) => idUser === id
@@ -56,7 +64,7 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({ id, followed }) => {
             Unfollow
           </Button>
         </div>
-      ) : id === authorizedUserID ? (
+      ) : id === authorizedUserID || followed === undefined ? (
         <></>
       ) : (
         <div style={stylesWrapButton}>

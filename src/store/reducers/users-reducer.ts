@@ -118,6 +118,14 @@ export const getUsers = createAsyncThunk(
   }
 )
 
+export const getIsFollowed = createAsyncThunk(
+  'users/getIsFollowed',
+  async (id: number) => {
+    const response = await usersAPI.isFollowed(id)
+    return response
+  }
+)
+
 export const follow = createAsyncThunk(
   'users/follow',
   async (id: number, { dispatch }) => {

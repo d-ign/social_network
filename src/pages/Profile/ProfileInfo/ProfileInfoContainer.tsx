@@ -8,15 +8,17 @@ import SaveIcon from '@material-ui/icons/Save'
 import CloseIcon from '@material-ui/icons/Close'
 import s from './ProfileInfoContainer.module.scss'
 
-import Avatar from '../../../components/Avatar/Avatar'
 import ProfilePlug from './ProfilePlug/ProfilePlug'
 import ProfileData from './ProfileData/ProfileData'
-import Preloader from '../../../components/Preloader/Preloader'
+import Avatar from '../../../components/Avatar/Avatar'
 import ProfileStatus from './ProfileStatus/ProfileStatus'
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
+import Preloader from '../../../components/Preloader/Preloader'
+import ButtonFollow from '../../../components/ButtonFollow/ButtonFollow'
 import ProfileInputChangeAvatar from './ProfileInputChangeAvatar/ProfileInputChangeAvatar'
 import { useAppDispatch, useAppSelector } from '../../../services/hooks/useApp'
 
+import { getIsFollowed } from '../../../store/reducers/users-reducer'
 import { getTheme } from '../../../store/selectors/app-selectors'
 import {
   getEditModeProfile,
@@ -69,6 +71,19 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
 
   const [isEditInputProfileForm, setIsEditInputProfileForm] = useState(false)
 
+  type IsFollowedType = boolean | undefined | unknown
+  const [isFollowed, setIsFollowed] = useState<IsFollowedType>(undefined)
+
+  useEffect(() => {
+    const request = async () => {
+      if (profile) {
+        const response = await dispatch(getIsFollowed(profile.userId))
+        setIsFollowed(response.payload)
+      }
+    }
+    request()
+  }, [dispatch, profile])
+
   const onSubmitProfile = (values: ProfileType) => {
     dispatch(saveProfileThunk(values))
   }
@@ -116,7 +131,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
           />
         </div>
 
-        {isOwner && !isEditModeProfile && (
+        {isOwner && !isEditModeProfile ? (
           <Button
             onClick={handleEditProfile}
             variant='outlined'
@@ -125,6 +140,14 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
           >
             Edit profile
           </Button>
+        ) : (
+          <div className={s.buttonFollow}>
+            <ButtonFollow
+              id={profile.userId}
+              followed={isFollowed}
+              setIsFollowed={setIsFollowed}
+            />
+          </div>
         )}
 
         {isEditModeProfile && (
