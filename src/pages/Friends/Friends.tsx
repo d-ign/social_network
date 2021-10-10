@@ -71,7 +71,7 @@ const Friends: React.FC = () => {
   return (
     <main className={s.container}>
       <h1 className={s.visuallyHidden}>Friends</h1>
-      {isShowPrompt && !isFetching && (
+      {isShowPrompt && !isFetching && maxPageCount > 1 && (
         <Prompt.PaginationUsers pathname={pathname} />
       )}
 
