@@ -7,14 +7,14 @@ import { getIsAuth } from '../../store/selectors/auth-selectors'
 export default function withAuthRedirect<WCP>(
   WrappedComponent: React.ComponentType<WCP>
 ) {
-  const RedirectComponent: React.FC = (props) => {
+  const RedirectComponent: React.FC<WCP> = (props) => {
     const isAuth = useAppSelector(getIsAuth)
 
     if (!isAuth) {
       return <Redirect to='/login' />
     }
 
-    return <WrappedComponent {...(props as WCP)} />
+    return <WrappedComponent {...props} />
   }
 
   return RedirectComponent

@@ -26,8 +26,8 @@ const ProfileContainer: React.FC = () => {
   const isOwner = userId === authorizedUserID
 
   useEffect(() => {
-    dispatch(getUserProfile(userId as number))
-    dispatch(getStatus(userId as number))
+    dispatch(getUserProfile(userId))
+    dispatch(getStatus(userId))
 
     return () => {
       if (isEditModeProfile) {
