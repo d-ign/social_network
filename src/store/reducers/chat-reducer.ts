@@ -50,6 +50,7 @@ export const startMessagesListening = createAsyncThunk(
     chatAPI.subscribe('messages-received', (messages: ChatMessageAPIType[]) =>
       dispatch(messagesReceived({ messages }))
     )
+
     chatAPI.subscribe('status-changed', (statusWS: StatusWSType) =>
       dispatch(statusChanged({ statusWS }))
     )

@@ -87,6 +87,7 @@ const setCaptchaThunk = createAsyncThunk(
   'authPage/setCaptchaThunk',
   async (_, { dispatch }) => {
     const response = await securityAPI.getCaptchaURL()
+
     dispatch(setCaptcha({ captchaURL: response.url }))
   }
 )
@@ -95,6 +96,7 @@ export const loginThunk = createAsyncThunk(
   'authPage/loginThunk',
   async (props: LoginType, { dispatch }) => {
     const { email, password, rememberMe, captcha } = props
+
     const response = await authAPI.login(email, password, rememberMe, captcha)
 
     if (response.resultCode === ResultCodesEnum.Success) {

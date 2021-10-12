@@ -26,6 +26,7 @@ export const initializeApp = createAsyncThunk(
   'app/initializeApp',
   async (_, { dispatch }) => {
     await dispatch(getAuthUserData())
+
     dispatch(initializedSuccess())
   }
 )

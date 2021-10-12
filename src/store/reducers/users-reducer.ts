@@ -92,11 +92,12 @@ export const getUsers = createAsyncThunk(
   'users/getUsers',
   async (props: GetUsersPropsType, { dispatch, getState }) => {
     const { page, term, friend } = props
-
-    dispatch(toggleIsFetching({ isFetching: true }))
     const {
       users: { pageSize },
     } = getState() as { users: { pageSize: number } }
+
+    dispatch(toggleIsFetching({ isFetching: true }))
+
     const response = await usersAPI.getUsers(page, pageSize, term, friend)
 
     // primary download
@@ -132,6 +133,7 @@ export const follow = createAsyncThunk(
     dispatch(toggleFollowingProgress({ isFetching: true, userID: id }))
 
     const response = await usersAPI.followUser(id)
+
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(followSuccess({ userID: id }))
     }
@@ -146,6 +148,7 @@ export const unfollow = createAsyncThunk(
     dispatch(toggleFollowingProgress({ isFetching: true, userID: id }))
 
     const response = await usersAPI.unfollowUser(id)
+
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(unfollowSuccess({ userID: id }))
     }
