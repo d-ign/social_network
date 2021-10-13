@@ -86,6 +86,7 @@ const Form: React.FC<
               onInput={handleEditInput}
               name={`contacts.${key}`}
               placeholder='https://...'
+              variant='standard'
               multiline
               fullWidth
             />

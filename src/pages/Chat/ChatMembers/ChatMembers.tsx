@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 
 import cn from 'classnames'
-import Icon from '@mdi/react'
-import { mdiChevronDown } from '@mdi/js'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import s from './ChatMembers.module.scss'
 
 import ChatButtonSort from './ChatButtonSort/ChatBurronSort'
@@ -112,12 +111,9 @@ const TitleMembers: React.FC<TitleMembersPropsType> = ({
           onClick={handleClickTitle}
         >
           <h1 className={s.title}>Members</h1>
-          <Icon
-            className={s.titleArrow}
-            path={mdiChevronDown}
-            title='ArrowShowMembers'
-            size='18px'
-          />
+          <span className={s.titleArrow}>
+            <KeyboardArrowDownIcon fontSize='small' />
+          </span>
         </div>
       </div>
     </>

@@ -1,9 +1,8 @@
 import React, { useCallback, memo, useMemo, useEffect, useState } from 'react'
 import debounce from 'lodash/debounce'
 
-import InputBase from '@material-ui/core/InputBase'
-import SearchIcon from '@material-ui/icons/Search'
-import useStyles from './stylesCustomMaterialUI'
+import InputBase from '@mui/material/InputBase'
+import SearchIcon from '@mui/icons-material/Search'
 import s from './Search.module.scss'
 
 import Prompt from '../Prompt/Prompt'
@@ -19,7 +18,12 @@ type PropsType = {
 const Search: React.FC<PropsType> = (props) => {
   const { pathname, termOfUrl, searchUsers, totalUsersCount, isFetching } =
     props
-  const classes = useStyles()
+
+  const stylesInput = {
+    p: '1, 1, 1, 0',
+    pl: 'calc(1em + 32px)', // vertical padding + font size from searchIcon
+    width: '100%',
+  }
 
   const [isShowPrompt, setIsShowPrompt] = useState(true)
 
@@ -52,7 +56,7 @@ const Search: React.FC<PropsType> = (props) => {
           <InputBase
             placeholder='Search by name...'
             inputProps={{ 'aria-label': 'search' }}
-            classes={{ input: classes.search }}
+            sx={stylesInput}
             value={termOfUrl}
             onChange={handleChange}
           />
@@ -61,7 +65,7 @@ const Search: React.FC<PropsType> = (props) => {
           <InputBase
             placeholder='Search by name...'
             inputProps={{ 'aria-label': 'search' }}
-            classes={{ input: classes.search }}
+            sx={stylesInput}
             onInput={handleDebounce}
           />
         )}

@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import React, { useCallback, useEffect, useState, memo } from 'react'
 
-import Button from '@material-ui/core/Button'
-import PostAddIcon from '@material-ui/icons/PostAdd'
-import { IconButton, TextField } from '@material-ui/core'
+import Button from '@mui/material/Button'
+import PostAddIcon from '@mui/icons-material/PostAdd'
+import { IconButton, TextField } from '@mui/material'
 import s from './ProfileWall.module.scss'
 import stylesAdaptiveButtons from './ProfileButtonsPostsDelete/ProfileButtonsPostsDelete.module.scss'
 
@@ -159,6 +159,7 @@ const AddPostForm: React.FC = memo(() => {
           aria-label='Add post'
           style={{ marginLeft: 5 }}
           onClick={handleAddPost}
+          size='large'
         >
           <PostAddIcon color={theme === 'theme1' ? 'primary' : 'secondary'} />
         </IconButton>

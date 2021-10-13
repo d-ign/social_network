@@ -30,7 +30,8 @@
 - Redux-form (компоненты `Auth`, `ProfileDataForm`)
 - Typescript
 - WebSocket (`Chat`)
-- SCSS и Material UI (для стилизации элементов форм)
+- SCSS
+- Material UI v5 (для стилизации элементов форм)
 - <a href="https://social-network.samuraijs.com/docs">Данный</a> серверный REST API с помощью axios
 
 # Что реализовано

@@ -1,10 +1,10 @@
 import React, { useEffect, memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import Button from '@material-ui/core/Button'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import InvertColorsIcon from '@material-ui/icons/InvertColors'
-import { IconButton } from '@material-ui/core'
+import Button from '@mui/material/Button'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import InvertColorsIcon from '@mui/icons-material/InvertColors'
+import { IconButton } from '@mui/material'
 import s from './Header.module.scss'
 import logo from '../../assets/img/icons/logo.svg'
 
@@ -124,6 +124,7 @@ const ButtonChangeTheme: React.FC<ButtonChangeThemePropsType> = ({
         aria-label='changeTheme'
         style={{ margin: '0 12px' }}
         title='Change theme'
+        size='large'
       >
         <InvertColorsIcon
           color={theme === 'theme1' ? 'primary' : 'secondary'}
@@ -147,7 +148,11 @@ const ButtonLogout: React.FC<{ handleLogout: () => void }> = memo(
         </Button>
       </span>
       <span hidden className={s.buttonLogoutMobile}>
-        <IconButton title='Logout of profile' onClick={handleLogout}>
+        <IconButton
+          title='Logout of profile'
+          onClick={handleLogout}
+          size='large'
+        >
           <ExitToAppIcon />
         </IconButton>
       </span>

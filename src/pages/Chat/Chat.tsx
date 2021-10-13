@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import IconButton from '@material-ui/core/IconButton'
-import SendIcon from '@material-ui/icons/Send'
-import { TextField } from '@material-ui/core'
+import IconButton from '@mui/material/IconButton'
+import SendIcon from '@mui/icons-material/Send'
+import { TextField } from '@mui/material'
 import s from './Chat.module.scss'
 
 import ChatMembers from './ChatMembers/ChatMembers'
@@ -85,6 +85,7 @@ const AddMessageForm: React.FC<FormPropsType> = ({ theme, status }) => {
           style={{ margin: '5px' }}
           onClick={handleSendMessage}
           disabled={status === 'pending'}
+          size='large'
         >
           <SendIcon />
         </IconButton>

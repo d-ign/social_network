@@ -6,13 +6,13 @@ import React, {
   SetStateAction,
 } from 'react'
 
-import { Button, TextField } from '@material-ui/core'
-import SaveIcon from '@material-ui/icons/Save'
+import { Button, TextField } from '@mui/material'
+import SaveIcon from '@mui/icons-material/Save'
 import cn from 'classnames'
+import { styled } from '@mui/material/styles'
 import s from './ProfileStatus.module.scss'
 // eslint-disable-next-line max-len
 import stylesField from '../../../../components/FieldWithCounter/FieldWithCounter.module.scss'
-import useStyles from './stylesCustomMaterialUI'
 
 import {
   useAppDispatch,
@@ -22,7 +22,6 @@ import useOutsideAlerter from '../../../../services/hooks/useOutsideAlerter'
 
 import { getTheme } from '../../../../store/selectors/app-selectors'
 import { getStatus } from '../../../../store/selectors/profile-selectors'
-
 import { updateStatus } from '../../../../store/reducers/profile-info-reducer'
 
 type PropsType = {
@@ -97,15 +96,21 @@ const StatusForm: React.FC<StatusFormPropsType> = ({
   setStatusLocal,
   setEditMode,
 }) => {
-  const classes = useStyles()
-
-  const stylesSaveAndButton: React.CSSProperties = {
+  const stylesSaveButton: React.CSSProperties = {
     color: 'white',
     textShadow: '2px 2px 7px var(--color-darkBlueTransparent)',
     boxShadow: '2px 2px 5px var(--color-darkBlueTransparent)',
     margin: 10,
     width: '100%',
   }
+
+  const WrapStyles = styled('div')(({ theme }) => ({
+    borderRadius: '5px 5px 0 0',
+    padding: theme.spacing(1),
+    minHeight: '30px',
+    lineHeight: '25px',
+    backgroundColor: '#4f4f4f',
+  }))
 
   const theme = useAppSelector(getTheme)
   const dispatch = useAppDispatch()
@@ -139,20 +144,22 @@ const StatusForm: React.FC<StatusFormPropsType> = ({
   return (
     <>
       <div className={s.statusEditMode}>
-        <TextField
-          autoFocus
-          multiline
-          fullWidth
-          name='newStatusText'
-          placeholder='Your status...'
-          inputProps={{ maxLength: 300 }}
-          className={classes.status}
-          color={theme === 'theme1' ? 'primary' : 'secondary'}
-          value={statusLocal}
-          onChange={handleChangeInput}
-          onFocus={handleFocusInput}
-          onBlur={handleBlurInput}
-        />
+        <WrapStyles>
+          <TextField
+            autoFocus
+            multiline
+            fullWidth
+            name='newStatusText'
+            placeholder='Your status...'
+            variant='standard'
+            inputProps={{ maxLength: 300 }}
+            color={theme === 'theme1' ? 'primary' : 'secondary'}
+            value={statusLocal}
+            onChange={handleChangeInput}
+            onFocus={handleFocusInput}
+            onBlur={handleBlurInput}
+          />
+        </WrapStyles>
 
         <div className={s.buttonAndCounter}>
           <div className={s.buttonWrap}>
@@ -161,7 +168,7 @@ const StatusForm: React.FC<StatusFormPropsType> = ({
               disabled={!isEditInputStatusForm}
               variant='contained'
               color={theme === 'theme1' ? 'primary' : 'secondary'}
-              style={stylesSaveAndButton}
+              style={stylesSaveButton}
               startIcon={<SaveIcon />}
             >
               Save

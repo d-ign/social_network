@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react'
 
 import cn from 'classnames'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
-import { Button } from '@material-ui/core'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import { Button } from '@mui/material'
 import s from './ChatButtonSort.module.scss'
 
 import { ThemeType } from '../../../../types/types'

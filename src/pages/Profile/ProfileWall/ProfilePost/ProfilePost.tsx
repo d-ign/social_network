@@ -8,9 +8,9 @@ import React, {
 } from 'react'
 
 import cn from 'classnames'
-import IconButton from '@material-ui/core/IconButton'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import CloseIcon from '@material-ui/icons/Close'
+import IconButton from '@mui/material/IconButton'
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
+import CloseIcon from '@mui/icons-material/Close'
 import s from './ProfilePost.module.scss'
 
 import Name from '../../../../components/Name/Name'

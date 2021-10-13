@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback, memo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import cn from 'classnames'
-import IconButton from '@material-ui/core/IconButton'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import IconButton from '@mui/material/IconButton'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import s from './Users.module.scss'
 
 import User from '../../components/User/User'
@@ -128,7 +128,11 @@ const Users: React.FC = () => {
             [s.hiddenButtonLoadMore]: !isShowMoreUsersButton,
           })}
         >
-          <IconButton title='Load more users' onClick={handleShowMoreUsers}>
+          <IconButton
+            title='Load more users'
+            onClick={handleShowMoreUsers}
+            size='large'
+          >
             <ExpandMoreIcon />
           </IconButton>
         </div>

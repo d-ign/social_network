@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 
 import cn from 'classnames'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import s from './Auth.module.scss'
 import RenderTextField from '../../components/RenderFormElement/RenderTextField'
 import RenderCheckbox from '../../components/RenderFormElement/RenderCheckbox'
@@ -111,6 +111,7 @@ const LoginForm: React.FC<
             <Field
               component={RenderTextField}
               autoComplete='username'
+              variant='standard'
               name='email'
               label='Email:'
               type='email'
@@ -121,6 +122,7 @@ const LoginForm: React.FC<
             <Field
               component={RenderTextField}
               autoComplete='current-password'
+              variant='standard'
               name='password'
               label='Password:'
               type='password'

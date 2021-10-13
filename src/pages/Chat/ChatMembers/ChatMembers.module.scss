@@ -54,7 +54,8 @@
   display: none;
 
   @media (max-width: 760px) {
-    display: inline;
+    display: inline-block;
+    margin: 6px 0 0 2px;
   }
 }
 

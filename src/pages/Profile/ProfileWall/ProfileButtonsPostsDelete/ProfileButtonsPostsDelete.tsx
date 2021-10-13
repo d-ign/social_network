@@ -1,9 +1,9 @@
 import React, { SetStateAction, Dispatch } from 'react'
 
-import Button from '@material-ui/core/Button'
-import { Checkbox, FormControlLabel, IconButton } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
-import CloseIcon from '@material-ui/icons/Close'
+import Button from '@mui/material/Button'
+import { Checkbox, FormControlLabel, IconButton } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import CloseIcon from '@mui/icons-material/Close'
 import cn from 'classnames'
 import s from './ProfileButtonsPostsDelete.module.scss'
 
@@ -123,6 +123,7 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
             title='Delete'
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             onClick={handleDeleteSelectedPost}
+            size='large'
           >
             <DeleteIcon />
           </IconButton>
@@ -144,6 +145,7 @@ const ProfileButtonsPostsDelete: React.FC<PropsType> = (props) => {
             title='Cancel'
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             onClick={handleCancelDeletion}
+            size='large'
           >
             <CloseIcon />
           </IconButton>
