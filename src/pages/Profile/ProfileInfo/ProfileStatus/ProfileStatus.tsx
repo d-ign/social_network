@@ -39,7 +39,7 @@ const ProfileStatus = ({ isOwner }: PropsType) => {
   }, [status])
 
   const statusRef = useRef<HTMLDivElement | null>(null)
-  useOutsideAlerter(statusRef, setEditMode)
+  useOutsideAlerter({ alerter: statusRef, callback: () => setEditMode(false) })
 
   return (
     <div ref={statusRef} className={s.container}>

@@ -1,8 +1,18 @@
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState,
+  PropsWithChildren,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { useHistory } from 'react-router-dom'
 import queryString from 'query-string'
 
-const useQueryUrl = (pathname: string) => {
+type HookType = (
+  props: PropsWithChildren<{ pathname: string }>
+) => [string, Dispatch<SetStateAction<string>>]
+
+const useQueryUrl: HookType = ({ pathname }) => {
   const history = useHistory()
   const [termOfUrl, setTermOfUrl] = useState('')
 
@@ -25,7 +35,7 @@ const useQueryUrl = (pathname: string) => {
     })
   }, [termOfUrl, history, pathname])
 
-  return { termOfUrl, setTermOfUrl }
+  return [termOfUrl, setTermOfUrl]
 }
 
 export default useQueryUrl

@@ -57,11 +57,16 @@ const Friends: React.FC = () => {
   const lastElement = React.useRef<HTMLDivElement>(null)
   const [isFetchingUsers, setIsFetchingUsers] = useState(false)
 
-  useObserver(lastElement, maxPageCount > pageNumber, isFetching, () => {
-    setIsShowPrompt(false)
-    setIsFetchingUsers(true)
-    setPageNumber(++pageNumber)
-    dispatch(getUsers({ page: pageNumber, term: termLocal, friend: true }))
+  useObserver({
+    elementTrigger: lastElement,
+    isCanLoad: maxPageCount > pageNumber,
+    isFetching,
+    callback: () => {
+      setIsShowPrompt(false)
+      setIsFetchingUsers(true)
+      setPageNumber(++pageNumber)
+      dispatch(getUsers({ page: pageNumber, term: termLocal, friend: true }))
+    },
   })
 
   useEffect(() => {

@@ -32,7 +32,7 @@ const Users: React.FC = () => {
 
   const dispatch = useAppDispatch()
   const { pathname } = useLocation()
-  const { termOfUrl, setTermOfUrl } = useQueryUrl(pathname)
+  const [termOfUrl, setTermOfUrl] = useQueryUrl({ pathname })
 
   // eslint-disable-next-line prefer-const
   let [pageNumber, setPageNumber] = useState(1)
@@ -83,8 +83,11 @@ const Users: React.FC = () => {
   const [isShowPrompt, setIsShowPrompt] = useState(true)
   const lastElement = React.useRef<HTMLDivElement>(null)
 
-  useObserver(lastElement, pageNumber === 1, isFetching, () => {
-    setIsShowPrompt(false)
+  useObserver({
+    elementTrigger: lastElement,
+    isCanLoad: pageNumber === 1,
+    isFetching,
+    callback: () => setIsShowPrompt(false),
   })
 
   return (

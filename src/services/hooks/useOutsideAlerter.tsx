@@ -1,23 +1,28 @@
-import React, { useEffect, Dispatch, SetStateAction } from 'react'
+import React, { useEffect, PropsWithChildren } from 'react'
 
-const useOutsideAlerter = (
-  alerter: React.RefObject<HTMLDivElement>,
-  action: Dispatch<SetStateAction<boolean>>
-) => {
+type PropsType = {
+  alerter: React.RefObject<HTMLDivElement>
+  callback: () => void
+}
+
+type HookType = (props: PropsWithChildren<PropsType>) => void
+
+const useOutsideAlerter: HookType = ({ alerter, callback }) => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
         alerter.current &&
         !alerter.current.contains(e.target as HTMLInputElement)
       ) {
-        action(false)
+        callback()
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [alerter, action])
+  }, [alerter, callback])
 }
 
 export default useOutsideAlerter

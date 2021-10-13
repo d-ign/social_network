@@ -1,16 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, PropsWithChildren } from 'react'
 
-const useObserver = (
+type PropsType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  elementTrigger: React.RefObject<any>,
-  isCanLoad: boolean,
-  isFetching: boolean,
+  elementTrigger: React.RefObject<any>
+  isCanLoad: boolean
+  isFetching: boolean
   callback: () => void
-) => {
+}
+
+type HookType = (props: PropsWithChildren<PropsType>) => void
+
+const useObserver: HookType = ({
+  elementTrigger,
+  isCanLoad,
+  isFetching,
+  callback,
+}) => {
   const observer = useRef<IntersectionObserver | undefined>()
 
   useEffect(() => {
     if (isFetching) return
+
     if (observer.current) observer.current.disconnect()
 
     const _callback = (entries: IntersectionObserverEntry[]) => {
@@ -20,6 +30,7 @@ const useObserver = (
         callback()
       }
     }
+
     observer.current = new IntersectionObserver(_callback)
     observer.current.observe(elementTrigger.current)
   }, [isFetching, callback, isCanLoad, elementTrigger])
