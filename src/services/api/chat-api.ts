@@ -16,24 +16,24 @@ const reconnect = () => {
   setTimeout(createChannel, 3000)
 }
 
-const messageHandler = (e: MessageEvent) => {
+const handleGetMessage = (e: MessageEvent) => {
   const newMessages = JSON.parse(e.data)
   subscribers['messages-received'].forEach((s) => s(newMessages))
 }
 
-const openHandler = () => {
+const handleOpenConnection = () => {
   notifySubscribersAboutStatus('ready')
 }
 
-const errorHandler = () => {
+const handleError = () => {
   notifySubscribersAboutStatus('error')
 }
 
 const cleanUp = () => {
   ws?.removeEventListener('close', reconnect)
-  ws?.removeEventListener('message', messageHandler)
-  ws?.removeEventListener('open', openHandler)
-  ws?.removeEventListener('error', errorHandler)
+  ws?.removeEventListener('message', handleGetMessage)
+  ws?.removeEventListener('open', handleOpenConnection)
+  ws?.removeEventListener('error', handleError)
 }
 
 const createChannel = () => {
@@ -47,9 +47,9 @@ const createChannel = () => {
   notifySubscribersAboutStatus('pending')
 
   ws.addEventListener('close', reconnect)
-  ws.addEventListener('message', messageHandler)
-  ws.addEventListener('open', openHandler)
-  ws.addEventListener('error', errorHandler)
+  ws.addEventListener('message', handleGetMessage)
+  ws.addEventListener('open', handleOpenConnection)
+  ws.addEventListener('error', handleError)
 }
 
 const chatAPI = {

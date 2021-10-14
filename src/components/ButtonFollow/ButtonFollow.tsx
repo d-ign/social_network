@@ -42,12 +42,12 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
   const theme = useAppSelector(getTheme)
   const dispatch = useAppDispatch()
 
-  const followHandler = useCallback(() => {
+  const handleFollow = useCallback(() => {
     dispatch(follow(id))
     if (setIsFollowed) setIsFollowed(true)
   }, [dispatch, id, setIsFollowed])
 
-  const unfollowHandler = useCallback(() => {
+  const handleUnfollow = useCallback(() => {
     dispatch(unfollow(id))
     if (setIsFollowed) setIsFollowed(false)
   }, [dispatch, id, setIsFollowed])
@@ -61,7 +61,7 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
       {followed ? (
         <div style={stylesWrapButton}>
           <Button
-            onClick={unfollowHandler}
+            onClick={handleUnfollow}
             disabled={isDisabledButton}
             style={stylesUnfollowButton}
             startIcon={<RemoveIcon />}
@@ -74,7 +74,7 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
       ) : (
         <div style={stylesWrapButton}>
           <Button
-            onClick={followHandler}
+            onClick={handleFollow}
             disabled={isDisabledButton}
             color={theme === 'theme1' ? 'primary' : 'secondary'}
             style={stylesButton}
