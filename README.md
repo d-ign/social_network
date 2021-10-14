@@ -6,7 +6,7 @@
 <img src="https://img.shields.io/badge/Commitizen-used%20by%20-brightgreen" />
 
 
-<a href="./readme_content/jscpd-report.md">1.11% duplicated lines</a> by <a href="https://github.com/kucherenko/jscpd">jscpd</a>
+<a href="./readme_content/jscpd-report.md">1.06% duplicated lines</a> by <a href="https://github.com/kucherenko/jscpd">jscpd</a>
 
 </div>
 
