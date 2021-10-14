@@ -19,7 +19,7 @@ type ButtonFollowPropsType = {
 
 const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
   id,
-  followed,
+  followed = undefined,
   setIsFollowed = null,
 }) => {
   const stylesWrapButton: React.CSSProperties = {
