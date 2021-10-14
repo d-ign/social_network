@@ -115,7 +115,7 @@ const ProfilePost: React.FC<PropsType> = (props) => {
         )}
 
         <div className={s.columnCenter}>
-          <Name id={profile?.userId} name={profile?.fullName} size='normal' />
+          <Name id={profile?.userId} name={profile?.fullName} />
           <div className={s.message}>{message}</div>
         </div>
 

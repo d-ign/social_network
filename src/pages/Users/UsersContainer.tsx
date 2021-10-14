@@ -12,7 +12,7 @@ const UsersContainer = () => {
 
   return (
     <>
-      {isFetching ? <Preloader display='default' /> : null}
+      {isFetching ? <Preloader /> : null}
       <Users />
     </>
   )

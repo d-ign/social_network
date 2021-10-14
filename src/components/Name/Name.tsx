@@ -7,7 +7,7 @@ import s from './Name.module.scss'
 type PropsType = {
   id: number | undefined
   name: string | undefined
-  size: 'small' | 'normal'
+  size?: 'small' | 'normal'
 }
 
 const Name: React.FC<PropsType> = ({ id, name, size = 'normal' }) => {

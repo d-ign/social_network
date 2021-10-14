@@ -35,7 +35,7 @@ const User: React.FC<{ user: UserType }> = (props) => {
           <WithTooltip.Status status={status} symbolCount={symbolCount} />
         </div>
       </div>
-      <ButtonFollow id={id} followed={followed} setIsFollowed={null} />
+      <ButtonFollow id={id} followed={followed} />
     </article>
   )
 }
@@ -57,12 +57,12 @@ const WithTooltip = {
       {name?.length > symbolCount ? (
         <Tooltip element={name}>
           <div className={s.wrapName}>
-            <Name id={id} name={name} size='normal' />
+            <Name id={id} name={name} />
           </div>
         </Tooltip>
       ) : (
         <div className={s.wrapName}>
-          <Name id={id} name={name} size='normal' />
+          <Name id={id} name={name} />
         </div>
       )}
     </>

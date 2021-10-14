@@ -30,7 +30,7 @@ const ChatMessage: React.FC<{ message: ChatMessageAPIType }> = ({
       </div>
 
       <div className={s.nameAndMessage}>
-        <Name id={userId} name={userName} size='normal' />
+        <Name id={userId} name={userName} />
         <div className={s.message}>{message}</div>
       </div>
     </article>

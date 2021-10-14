@@ -10,10 +10,10 @@ import { useAppSelector } from '../../services/hooks/useApp'
 import { getTheme } from '../../store/selectors/app-selectors'
 
 type PropsType = {
-  display: 'default' | 'block'
+  display?: 'default' | 'block'
 }
 
-const Preloader: React.FC<PropsType> = ({ display }) => {
+const Preloader: React.FC<PropsType> = ({ display = 'default' }) => {
   const theme = useAppSelector(getTheme)
 
   return (

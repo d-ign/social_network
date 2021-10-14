@@ -105,9 +105,7 @@ const Users: React.FC = () => {
         totalUsersCount={totalUsersCount}
       />
 
-      {totalUsersCount === 0 && !isFetching && (
-        <NoElement elements='users' writeSomething={false} />
-      )}
+      {totalUsersCount === 0 && !isFetching && <NoElement elements='users' />}
 
       <div className={s.wrapUsers}>
         <div className={s.users}>

@@ -12,9 +12,9 @@ import { follow, unfollow } from '../../store/reducers/users-reducer'
 import { getTheme } from '../../store/selectors/app-selectors'
 
 type ButtonFollowPropsType = {
-  followed: boolean | undefined | unknown
   id: number
-  setIsFollowed: Dispatch<SetStateAction<boolean>> | null
+  followed: boolean | undefined | unknown
+  setIsFollowed?: Dispatch<SetStateAction<boolean>> | null
 }
 
 const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
