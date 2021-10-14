@@ -15,27 +15,27 @@ const Navbar: React.FC = () => {
   const profileUrl = `/profile/${authorizedUserID}`
 
   const pages = [
-    { id: 1, name: 'Profile', to: profileUrl, exact: true },
-    { id: 2, name: 'Chat', to: '/chat', exact: false },
-    { id: 3, name: 'Find Users', to: '/users', exact: false },
-    { id: 4, name: 'Friends', to: '/friends', exact: false },
+    { name: 'Profile', to: profileUrl, svgPath: profilePath, exact: true },
+    { name: 'Chat', to: '/chat', svgPath: chatPath },
+    { name: 'Find Users', to: '/users', svgPath: usersPath },
+    { name: 'Friends', to: '/friends', svgPath: friendsPath },
   ]
 
   type PageType = {
-    id: number
     name: string
     to: string
-    exact: boolean
+    svgPath: JSX.Element
+    exact?: boolean
   }
 
   return (
     <nav className={s.nav}>
       <ul>
-        {pages.map((p: PageType) => (
-          <li key={p.id}>
+        {pages.map((page: PageType) => (
+          <li key={page.name}>
             <NavLink
-              exact={p.exact}
-              to={p.to}
+              exact={page.exact}
+              to={page.to}
               activeClassName={s.active}
               className={s.navLink}
               replace
@@ -45,18 +45,12 @@ const Navbar: React.FC = () => {
                 height='24'
                 viewBox='0 0 24 24'
                 className={cn(s.navLinkImg, {
-                  [s.activeIcon]: pathname === p.to,
+                  [s.activeIcon]: pathname === page.to,
                 })}
               >
-                {/\/profile*/.test(p.to)
-                  ? profilePath
-                  : p.to === '/chat'
-                  ? chatPath
-                  : p.to === '/users'
-                  ? usersPath
-                  : friendsPath}
+                {page.svgPath}
               </svg>
-              {p.name}
+              {page.name}
             </NavLink>
           </li>
         ))}
