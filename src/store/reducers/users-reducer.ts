@@ -5,6 +5,7 @@ import { UserType } from '../../types/types'
 
 const usersSlice = createSlice({
   name: 'users',
+
   initialState: {
     users: [] as UserType[],
     pageSize: 10,
@@ -13,6 +14,7 @@ const usersSlice = createSlice({
     // disabling the button after pressing
     followingInProgress: [] as number[], // array of users ID
   },
+
   reducers: {
     followSuccess: (state, action: PayloadAction<{ userID: number }>) => {
       state.users = state.users.map((u) => {

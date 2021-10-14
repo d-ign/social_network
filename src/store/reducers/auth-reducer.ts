@@ -11,6 +11,7 @@ import { LoginType } from '../../types/types'
 
 const authSlice = createSlice({
   name: 'authPage',
+
   initialState: {
     userID: null as number | null,
     email: null as string | null,
@@ -19,6 +20,7 @@ const authSlice = createSlice({
     captchaURL: null as string | null,
     myPhoto: null as string | null,
   },
+
   reducers: {
     setAuthUserData: (
       state,

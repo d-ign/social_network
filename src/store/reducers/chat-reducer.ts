@@ -11,10 +11,12 @@ import {
 
 const chatSlice = createSlice({
   name: 'chatPage',
+
   initialState: {
     messages: [] as ChatMessageType[],
     statusWS: 'pending' as StatusWSType,
   },
+
   reducers: {
     messagesReceived: (
       state,

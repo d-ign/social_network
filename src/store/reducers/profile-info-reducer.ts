@@ -7,6 +7,7 @@ import { ProfileType, PhotosType } from '../../types/types'
 
 const profileInfoSlice = createSlice({
   name: 'info',
+
   initialState: {
     profile: null as ProfileType | null,
     status: '',
@@ -14,6 +15,7 @@ const profileInfoSlice = createSlice({
     errorProfileContacts: '',
     isEditModeProfile: false,
   },
+
   reducers: {
     setUserProfile: (
       state,

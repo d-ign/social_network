@@ -5,10 +5,12 @@ import { ThemeType } from '../../types/types'
 
 const appSlice = createSlice({
   name: 'app',
+
   initialState: {
     initialized: false,
     theme: 'theme1' as ThemeType,
   },
+
   reducers: {
     initializedSuccess: (state) => {
       state.initialized = true

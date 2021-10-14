@@ -3,6 +3,7 @@ import { PostType } from '../../types/types'
 
 const profileWallSlice = createSlice({
   name: 'wall',
+
   initialState: {
     posts: [
       {
@@ -30,6 +31,7 @@ const profileWallSlice = createSlice({
     ] as PostType[],
     postsForDelete: [] as number[],
   },
+
   reducers: {
     initializePosts: (state, action: PayloadAction<PostType[]>) => {
       state.posts = action.payload
