@@ -33,6 +33,14 @@ const App: React.FC = () => {
     return <PreloaderStart />
   }
 
+  const routes = [
+    { path: '/login', component: Auth },
+    { path: '/profile/:userId', component: ProfileContainer },
+    { path: '/chat', component: SuspendedChat },
+    { path: '/friends', component: SuspendedFriends },
+    { path: '/users', component: SuspendedUsers },
+  ]
+
   return (
     <div className={s.fon}>
       <div className={s.container}>
@@ -42,25 +50,16 @@ const App: React.FC = () => {
 
           <div className={s.appWrapperContent}>
             <ErrorBoundary>
-              <Suspense fallback={<Preloader display='default' />}>
+              <Suspense fallback={<Preloader />}>
                 <Switch>
-                  <Redirect from='/profile/undefined' to='/' />
-
-                  <Route
-                    path='/profile/:userId'
-                    render={() => <ProfileContainer />}
-                  />
-
-                  <Route path='/chat' render={() => <SuspendedChat />} />
-
-                  <Route path='/friends' render={() => <SuspendedFriends />} />
-
-                  <Route path='/users' render={() => <SuspendedUsers />} />
-
-                  <Route path='/login' render={() => <Auth />} />
-
+                  {/* Homepage */}
                   <Redirect exact from='/' to={`/profile/${userID}`} />
 
+                  {routes.map(({ path, component }) => (
+                    <Route key={path} path={path} component={component} />
+                  ))}
+
+                  {/* Missing pages */}
                   <Redirect from='*' to='/' />
                 </Switch>
               </Suspense>

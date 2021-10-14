@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect, Switch } from 'react-router-dom'
 
 import ProfileWall from './ProfileWall/ProfileWall'
 import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer'
@@ -38,8 +38,13 @@ const ProfileContainer: React.FC = () => {
 
   return (
     <main>
-      <ProfileInfoContainer isOwner={isOwner} />
-      {!isEditModeProfile && isOwner && <ProfileWall />}
+      <Switch>
+        <Redirect from='/profile/undefined' to='/' />
+        <>
+          <ProfileInfoContainer isOwner={isOwner} userIdFromUrl={userId} />
+          {!isEditModeProfile && isOwner && <ProfileWall />}
+        </>
+      </Switch>
     </main>
   )
 }

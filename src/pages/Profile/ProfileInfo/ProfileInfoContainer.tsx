@@ -12,6 +12,7 @@ import ProfilePlug from './ProfilePlug/ProfilePlug'
 import ProfileData from './ProfileData/ProfileData'
 import Avatar from '../../../components/Avatar/Avatar'
 import ProfileStatus from './ProfileStatus/ProfileStatus'
+import NoElement from '../../../components/NoElement/NoElement'
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm'
 import Preloader from '../../../components/Preloader/Preloader'
 import ButtonFollow from '../../../components/ButtonFollow/ButtonFollow'
@@ -45,9 +46,13 @@ function ScrollToTopOnMount() {
 
 type PropsType = {
   isOwner: boolean
+  userIdFromUrl: number
 }
 
-const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
+const ProfileInfoContainer: React.FC<PropsType> = ({
+  isOwner,
+  userIdFromUrl,
+}) => {
   const stylesSaveAndCancelButton: React.CSSProperties = {
     fontSize: 12,
     color: 'white',
@@ -108,13 +113,19 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
     dispatch(setEditModeProfile({ bool: false }))
   }
 
-  if (!profile) {
+  const isExisting = userIdFromUrl === profile?.userId
+
+  if (!profile && isExisting) {
     return (
       <>
-        <Preloader display='default' />
+        <Preloader />
         <ProfilePlug isOwner={isOwner} />
       </>
     )
+  }
+
+  if (!isExisting) {
+    return <NoElement elements='profile' />
   }
 
   return (
