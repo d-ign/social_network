@@ -11,3 +11,6 @@ export const getIsFetching = (state: RootStateType) => state.users.isFetching
 
 export const getFollowingInProgress = (state: RootStateType) =>
   state.users.followingInProgress
+
+export const getIsFollowedSelector = (state: RootStateType) =>
+  state.users.isFollowed

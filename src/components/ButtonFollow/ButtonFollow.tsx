@@ -1,4 +1,4 @@
-import React, { useCallback, memo, SetStateAction, Dispatch } from 'react'
+import React, { useCallback, memo } from 'react'
 
 import { Button } from '@mui/material'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -14,14 +14,9 @@ import { getTheme } from '../../store/selectors/app-selectors'
 type ButtonFollowPropsType = {
   id: number
   followed: boolean | undefined | unknown
-  setIsFollowed?: Dispatch<SetStateAction<boolean>> | null
 }
 
-const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
-  id,
-  followed = undefined,
-  setIsFollowed = null,
-}) => {
+const ButtonFollow: React.FC<ButtonFollowPropsType> = ({ id, followed }) => {
   const stylesWrapButton: React.CSSProperties = {
     textAlign: 'center',
   }
@@ -44,13 +39,11 @@ const ButtonFollow: React.FC<ButtonFollowPropsType> = ({
 
   const handleFollow = useCallback(() => {
     dispatch(follow(id))
-    if (setIsFollowed) setIsFollowed(true)
-  }, [dispatch, id, setIsFollowed])
+  }, [dispatch, id])
 
   const handleUnfollow = useCallback(() => {
     dispatch(unfollow(id))
-    if (setIsFollowed) setIsFollowed(false)
-  }, [dispatch, id, setIsFollowed])
+  }, [dispatch, id])
 
   const isDisabledButton = followingInProgress.some(
     (idUser: number) => idUser === id

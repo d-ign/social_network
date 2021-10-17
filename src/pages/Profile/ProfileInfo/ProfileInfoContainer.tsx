@@ -18,7 +18,6 @@ import ButtonFollow from '../../../components/ButtonFollow/ButtonFollow'
 import ProfileInputChangeAvatar from './ProfileInputChangeAvatar/ProfileInputChangeAvatar'
 import { useAppDispatch, useAppSelector } from '../../../services/hooks/useApp'
 
-import { getIsFollowed } from '../../../store/reducers/users-reducer'
 import { getTheme } from '../../../store/selectors/app-selectors'
 import {
   getEditModeProfile,
@@ -31,6 +30,8 @@ import {
   savePhotoThunk,
   saveProfileThunk,
 } from '../../../store/reducers/profile-info-reducer'
+import { getIsFollowedSelector } from '../../../store/selectors/users-selectors'
+import { getIsFollowed } from '../../../store/reducers/users-reducer'
 
 import { ProfileType } from '../../../types/types'
 
@@ -65,23 +66,17 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
 
   const theme = useAppSelector(getTheme)
   const profile = useAppSelector(getProfile)
+  const isFollowed = useAppSelector(getIsFollowedSelector)
   const showSuccessSave = useAppSelector(getShowSuccessSave)
   const isEditModeProfile = useAppSelector(getEditModeProfile)
   const dispatch = useAppDispatch()
 
   const [isEditInputProfileForm, setIsEditInputProfileForm] = useState(false)
 
-  type IsFollowedType = boolean | undefined | unknown
-  const [isFollowed, setIsFollowed] = useState<IsFollowedType>(undefined)
-
   useEffect(() => {
-    const request = async () => {
-      if (profile) {
-        const response = await dispatch(getIsFollowed(profile.userId))
-        setIsFollowed(response.payload)
-      }
+    if (profile) {
+      dispatch(getIsFollowed(profile.userId))
     }
-    request()
   }, [dispatch, profile])
 
   const onSubmitProfile = (values: ProfileType) => {
@@ -142,11 +137,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
           </Button>
         ) : (
           <div className={s.buttonFollow}>
-            <ButtonFollow
-              id={profile.userId}
-              followed={isFollowed}
-              setIsFollowed={setIsFollowed}
-            />
+            <ButtonFollow id={profile.userId} followed={isFollowed} />
           </div>
         )}
 

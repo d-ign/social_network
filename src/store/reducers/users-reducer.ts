@@ -13,9 +13,14 @@ const usersSlice = createSlice({
     isFetching: true,
     // disabling the button after pressing
     followingInProgress: [] as number[], // array of users ID
+    isFollowed: undefined as boolean | undefined | unknown,
   },
 
   reducers: {
+    setIsFollowed: (state, action: PayloadAction<{ bool: boolean }>) => {
+      state.isFollowed = action.payload.bool
+    },
+
     followSuccess: (state, action: PayloadAction<{ userID: number }>) => {
       state.users = state.users.map((u) => {
         if (u.id === action.payload.userID) {
@@ -74,6 +79,7 @@ const usersSlice = createSlice({
 })
 
 export const {
+  setIsFollowed,
   followSuccess,
   unfollowSuccess,
   setUsers,
@@ -123,9 +129,10 @@ export const getUsers = createAsyncThunk(
 
 export const getIsFollowed = createAsyncThunk(
   'users/getIsFollowed',
-  async (id: number) => {
+  async (id: number, { dispatch }) => {
     const response = await usersAPI.isFollowed(id)
-    return response
+
+    dispatch(setIsFollowed({ bool: response }))
   }
 )
 
