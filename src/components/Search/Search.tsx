@@ -19,9 +19,9 @@ const Search: React.FC<PropsType> = (props) => {
   const { pathname, termOfUrl, searchUsers, totalUsersCount, isFetching } =
     props
 
-  const stylesInput = {
-    p: '1, 1, 1, 0',
-    pl: 'calc(1em + 32px)', // vertical padding + font size from searchIcon
+  const stylesInput: React.CSSProperties = {
+    padding: '1, 1, 1, 0',
+    paddingLeft: 'calc(1em + 32px)', // vertical padding + font size from searchIcon
     width: '100%',
   }
 
@@ -56,7 +56,7 @@ const Search: React.FC<PropsType> = (props) => {
           <InputBase
             placeholder='Search by name...'
             inputProps={{ 'aria-label': 'search' }}
-            sx={stylesInput}
+            style={stylesInput}
             value={termOfUrl}
             onChange={handleChange}
           />

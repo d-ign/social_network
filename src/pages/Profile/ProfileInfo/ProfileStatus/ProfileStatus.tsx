@@ -9,7 +9,6 @@ import React, {
 import { Button, TextField } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save'
 import cn from 'classnames'
-import { styled } from '@mui/material/styles'
 import s from './ProfileStatus.module.scss'
 // eslint-disable-next-line max-len
 import stylesField from '../../../../components/FieldWithCounter/FieldWithCounter.module.scss'
@@ -104,13 +103,13 @@ const StatusForm: React.FC<StatusFormPropsType> = ({
     width: '100%',
   }
 
-  const WrapStyles = styled('div')(({ theme }) => ({
+  const stylesTextField: React.CSSProperties = {
     borderRadius: '5px 5px 0 0',
-    padding: theme.spacing(1),
+    padding: '8px',
     minHeight: '30px',
     lineHeight: '25px',
     backgroundColor: '#4f4f4f',
-  }))
+  }
 
   const theme = useAppSelector(getTheme)
   const dispatch = useAppDispatch()
@@ -144,22 +143,21 @@ const StatusForm: React.FC<StatusFormPropsType> = ({
   return (
     <>
       <div className={s.statusEditMode}>
-        <WrapStyles>
-          <TextField
-            autoFocus
-            multiline
-            fullWidth
-            name='newStatusText'
-            placeholder='Your status...'
-            variant='standard'
-            inputProps={{ maxLength: 300 }}
-            color={theme === 'theme1' ? 'primary' : 'secondary'}
-            value={statusLocal}
-            onChange={handleChangeInput}
-            onFocus={handleFocusInput}
-            onBlur={handleBlurInput}
-          />
-        </WrapStyles>
+        <TextField
+          autoFocus
+          multiline
+          fullWidth
+          name='newStatusText'
+          placeholder='Your status...'
+          variant='standard'
+          inputProps={{ maxLength: 300 }}
+          style={stylesTextField}
+          color={theme === 'theme1' ? 'primary' : 'secondary'}
+          value={statusLocal}
+          onChange={handleChangeInput}
+          onFocus={handleFocusInput}
+          onBlur={handleBlurInput}
+        />
 
         <div className={s.buttonAndCounter}>
           <div className={s.buttonWrap}>
