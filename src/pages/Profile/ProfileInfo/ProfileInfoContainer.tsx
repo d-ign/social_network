@@ -57,7 +57,7 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
   }
 
   const stylesEditButton: React.CSSProperties = {
-    fontSize: 12,
+    fontSize: 11,
     marginTop: 20,
   }
 

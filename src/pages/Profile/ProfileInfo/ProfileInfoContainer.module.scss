@@ -11,6 +11,9 @@
 
 .columnLeft {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 10px;
 
   @media (max-width: 770px) {
