@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './ProfilePlug.module.scss'
 
 type PropsType = {
@@ -6,8 +6,22 @@ type PropsType = {
 }
 
 const ProfilePlug: React.FC<PropsType> = ({ isOwner }) => {
+  const [showMessage, setShowMessage] = useState(false)
+
+  useEffect(() => {
+    const time = setTimeout(() => {
+      setShowMessage(true)
+    }, 3000)
+
+    return () => clearTimeout(time)
+  }, [])
+
   return (
     <div className={s.container}>
+      {showMessage && (
+        <div className={s.message}>Maybe, such a profile does not exist...</div>
+      )}
+
       <div className={s.columnLeft}>
         <div className={s.avatar} />
         {isOwner && <div className={s.button} />}

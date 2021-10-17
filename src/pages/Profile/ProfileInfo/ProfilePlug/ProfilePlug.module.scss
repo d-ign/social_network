@@ -8,10 +8,25 @@
 .container {
   @include wh(100%, 400px);
 
+  position: relative;
   display: flex;
 
   @media (max-width: 770px) {
     display: block;
+  }
+}
+
+.message {
+  position: absolute;
+  left: calc(50% - 150px);
+  top: 240px;
+  width: 300px;
+  text-align: center;
+  color: $color-greyLight;
+
+  @media (max-width: 360px) {
+    left: calc(50% - 125px);
+    width: 250px;
   }
 }
 

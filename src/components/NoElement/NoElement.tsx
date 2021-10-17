@@ -10,12 +10,10 @@ const NoElement: React.FC<PropsType> = ({
   elements,
   writeSomething = false,
 }) => {
-  let verb: 'found' | 'exist' | ''
+  let verb: 'found' | ''
 
   if (elements === 'users') {
     verb = 'found'
-  } else if (elements === 'profile') {
-    verb = 'exist'
   } else {
     verb = ''
   }
