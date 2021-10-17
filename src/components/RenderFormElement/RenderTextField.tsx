@@ -1,10 +1,18 @@
-import { TextField } from '@mui/material'
+import { InputProps, TextField } from '@mui/material'
 import { useAppSelector } from '../../services/hooks/useApp'
 import { getTheme } from '../../store/selectors/app-selectors'
 
 import s from './RenderTextField.module.scss'
 
-const RenderTextField = (props) => {
+type OwnPropsType = {
+  label: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  input: any
+  variant: 'outlined' | 'standard' | 'filled'
+  meta: { touched: boolean; error: string; warning: string }
+}
+
+const RenderTextField = (props: InputProps & OwnPropsType) => {
   const {
     label,
     input,
