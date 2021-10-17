@@ -19,10 +19,12 @@ const usersAPI = {
     )
     return response.data
   },
+
   async isFollowed(id: number) {
     const response = await instance.get<boolean>(`follow/${id}`)
     return response.data
   },
+
   async followUser(id: number) {
     const response = await instance.post<DefaultResponseType>(
       `follow/${id}`,
@@ -30,6 +32,7 @@ const usersAPI = {
     )
     return response.data
   },
+
   async unfollowUser(id: number) {
     const response = await instance.delete<DefaultResponseType>(`follow/${id}`)
     return response.data
