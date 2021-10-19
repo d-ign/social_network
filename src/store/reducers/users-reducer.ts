@@ -145,6 +145,7 @@ export const follow = createAsyncThunk(
 
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(followSuccess({ userID: id }))
+      dispatch(setIsFollowed({ bool: true }))
     }
 
     dispatch(toggleFollowingProgress({ isFetching: false, userID: id }))
@@ -160,6 +161,7 @@ export const unfollow = createAsyncThunk(
 
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(unfollowSuccess({ userID: id }))
+      dispatch(setIsFollowed({ bool: false }))
     }
 
     dispatch(toggleFollowingProgress({ isFetching: false, userID: id }))
