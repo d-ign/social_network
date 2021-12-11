@@ -35,13 +35,15 @@ const ProfileContainer: React.FC = () => {
     }
   }, [authorizedUserID, dispatch, isEditModeProfile, userIdFromUrl])
 
+  const isProfileWall = !isEditModeProfile && isOwner
+
   return (
     <main>
       <Switch>
         <Redirect from='/profile/undefined' to='/' />
         <>
           <ProfileInfoContainer isOwner={isOwner} />
-          {!isEditModeProfile && isOwner && <ProfileWall />}
+          {isProfileWall && <ProfileWall />}
         </>
       </Switch>
     </main>

@@ -73,12 +73,13 @@ const Friends: React.FC = () => {
     setIsFetchingUsers(false)
   }, [users.length])
 
+  const isPrompt = isShowPrompt && maxPageCount > 1 && !isFetching
+  const isNoElement = totalUsersCount === 0 && !isFetching
+
   return (
     <main className={s.container}>
       <h1 className={s.visuallyHidden}>Friends</h1>
-      {isShowPrompt && !isFetching && maxPageCount > 1 && (
-        <Prompt.PaginationUsers pathname={pathname} />
-      )}
+      {isPrompt && <Prompt.PaginationUsers pathname={pathname} />}
 
       <Search
         termOfUrl=''
@@ -88,7 +89,7 @@ const Friends: React.FC = () => {
         totalUsersCount={totalUsersCount}
       />
 
-      {totalUsersCount === 0 && !isFetching && <NoElement elements='users' />}
+      {isNoElement && <NoElement elements='users' />}
 
       <div className={s.wrapUsers}>
         <div className={s.users}>

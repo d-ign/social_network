@@ -90,12 +90,13 @@ const Users: React.FC = () => {
     callback: () => setIsShowPrompt(false),
   })
 
+  const isPrompt = pageNumber === 1 && isShowPrompt && !isFetching
+  const isNoElement = totalUsersCount === 0 && !isFetching
+
   return (
     <main className={s.container}>
       <h1 className={s.visuallyHidden}>Users</h1>
-      {pageNumber === 1 && !isFetching && isShowPrompt && (
-        <Prompt.PaginationUsers pathname={pathname} />
-      )}
+      {isPrompt && <Prompt.PaginationUsers pathname={pathname} />}
 
       <Search
         pathname={pathname}
@@ -105,7 +106,7 @@ const Users: React.FC = () => {
         totalUsersCount={totalUsersCount}
       />
 
-      {totalUsersCount === 0 && !isFetching && <NoElement elements='users' />}
+      {isNoElement && <NoElement elements='users' />}
 
       <div className={s.wrapUsers}>
         <div className={s.users}>

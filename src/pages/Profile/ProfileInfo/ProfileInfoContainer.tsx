@@ -175,22 +175,22 @@ const ProfileInfoContainer: React.FC<PropsType> = ({ isOwner }) => {
 
       <div className={s.columnRight}>
         {!isEditModeProfile && (
-          <div id='scrollToTopOnMount' className={s.fullName}>
-            {profile.fullName}
-          </div>
+          <>
+            <div id='scrollToTopOnMount' className={s.fullName}>
+              {profile.fullName}
+            </div>
+            <ProfileStatus isOwner={isOwner} />
+            <ProfileData profile={profile} />
+          </>
         )}
 
-        {!isEditModeProfile && <ProfileStatus isOwner={isOwner} />}
-
-        {isEditModeProfile ? (
+        {isEditModeProfile && (
           <ProfileDataForm
             initialValues={profile}
             onSubmit={onSubmitProfile}
             errorProfileContacts={errorProfileContacts}
             setIsEditInputProfileForm={setIsEditInputProfileForm}
           />
-        ) : (
-          <ProfileData profile={profile} />
         )}
       </div>
 

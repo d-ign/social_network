@@ -131,9 +131,11 @@ const ButtonShowAll: React.FC<ButtonShowAllPropsType> = ({
   isShowAll,
   setIsShowAll,
 }) => {
+  const isButtonShowAll = chatMembers.length > 2 && !isShowAll
+
   return (
     <>
-      {chatMembers.length > 2 && !isShowAll ? (
+      {isButtonShowAll ? (
         <div className={s.buttonShowAllWrap}>
           <button
             type='button'
